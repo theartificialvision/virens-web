@@ -8,16 +8,19 @@
  * contenido nuevo sin equivalente en la web actual.
  */
 
-// LITERAL (§2.1): titular y texto de cada bloque de la pantalla partida
-// original. El texto de Tech corrige el typo "desarollo" -> "desarrollo"
-// (reconocido como error en el propio documento, §1.2 problema 07).
+// El cuerpo de cada tarjeta sigue siendo LITERAL (§2.1) de la pantalla
+// partida original. El claim, no: por petición explícita del cliente
+// (2026-09-02) pasa de "Contract manufacturing" / "Development" —el
+// literal real— a "Contract Manufacturing" / "Contract Development", en
+// paralelo, terminología estándar de CDMO. Excepción deliberada a la regla
+// de copy literal (CLAUDE.md regla 3), no un descuido.
 export const divisionCards = {
   labs: {
-    claim: 'Contract manufacturing',
+    claim: 'Contract Manufacturing',
     body: 'En formas sólidas y líquidos siguiendo los más estrictos estándares de calidad.',
   },
   tech: {
-    claim: 'Development',
+    claim: 'Contract Development',
     body: 'Nuevo concepto integrado de tecnología aplicada al desarrollo de producto.',
   },
 } as const;

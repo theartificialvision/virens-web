@@ -11,7 +11,7 @@ const NOISE_SVG = `<svg xmlns='http://www.w3.org/2000/svg' width='180' height='1
 /**
  * Grano global, una sola capa fija (no por sección). Sin animación, por eso
  * queda exenta del chequeo JS de prefers-reduced-motion (CLAUDE.md regla 8).
- * Se autolimita a DARK_ROUTES, igual que Cursor.
+ * Se autolimita a DARK_ROUTES.
  */
 export function Grain() {
   const pathname = usePathname();

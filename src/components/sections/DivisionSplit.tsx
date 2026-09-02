@@ -111,21 +111,24 @@ function DivisionHalf({
         src={image.src}
         alt={image.alt}
         fill
+        priority
         sizes="(max-width: 1024px) 100vw, 50vw"
         className={cn(
-          'object-cover contrast-110 transition-[filter] duration-[1100ms] ease-[var(--ease-out-quart)]',
-          active ? 'grayscale-0 saturate-[1.3] brightness-100' : 'grayscale brightness-[0.82]',
+          'object-cover grayscale contrast-110 transition-[filter] duration-[1100ms] ease-[var(--ease-out-quart)]',
+          active ? 'saturate-[1.3] brightness-100' : 'brightness-[0.92]',
         )}
       />
-      {/* En reposo la mitad queda neutra/apagada (lavado de --color-ink, no
-          del color de marca): la foto ya tiene un cian natural por la luz
-          de planta que se confundía con el teal si el lavado de reposo
-          también era de color — apenas se notaba el cambio al activar. Solo
-          el círculo de difusión lleva el acento, para que "llegue" el color
-          en vez de simplemente subir de intensidad. */}
-      <span aria-hidden className="absolute inset-0 bg-ink/55" />
-      {/* Difusión de tinte: crece desde la costura al activar el botón de
-          esta división — "como un tinte que se esparce bajo el agua". */}
+      {/* Reposo: cada mitad ya lleva su color de marca (petición explícita
+          del cliente 2026-09-02 — "no quiero que empiece en B/N"), no un
+          lavado neutro. La foto queda en escala de grises (arriba) para que
+          el `mix-blend-mode: color` de aquí abajo la tiña por completo con
+          el acento — el resultado es color desde el primer fotograma, no
+          gris con un toque de color. */}
+      <span aria-hidden className="absolute inset-0" style={{ background: accent, mixBlendMode: 'color', opacity: 0.55 }} />
+      {/* Al activar el botón de esta división, el tinte "se unifica": el
+          mismo acento sube a una saturación más plena y se extiende desde
+          la costura — como un tinte que se esparce bajo el agua — hasta
+          cubrir el panel entero en un tono más sólido y uniforme. */}
       <span
         aria-hidden
         className="absolute inset-0 transition-[clip-path] duration-[1200ms] ease-[var(--ease-out-quart)]"

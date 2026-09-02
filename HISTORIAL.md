@@ -456,3 +456,43 @@ botones (uno por división) con estética glass y una transición de color
   overflow), difusión de tinte en ambos botones, paridad de teclado,
   `prefers-reduced-motion`, orden de mobile corregido, sin errores de
   consola.
+
+### 2026-09-02 (noche, 4) — Claude Code — Ajustes de hero: copy CDMO, color desde el inicio, fuera el cursor personalizado
+
+Cuarta ronda de feedback sobre el mismo hero. Cuatro peticiones, todas
+aplicadas:
+
+- **Copy (excepción deliberada a la regla de literal):** los claims pasan
+  a "Contract Manufacturing" y "Contract Development" — el cliente lo pidió
+  explícitamente tras la pregunta que quedó abierta en la sesión anterior.
+  El literal real de la web actual era "Contract manufacturing" y
+  "Development"; queda documentado en `content/home.ts` como excepción a
+  CLAUDE.md regla 3, no como descuido. (El cliente escribió "Developing" /
+  "Manufacturating"; se ha usado la forma correcta en inglés, que además es
+  la terminología estándar de CDMO.)
+- **Fuera el arranque en blanco y negro:** cita del cliente, "NO quiero que
+  empiece en ByN, quiero que cada uno su color". Se retira el lavado neutro
+  de `--color-ink` que había introducido la sesión anterior en reposo: cada
+  mitad vuelve a llevar su acento desde el primer fotograma (la foto sigue
+  en escala de grises, pero el `mix-blend-mode: color` al 55 % ya la tiñe
+  por completo). Al activar el botón, el mismo acento sube al 95 % y se
+  extiende desde la costura: el tinte "se unifica" en un tono más sólido,
+  en vez de aparecer de la nada.
+- **Cursor personalizado eliminado** ("quiero un cursor tradicional"):
+  borrado `src/components/ui/Cursor.tsx`, su render en `layout.tsx` y la
+  regla `.cursor-none` de `globals.css`, más las dos referencias en
+  comentarios (`Grain.tsx`, `navigation.ts`). Verificado: `cursor: auto` y
+  sin clase `cursor-none` en `<html>`.
+- **Navegación por clic de los botones:** verificada explícitamente (8/8
+  en producción). Merece nota porque durante la verificación aparecieron
+  fallos intermitentes que resultaron ser un artefacto del propio test:
+  solo se reproducían cuando el script intercalaba `page.screenshot()`
+  entre el hover y el clic (las capturas fuerzan pasadas de composición en
+  Chromium headless y alteran el timing de los eventos de entrada). Sin
+  capturas de por medio, 8 de 8 navegaciones correctas. No es un bug del
+  sitio, pero queda anotado por si vuelve a verse en otra sesión.
+- **De paso, aviso real de Next resuelto:** las dos fotos del hero son el
+  elemento LCP y no llevaban `priority`; añadido (CLAUDE.md regla 9).
+- `npm run typecheck` y `npm run build` limpios. Verificado con Playwright
+  en desktop y mobile, con y sin `prefers-reduced-motion`, sin errores de
+  consola.

@@ -52,6 +52,6 @@ export const legalNav: NavItem[] = [
 /**
  * Rutas del pivote oscuro 2026-09-01 (Home + las dos divisiones). El resto
  * del sitio (Compañía/Contacto/Noticias) se queda en el sistema claro hasta
- * su propia fase — Header, Cursor y Grain se autolimitan a esta lista.
+ * su propia fase — Header y Grain se autolimitan a esta lista.
  */
 export const DARK_ROUTES = ['/', '/virens-labs', '/virens-tech'] as const;

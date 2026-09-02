@@ -139,10 +139,6 @@
   [id] { scroll-margin-top: 9.5rem; }
 }
 
-/* Cursor personalizado (Cursor.tsx): activo solo en Home/Labs/Tech, con
-   puntero fino y sin prefers-reduced-motion — ver DARK_ROUTES. */
-.cursor-none, .cursor-none * { cursor: none; }
-
 /* --- Split "Dos divisiones" (home, bloque 01) -------------------
    2026-09-02, segunda vuelta: el seguimiento continuo del ratón (la
    costura seguía el cursor en tiempo real) se retira por usabilidad —

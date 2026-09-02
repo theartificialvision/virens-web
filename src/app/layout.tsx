@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { Montserrat, Newsreader } from 'next/font/google';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
-import { Cursor } from '@/components/ui/Cursor';
 import { Grain } from '@/components/ui/Grain';
 import { site } from '@/config/site';
 import './globals.css';
@@ -56,7 +55,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main id="contenido">{children}</main>
         <Footer />
-        <Cursor />
         <Grain />
         <OrganizationSchema />
       </body>
