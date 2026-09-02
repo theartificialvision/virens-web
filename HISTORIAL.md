@@ -394,3 +394,65 @@ desde el origen del proyecto (código sin usar, no un bug introducido ahora).
 - `npm run typecheck` y `npm run build` limpios (11 páginas estáticas).
   Verificado con Playwright: Home/Labs/Tech en desktop y mobile, sin
   errores de consola, sin solape del H1 tras el ajuste de ancho.
+
+### 2026-09-02 (noche, 3) — Claude Code — Hero de Home: una línea, logos a color, y el hover pasa a dos botones
+
+Feedback directo del cliente sobre el hero: el H1 debía caber en una sola
+línea sin tocar las moléculas, las moléculas debían ir a color, y el
+seguimiento continuo del ratón "marea mucho" — pide sustituirlo por dos
+botones (uno por división) con estética glass y una transición de color
+"como un tinte que se esparce bajo el agua".
+
+- **H1 en una sola línea:** nuevo token `--text-display-compact` (mismo
+  criterio que `--text-stat-compact`) más `whitespace-nowrap` en desktop.
+  Verificado sin overflow en 1024/1280/1440/1920px.
+- **Moléculas a color por defecto** (antes blancas, coloreadas solo al
+  hover): un único `<img>` sin el filtro `brightness(0) invert(1)`, con un
+  halo sutil (`blur-2xl` del color de división) a juego con el glass de
+  los botones.
+- **Se retira el arrastre continuo del split** (rAF + flex-basis + lerp
+  sobre la posición X del ratón, de la sesión anterior) por usabilidad —
+  cita del cliente: "se marea mucho con movimientos del mouse". El split
+  vuelve a ser 50/50 fijo, sin JS de layout.
+- **Dos botones nuevos, `DivisionButton`** ("Visitar Labs" / "Visitar
+  Tech" — reutiliza el literal ya existente de `DivisionSwitch`, añadido
+  a `divisionSplit` en `content/home.ts` como campo `cta`, nunca en el
+  JSX). Estética glass (blur, borde, pulso suave en el glow de cada
+  división — CLAUDE.md regla 4, excepción ya sancionada).
+- **Difusión de tinte al activar** (hover o foco del botón — paridad de
+  teclado automática, sin simular nada): un `clip-path: circle()` con el
+  color de la división crece desde la costura hasta cubrir el panel
+  entero, mientras la foto pasa de gris a color. Cambio de estado
+  discreto (React state + transición CSS de 1,1–1,2 s), no una animación
+  por frame — nada que pueda "marear". Bajo `prefers-reduced-motion` el
+  cambio es instantáneo (ya cubierto por la regla global de
+  `transition-duration: 0.01ms`), sin JS adicional.
+  - **Ajuste real tras la primera prueba:** con el lavado de reposo en el
+    color de la propia división (como antes), el cambio apenas se notaba
+    — la foto de planta ya tiene un cian natural por la iluminación que
+    se confundía con el teal de marca. Corregido: en reposo la mitad
+    queda neutra/apagada (`bg-ink/55` + `brightness-[0.82]` + escala de
+    grises), y solo el círculo de difusión lleva el color — así "llega"
+    de verdad al activar, en vez de simplemente subir de intensidad.
+- **Dos bugs reales encontrados y corregidos en el propio proceso:**
+  1. Al comprimir el H1 a una línea, el bloque del titular compartido
+     cambió de posición vertical y las moléculas (antes centradas en todo
+     el panel) empezaron a chocar con el subtítulo y los botones —
+     corregido ancladas siempre arriba (antes solo en mobile).
+  2. Al mover el orden del JSX, el titular pasó a renderizarse DESPUÉS de
+     las dos fotos en el flujo de mobile — invisible en desktop (todo
+     `absolute`, el DOM no importa) pero en mobile el usuario veía dos
+     pantallas completas de foto antes de llegar al titular. Corregido
+     devolviendo el bloque del titular al principio del JSX.
+- **Sin resolver, marcado explícitamente:** el mensaje del cliente
+  mencionaba "contract developement" junto a "contract manufacturating".
+  El claim de Tech (`divisionCards.tech.claim`) sigue en "Development"
+  literal de la web actual — no se ha cambiado a "Contract Development"
+  porque violaría la regla de copy literal (CLAUDE.md regla 3) sin
+  confirmación explícita de que es un cambio de copy deliberado y no una
+  paráfrasis del mensaje. Pendiente de que el cliente lo confirme.
+- `npm run typecheck` y `npm run build` limpios (11 páginas estáticas).
+  Verificado con Playwright: los tres tests de ancho (una línea sin
+  overflow), difusión de tinte en ambos botones, paridad de teclado,
+  `prefers-reduced-motion`, orden de mobile corregido, sin errores de
+  consola.

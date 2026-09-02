@@ -69,6 +69,12 @@
      no solo dígitos: sin esto, la palabra más larga se desborda de su columna. */
   --text-stat-compact: clamp(1.75rem, 1.30rem + 2.3vw, 3.00rem); /* 28 -> 48 */
   --text-note:      0.75rem;                                     /* 12 */
+  /* Único uso: H1 de Home (`DivisionSplit`), a petición del cliente
+     (2026-09-02) para que "Expertos en complementos alimenticios" quepa
+     en una sola línea entre las dos moléculas sin tocarlas. Mismo criterio
+     que --text-stat-compact: un tamaño más contenido para un contexto con
+     menos ancho disponible que un H1 normal a sangre completa. */
+  --text-display-compact: clamp(1.375rem, 0.85rem + 2.15vw, 3.375rem); /* 22 -> 54 */
 
   /* --- Layout -------------------------------------------------- */
   --container-max:  90rem;   /* 1440 */
@@ -138,14 +144,19 @@
 .cursor-none, .cursor-none * { cursor: none; }
 
 /* --- Split "Dos divisiones" (home, bloque 01) -------------------
-   2026-09-02: el gesto pasa de discreto (hover = salto fijo) a continuo
-   (la costura sigue la posición X del ratón). `flex-basis` y la opacidad
-   del titular compartido ya no se controlan aquí — `DivisionSplit.tsx` los
-   escribe directamente en el DOM cada frame vía requestAnimationFrame
-   (interpolación lineal, no hay transición CSS que la duplicaría). Solo
-   queda el reparto base 50/50 (`flex-1` en el propio JSX) para el estado
-   sin JS/táctil/reduced-motion, y el ancho a pantalla completa que ya vive
-   en el propio componente. */
+   2026-09-02, segunda vuelta: el seguimiento continuo del ratón (la
+   costura seguía el cursor en tiempo real) se retira por usabilidad —
+   feedback directo del cliente: "se marea mucho con movimientos del
+   mouse". El split vuelve a ser 50/50 fijo (`flex-1` en el JSX, sin JS);
+   la interacción pasa a dos botones explícitos (`DivisionButton`) que
+   activan una difusión de color por `clip-path` — ver `DivisionSplit.tsx`.
+   El pulso de los botones es la única animación en bucle: `--pulse-glow`
+   la fija cada botón a su color de división. */
+@keyframes glass-pulse {
+  0%, 100% { box-shadow: var(--shadow-elevate), 0 0 0 0 color-mix(in srgb, var(--pulse-glow) 55%, transparent); }
+  50%      { box-shadow: var(--shadow-elevate), 0 0 22px 6px color-mix(in srgb, var(--pulse-glow) 0%, transparent); }
+}
+.glass-pulse { animation: glass-pulse 2.6s ease-in-out infinite; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

@@ -2,13 +2,11 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { forwardRef, useEffect, useRef } from 'react';
+import { useState } from 'react';
 import type { Division } from '@/lib/types';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { KineticHeading } from '@/components/ui/KineticHeading';
-import { Magnetic } from '@/components/ui/Magnetic';
-import { usePrefersReducedMotion } from '@/lib/useReducedMotion';
-import { divisionColor } from '@/lib/utils';
+import { divisionColor, divisionGlow, cn } from '@/lib/utils';
 
 interface DivisionHalfData {
   id: Division;
@@ -18,38 +16,29 @@ interface DivisionHalfData {
   body: string;
   image: { src: string; alt: string };
   molecule: string;
+  cta: string;
 }
-
-const REST = 50;
-const LERP = 0.14;
-const SNAP_THRESHOLD = 0.05;
 
 /**
  * Hero inmersivo Labs/Tech (HOME · bloque 01, sustituye al vídeo). Mitad y
- * mitad a sangre: cada lado con el tono de su marca (duotono vía
- * mix-blend-mode sobre la foto, nunca un degradado decorativo) y la
- * molécula de su isotipo, grande y centrada en el propio panel.
+ * mitad a sangre, siempre 50/50 (sin JS de layout): cada lado con el tono
+ * de su marca (duotono vía mix-blend-mode sobre la foto) y la molécula de
+ * su isotipo, a color.
  *
- * **2026-09-02, petición directa del cliente — el gesto pasa de discreto a
- * continuo:** ya no es "hover en una mitad = esa mitad gana espacio fijo".
- * La costura sigue la posición X real del ratón dentro de todo el bloque:
- * ratón en el borde derecho → la mitad derecha ocupa el 100% (la izquierda
- * desaparece); ratón en el centro → 50/50; ratón en el borde izquierdo → la
- * izquierda ocupa el 100%. `requestAnimationFrame` con interpolación lineal
- * (lerp) sobre `flex-basis`, escrito directamente en el DOM vía refs (no en
- * estado de React) para no re-renderizar a 60 fps. El foco por teclado
- * simula la misma posición extrema (borde) que produciría ese resultado con
- * el ratón, así un usuario de teclado ve exactamente el mismo efecto.
- * Efecto solo en desktop con puntero fino (`hover: hover` + `pointer: fine`
- * + `min-width: 1024px`); en mobile/táctil las mitades se apilan a igual
- * altura sin JS. Comprobación explícita de `prefers-reduced-motion` (regla
- * 8): con la preferencia activa, no se engancha ningún listener y las
- * mitades se quedan fijas en 50/50.
- *
- * El titular compartido (`title`/`subtitle`) es el H1 de la página,
- * centrado sobre la costura, y se desvanece según cuánto se haya movido la
- * costura del centro (misma interpolación, sin transición CSS aparte para
- * no duplicar el suavizado).
+ * **2026-09-02, segunda vuelta — de "arrastre continuo" a "dos botones":**
+ * la primera versión hacía que la costura siguiera la posición X del ratón
+ * en tiempo real; feedback directo del cliente: "se marea mucho con
+ * movimientos del mouse". Se retira ese sistema entero (rAF + flex-basis +
+ * lerp) y se sustituye por dos botones explícitos, `DivisionButton`
+ * ("Visitar Labs" / "Visitar Tech"), con estética glass (blur, borde,
+ * pulso — CLAUDE.md regla 4, excepción "glass" ya sancionada). Al pasar
+ * el ratón o el foco por un botón, ESE lado recibe una difusión de color
+ * — `clip-path: circle()` creciendo desde la costura, como un tinte que se
+ * esparce bajo el agua — mientras la imagen pasa de gris a color. Es un
+ * cambio de estado discreto (React state + transición CSS), no una
+ * animación por frame: no hay nada que "marear". Paridad de teclado
+ * automática: los botones son el propio trigger de foco/hover, sin
+ * necesitar simular posiciones extremas.
  */
 export function DivisionSplit({
   halves,
@@ -62,170 +51,111 @@ export function DivisionSplit({
   title: string;
   subtitle: string;
 }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const headingRef = useRef<HTMLDivElement>(null);
-  const leftRef = useRef<HTMLAnchorElement>(null);
-  const rightRef = useRef<HTMLAnchorElement>(null);
-  const reducedMotion = usePrefersReducedMotion();
-
-  useEffect(() => {
-    if (reducedMotion) return;
-    const container = containerRef.current;
-    const heading = headingRef.current;
-    const left = leftRef.current;
-    const right = rightRef.current;
-    if (!container || !left || !right) return;
-
-    const mq = window.matchMedia('(hover: hover) and (pointer: fine) and (min-width: 1024px)');
-    let active = mq.matches;
-    let target = REST;
-    let current = REST;
-    let raf = 0;
-
-    function apply(value: number) {
-      left!.style.flexBasis = `${value}%`;
-      right!.style.flexBasis = `${100 - value}%`;
-      // Se apaga del todo bastante antes del extremo (a 40pp del centro, no
-      // a 50) para no solaparse con el nombre/claim de la mitad que gana la
-      // pantalla — a diferencia del salto discreto de antes, aquí el rango
-      // recorrido llega hasta el 100%, así que hace falta más margen.
-      if (heading) heading.style.opacity = `${Math.max(0, 1 - Math.abs(value - REST) / 40)}`;
-    }
-
-    function tick() {
-      current += (target - current) * LERP;
-      if (Math.abs(target - current) < SNAP_THRESHOLD) current = target;
-      apply(current);
-      raf = requestAnimationFrame(tick);
-    }
-
-    // Ratón en el borde izquierdo del contenedor (ratio→0) debe hacer que la
-    // mitad IZQUIERDA (primer hijo) llegue al 100%: la relación es inversa
-    // a la posición del ratón, no directa.
-    function onPointerMove(e: PointerEvent) {
-      if (!active) return;
-      const rect = container!.getBoundingClientRect();
-      const ratio = (e.clientX - rect.left) / rect.width;
-      target = 100 - Math.min(100, Math.max(0, ratio * 100));
-    }
-    function onPointerLeave() {
-      target = REST;
-    }
-    function onFocusLeft() {
-      if (active) target = 100;
-    }
-    function onFocusRight() {
-      if (active) target = 0;
-    }
-    function onBlurHalf() {
-      if (active) target = REST;
-    }
-    function onMQChange() {
-      active = mq.matches;
-      if (!active) target = REST;
-    }
-
-    container.addEventListener('pointermove', onPointerMove);
-    container.addEventListener('pointerleave', onPointerLeave);
-    left.addEventListener('focus', onFocusLeft);
-    right.addEventListener('focus', onFocusRight);
-    left.addEventListener('blur', onBlurHalf);
-    right.addEventListener('blur', onBlurHalf);
-    mq.addEventListener('change', onMQChange);
-    raf = requestAnimationFrame(tick);
-
-    return () => {
-      container.removeEventListener('pointermove', onPointerMove);
-      container.removeEventListener('pointerleave', onPointerLeave);
-      left.removeEventListener('focus', onFocusLeft);
-      right.removeEventListener('focus', onFocusRight);
-      left.removeEventListener('blur', onBlurHalf);
-      right.removeEventListener('blur', onBlurHalf);
-      mq.removeEventListener('change', onMQChange);
-      cancelAnimationFrame(raf);
-      left.style.flexBasis = '';
-      right.style.flexBasis = '';
-      if (heading) heading.style.opacity = '';
-    };
-  }, [reducedMotion]);
+  const [active, setActive] = useState<Division | null>(null);
 
   return (
-    <div ref={containerRef} className="division-split relative flex flex-col lg:h-[100svh] lg:min-h-[640px] lg:flex-row">
-      {/* Mobile: banda normal, apilada antes que las mitades (cada una ya
-          lleva su propio nombre/claim, no compite por el mismo espacio).
-          Desktop (lg): se saca del flujo y se centra sobre la costura. */}
-      <div
-        ref={headingRef}
-        className="division-split-heading relative z-10 flex flex-col items-center bg-ink px-6 py-10 text-center text-white lg:pointer-events-none lg:absolute lg:inset-0 lg:justify-center lg:bg-transparent lg:py-0"
-      >
+    <div className="division-split relative flex flex-col lg:h-[100svh] lg:min-h-[640px] lg:flex-row">
+      {/* Mobile: banda normal, primero en el flujo (antes de las fotos) —
+          el titular/CTA es lo primero que se lee, no algo que aparece tras
+          dos pantallas completas de foto. Desktop (lg): se saca del flujo
+          con `absolute` y se centra sobre la costura, así que el orden en
+          el DOM deja de importar ahí (el z-10 ya fija el apilado). */}
+      <div className="division-split-heading relative z-10 flex flex-col items-center bg-ink px-6 py-10 text-center text-white lg:absolute lg:inset-0 lg:justify-center lg:bg-transparent lg:py-0">
         {/* En mobile el logo del header queda justo encima y repetiria
             literalmente este rotulo: solo se muestra en desktop, donde el
             titular esta centrado y lejos del logo. */}
         <Eyebrow className="hidden text-mist-dim lg:block">{eyebrow}</Eyebrow>
-        {/* Serif editorial (doc maestro §10.2) solo aquí: el único H1 real
-            de la página, para que el sistema no lea como Montserrat a todo
-            volumen de arriba abajo. */}
+        {/* Serif editorial (doc maestro §10.2), único H1 real de la página.
+            Tamaño compacto (--text-display-compact, no el display general)
+            y ancho generoso a propósito: a petición del cliente, el titular
+            entero cabe en una sola línea entre las dos moléculas, sin
+            tocarlas — nunca varias líneas cortadas a mitad de frase. */}
         <KineticHeading
           as="h1"
           text={title}
-          className="mt-4 max-w-[34rem] font-serif text-[length:var(--text-display)] font-semibold leading-[1.02] tracking-[-0.01em]"
+          className="mt-4 max-w-[62rem] font-serif text-[length:var(--text-display-compact)] font-semibold leading-[1.08] tracking-[-0.01em] lg:whitespace-nowrap"
         />
         <p className="mt-4 text-[length:var(--text-lead)] text-mist">{subtitle}</p>
+
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+          <DivisionButton {...halves[0]} onActivate={() => setActive('labs')} onDeactivate={() => setActive(null)} />
+          <DivisionButton {...halves[1]} onActivate={() => setActive('tech')} onDeactivate={() => setActive(null)} />
+        </div>
       </div>
 
-      <DivisionHalf ref={leftRef} {...halves[0]} />
-      <DivisionHalf ref={rightRef} {...halves[1]} />
+      <DivisionHalf {...halves[0]} side="left" active={active === 'labs'} />
+      <DivisionHalf {...halves[1]} side="right" active={active === 'tech'} />
     </div>
   );
 }
 
-const DivisionHalf = forwardRef<HTMLAnchorElement, DivisionHalfData>(function DivisionHalf(
-  { id, href, name, claim, body, image, molecule },
-  ref,
-) {
+function DivisionHalf({
+  id,
+  name,
+  claim,
+  body,
+  image,
+  molecule,
+  side,
+  active,
+}: DivisionHalfData & { side: 'left' | 'right'; active: boolean }) {
   const accent = divisionColor[id];
+  // El tinte nace en la costura (borde interior de cada mitad) y crece
+  // hacia afuera — de ahí que el origen del círculo esté en el lado
+  // contrario al que da al exterior de la pantalla.
+  const origin = side === 'left' ? '100% 50%' : '0% 50%';
+
   return (
-    <Link
-      ref={ref}
-      href={href}
-      data-half={id}
-      className="group relative flex min-h-[46svh] flex-1 flex-col items-center overflow-hidden p-8 text-center lg:min-h-0 lg:p-12 2xl:p-16"
-    >
+    <div className="group/half relative flex min-h-[46svh] flex-1 flex-col items-center overflow-hidden p-8 text-center lg:min-h-0 lg:p-12 2xl:p-16">
       <Image
         src={image.src}
         alt={image.alt}
         fill
         sizes="(max-width: 1024px) 100vw, 50vw"
-        className="object-cover grayscale contrast-110 transition-transform duration-700 ease-[var(--ease-out-quart)] group-hover:scale-[1.04]"
+        className={cn(
+          'object-cover contrast-110 transition-[filter] duration-[1100ms] ease-[var(--ease-out-quart)]',
+          active ? 'grayscale-0 saturate-[1.3] brightness-100' : 'grayscale brightness-[0.82]',
+        )}
       />
-      <span aria-hidden className="absolute inset-0" style={{ background: accent, mixBlendMode: 'color', opacity: 0.92 }} />
+      {/* En reposo la mitad queda neutra/apagada (lavado de --color-ink, no
+          del color de marca): la foto ya tiene un cian natural por la luz
+          de planta que se confundía con el teal si el lavado de reposo
+          también era de color — apenas se notaba el cambio al activar. Solo
+          el círculo de difusión lleva el acento, para que "llegue" el color
+          en vez de simplemente subir de intensidad. */}
+      <span aria-hidden className="absolute inset-0 bg-ink/55" />
+      {/* Difusión de tinte: crece desde la costura al activar el botón de
+          esta división — "como un tinte que se esparce bajo el agua". */}
+      <span
+        aria-hidden
+        className="absolute inset-0 transition-[clip-path] duration-[1200ms] ease-[var(--ease-out-quart)]"
+        style={{
+          background: accent,
+          mixBlendMode: 'color',
+          opacity: 0.95,
+          clipPath: `circle(${active ? '150%' : '0%'} at ${origin})`,
+        }}
+      />
       <span aria-hidden className="absolute inset-0 bg-black/15" />
       <span aria-hidden className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-b from-transparent to-black/60" />
 
-      {/* Molécula del isotipo: watermark de marca, fuera del flujo para no
-          empujar el bloque de texto que se ancla abajo. En desktop (lg+),
-          centrada en todo el panel — hay espacio de sobra por encima del
-          bloque de texto. En mobile el panel mide solo 46svh: centrarla del
-          todo la solaparía con el nombre/claim de abajo, así que se queda
-          arriba, un poco más grande que antes pero sin invadir el texto. */}
-      {/* lg:inset-0 ya fija top:0 (y anula el top-8 de mobile por el propio
-          orden de las media queries) — un lg:top-auto adicional aquí
-          quedaba por delante de inset-0 en el orden interno de Tailwind y
-          volvía a anclar el elemento abajo: bug real visto en producción
-          (la molécula se solapaba con el texto en vez de centrarse). */}
-      <span aria-hidden className="pointer-events-none absolute inset-x-0 top-8 flex justify-center lg:inset-0 lg:items-center">
-        <span className="relative h-14 w-14 lg:h-40 lg:w-40 2xl:h-48 2xl:w-48">
-          <img
-            src={molecule}
-            alt=""
-            className="absolute inset-0 h-full w-full object-contain transition-opacity duration-500 group-hover:opacity-0"
-            style={{ filter: 'brightness(0) invert(1)' }}
+      {/* Molécula del isotipo a color (petición del cliente 2026-09-02:
+          antes blanca por defecto, coloreada solo al hover). Halo suave a
+          juego con el glass de los botones. Tamaño moderado a propósito —
+          a color y a la escala anterior (160px+) competía demasiado con el
+          texto. Siempre arriba (nunca centrada en todo el panel): el
+          titular compartido ya vive centrado en esa misma franja media, y
+          centrar la molécula ahí también las hacía chocar — visto en la
+          propia captura al comprimir el H1 a una línea. Arriba, fuera del
+          flujo, no empuja el bloque que se ancla abajo. */}
+      <span aria-hidden className="pointer-events-none absolute inset-x-0 top-6 flex justify-center lg:top-10 2xl:top-12">
+        <span className="relative h-12 w-12 lg:h-16 lg:w-16 2xl:h-20 2xl:w-20">
+          <span
+            aria-hidden
+            className="absolute inset-0 scale-150 rounded-full opacity-50 blur-2xl transition-opacity duration-700"
+            style={{ background: divisionGlow[id], opacity: active ? 0.7 : 0.35 }}
           />
-          <img
-            src={molecule}
-            alt=""
-            className="absolute inset-0 h-full w-full object-contain opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-          />
+          <img src={molecule} alt="" className="relative h-full w-full object-contain" />
         </span>
       </span>
 
@@ -235,16 +165,46 @@ const DivisionHalf = forwardRef<HTMLAnchorElement, DivisionHalfData>(function Di
           {claim}
         </h2>
         <p className="mt-4 max-w-[34ch] text-mist">{body}</p>
-        <Magnetic className="mt-8 inline-block">
-          <span
-            className="inline-flex items-center gap-2 rounded-full px-8 py-[length:var(--btn-py)] text-[length:var(--text-small)] font-semibold tracking-[0.04em] text-white transition-transform duration-200 ease-[var(--ease-out-quart)] group-hover:-translate-y-px"
-            style={{ background: accent }}
-          >
-            Ver división
-            <span aria-hidden>&rarr;</span>
-          </span>
-        </Magnetic>
       </span>
+    </div>
+  );
+}
+
+/**
+ * Botón glass (CLAUDE.md regla 4): fondo translúcido + blur + borde +
+ * pulso suave en el color de su división (`--color-labs-glow` /
+ * `--color-tech-glow`, ya calibrados para brillar sobre fondo oscuro). Al
+ * activarse, el fondo vira hacia el color de la división y el pulso se
+ * detiene (el brillo fijo del `boxShadow` ya comunica el estado activo).
+ */
+function DivisionButton({
+  id,
+  href,
+  cta,
+  onActivate,
+  onDeactivate,
+}: DivisionHalfData & { onActivate: () => void; onDeactivate: () => void }) {
+  const accent = divisionColor[id];
+  const glow = divisionGlow[id];
+
+  return (
+    <Link
+      href={href}
+      onMouseEnter={onActivate}
+      onFocus={onActivate}
+      onMouseLeave={onDeactivate}
+      onBlur={onDeactivate}
+      className="glass-pulse inline-flex items-center gap-2 rounded-full border px-8 py-[length:var(--btn-py)] text-[length:var(--text-small)] font-semibold tracking-[0.04em] text-white backdrop-blur-md transition-all duration-500 ease-[var(--ease-out-quart)] hover:-translate-y-px focus-visible:-translate-y-px"
+      style={
+        {
+          background: `color-mix(in srgb, ${accent} 30%, rgba(255,255,255,0.08))`,
+          borderColor: 'rgba(255,255,255,0.28)',
+          '--pulse-glow': glow,
+        } as React.CSSProperties
+      }
+    >
+      {cta}
+      <span aria-hidden>&rarr;</span>
     </Link>
   );
-});
+}
