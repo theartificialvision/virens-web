@@ -6,8 +6,14 @@ export interface NavItem {
   division?: Division;
 }
 
-/** Overlay de menú (§5.3): Compañía · Virens Labs · Virens Tech · Noticias · Contacto. */
+/**
+ * Overlay de menú (§5.3): Compañía · Virens Labs · Virens Tech · Noticias ·
+ * Contacto. "Inicio" se añadió el 2026-09-02 al quitar el logotipo de texto
+ * de la cabecera (petición del cliente): sin él, el menú es la única forma
+ * de volver a Home.
+ */
 export const mainNav: NavItem[] = [
+  { href: '/', label: 'Inicio' },
   { href: '/compania', label: 'Compañía' },
   { href: '/virens-labs', label: 'Virens Labs', division: 'labs' },
   { href: '/virens-tech', label: 'Virens Tech', division: 'tech' },

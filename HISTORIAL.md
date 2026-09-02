@@ -301,3 +301,48 @@ suma ahora la tabla de "Casos abiertos" de arriba.
   instalado), así que desde la sesión de Claude Code no se puede hacer `push`
   sin intervención. El commit del hero nuevo está hecho en local y espera
   push. Al resolverlo, Netlify reconstruye solo.
+
+### 2026-09-02 (noche) — Claude Code — Cabecera sin logo/idioma, split con seguimiento continuo del ratón
+
+Feedback directo del cliente sobre el hero nuevo: quitar el wordmark y el
+selector de idioma de la cabecera, y convertir el gesto de hover del split
+(discreto, "una mitad gana espacio fijo") en continuo (la costura sigue la
+posición X del ratón en todo el bloque).
+
+- **Cabecera:** fuera "Laboratorios Virens" de arriba-izquierda y fuera
+  ES/EN de junto al trigger del menú — la cabecera fija queda solo con
+  "Menú". El selector de idioma se trasladó dentro del panel (`MenuOverlay`,
+  franja superior, junto a "Cerrar"). Sin logo que enlace a "/", se añadió
+  "Inicio" como primera entrada de `mainNav` para no perder la vuelta a
+  Home — comprobado en el menú de las tres rutas.
+- **Split de divisiones — gesto continuo:** sustituido el salto discreto
+  (`flex-grow` vía `:has(:hover)`/`:has(:focus-visible)` en CSS) por
+  seguimiento continuo de la posición X del ratón dentro de todo el
+  contenedor, con `requestAnimationFrame` + interpolación lineal escrita
+  directamente en el DOM vía refs (no en estado de React, para no
+  re-renderizar a 60 fps). Ratón en el borde derecho → Tech al ~100%, Labs
+  desaparece; centro → 50/50; borde izquierdo → Labs al ~100%. El titular
+  compartido se desvanece con la misma interpolación (antes: salto discreto
+  a opacidad 0.2; ahora: curva que llega a 0 antes del extremo, para no
+  solaparse visualmente con el nombre/claim de la mitad que gana la
+  pantalla). Paridad de teclado: el foco en una mitad simula la misma
+  posición extrema que produciría el ratón en ese borde, así un usuario de
+  teclado ve el mismo efecto. Gate único vía `matchMedia('(hover: hover)
+  and (pointer: fine) and (min-width: 1024px)')`; en mobile/táctil las
+  mitades se quedan apiladas y estáticas, sin JS. `prefers-reduced-motion`
+  comprobado explícitamente (regla 8): con la preferencia activa no se
+  engancha ningún listener, queda fijo en 50/50 — verificado con Playwright
+  simulando `reducedMotion: 'reduce'` y moviendo el ratón al extremo (sin
+  efecto).
+- **Moléculas de isotipo, más grandes:** en desktop (lg+) pasan a estar
+  centradas en todo el panel (antes: pequeñas, ancladas arriba). **Bug
+  real encontrado y corregido en mobile:** centrar la molécula agrandada en
+  todo el panel de 46svh la solapaba con el nombre/claim de abajo — en
+  mobile se queda arriba (como antes, algo más grande), solo el desktop
+  usa el centrado completo.
+- `npm run typecheck` y `npm run build` limpios (11 páginas estáticas).
+  Verificado con Playwright: los tres bordes del split (derecha/centro/
+  izquierda) en desktop, paridad de teclado (Tab a cada mitad), reduced
+  motion, contenido del menú (Inicio + ES/EN), y las tres páginas que
+  comparten `Header` (Labs/Tech/Compañía, tema claro) sin errores de
+  consola.

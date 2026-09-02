@@ -137,36 +137,15 @@
    puntero fino y sin prefers-reduced-motion — ver DARK_ROUTES. */
 .cursor-none, .cursor-none * { cursor: none; }
 
-/* --- Split "Dos divisiones" (home, bloque 03) -------------------
-   Al pasar el ratón o llevar el foco a una mitad, esa mitad crece y la
-   otra cede espacio — el gesto que hace inmediato que Virens son dos
-   divisiones. Solo en desktop: en mobile las mitades se apilan a igual
-   altura (`DivisionSplit`, src/components/sections/DivisionSplit.tsx).
-   prefers-reduced-motion ya neutraliza la transición vía la regla
-   global de arriba (duration 0.01ms). */
-@media (min-width: 1024px) {
-  .division-split > a {
-    /* Basis en 0: sin espacio libre que repartir, flex-grow no podría
-       mover nada (con basis 50%/50% ya se consume el 100% del ancho). */
-    flex: 1 1 0%;
-    transition: flex-grow 700ms var(--ease-out-quart);
-  }
-  .division-split:has(> a:hover) > a:not(:hover),
-  .division-split:has(> a:focus-visible) > a:not(:focus-visible) {
-    flex-grow: 0.5;
-  }
-  .division-split > a:hover,
-  .division-split > a:focus-visible {
-    flex-grow: 1.75;
-  }
-
-  /* El titular compartido se retira al fondo cuando una mitad gana espacio,
-     para que el color y la foto de esa división protagonicen el momento. */
-  .division-split:has(> a:hover) .division-split-heading,
-  .division-split:has(> a:focus-visible) .division-split-heading {
-    opacity: 0.2;
-  }
-}
+/* --- Split "Dos divisiones" (home, bloque 01) -------------------
+   2026-09-02: el gesto pasa de discreto (hover = salto fijo) a continuo
+   (la costura sigue la posición X del ratón). `flex-basis` y la opacidad
+   del titular compartido ya no se controlan aquí — `DivisionSplit.tsx` los
+   escribe directamente en el DOM cada frame vía requestAnimationFrame
+   (interpolación lineal, no hay transición CSS que la duplicaría). Solo
+   queda el reparto base 50/50 (`flex-1` en el propio JSX) para el estado
+   sin JS/táctil/reduced-motion, y el ancho a pantalla completa que ya vive
+   en el propio componente. */
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

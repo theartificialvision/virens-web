@@ -109,7 +109,8 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
           exit={{ opacity: 0, y: isDesktop ? -8 : 16, scale: 0.97 }}
           transition={{ duration: 0.22, ease: EASE_OUT_QUART }}
         >
-          <div className="flex h-11 shrink-0 items-center justify-end px-5 lg:px-7">
+          <div className="flex h-11 shrink-0 items-center justify-between px-5 lg:px-7">
+            <LocaleSwitch />
             <button type="button" onClick={onClose} className="text-[13px] font-semibold uppercase tracking-[0.18em]">
               Cerrar &times;
             </button>
@@ -156,5 +157,23 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
         </motion.div>
       )}
     </AnimatePresence>
+  );
+}
+
+/**
+ * Trasladado aquí desde `Header` el 2026-09-02 (petición del cliente: fuera
+ * de la cabecera fija, junto al trigger). Vive siempre sobre el panel azul
+ * del menú, por eso ya no necesita la variante clara/oscura que tenía en
+ * el header.
+ */
+function LocaleSwitch() {
+  return (
+    <div className="flex items-center gap-3 text-[12px] font-semibold tracking-[0.14em] text-white">
+      <span aria-current="true">ES</span>
+      <span className="opacity-40">·</span>
+      <Link href="/en" className="opacity-60 transition-opacity hover:opacity-100">
+        EN
+      </Link>
+    </div>
   );
 }
