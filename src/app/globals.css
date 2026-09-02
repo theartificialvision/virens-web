@@ -1,0 +1,171 @@
+@import "tailwindcss";
+
+/* ============================================================
+   SISTEMA VISUAL VIRENS — fuente única de verdad.
+   Ningún componente debe declarar un hex, un tamaño de fuente
+   ni un espaciado que no esté aquí.
+   ============================================================ */
+
+@theme {
+  /* --- Color -------------------------------------------------- */
+  --color-blue:      #00285C;  /* corporativo */
+  --color-blue-deep: #001C42;  /* profundidad para bloques editoriales */
+  --color-blue-soft: #EAF0F6;  /* fondos técnicos muy claros */
+  --color-labs:      #00A099;  /* Virens Labs */
+  --color-labs-soft: #E7F7F5;  /* fondos de apoyo Labs */
+  --color-tech:      #A2195B;  /* Virens Tech */
+  --color-tech-soft: #F8EAF1;  /* fondos de apoyo Tech */
+
+  --color-gray-50:   #F7F8FA;
+  --color-gray-100:  #F4F6F8;  /* gris de trabajo */
+  --color-gray-200:  #E4E7EB;  /* filetes sobre blanco */
+  --color-gray-300:  #D9DEE4;  /* filetes sobre gris */
+  --color-gray-500:  #6B7684;  /* texto secundario */
+  --color-gray-700:  #4A5560;  /* cuerpo sobre blanco */
+  --color-ink:       #0B1520;
+
+  /* --- Sistema oscuro (pivote 2026-09-01, ver CLAUDE.md) ---------
+     Aditivo: no toca ninguno de los tokens de arriba. --color-ink ya
+     existía sin uso — pasa a ser el fondo base de Home/Labs/Tech. */
+  --color-surface:    #13212F; /* panel elevado, alterna con ink */
+  --color-surface-2:  #1C3040; /* segundo nivel — celdas "glass" */
+
+  --color-mist:       #A9B4C0; /* cuerpo secundario sobre oscuro (~9:1 sobre ink) */
+  --color-mist-dim:   #7A8CA0; /* metadatos/etiquetas sobre oscuro (~5.4:1 sobre ink) */
+
+  /* Variantes elevadas de marca para halos/cursor/campo molecular sobre
+     negro: --color-tech (#A2195B) da solo ~2.55:1 sobre ink, insuficiente
+     como texto/icono — de ahí esta variante, no sustituye al color base. */
+  --color-labs-glow:  #2FE0D0;
+  --color-tech-glow:  #E0409A;
+
+  --glow-labs:        0 0 8rem rgba(0, 160, 153, 0.35);
+  --glow-tech:        0 0 8rem rgba(162, 25, 91, 0.38);
+  --shadow-elevate:   0 24px 48px -24px rgba(0, 0, 0, 0.6);
+  --radius-surface:   0.75rem; /* categoría "glass" puntual, distinta de --radius-panel */
+
+  --opacity-grain:    0.05;
+
+  /* --- Tipografía --------------------------------------------- */
+  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-editorial), Georgia, serif;
+
+  /* Escala fluida: mobile -> desktop.
+     Revisada 2026-09-01 a petición del cliente: la escala original del
+     documento (§10.2, Display 92 / H1 72 / H2 56 / Stat 96) resultaba
+     desproporcionada en la práctica. Escala más medida, criterio Apple HIG. */
+  --text-display:   clamp(2.5rem, 1.65rem + 3.4vw, 4.25rem);    /* 40 -> 68 */
+  --text-h1:        clamp(2.00rem, 1.50rem + 2.2vw, 3.50rem);   /* 32 -> 56 */
+  --text-h2:        clamp(1.75rem, 1.40rem + 1.6vw, 2.75rem);   /* 28 -> 44 */
+  --text-h3:        clamp(1.375rem, 1.20rem + 0.8vw, 1.875rem); /* 22 -> 30 */
+  --text-h4:        clamp(1.125rem, 1.05rem + 0.3vw, 1.375rem); /* 18 -> 22 */
+  --text-lead:      clamp(1.0625rem, 1.00rem + 0.25vw, 1.1875rem); /* 17 -> 19 */
+  --text-body:      clamp(1.00rem, 0.96rem + 0.15vw, 1.0625rem);/* 16 -> 17 */
+  --text-small:     0.9375rem;                                   /* 15 */
+  --text-eyebrow:   clamp(0.6875rem, 0.65rem + 0.12vw, 0.8125rem); /* 11 -> 13 */
+  --text-stat:      clamp(2.75rem, 1.85rem + 3.6vw, 4.75rem);   /* 44 -> 76 */
+  /* Igual que --text-stat pero para franjas de 4 columnas donde el valor
+     puede incluir una palabra completa (p. ej. "Desde 2000", "9 formatos"),
+     no solo dígitos: sin esto, la palabra más larga se desborda de su columna. */
+  --text-stat-compact: clamp(1.75rem, 1.30rem + 2.3vw, 3.00rem); /* 28 -> 48 */
+  --text-note:      0.75rem;                                     /* 12 */
+
+  /* --- Layout -------------------------------------------------- */
+  --container-max:  90rem;   /* 1440 */
+  --measure-max:    42.5rem; /* 680 — ancho máximo de texto corrido */
+  --measure-narrow: 32rem;   /* 512 — bloques editoriales compactos */
+
+  /* --- Botones (§10.5) ------------------------------------------ */
+  --btn-py: 1.125rem; /* 18px — padding vertical exacto del botón del sistema */
+
+  /* --- Panel flotante (menú desktop) ------------------------------
+     Excepción puntual a "radio 0 / sin sombra": pendiente de confirmar
+     en CLAUDE.md si se adopta como regla general o se queda aquí. */
+  --radius-panel: 1.25rem; /* 20px */
+  --shadow-panel: 0 20px 50px -12px rgba(0, 12, 30, 0.35);
+
+  /* --- Ritmo vertical de sección (§10.4) ----------------------- */
+  --section-compact: 4rem;   /* 64  mobile */
+  --section-base:    5rem;   /* 80  mobile */
+  --section-air:     6rem;   /* 96  mobile */
+
+  /* --- Movimiento ---------------------------------------------- */
+  --ease-out-quart: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (min-width: 1024px) {
+  @theme {
+    --section-compact: 7.5rem;  /* 120 */
+    --section-base:   10rem;    /* 160 */
+    --section-air:    12.5rem;  /* 200 */
+  }
+}
+
+/* --- Base ------------------------------------------------------ */
+@layer base {
+  html { scroll-behavior: smooth; }
+
+  body {
+    /* Pivote 2026-09-01: fondo base oscuro (antes #fff/--color-blue).
+       Compañía/Contacto/Noticias no dependen de este valor heredado —
+       pintan su propio fondo claro por sección. */
+    background: var(--color-ink);
+    color: #fff;
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 { text-wrap: balance; }
+  p { text-wrap: pretty; }
+
+  /* Sin sombras en todo el sistema (§10.6). */
+  ::selection { background: var(--color-labs); color: #fff; }
+
+  :focus-visible {
+    outline: 2px solid var(--color-labs);
+    outline-offset: 3px;
+  }
+
+  /* Compensa el header fijo al saltar a un ancla. */
+  [id] { scroll-margin-top: 9.5rem; }
+}
+
+/* Cursor personalizado (Cursor.tsx): activo solo en Home/Labs/Tech, con
+   puntero fino y sin prefers-reduced-motion — ver DARK_ROUTES. */
+.cursor-none, .cursor-none * { cursor: none; }
+
+/* --- Split "Dos divisiones" (home, bloque 03) -------------------
+   Al pasar el ratón o llevar el foco a una mitad, esa mitad crece y la
+   otra cede espacio — el gesto que hace inmediato que Virens son dos
+   divisiones. Solo en desktop: en mobile las mitades se apilan a igual
+   altura (`DivisionSplit`, src/components/sections/DivisionSplit.tsx).
+   prefers-reduced-motion ya neutraliza la transición vía la regla
+   global de arriba (duration 0.01ms). */
+@media (min-width: 1024px) {
+  .division-split > a {
+    /* Basis en 0: sin espacio libre que repartir, flex-grow no podría
+       mover nada (con basis 50%/50% ya se consume el 100% del ancho). */
+    flex: 1 1 0%;
+    transition: flex-grow 700ms var(--ease-out-quart);
+  }
+  .division-split:has(> a:hover) > a:not(:hover),
+  .division-split:has(> a:focus-visible) > a:not(:focus-visible) {
+    flex-grow: 0.62;
+  }
+  .division-split > a:hover,
+  .division-split > a:focus-visible {
+    flex-grow: 1.6;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
