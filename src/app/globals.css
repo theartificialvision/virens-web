@@ -148,11 +148,28 @@
    activan una difusión de color por `clip-path` — ver `DivisionSplit.tsx`.
    El pulso de los botones es la única animación en bucle: `--pulse-glow`
    la fija cada botón a su color de división. */
+/* Pulso en dos capas (revisado 2026-09-02, "mejora el pulso"): un halo
+   suave que respira (18→34px) y, encima, un anillo que nace pegado al
+   borde y se expande hasta desvanecerse — lectura de "latido", no de
+   parpadeo. Más lento (3,4 s) y con la curva del sistema. Al pasar el
+   ratón o el foco, el bucle se para y queda un brillo fijo: el estado
+   activo lo comunica el tinte que inunda el hero, no el pulso. */
 @keyframes glass-pulse {
-  0%, 100% { box-shadow: var(--shadow-elevate), 0 0 0 0 color-mix(in srgb, var(--pulse-glow) 55%, transparent); }
-  50%      { box-shadow: var(--shadow-elevate), 0 0 22px 6px color-mix(in srgb, var(--pulse-glow) 0%, transparent); }
+  0%   { box-shadow: var(--shadow-elevate),
+                     0 0 0 0    color-mix(in srgb, var(--pulse-glow) 60%, transparent),
+                     0 0 18px 0 color-mix(in srgb, var(--pulse-glow) 28%, transparent); }
+  60%  { box-shadow: var(--shadow-elevate),
+                     0 0 0 14px color-mix(in srgb, var(--pulse-glow) 0%, transparent),
+                     0 0 34px 4px color-mix(in srgb, var(--pulse-glow) 48%, transparent); }
+  100% { box-shadow: var(--shadow-elevate),
+                     0 0 0 14px color-mix(in srgb, var(--pulse-glow) 0%, transparent),
+                     0 0 18px 0 color-mix(in srgb, var(--pulse-glow) 28%, transparent); }
 }
-.glass-pulse { animation: glass-pulse 2.6s ease-in-out infinite; }
+.glass-pulse { animation: glass-pulse 3.4s var(--ease-out-quart) infinite; }
+.glass-pulse:hover, .glass-pulse:focus-visible {
+  animation-play-state: paused;
+  box-shadow: var(--shadow-elevate), 0 0 36px 6px color-mix(in srgb, var(--pulse-glow) 60%, transparent);
+}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

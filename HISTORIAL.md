@@ -496,3 +496,48 @@ aplicadas:
 - `npm run typecheck` y `npm run build` limpios. Verificado con Playwright
   en desktop y mobile, con y sin `prefers-reduced-motion`, sin errores de
   consola.
+
+### 2026-09-02 (noche, 5) — Claude Code — Logos 3D del hero + botones LABS/TECH, pulso, legibilidad y tinte cruzado
+
+Dos peticiones en la misma sesión: incorporar los logos 3D del diseño
+compartido por el cliente (Claude Design, `Logos 3D (standalone).html` en
+la raíz del proyecto, fuera de `web/`) y cuatro ajustes más del hero.
+
+- **Logos 3D — decisión técnica:** el diseño es una escena three.js
+  (esferas + enlaces torneados con acuerdos cóncavos por `LatheGeometry`,
+  material metálico `metalness 0.88 / roughness 0.19`, degradado de marca
+  muestreado en 10 materiales). Meter three.js en la web serían ~600 KB de
+  JS en el LCP para una marca de 112 px — contra CLAUDE.md regla 9 y sin
+  avisar de la dependencia (regla de stack). Solución: **render estático**
+  de la misma escena (Playwright + Chromium headless con SwiftShader,
+  capturando el buffer WebGL vía `toDataURL` porque el compositor no
+  llegaba a completar un frame), recortado al contenido y exportado a
+  **WebP transparente de 512 px** (`public/img/labs-molecule-3d.webp` 18 KB,
+  `tech-molecule-3d.webp` 20 KB). Mismo acabado, coste cero de JS. Ángulo
+  fijo 3/4 suave para que la silueta siga leyéndose como el logo 2D. Los
+  PNG planos anteriores (`labs-molecule.png`/`tech-molecule.png`) quedan
+  sin referencias en `src/` pero se conservan en `public/img` por ser
+  material de marca del cliente. Tamaño del isotipo subido a 112/128 px en
+  desktop (antes 64/80): con volumen metálico merece presencia; verificado
+  184 px de holgura hasta el titular compartido.
+- **Botones "LABS" / "TECH"** (antes "Visitar Labs/Tech →"): solo el nombre
+  de la división, mayúsculas y tracking amplio vía CSS, sin flecha. El
+  texto vive en `content/home.ts` (`cta`).
+- **Pulso mejorado:** de un anillo único a dos capas — halo que respira
+  (18→34 px) + anillo que nace en el borde y se expande hasta
+  desvanecerse; 3,4 s con la curva del sistema (`--ease-out-quart`). Al
+  pasar el ratón o el foco, el bucle se para y queda un brillo fijo.
+- **Legibilidad de los textos grises:** sobre fotografía, `mist`/`mist-dim`
+  se apagaban demasiado (el token está calibrado para superficies planas
+  ink/surface, no para imagen). En el hero pasan a blanco con opacidad
+  alta (`white/80` eyebrows, `white/90` cuerpo). `mist` sigue siendo el
+  token del resto de la web.
+- **Tinte cruzado:** al pasar por LABS, también la mitad Tech se inunda de
+  teal (y viceversa): cada mitad recibe ahora la división ACTIVA
+  (`activeDivision`), no "si yo estoy activa", y el círculo de difusión
+  usa el color de esa división (`flood`). Resultado: todo el hero se
+  unifica en un solo color desde la costura.
+- `npm run typecheck` y `npm run build` limpios. Verificado con
+  Playwright: rótulos/`text-transform`/animación por computed style,
+  carga de los WebP, hover en ambas direcciones, holgura logo↔titular,
+  mobile. Sin errores de consola.

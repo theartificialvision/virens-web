@@ -41,10 +41,9 @@ export const homeHero = {
 
 // NO LITERAL: fotografía candidata (carpeta de sesión Midjourney del
 // cliente) a la espera de reportaje fotográfico propio.
-// `cta` sí es literal: reutiliza el mismo rótulo "Visitar Labs" / "Visitar
-// Tech" que ya usa `DivisionSwitch` para el cruce entre divisiones — aquí
-// cambia el origen (desde Home, no desde la otra división) pero no el
-// texto, para no inventar una segunda fórmula distinta en la misma web.
+// `cta`: solo el nombre de la división ("Labs" / "Tech", en mayúsculas vía
+// CSS) — petición explícita del cliente (2026-09-02), sustituye al
+// "Visitar Labs" / "Visitar Tech" literal que se reutilizaba antes.
 export const divisionSplit = [
   {
     id: 'labs',
@@ -53,8 +52,8 @@ export const divisionSplit = [
     claim: divisionCards.labs.claim,
     body: divisionCards.labs.body,
     image: { src: '/img/labs-hero-mj.png', alt: '' },
-    molecule: '/img/labs-molecule.png',
-    cta: 'Visitar Labs',
+    molecule: '/img/labs-molecule-3d.webp',
+    cta: 'Labs',
   },
   {
     id: 'tech',
@@ -63,8 +62,8 @@ export const divisionSplit = [
     claim: divisionCards.tech.claim,
     body: divisionCards.tech.body,
     image: { src: '/img/tech-hero-mj.png', alt: '' },
-    molecule: '/img/tech-molecule.png',
-    cta: 'Visitar Tech',
+    molecule: '/img/tech-molecule-3d.webp',
+    cta: 'Tech',
   },
 ] as const;
 

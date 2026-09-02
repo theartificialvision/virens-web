@@ -64,7 +64,12 @@ export function DivisionSplit({
         {/* En mobile el logo del header queda justo encima y repetiria
             literalmente este rotulo: solo se muestra en desktop, donde el
             titular esta centrado y lejos del logo. */}
-        <Eyebrow className="hidden text-mist-dim lg:block">{eyebrow}</Eyebrow>
+        {/* Texto secundario del hero en blanco (no en `mist`): sobre
+            fotografía, el gris azulado de los tokens se apagaba demasiado
+            — feedback del cliente 2026-09-02, "mejora la visibilidad de los
+            textos en gris". `mist` sigue siendo el token para superficies
+            planas (ink/surface); sobre imagen, blanco con opacidad alta. */}
+        <Eyebrow className="hidden text-white/80 lg:block">{eyebrow}</Eyebrow>
         {/* Serif editorial (doc maestro §10.2), único H1 real de la página.
             Tamaño compacto (--text-display-compact, no el display general)
             y ancho generoso a propósito: a petición del cliente, el titular
@@ -75,7 +80,7 @@ export function DivisionSplit({
           text={title}
           className="mt-4 max-w-[62rem] font-serif text-[length:var(--text-display-compact)] font-semibold leading-[1.08] tracking-[-0.01em] lg:whitespace-nowrap"
         />
-        <p className="mt-4 text-[length:var(--text-lead)] text-mist">{subtitle}</p>
+        <p className="mt-4 text-[length:var(--text-lead)] text-white/90">{subtitle}</p>
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
           <DivisionButton {...halves[0]} onActivate={() => setActive('labs')} onDeactivate={() => setActive(null)} />
@@ -83,8 +88,11 @@ export function DivisionSplit({
         </div>
       </div>
 
-      <DivisionHalf {...halves[0]} side="left" active={active === 'labs'} />
-      <DivisionHalf {...halves[1]} side="right" active={active === 'tech'} />
+      {/* Las dos mitades reciben la división ACTIVA (no "si yo estoy
+          activa"): al pasar por Labs, también la mitad Tech se tiñe de
+          teal, y viceversa — petición del cliente 2026-09-02. */}
+      <DivisionHalf {...halves[0]} side="left" activeDivision={active} />
+      <DivisionHalf {...halves[1]} side="right" activeDivision={active} />
     </div>
   );
 }
@@ -97,9 +105,14 @@ function DivisionHalf({
   image,
   molecule,
   side,
-  active,
-}: DivisionHalfData & { side: 'left' | 'right'; active: boolean }) {
+  activeDivision,
+}: DivisionHalfData & { side: 'left' | 'right'; activeDivision: Division | null }) {
   const accent = divisionColor[id];
+  const active = activeDivision !== null;
+  // Color que inunda ESTA mitad al activar: el de la división activa, no
+  // el propio — al pasar por Labs, la mitad Tech también se tiñe de teal
+  // (y viceversa). En reposo no hay inundación, así que cae al propio.
+  const flood = activeDivision ? divisionColor[activeDivision] : accent;
   // El tinte nace en la costura (borde interior de cada mitad) y crece
   // hacia afuera — de ahí que el origen del círculo esté en el lado
   // contrario al que da al exterior de la pantalla.
@@ -125,15 +138,15 @@ function DivisionHalf({
           el acento — el resultado es color desde el primer fotograma, no
           gris con un toque de color. */}
       <span aria-hidden className="absolute inset-0" style={{ background: accent, mixBlendMode: 'color', opacity: 0.55 }} />
-      {/* Al activar el botón de esta división, el tinte "se unifica": el
-          mismo acento sube a una saturación más plena y se extiende desde
-          la costura — como un tinte que se esparce bajo el agua — hasta
-          cubrir el panel entero en un tono más sólido y uniforme. */}
+      {/* Al activar un botón, el tinte "se unifica" en todo el hero: el
+          color de la división activa (`flood`) se extiende desde la
+          costura — como un tinte que se esparce bajo el agua — hasta
+          cubrir ESTA mitad entera, sea la suya o la contraria. */}
       <span
         aria-hidden
         className="absolute inset-0 transition-[clip-path] duration-[1200ms] ease-[var(--ease-out-quart)]"
         style={{
-          background: accent,
+          background: flood,
           mixBlendMode: 'color',
           opacity: 0.95,
           clipPath: `circle(${active ? '150%' : '0%'} at ${origin})`,
@@ -142,17 +155,19 @@ function DivisionHalf({
       <span aria-hidden className="absolute inset-0 bg-black/15" />
       <span aria-hidden className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-b from-transparent to-black/60" />
 
-      {/* Molécula del isotipo a color (petición del cliente 2026-09-02:
-          antes blanca por defecto, coloreada solo al hover). Halo suave a
-          juego con el glass de los botones. Tamaño moderado a propósito —
-          a color y a la escala anterior (160px+) competía demasiado con el
-          texto. Siempre arriba (nunca centrada en todo el panel): el
-          titular compartido ya vive centrado en esa misma franja media, y
-          centrar la molécula ahí también las hacía chocar — visto en la
-          propia captura al comprimir el H1 a una línea. Arriba, fuera del
-          flujo, no empuja el bloque que se ancla abajo. */}
+      {/* Isotipo 3D (2026-09-02): render estático del modelo three.js que
+          aportó el cliente (esferas + enlaces torneados, acabado metálico,
+          degradado de marca), exportado a WebP transparente de 512px — sin
+          meter three.js en el bundle (~600 KB) para una marca de 112px en
+          el LCP. Halo suave a juego con el glass de los botones. Tamaño
+          con presencia (el volumen metálico es la gracia) pero acotado:
+          termina a ~170px del borde superior en desktop y el titular
+          compartido no empieza hasta ~340px, así que no se tocan. Siempre
+          arriba (nunca centrada en todo el panel): centrarla la hacía
+          chocar con el titular. Fuera del flujo, no empuja el bloque que
+          se ancla abajo. */}
       <span aria-hidden className="pointer-events-none absolute inset-x-0 top-6 flex justify-center lg:top-10 2xl:top-12">
-        <span className="relative h-12 w-12 lg:h-16 lg:w-16 2xl:h-20 2xl:w-20">
+        <span className="relative h-16 w-16 lg:h-28 lg:w-28 2xl:h-32 2xl:w-32">
           <span
             aria-hidden
             className="absolute inset-0 scale-150 rounded-full opacity-50 blur-2xl transition-opacity duration-700"
@@ -163,11 +178,11 @@ function DivisionHalf({
       </span>
 
       <span className="relative mt-auto flex max-w-[26rem] flex-col items-center">
-        <Eyebrow className="text-mist-dim">{name}</Eyebrow>
+        <Eyebrow className="text-white/80">{name}</Eyebrow>
         <h2 className="mt-4 text-[length:var(--text-h2)] font-bold leading-[1.05] tracking-[-0.02em] text-white">
           {claim}
         </h2>
-        <p className="mt-4 max-w-[34ch] text-mist">{body}</p>
+        <p className="mt-4 max-w-[34ch] text-white/90">{body}</p>
       </span>
     </div>
   );
@@ -175,10 +190,12 @@ function DivisionHalf({
 
 /**
  * Botón glass (CLAUDE.md regla 4): fondo translúcido + blur + borde +
- * pulso suave en el color de su división (`--color-labs-glow` /
- * `--color-tech-glow`, ya calibrados para brillar sobre fondo oscuro). Al
- * activarse, el fondo vira hacia el color de la división y el pulso se
- * detiene (el brillo fijo del `boxShadow` ya comunica el estado activo).
+ * pulso en dos capas en el color de su división (`--color-labs-glow` /
+ * `--color-tech-glow`, ya calibrados para brillar sobre fondo oscuro; el
+ * pulso vive en `.glass-pulse`, globals.css). Rótulo: solo el nombre de
+ * la división en mayúsculas, sin flecha — petición del cliente
+ * 2026-09-02. Al pasar el ratón o el foco, el pulso se para y queda un
+ * brillo fijo; el estado activo lo comunica el tinte del hero.
  */
 function DivisionButton({
   id,
@@ -197,7 +214,7 @@ function DivisionButton({
       onFocus={onActivate}
       onMouseLeave={onDeactivate}
       onBlur={onDeactivate}
-      className="glass-pulse inline-flex items-center gap-2 rounded-full border px-8 py-[length:var(--btn-py)] text-[length:var(--text-small)] font-semibold tracking-[0.04em] text-white backdrop-blur-md transition-all duration-500 ease-[var(--ease-out-quart)] hover:-translate-y-px focus-visible:-translate-y-px"
+      className="glass-pulse inline-flex items-center justify-center rounded-full border px-9 py-[length:var(--btn-py)] text-[length:var(--text-small)] font-semibold uppercase tracking-[0.18em] text-white backdrop-blur-md transition-all duration-500 ease-[var(--ease-out-quart)] hover:-translate-y-px focus-visible:-translate-y-px"
       style={
         {
           background: `color-mix(in srgb, ${accent} 30%, rgba(255,255,255,0.08))`,
@@ -207,7 +224,6 @@ function DivisionButton({
       }
     >
       {cta}
-      <span aria-hidden>&rarr;</span>
     </Link>
   );
 }
