@@ -205,7 +205,12 @@ const DivisionHalf = forwardRef<HTMLAnchorElement, DivisionHalfData>(function Di
           bloque de texto. En mobile el panel mide solo 46svh: centrarla del
           todo la solaparía con el nombre/claim de abajo, así que se queda
           arriba, un poco más grande que antes pero sin invadir el texto. */}
-      <span aria-hidden className="pointer-events-none absolute inset-x-0 top-8 flex justify-center lg:inset-0 lg:top-auto lg:items-center">
+      {/* lg:inset-0 ya fija top:0 (y anula el top-8 de mobile por el propio
+          orden de las media queries) — un lg:top-auto adicional aquí
+          quedaba por delante de inset-0 en el orden interno de Tailwind y
+          volvía a anclar el elemento abajo: bug real visto en producción
+          (la molécula se solapaba con el texto en vez de centrarse). */}
+      <span aria-hidden className="pointer-events-none absolute inset-x-0 top-8 flex justify-center lg:inset-0 lg:items-center">
         <span className="relative h-14 w-14 lg:h-40 lg:w-40 2xl:h-48 2xl:w-48">
           <img
             src={molecule}
