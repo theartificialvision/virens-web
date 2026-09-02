@@ -70,8 +70,9 @@ datos/lista, es un cambio rápido — están todos centralizados en `src/content
 - **Fase C (Virens Tech, 13 bloques del §07):** completa y verificada.
   Un solo H1, jerarquía de encabezados sin saltos, sin errores de consola,
   navegación cruzada a Labs consistente con el botón literal "Visitar Labs".
-- **Fase D (Home y Compañía):** Home tiene hero + franja de datos + 2
-  divisiones + cómo trabajamos + CTA — faltan capacidad resumida,
+- **Fase D (Home y Compañía):** Home tiene hero (desde 2026-09-02 el hero
+  ES el split Labs/Tech, ya no hay vídeo en Home) + franja de datos + cómo
+  trabajamos + CTA — faltan capacidad resumida,
   certificaciones, áreas terapéuticas (resumen) y noticias (§07.b). Compañía
   tiene intro + pilares + timeline + CTA — falta el bloque "Qué hacemos"
   (cadena de valor ya existe en Home, revisar si se duplica aquí) y "Nuestra
@@ -256,3 +257,47 @@ suma ahora la tabla de "Casos abiertos" de arriba.
   interacción de hover del split, cursor visible, reduced-motion, y
   regresión de Compañía (sigue clara, única costura aceptada: la banda de
   `CtaContact`, compartida, ahora oscura también ahí hasta su propia fase).
+
+### 2026-09-02 (tarde) — Claude Code — El split de divisiones pasa a ser el hero de Home
+
+- **Home, bloque 01:** el hero de vídeo (`HeroVideo`) desaparece de Home y su
+  sitio lo ocupa `DivisionSplit` a pantalla completa (`100svh`). El
+  claim/subclaim de `site` es ahora el H1 compartido, centrado sobre la
+  costura entre las dos mitades y retirándose a opacidad 0.2 cuando una mitad
+  gana espacio (hover/foco), para que el color y la foto de esa división
+  protagonicen el momento. Lo primero que se lee en la web es que Virens son
+  dos divisiones. `HeroVideo` sigue en uso en Labs y Tech, sin tocar.
+- Contenido de cada mitad centrado y anclado abajo (`mt-auto`), moléculas
+  centradas en vez de ancladas arriba-izquierda, y los claims suben de `h3` a
+  `h2` al subir de nivel el bloque (jerarquía verificada: un solo H1, sin
+  saltos).
+- **Bug real encontrado y corregido en móvil:** el eyebrow del titular
+  ("Laboratorios Virens") quedaba pegado justo debajo del logo del header y
+  repetía el mismo texto palabra por palabra. Ahora el rótulo es solo desktop,
+  donde el titular está centrado y lejos del logo.
+- `StatRow` pasa de tono `ink` a `surface` para no repetir fondo con el bloque
+  siguiente (regla 5, ritmo).
+- Fotografía: entran las dos candidatas de la sesión Midjourney del cliente
+  (`labs-hero-mj.png` / `tech-hero-mj.png`) en lugar de los pósters
+  placeholder. Siguen siendo NO LITERAL, a la espera de reportaje propio.
+- `divisionsIntro` deja de usarse (su titular ya no existe) y `homeHero.lead`
+  se conserva definido pero sin renderizar — la composición centrada
+  mitad/mitad no tiene sitio para un párrafo largo.
+- **Falsa alarma que conviene no repetir:** en capturas de página completa
+  (`fullPage`) los bloques con `Reveal` salen vacíos porque nunca llegan a
+  intersectar. No es un bug de la web; verificar siempre con scroll real.
+- `npm run typecheck` y `npm run build` limpios (11 páginas estáticas).
+  Verificado con Playwright en desktop (1440) y móvil (390): sin errores de
+  consola, hover del split correcto.
+
+## Despliegue — estado
+
+- **GitHub:** `https://github.com/theartificialvision/virens-web` (rama
+  `main`). El commit del pivote a oscuro (`f606c45`) sí está pusheado.
+- **Netlify:** ya conectado y en producción — `https://virens-web.netlify.app`
+  (proyecto `virens-web`, equipo `primeravisita`). Sirve lo que hay en `main`.
+- **Bloqueo actual:** la máquina no tiene credenciales de GitHub guardadas
+  (Git Credential Manager sin token en el almacén de Windows, y `gh` no está
+  instalado), así que desde la sesión de Claude Code no se puede hacer `push`
+  sin intervención. El commit del hero nuevo está hecho en local y espera
+  push. Al resolverlo, Netlify reconstruye solo.
