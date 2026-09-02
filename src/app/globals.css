@@ -153,11 +153,18 @@
   }
   .division-split:has(> a:hover) > a:not(:hover),
   .division-split:has(> a:focus-visible) > a:not(:focus-visible) {
-    flex-grow: 0.62;
+    flex-grow: 0.5;
   }
   .division-split > a:hover,
   .division-split > a:focus-visible {
-    flex-grow: 1.6;
+    flex-grow: 1.75;
+  }
+
+  /* El titular compartido se retira al fondo cuando una mitad gana espacio,
+     para que el color y la foto de esa división protagonicen el momento. */
+  .division-split:has(> a:hover) .division-split-heading,
+  .division-split:has(> a:focus-visible) .division-split-heading {
+    opacity: 0.2;
   }
 }
 

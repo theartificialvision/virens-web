@@ -26,18 +26,18 @@ export const divisionCards = {
 // este tipo (§1.2 problema 01: "la home no comunica nada"). Este bloque es
 // contenido nuevo pendiente de validar con el cliente — no hay una versión
 // anterior de la que partir.
+// Pivote 2026-09-02: el hero pasa a ser el split Labs/Tech (`DivisionSplit`,
+// ver `app/page.tsx`); `eyebrow` se reutiliza ahí como rótulo sobre el
+// titular compartido. `lead` deja de mostrarse en el hero (la composición
+// centrada mitad/mitad no tiene sitio para un párrafo largo) — se queda
+// definido aquí por si vuelve a hacer falta, no se ha borrado el dato.
 export const homeHero = {
   eyebrow: 'Laboratorios Virens',
   lead: 'Desarrollamos, fabricamos y acondicionamos complementos alimenticios en instalaciones propias en Barcelona.',
 } as const;
 
-export const divisionsIntro = {
-  eyebrow: 'Arquitectura de marca',
-  title: 'Dos divisiones, un mismo proceso',
-} as const;
-
-// NO LITERAL: imágenes de sustitución a la espera de reportaje fotográfico
-// propio (mismo criterio que labs-hero-poster.jpg / tech-hero-poster.jpg).
+// NO LITERAL: fotografía candidata (carpeta de sesión Midjourney del
+// cliente) a la espera de reportaje fotográfico propio.
 export const divisionSplit = [
   {
     id: 'labs',
@@ -45,7 +45,7 @@ export const divisionSplit = [
     name: 'Virens Labs',
     claim: divisionCards.labs.claim,
     body: divisionCards.labs.body,
-    image: { src: '/img/labs-hero-poster.jpg', alt: '' },
+    image: { src: '/img/labs-hero-mj.png', alt: '' },
     molecule: '/img/labs-molecule.png',
   },
   {
@@ -54,7 +54,7 @@ export const divisionSplit = [
     name: 'Virens Tech',
     claim: divisionCards.tech.claim,
     body: divisionCards.tech.body,
-    image: { src: '/img/tech-hero-poster.jpg', alt: '' },
+    image: { src: '/img/tech-hero-mj.png', alt: '' },
     molecule: '/img/tech-molecule.png',
   },
 ] as const;

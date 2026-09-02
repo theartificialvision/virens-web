@@ -1,4 +1,3 @@
-import { HeroVideo } from '@/components/sections/HeroVideo';
 import { StatRow } from '@/components/sections/StatRow';
 import { DivisionSplit } from '@/components/sections/DivisionSplit';
 import { CtaContact } from '@/components/sections/CtaContact';
@@ -7,42 +6,22 @@ import { Container } from '@/components/ui/Container';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Reveal } from '@/components/ui/Reveal';
 import { valueChain } from '@/content/company';
-import { divisionSplit, divisionsIntro, homeHero, homeStats, processIntro } from '@/content/home';
+import { divisionSplit, homeHero, homeStats, processIntro } from '@/content/home';
 import { site } from '@/config/site';
 
 /**
  * HOME. La web actual es una pantalla de acceso con dos palabras en inglés:
- * aquí informa antes de bifurcar (§13.1).
+ * aquí informa antes de bifurcar (§13.1) — pero el hero pasa a ser el split
+ * Labs/Tech (pivote 2026-09-02, decisión directa del cliente): "3 segundos
+ * para entender que Virens son dos divisiones" es ahora lo primero, no el
+ * vídeo. El titular compartido (claim/subclaim de `site`) hace de H1.
  */
 export default function HomePage() {
   return (
     <>
-      <HeroVideo
-        eyebrow={homeHero.eyebrow}
-        title={site.claim}
-        subtitle={site.subclaim}
-        lead={homeHero.lead}
-        video={{ mp4: '/video/home-hero.mp4', poster: '/img/home-hero-poster.jpg' }}
-        moleculeVariant="neutral"
-      />
+      <DivisionSplit halves={divisionSplit} eyebrow={homeHero.eyebrow} title={site.claim} subtitle={site.subclaim} />
 
-      <StatRow stats={homeStats} tone="ink" />
-
-      {/* Las dos divisiones */}
-      <Section tone="surface" rhythm="base">
-        <Container>
-          <div className="max-w-[var(--measure-max)]">
-            <Eyebrow className="text-mist-dim">{divisionsIntro.eyebrow}</Eyebrow>
-            <h2 className="mt-6 text-[length:var(--text-h2)] font-bold leading-[1.1] tracking-[-0.015em]">
-              {divisionsIntro.title}
-            </h2>
-          </div>
-        </Container>
-
-        <div className="mt-16">
-          <DivisionSplit halves={divisionSplit} />
-        </div>
-      </Section>
+      <StatRow stats={homeStats} tone="surface" />
 
       {/* Cómo trabajamos */}
       <Section tone="ink" rhythm="base">
