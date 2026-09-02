@@ -31,11 +31,13 @@ export function GalenicForms({
           <MolecularField variant="labs" className="hidden lg:block" />
           <div className="relative mx-auto w-full max-w-[45rem] px-5 py-[var(--section-base)] md:px-8 lg:pl-12 lg:pr-14 2xl:pl-20">
             <div className="max-w-[var(--measure-max)]">
-              <Eyebrow className="text-white/70">Formas galénicas</Eyebrow>
+              {/* Doc maestro §10.1: "sobre #00A099 y #A2195B, el texto
+                  siempre es blanco puro" — nunca semitransparente. */}
+              <Eyebrow className="text-white">Formas galénicas</Eyebrow>
               <h2 className="mt-6 text-[length:var(--text-h2)] font-bold leading-[1.1] tracking-[-0.015em]">
                 Sólidas y líquidas
               </h2>
-              <p className="mt-5 text-white/85">{intro}</p>
+              <p className="mt-5 text-white">{intro}</p>
             </div>
 
             <ul className="mt-14 grid grid-cols-2 border-l border-t border-white/25 sm:grid-cols-3">

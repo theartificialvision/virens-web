@@ -12,7 +12,10 @@ export function CtaContact() {
         <div className="grid items-center gap-8 border-y border-white/15 py-10 md:grid-cols-[auto_1fr_auto] md:text-left lg:gap-12">
           <ContactGlyph />
           <div>
-            <h2 className="max-w-[24ch] text-[length:var(--text-h3)] font-bold leading-[1.15] tracking-[-0.015em]">
+            {/* Tamaño de rol H3: doc maestro §10.2 asigna peso 600 (no 700)
+                a ese escalón — coherente con el resto de titulares H3
+                (`EditorialSplit`), antes en bold por descuido. */}
+            <h2 className="max-w-[24ch] text-[length:var(--text-h3)] font-semibold leading-[1.15] tracking-[-0.015em]">
               {site.ctaContact.title}
             </h2>
             <p className="mt-4 text-[length:var(--text-small)] text-mist-dim">

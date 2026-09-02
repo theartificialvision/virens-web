@@ -50,7 +50,7 @@ export function CapacityGrid({ eyebrow, title, stats, items, operations, note }:
           {items.map((item, i) => (
             <li key={item.id} className="min-h-64 border-b border-r border-white/12 bg-surface-2">
               <Reveal delay={(i % 5) * 0.04} className="flex h-full flex-col justify-between gap-8 p-6 lg:p-8">
-                <FormIcon name={item.icon} className="size-14 shrink-0 text-white/60 lg:size-16" />
+                <FormIcon name={item.icon} className="size-14 shrink-0 text-mist-dim lg:size-16" />
                 <div>
                   <p className="text-[length:var(--text-eyebrow)] font-bold uppercase tracking-[0.18em] text-mist-dim">
                     {item.label}

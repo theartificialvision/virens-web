@@ -161,13 +161,16 @@ export function DivisionSplit({
         {/* En mobile el logo del header queda justo encima y repetiria
             literalmente este rotulo: solo se muestra en desktop, donde el
             titular esta centrado y lejos del logo. */}
-        <Eyebrow className="hidden text-white/80 lg:block">{eyebrow}</Eyebrow>
+        <Eyebrow className="hidden text-mist-dim lg:block">{eyebrow}</Eyebrow>
+        {/* Serif editorial (doc maestro §10.2) solo aquí: el único H1 real
+            de la página, para que el sistema no lea como Montserrat a todo
+            volumen de arriba abajo. */}
         <KineticHeading
           as="h1"
           text={title}
-          className="mt-4 max-w-[20ch] text-[length:var(--text-display)] font-bold leading-[0.98] tracking-[-0.02em]"
+          className="mt-4 max-w-[34rem] font-serif text-[length:var(--text-display)] font-semibold leading-[1.02] tracking-[-0.01em]"
         />
-        <p className="mt-4 text-[length:var(--text-lead)] text-white/85">{subtitle}</p>
+        <p className="mt-4 text-[length:var(--text-lead)] text-mist">{subtitle}</p>
       </div>
 
       <DivisionHalf ref={leftRef} {...halves[0]} />
@@ -227,11 +230,11 @@ const DivisionHalf = forwardRef<HTMLAnchorElement, DivisionHalfData>(function Di
       </span>
 
       <span className="relative mt-auto flex max-w-[26rem] flex-col items-center">
-        <Eyebrow className="text-white/80">{name}</Eyebrow>
+        <Eyebrow className="text-mist-dim">{name}</Eyebrow>
         <h2 className="mt-4 text-[length:var(--text-h2)] font-bold leading-[1.05] tracking-[-0.02em] text-white">
           {claim}
         </h2>
-        <p className="mt-4 max-w-[34ch] text-white/85">{body}</p>
+        <p className="mt-4 max-w-[34ch] text-mist">{body}</p>
         <Magnetic className="mt-8 inline-block">
           <span
             className="inline-flex items-center gap-2 rounded-full px-8 py-[length:var(--btn-py)] text-[length:var(--text-small)] font-semibold tracking-[0.04em] text-white transition-transform duration-200 ease-[var(--ease-out-quart)] group-hover:-translate-y-px"

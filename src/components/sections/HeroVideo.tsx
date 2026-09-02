@@ -67,14 +67,16 @@ export function HeroVideo({ eyebrow, title, subtitle, lead, video, children, mol
 
       <Container className="relative pb-20 lg:pb-28">
         <div className="max-w-[58ch] lg:w-7/12">
-          <Eyebrow className="text-white/80">{eyebrow}</Eyebrow>
+          <Eyebrow className="text-mist-dim">{eyebrow}</Eyebrow>
+          {/* Serif editorial (doc maestro §10.2), mismo tratamiento que el
+              H1 de Home: un único titular por página en Newsreader. */}
           <KineticHeading
             as="h1"
             text={title}
-            className="mt-6 text-[length:var(--text-display)] font-bold leading-[0.98] tracking-[-0.02em] text-white"
+            className="mt-6 font-serif text-[length:var(--text-display)] font-semibold leading-[1.02] tracking-[-0.01em] text-white"
           />
           <p className="mt-5 text-[length:var(--text-lead)] font-normal text-white">{subtitle}</p>
-          {lead && <p className="mt-5 max-w-[var(--measure-max)] text-white/80">{lead}</p>}
+          {lead && <p className="mt-5 max-w-[var(--measure-max)] text-mist">{lead}</p>}
           {children && <div className="mt-10">{children}</div>}
         </div>
       </Container>

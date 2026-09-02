@@ -346,3 +346,51 @@ posición X del ratón en todo el bloque).
   motion, contenido del menú (Inicio + ES/EN), y las tres páginas que
   comparten `Header` (Labs/Tech/Compañía, tema claro) sin errores de
   consola.
+
+### 2026-09-02 (noche, 2) — Claude Code — Pasada "premium": serif editorial + coherencia de paletas y pesos
+
+Feedback del cliente: "se ve barato todavía, falta coherencia de paletas y
+tipografía, los pesos de las mismas." Antes de rediseñar a ciegas, auditoría
+del sistema de tokens (`globals.css`) contra cómo lo usa realmente cada
+componente — los cuatro hallazgos de abajo son concretos, no una relectura
+estética. El más importante: `--font-serif` ya existía y apuntaba a
+`--font-editorial`, una variable que nadie definía — el token estaba muerto
+desde el origen del proyecto (código sin usar, no un bug introducido ahora).
+
+- **Serif editorial activado (doc §10.2, "opcional... como mucho un
+  titular por página"):** cargada **Newsreader** (Google Fonts, pesos
+  500/600) vía `next/font/google`, cableada a `--font-editorial`. Aplicada
+  solo al H1 de cada hero — Home (`DivisionSplit`) y Labs/Tech
+  (`HeroVideo`) — en semibold (600), nunca en H2 en adelante: el resto del
+  sistema sigue en Montserrat. Es el cambio de mayor impacto visual de la
+  sesión: contraste serif/grotesk en vez de Montserrat bold a todo volumen
+  en toda la jerarquía.
+  - **Bug real encontrado al aplicarlo:** en el H1 de Home, `max-w-[20ch]`
+    dejó de bastar — Newsreader es más estrecho que Montserrat al mismo
+    tamaño, así que el mismo límite en `ch` dejó pasar una línea más ancha
+    que antes, invadiendo los dos logos moleculares a los lados. Corregido
+    a un ancho fijo (`max-w-[34rem]`) en vez de una unidad relativa a la
+    fuente activa.
+- **Coherencia de paletas — texto secundario sobre fondo oscuro:**
+  `globals.css` ya definía `--color-mist`/`--color-mist-dim` (con ratios de
+  contraste calculados, ~9:1 y ~5,4:1 sobre `--color-ink`) para esto
+  exactamente, pero la mayoría de componentes los ignoraban y usaban
+  opacidades sueltas (`text-white/60`, `/70`, `/75`, `/80`, `/85`, `/90` —
+  seis valores distintos para el mismo rol de "texto secundario", sin
+  ningún criterio). Sustituidos por los tokens semánticos en
+  `DivisionSplit`, `HeroVideo`, `TherapeuticAreas` y el icono suelto de
+  `CapacityGrid` — **comprobado el contraste real de cada sustitución
+  antes de aplicarla** (calculado a mano contra ink/azul/teal/magenta):
+  `GalenicForms` (fondo teal sólido) y `TypographicBlock` (fondo magenta
+  sólido) se quedaron fuera de esta sustitución porque `mist` da un
+  contraste inservible ahí (1,5:1 y 3,5:1) — en su lugar se corrigieron a
+  **blanco puro**, que es literalmente lo que pide el documento maestro
+  en §10.1 ("sobre #00A099 y #A2195B, el texto siempre es blanco puro") y
+  que ninguno de los dos cumplía (estaban en 70/85/90 % de opacidad).
+- **Coherencia de pesos:** `CtaContact` tenía su título a tamaño de rol H3
+  pero en `font-bold` (700) — el doc asigna 600 a ese escalón, y el resto
+  de H3 del sistema (`EditorialSplit`) ya usaba 600 correctamente.
+  Corregido a `font-semibold`.
+- `npm run typecheck` y `npm run build` limpios (11 páginas estáticas).
+  Verificado con Playwright: Home/Labs/Tech en desktop y mobile, sin
+  errores de consola, sin solape del H1 tras el ajuste de ancho.

@@ -33,7 +33,8 @@ export function TypographicBlock({
               {title}
             </h2>
           </Reveal>
-          <p className="mx-auto mt-8 max-w-[var(--measure-max)] text-[length:var(--text-lead)] text-white/90">{body}</p>
+          {/* Doc maestro §10.1: texto siempre blanco puro sobre #A2195B. */}
+          <p className="mx-auto mt-8 max-w-[var(--measure-max)] text-[length:var(--text-lead)] text-white">{body}</p>
         </div>
 
         <ul className="mt-16 grid grid-cols-2 divide-x divide-y divide-white/25 border-y border-white/25 lg:grid-cols-4 lg:divide-y-0">

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Montserrat } from 'next/font/google';
+import { Montserrat, Newsreader } from 'next/font/google';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Cursor } from '@/components/ui/Cursor';
@@ -11,6 +11,22 @@ const montserrat = Montserrat({
   subsets: ['latin', 'latin-ext'],
   weight: ['400', '500', '600', '700'],
   variable: '--font-montserrat',
+  display: 'swap',
+});
+
+/**
+ * Serif editorial opcional para titulares grandes (doc maestro §10.2: "como
+ * mucho un titular por página"). `--font-serif` ya existía en globals.css
+ * pero apuntaba a una variable (`--font-editorial`) que nadie definía — el
+ * token estaba muerto. Se usa solo en el H1 de Home/Labs/Tech
+ * (`KineticHeading`), nunca en H2 en adelante: Montserrat sigue sosteniendo
+ * el resto del sistema.
+ */
+const editorial = Newsreader({
+  subsets: ['latin', 'latin-ext'],
+  weight: ['500', '600'],
+  style: ['normal', 'italic'],
+  variable: '--font-editorial',
   display: 'swap',
 });
 
@@ -29,7 +45,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" className={montserrat.variable}>
+    <html lang="es" className={`${montserrat.variable} ${editorial.variable}`}>
       <body>
         <a
           href="#contenido"
