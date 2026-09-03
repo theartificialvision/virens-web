@@ -142,9 +142,9 @@ function buildLogo(key: LogoKey): THREE.Group {
     name: `metal_${key}`,
     color: 0xffffff,
     vertexColors: true,
-    metalness: 0.88,
-    roughness: 0.19,
-    envMapIntensity: 1.6,
+    metalness: 0.9,
+    roughness: 0.17,
+    envMapIntensity: 1.9,
   });
 
   const cx = 620;
@@ -177,7 +177,7 @@ function buildLogo(key: LogoKey): THREE.Group {
   };
 
   for (const [k, n] of nodes) {
-    const m = new THREE.Mesh(new THREE.SphereGeometry(n.rad, 48, 32), mat);
+    const m = new THREE.Mesh(new THREE.SphereGeometry(n.rad, 72, 48), mat);
     m.name = `nodo_${k}`;
     m.position.copy(n.pos);
     partOf(k).add(m);
@@ -204,11 +204,11 @@ function buildLogo(key: LogoKey): THREE.Group {
       f *= 0.8;
     }
 
-    const capA = new THREE.Mesh(new THREE.LatheGeometry(pa.pts, 48), mat);
+    const capA = new THREE.Mesh(new THREE.LatheGeometry(pa.pts, 72), mat);
     capA.name = `enlace_${a}_${b}_acuerdo_1`;
     link.add(capA);
 
-    const capB = new THREE.Mesh(new THREE.LatheGeometry(pb.pts, 48), mat);
+    const capB = new THREE.Mesh(new THREE.LatheGeometry(pb.pts, 72), mat);
     capB.name = `enlace_${a}_${b}_acuerdo_2`;
     capB.rotation.z = Math.PI;
     capB.position.y = L;
@@ -222,7 +222,7 @@ function buildLogo(key: LogoKey): THREE.Group {
       const h = span / n;
       const yc = y0 + h * (i + 0.5);
       const seg = new THREE.Mesh(
-        new THREE.CylinderGeometry(R_LINK, R_LINK, h + 0.0006, 48, 1, true),
+        new THREE.CylinderGeometry(R_LINK, R_LINK, h + 0.0006, 72, 1, true),
         mat,
       );
       seg.name = `enlace_${a}_${b}_barra_${i + 1}`;
@@ -274,22 +274,36 @@ function buildLogo(key: LogoKey): THREE.Group {
   return group;
 }
 
-/** Entorno de estudio para el reflejo metálico, pintado a canvas. */
+/**
+ * Entorno de estudio para el reflejo metálico, pintado a canvas.
+ *
+ * Recalibrado 2026-09-05 con el pivote a claro. El original bajaba hasta
+ * #5d6167 —un suelo casi negro, pensado para una página oscura— y sobre
+ * blanco dejaba el metal apagado, con la mitad inferior sucia. Ahora el
+ * degradado se queda en grises altos y la resolución se dobla a 2048×1024:
+ * en un material de `roughness` 0,19 el reflejo es prácticamente un espejo,
+ * así que la nitidez del isotipo la marca esta textura, no el tamaño del
+ * canvas.
+ */
 function studioEnv(renderer: THREE.WebGLRenderer): THREE.Texture {
+  const W = 2048;
+  const H = 1024;
   const ec = document.createElement('canvas');
-  ec.width = 1024;
-  ec.height = 512;
+  ec.width = W;
+  ec.height = H;
   const ex = ec.getContext('2d');
   if (!ex) throw new Error('sin contexto 2D para el entorno');
-  const g = ex.createLinearGradient(0, 0, 0, 512);
+  const g = ex.createLinearGradient(0, 0, 0, H);
   g.addColorStop(0, '#ffffff');
-  g.addColorStop(0.44, '#eef1f5');
-  g.addColorStop(0.52, '#b9bfc7');
-  g.addColorStop(1, '#5d6167');
+  g.addColorStop(0.40, '#f4f6fa');
+  g.addColorStop(0.49, '#e8ecf2');
+  g.addColorStop(0.505, '#7c8794'); // horizonte marcado: es el filo que dibuja el volumen
+  g.addColorStop(0.72, '#59636f');
+  g.addColorStop(1, '#8b95a1');
   ex.fillStyle = g;
-  ex.fillRect(0, 0, 1024, 512);
+  ex.fillRect(0, 0, W, H);
   const focos: ReadonlyArray<readonly [number, number, number]> = [
-    [210, 130, 150], [700, 170, 110], [470, 60, 80],
+    [420, 260, 300], [1400, 340, 220], [940, 120, 160], [200, 700, 260],
   ];
   for (const [x, y, r] of focos) {
     const rg = ex.createRadialGradient(x, y, 0, x, y, r);
@@ -373,7 +387,7 @@ export function mountLogoSpin(host: HTMLElement, opts: LogoSpinOptions): LogoSpi
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
   renderer.setClearAlpha(0);
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.05;
+  renderer.toneMappingExposure = 1.15;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.domElement.style.cssText = 'display:block;width:100%;height:100%';
   host.appendChild(renderer.domElement);
@@ -392,6 +406,32 @@ export function mountLogoSpin(host: HTMLElement, opts: LogoSpinOptions): LogoSpi
   const camera = new THREE.PerspectiveCamera(32, 1, 0.05, 60);
   const obj = buildLogo(opts.logo);
   scene.add(obj);
+
+  /* Radio de encuadre, calculado UNA sola vez y con las dos mitades abiertas
+     del todo. Antes se recalculaba en cada `resize()` recorriendo toda la
+     geometría, y como la banda de isotipos anima su tamaño durante 620 ms, el
+     ResizeObserver lo disparaba en cada fotograma de la transición: ese era el
+     origen real de los tirones, no los FPS. De paso, medir siempre la pose
+     abierta deja el encuadre quieto durante todo el ciclo, en vez de
+     reajustarlo según la pose que hubiera en ese instante. */
+  const fitRadius = (() => {
+    const partes = (obj.userData as { parts: THREE.Group[] }).parts;
+    const guardadas = partes.map((p) => p.position.clone());
+    for (const pt of partes) {
+      const d = pt.userData as PartData;
+      pt.position.copy(d.base).addScaledVector(d.dir, d.dist);
+    }
+    obj.updateMatrixWorld(true);
+    const r = new THREE.Box3()
+      .setFromObject(obj)
+      .getBoundingSphere(new THREE.Sphere()).radius;
+    partes.forEach((pt, i) => {
+      const g = guardadas[i];
+      if (g) pt.position.copy(g);
+    });
+    obj.updateMatrixWorld(true);
+    return r;
+  })();
 
   let stopped = false;
   let visible = true;
@@ -430,18 +470,29 @@ export function mountLogoSpin(host: HTMLElement, opts: LogoSpinOptions): LogoSpi
     renderer.render(scene, camera);
   }
 
+  let lastW = 0;
+  let lastH = 0;
+
   function resize() {
     const w = host.clientWidth || 320;
     const h = host.clientHeight || 320;
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    if (w === lastW && h === lastH) return;
+    lastW = w;
+    lastH = h;
+
+    /* Supersampling: el isotipo son barras metálicas finas, y ahí el MSAA de
+       `antialias: true` no llega. Renderizar a 1,5× la densidad del
+       dispositivo (tope 3) y dejar que el navegador reduzca al mostrar es lo
+       que de verdad limpia los cantos — subir FPS no habría hecho nada. */
+    const dpr = window.devicePixelRatio || 1;
+    renderer.setPixelRatio(Math.min(dpr * 1.5, 3));
     renderer.setSize(w, h, false);
+
     camera.aspect = w / h;
-    const sph = new THREE.Box3().setFromObject(obj).getBoundingSphere(new THREE.Sphere());
     const fov = (camera.fov * Math.PI) / 180;
-    const fitH = sph.radius / Math.sin(fov / 2);
-    const fitW = sph.radius / Math.sin(Math.atan(Math.tan(fov / 2) * camera.aspect));
-    const d = Math.max(fitH, fitW) * FIT;
-    camera.position.set(0, 0, d);
+    const fitH = fitRadius / Math.sin(fov / 2);
+    const fitW = fitRadius / Math.sin(Math.atan(Math.tan(fov / 2) * camera.aspect));
+    camera.position.set(0, 0, Math.max(fitH, fitW) * FIT);
     camera.lookAt(0, 0, 0);
     camera.updateProjectionMatrix();
     frame(true);

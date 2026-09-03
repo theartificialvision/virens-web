@@ -3,19 +3,30 @@
 import Link from 'next/link';
 import { useRef } from 'react';
 import type { Division } from '@/lib/types';
-import { divisionColor, divisionGlow } from '@/lib/utils';
+import { divisionInk } from '@/lib/utils';
 
 /**
- * Botón glass del hero (CLAUDE.md regla 4): fondo translúcido + blur + borde
- * + pulso en dos capas en el color de su división (`.glass-pulse`,
- * globals.css). Rótulo: solo el nombre de la división en mayúsculas, sin
- * flecha — petición del cliente 2026-09-02.
+ * Botón de división. **Pivote 2026-09-05:** deja de ser una cápsula «glass»
+ * translúcida con pulso y pasa a ser un botón sólido.
  *
- * Sigue siendo un enlace de verdad a /virens-labs y /virens-tech: el destino
- * no cambia. Lo que cambia (2026-09-04) es el primer toque en táctil, donde
- * no hay hover que pueda abrir el área: ahí el primer toque despliega la
- * información y solo el segundo navega. Con ratón o teclado el enlace
- * funciona al primer clic/Intro, como siempre.
+ * El brief pedía presencia sin depender de brillos: relleno pleno del color
+ * de marca, texto blanco (5,3:1 en Labs, 9,4:1 en Tech) y ni una sombra de
+ * color. Los estados se leen sin ambigüedad y sin animación llamativa — los
+ * tres rellenos viajan como variables CSS (`--btn-bg*`) y los aplica
+ * `.btn-division` en globals.css, porque un color calculado en runtime no
+ * puede pasar por una utilidad `hover:` de Tailwind:
+ *
+ * - **Reposo** — color de marca pleno, sombra corta.
+ * - **Hover** — 12 % más oscuro, sube 1 px, sombra media.
+ * - **Pulsado** — 22 % más oscuro, vuelve a su sitio y baja a sombra corta:
+ *   el botón «se hunde», que es la lectura física correcta.
+ * - **Foco** — anillo azul del sistema con offset, visible entero alrededor
+ *   de la píldora.
+ * - **Activo** (su área desplegada) — anillo exterior del propio color, no un
+ *   cambio de relleno: así no compite con el hover.
+ *
+ * Sigue siendo un enlace real a /virens-labs y /virens-tech. En táctil el
+ * primer toque despliega y el segundo navega.
  */
 export function DivisionButton({
   id,
@@ -32,13 +43,15 @@ export function DivisionButton({
   coarse: boolean;
   onActivate: () => void;
 }) {
-  const accent = divisionColor[id];
-
   // Al tocar, el navegador sintetiza `mouseenter` ANTES del `click`: mirar
   // `active` dentro del click daría siempre "ya estaba abierta" y el primer
   // toque navegaría. Se anota el estado en `pointerdown`, que sí ocurre antes
-  // de esa cadena sintética, y el click decide con ese apunte.
+  // de esa cadena sintética.
   const abiertaAlPulsar = useRef(false);
+  // Variante oscurecida del acento: sobre el teal plano el texto blanco se
+  // queda en 3,24:1 y no llega a AA. El granate ya pasaba, pero se usa la
+  // misma fuente para los dos y así el par se lee con el mismo peso.
+  const accent = divisionInk[id];
 
   return (
     <Link
@@ -50,21 +63,19 @@ export function DivisionButton({
         abiertaAlPulsar.current = active;
       }}
       onClick={(e) => {
-        // `detail === 0` es activación por teclado (Intro): ahí no hay dos
-        // toques que valgan, el enlace navega directamente.
+        // `detail === 0` es activación por teclado (Intro): ahí el enlace
+        // navega directamente, sin dos toques que valgan.
         if (!coarse || e.detail === 0 || abiertaAlPulsar.current) return;
         e.preventDefault();
         onActivate();
       }}
-      // `touch-manipulation`: sin él, dos toques seguidos en el mismo sitio son
-      // un doble toque de zoom para el navegador y el segundo clic se pierde —
-      // justo el gesto en el que se apoya la versión táctil.
-      className="glass-pulse inline-flex touch-manipulation items-center justify-center rounded-full border px-9 py-[length:var(--btn-py)] text-[length:var(--text-small)] font-semibold uppercase leading-none tracking-[0.18em] text-white backdrop-blur-md transition-[transform,background-color,border-color] duration-500 ease-[var(--ease-out-quart)] hover:-translate-y-px focus-visible:-translate-y-px"
+      className="btn-division touch-manipulation"
       style={
         {
-          background: `color-mix(in srgb, ${accent} ${active ? 52 : 30}%, rgba(255,255,255,0.08))`,
-          borderColor: active ? 'rgba(255,255,255,0.55)' : 'rgba(255,255,255,0.28)',
-          '--pulse-glow': divisionGlow[id],
+          '--btn-bg': accent,
+          '--btn-bg-hover': `color-mix(in srgb, ${accent} 88%, #000)`,
+          '--btn-bg-active': `color-mix(in srgb, ${accent} 78%, #000)`,
+          '--btn-ring': `color-mix(in srgb, ${accent} 32%, transparent)`,
         } as React.CSSProperties
       }
     >

@@ -1,15 +1,21 @@
 import type { SectionTone } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
+/**
+ * Pivote 2026-09-05 (claro): el blanco es el fondo por defecto y `surface`
+ * —un gris de 3 % — es el único descanso habitual. `blue`, `labs` y `tech`
+ * quedan para golpes puntuales: una franja de color por página como mucho,
+ * nunca dos seguidas. Con el blanco dominando, dos secciones blancas
+ * consecutivas son lo normal; el ritmo lo dan el aire y la medida.
+ */
 const TONE: Record<SectionTone, string> = {
-  white: 'bg-white text-blue',
-  gray: 'bg-gray-100 text-blue',
+  white: 'bg-canvas text-blue',
+  surface: 'bg-surface text-blue',
   blue: 'bg-blue text-white',
-  labs: 'bg-labs text-white',
+  // El teal plano da 3,24:1 con texto blanco; como superficie de sección se
+  // usa la variante oscurecida (5,2:1), que pasa AA sin perder intensidad.
+  labs: 'bg-labs-ink text-white',
   tech: 'bg-tech text-white',
-  // Pivote oscuro 2026-09-01 (Home/Labs/Tech) — ver CLAUDE.md regla 4/7.
-  ink: 'bg-ink text-white',
-  surface: 'bg-surface text-white',
 };
 
 const RHYTHM = {
@@ -26,10 +32,7 @@ interface SectionProps {
   children: React.ReactNode;
 }
 
-/**
- * Envoltorio de bloque. El ritmo de la página se compone alternando `tone`:
- * nunca dos secciones consecutivas con el mismo fondo.
- */
+/** Envoltorio de bloque: fondo, color de texto y ritmo vertical. */
 export function Section({ id, tone = 'white', rhythm = 'base', className, children }: SectionProps) {
   return (
     <section id={id} className={cn(TONE[tone], RHYTHM[rhythm], className)}>

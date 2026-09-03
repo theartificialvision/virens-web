@@ -14,6 +14,21 @@ resuelve dentro de Next — la tecnología se adapta al diseño, nunca al revés
 
 Solo se añade una dependencia nueva si es imprescindible, y avisando antes de instalarla.
 
+## Pivote 2026-09-05 — de oscuro a claro
+
+El sistema oscuro del 2026-09-01 queda **sustituido** por uno de base blanca,
+con criterio Apple HIG y por decisión directa del cliente. El blanco domina,
+los colores de marca entran a plena intensidad y en dosis cortas, y el ritmo lo
+dan el aire y la medida. Los tokens viven en el bloque `@theme` de
+`globals.css`; las reglas 4 y 5 se reescribieron ese mismo día para dar cabida
+a radios, sombras y fondo blanco repetido.
+
+Consecuencia de accesibilidad que conviene no olvidar: **el teal de marca
+(#00A099) da 3,24:1 con texto blanco y no llega a AA**. Donde el verde es
+superficie con texto encima se usa `--color-labs-ink` (#007A75, 5,2:1). El
+#00A099 se reserva para lo que no es texto: el isotipo 3D, filetes y cifras
+grandes. El granate (#A2195B) da 7,4:1 y no necesita variante.
+
 ## Reglas inviolables
 
 1. **Tokens.** Ningún hex, tamaño de fuente ni espaciado fuera del bloque `@theme` de
@@ -25,22 +40,28 @@ Solo se añade una dependencia nueva si es imprescindible, y avisando antes de i
    `image-only` · `unverified`). Los `unverified` no se renderizan por defecto. Si falta un dato,
    se deja como pendiente en `site.pendingClientConfirmation` y se dice explícitamente — jamás se
    rellena con una suposición plausible. Incluye cifras, certificaciones, países, años y plazos.
-4. **Sin sombras y sin radios**, salvo botones, círculos de numeración (`999px`), **paneles
-   flotantes de navegación** (el desplegable del menú en desktop): ahí sí se permite radio
-   (`--radius-panel`, 20px), blur de fondo y una sombra de elevación sutil (`--shadow-panel`),
-   siguiendo las Human Interface Guidelines de Apple como referencia de estilo para este tipo de
-   elemento (2026-09-01, decisión del cliente), y — **añadido 2026-09-01, pivote a oscuro** —
-   superficies «glass» puntuales y no repetidas en rejilla (el icono de `CtaContact`, el cursor
-   personalizado, cualquier elemento flotante nuevo equivalente), con `--radius-surface` (12px) y
-   `--shadow-elevate`. Esta cuarta excepción **no** cubre las rejillas de datos (capacidad,
-   certificaciones, áreas terapéuticas, franjas de estadística): esas siguen en radio 0 / cero
-   sombra y ganan profundidad subiendo el relleno de celda un escalón (`--color-ink` →
-   `--color-surface` → `--color-surface-2`), nunca con esquina redondeada ni sombra por celda. En
-   el resto de la web —secciones, bloques, imágenes, tarjetas de noticias— sigue rigiendo radio 0
-   y cero sombra sin excepción.
-5. **Ritmo.** Ninguna sección repite el fondo ni el layout de la anterior. Antes de dar una
-   página por terminada, recorrer la secuencia de `tone` y de estructura y verificar que no hay
-   dos iguales seguidas.
+4. **Radios y sombras: escala de sistema (reescrita 2026-09-05).** Hasta esta
+   fecha regía "radio 0 y cero sombra" con excepciones puntuales. Con el pivote
+   a claro y criterio Apple HIG, ambos pasan a ser sistema y viven en
+   `globals.css`: radios `--radius-xs|sm|md|lg|xl|pill` (6/10/14/20/28/999) y
+   elevación `--shadow-1|2|3`. Dos condiciones, y no son negociables: (a) **el
+   radio crece con la superficie** —un panel de imagen usa `xl`, una celda
+   `sm`— para que el arco se lea igual de suave a cualquier tamaño; (b) **solo
+   lleva sombra lo que flota de verdad**: botones, paneles de navegación,
+   paneles de imagen y controles elevados. Una rejilla de datos no flota: se
+   resuelve con filete (`--color-hairline`) y cambio de relleno, sin sombra por
+   celda. Las sombras van teñidas de azul corporativo, nunca de negro puro:
+   sobre blanco una sombra negra ensucia y una azulada asienta.
+5. **Ritmo (reescrita 2026-09-05).** Antes: "ninguna sección repite el fondo
+   de la anterior". Con el blanco dominando, esa regla obligaba a intercalar
+   franjas de color y era justo lo que el cliente pidió quitar. Ahora: **el
+   blanco es el fondo por defecto** y el descanso es `surface` (#F5F5F7); dos
+   secciones blancas seguidas son normales. El ritmo lo dan el aire, la medida
+   de lectura y el cambio de estructura, no el fondo. `blue`, `labs` y `tech`
+   son golpes puntuales: **como mucho una franja de color por página**, nunca
+   dos seguidas, y nunca a pantalla completa si se puede evitar. Antes de dar
+   una página por terminada, recorrer la secuencia y verificar que no hay dos
+   estructuras iguales seguidas ni más color del pactado.
 6. **Aire.** Ningún bloque baja de 120 px de padding vertical en desktop. El ritmo lo da el
    espacio, no el borde.
 7. **Nada de tarjetas.** Prohibidas las rejillas de cards con borde y sombra. Única excepción del
@@ -78,14 +99,21 @@ Solo se añade una dependencia nueva si es imprescindible, y avisando antes de i
 ## Prohibido explícitamente
 
 Estética WordPress o de plantilla genérica · rejillas de tarjetas repetidas · iconos dentro de
-círculos por defecto · columnas estrechas llenas de texto · sombras · degradados «tecnológicos»
+círculos por defecto · columnas estrechas llenas de texto · degradados «tecnológicos»
 decorativos · aspecto SaaS/startup · estética hospitalaria · rellenar todos los huecos · imágenes
 decorativas que no aporten información.
 
-**Matiz 2026-09-01** sobre degradados: el halo ambiental (`--glow-labs`/`--glow-tech`), el grano
-global y el filete cruzado de marca de `DivisionSwitch` sí están permitidos — son señal de
-marca/profundidad, no relleno decorativo. Sigue prohibido cualquier fondo mesh/sheen multicolor
-puramente ornamental.
+**Añadido 2026-09-05**: prohibido también el duotono sobre fotografía —teñir con
+`mix-blend-mode` sobre una imagen en escala de grises con el contraste subido
+producía fringing de color y una lectura anaglífica (ver el hero de Home antes
+de esta fecha)—, y prohibida cualquier superficie de color que ocupe más de
+una franja por página. Las sombras dejan de estar prohibidas: pasan a ser
+escala de sistema (regla 4).
+
+**Matiz 2026-09-01, revisado el 2026-09-05** sobre degradados: el grano global (`Grain`) y los
+halos ambientales se retiran con el pivote a claro — sobre blanco ensuciaban. Sigue permitido el
+filete cruzado de marca de `DivisionSwitch`, y sigue prohibido cualquier fondo mesh/sheen
+multicolor puramente ornamental.
 
 ## Identidad molecular (2026-09-01)
 

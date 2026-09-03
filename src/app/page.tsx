@@ -30,22 +30,22 @@ export default function HomePage() {
       <StatRow stats={homeStats} tone="surface" />
 
       {/* Cómo trabajamos */}
-      <Section tone="ink" rhythm="base">
+      <Section tone="white" rhythm="base">
         <Container>
           <div className="max-w-[var(--measure-max)]">
-            <Eyebrow className="text-mist-dim">{processIntro.eyebrow}</Eyebrow>
+            <Eyebrow className="text-subtle">{processIntro.eyebrow}</Eyebrow>
             <h2 className="mt-6 text-[length:var(--text-h2)] font-bold leading-[1.1] tracking-[-0.015em]">
               {processIntro.title}
             </h2>
           </div>
 
-          <ol className="mt-16 grid border-l border-t border-white/12 lg:grid-cols-4">
+          <ol className="mt-16 grid border-l border-t border-hairline lg:grid-cols-4">
             {valueChain.map((step, i) => (
-              <li key={step.index} className="min-h-72 border-b border-r border-white/12 bg-surface">
+              <li key={step.index} className="min-h-72 border-b border-r border-hairline bg-surface">
                 <Reveal delay={i * 0.06} className="flex h-full flex-col p-7 lg:p-8">
-                  <span className="text-[length:var(--text-h3)] font-bold leading-none tracking-[-0.03em] text-labs">{step.index}</span>
+                  <span className="text-[length:var(--text-h3)] font-bold leading-none tracking-[-0.03em] text-labs-ink">{step.index}</span>
                   <h3 className="mt-10 text-[length:var(--text-h4)] font-semibold">{step.title}</h3>
-                  <ul className="mt-6 space-y-2 text-[15px] text-mist">
+                  <ul className="mt-6 space-y-2 text-[15px] text-muted">
                     {step.items.map((it) => (
                       <li key={it}>{it}</li>
                     ))}

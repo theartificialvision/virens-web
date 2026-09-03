@@ -35,7 +35,7 @@ export function AnchorNav({ items, division }: { items: NavItem[]; division: Div
   return (
     <nav
       aria-label="Secciones de esta página"
-      className="sticky top-16 z-40 border-b border-white/10 bg-ink/85 backdrop-blur-md lg:top-20"
+      className="sticky top-16 z-40 border-b border-hairline bg-canvas/85 backdrop-blur-md lg:top-20"
     >
       <div className="mx-auto max-w-[var(--container-max)] px-5 md:px-6 lg:px-12 2xl:px-20">
         <ul className="flex h-14 items-stretch gap-8 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -48,7 +48,7 @@ export function AnchorNav({ items, division }: { items: NavItem[]; division: Div
                   href={item.href}
                   className={cn(
                     'whitespace-nowrap border-b-2 pb-1 text-[13px] font-semibold uppercase tracking-[0.12em] transition-colors',
-                    isActive ? 'text-white' : 'border-transparent text-mist-dim hover:text-white',
+                    isActive ? 'text-blue' : 'border-transparent text-subtle hover:text-blue',
                   )}
                   style={isActive ? { borderColor: accent } : undefined}
                   aria-current={isActive ? 'true' : undefined}

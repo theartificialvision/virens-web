@@ -36,18 +36,18 @@ export default function VirensLabsPage() {
   return (
     <>
       {/* 01 */}
-      <HeroVideo {...labsHero} moleculeVariant="labs" />
+      <HeroVideo {...labsHero} accent="labs" />
 
       <AnchorNav items={labsAnchors} division="labs" />
 
       {/* 02 — declaración de división: solo el eyebrow + los 3 puntos, ambos literales */}
-      <Section tone="ink" rhythm="base">
+      <Section tone="white" rhythm="base">
         <Container>
-          <Eyebrow className="text-labs">{labsIntro.eyebrow}</Eyebrow>
-          <ul className="mt-10 grid border-l border-t border-white/12 sm:grid-cols-3">
+          <Eyebrow className="text-labs-ink">{labsIntro.eyebrow}</Eyebrow>
+          <ul className="mt-10 grid border-l border-t border-hairline sm:grid-cols-3">
             {labsIntro.points.map((p) => (
-              <li key={p.index} className="flex min-h-52 flex-col justify-between border-b border-r border-white/12 p-7 lg:p-9">
-                <span className="text-[length:var(--text-h3)] font-bold leading-none tracking-[-0.03em] text-labs">{p.index}</span>
+              <li key={p.index} className="flex min-h-52 flex-col justify-between border-b border-r border-hairline p-7 lg:p-9">
+                <span className="text-[length:var(--text-h3)] font-bold leading-none tracking-[-0.03em] text-labs-ink">{p.index}</span>
                 <span className="mt-10 max-w-[18ch] text-[length:var(--text-lead)] font-medium leading-snug">{p.label}</span>
               </li>
             ))}

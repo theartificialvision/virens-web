@@ -96,14 +96,17 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
           aria-modal="true"
           aria-label="Menú principal"
           className={cn(
-            'fixed z-[60] flex flex-col overflow-hidden rounded-[length:var(--radius-panel)]',
-            'border border-white/10 bg-blue/95 text-white outline-none backdrop-blur-xl',
+            'fixed z-[60] flex flex-col overflow-hidden rounded-[length:var(--radius-lg)]',
+            // Pivote 2026-09-05: el panel pasa de azul a blanco translúcido,
+            // que es el desplegable real de macOS. El desenfoque hace el
+            // trabajo que antes hacía el relleno opaco.
+            'border border-hairline bg-canvas/85 text-blue outline-none backdrop-blur-xl',
             // Mobile: ancla abajo-derecha, junto al FAB, franja con márgenes.
             'inset-x-4 bottom-24 max-h-[65vh]',
             // Desktop: ancla arriba-derecha, bajo el header.
             'lg:inset-x-auto lg:bottom-auto lg:right-6 lg:top-[4.5rem] lg:max-h-[calc(100vh-6rem)] lg:w-[min(26rem,calc(100vw-3rem))]',
           )}
-          style={{ boxShadow: 'var(--shadow-panel)' }}
+          style={{ boxShadow: 'var(--shadow-3)' }}
           initial={{ opacity: 0, y: isDesktop ? -8 : 16, scale: 0.97 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: isDesktop ? -8 : 16, scale: 0.97 }}
@@ -124,7 +127,7 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.04 + i * 0.03, duration: 0.25 }}
-                  className="border-b border-white/10 last:border-b-0"
+                  className="border-b border-hairline last:border-b-0"
                 >
                   <Link
                     href={item.href}
@@ -145,7 +148,7 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
             </ul>
           </nav>
 
-          <div className="shrink-0 border-t border-white/10 px-5 py-4 text-[12px] leading-relaxed text-white/70 lg:px-7">
+          <div className="shrink-0 border-t border-hairline px-5 py-4 text-[12px] leading-relaxed text-subtle lg:px-7">
             <p>
               {site.contact.street} · {site.contact.city}
             </p>
@@ -162,16 +165,15 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
 
 /**
  * Trasladado aquí desde `Header` el 2026-09-02 (petición del cliente: fuera
- * de la cabecera fija, junto al trigger). Vive siempre sobre el panel azul
- * del menú, por eso ya no necesita la variante clara/oscura que tenía en
- * el header.
+ * de la cabecera fija, junto al trigger). Vive siempre sobre el panel del
+ * menú, así que no necesita variante de color.
  */
 function LocaleSwitch() {
   return (
-    <div className="flex items-center gap-3 text-[12px] font-semibold tracking-[0.14em] text-white">
+    <div className="flex items-center gap-3 text-[12px] font-semibold tracking-[0.14em] text-blue">
       <span aria-current="true">ES</span>
-      <span className="opacity-40">·</span>
-      <Link href="/en" className="opacity-60 transition-opacity hover:opacity-100">
+      <span className="text-hairline-2" aria-hidden>·</span>
+      <Link href="/en" className="text-subtle transition-colors hover:text-blue">
         EN
       </Link>
     </div>

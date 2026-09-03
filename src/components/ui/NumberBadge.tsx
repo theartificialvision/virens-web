@@ -6,7 +6,7 @@ export function NumberBadge({ n, className }: { n: number | string; className?: 
   return (
     <span
       className={cn(
-        'inline-flex size-9 shrink-0 items-center justify-center rounded-full bg-labs',
+        'inline-flex size-9 shrink-0 items-center justify-center rounded-[var(--radius-pill)] bg-labs-ink',
         'text-[14px] font-bold leading-none text-white md:size-11',
         className,
       )}

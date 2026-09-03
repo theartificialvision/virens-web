@@ -742,3 +742,82 @@ los isotipos al centro y el titular arriba.
   centrado horizontal y vertical, ranura contraria replegada, titular sin
   moverse al activar, holgura de los seis servicios, botones en viewport y
   `prefers-reduced-motion` (un fotograma, sin rAF). Sin errores de consola.
+
+### 2026-09-05 — Claude Code — Pivote a claro: estética Apple en toda la web
+
+Invierte el pivote a oscuro del 2026-09-01 por decisión del cliente. Toca el
+sistema de tokens, 5 páginas y 18 componentes.
+
+- **Sistema en blanco.** `globals.css` reescrito: blanco por defecto,
+  `surface` (#F5F5F7) de descanso, azul corporativo como texto, y escalas
+  nuevas de radio (6/10/14/20/28/999) y elevación (3 escalones, teñidos de
+  azul y no de negro: sobre blanco una sombra negra ensucia). Fuera los
+  tokens del sistema oscuro (`mist`, `ink` como fondo, `glow`, grano).
+  Medido: el blanco ocupa el 52-59 % de cada página y el gris el resto; las
+  franjas de color bajan a una por página como mucho.
+- **Efecto anaglífico del hero: diagnosticado y retirado.** No era una
+  impresión: la foto iba en `grayscale contrast-110` con **dos capas de
+  `mix-blend-mode: color`** encima —teal a la izquierda, magenta a la
+  derecha—. Cian y rojo son el par exacto de las gafas 3D, y el
+  `contrast-110` amplificaba el reborde de los contornos que el blend teñía
+  después: eso era el fringing. Se retira entero (`DivisionHalf` desaparece).
+  Las fotos van ahora a color real, sin filtro ni velo, dentro de paneles con
+  radio `xl` y sombra media. Verificado: cero `mix-blend-mode` y cero
+  `filter` en el hero.
+- **Hero de Home recompuesto.** Fondo blanco, titular azul arriba, los dos
+  isotipos 3D grandes al centro, botones sólidos y la banda de fotografías al
+  pie. La coreografía se conserva: al activar, el panel y la ranura de esa
+  división se llevan el ancho (`--half-basis`), el isotipo baja a tamaño de
+  firma y aparecen claim e información. El hueco entre mitades se anima a 0
+  al activar — con `flex-basis: 0` el `gap` seguía ocupando y dejaba el panel
+  16 px descentrado.
+- **Botones con presencia.** Fuera la cápsula «glass» con pulso. Ahora
+  sólidos, con los cinco estados definidos (reposo, hover −12 %, pulsado
+  −22 % y hundido, foco con anillo azul, activo con anillo del propio color).
+  Los rellenos viajan como variables CSS porque un `color-mix` de runtime no
+  puede pasar por una utilidad `hover:` de Tailwind.
+- **Accesibilidad: un fallo real corregido.** El teal de marca (#00A099) da
+  **3,24:1** con texto blanco, por debajo del 4,5:1 de AA. Afectaba a los
+  botones, a `NumberBadge`, a la sección `GalenicForms` entera y al tono
+  `labs` de `Section`. Todo eso pasa a `--color-labs-ink` (#007A75, 5,2:1),
+  que es más intenso, no más pálido. El #00A099 se reserva para lo que no es
+  texto. Verificado midiendo píxeles reales: mínimo 5,20:1 en toda la home y
+  en Labs.
+  - **Ojo con auditar contraste por CSS**: Tailwind v4 emite `oklab()` para
+    las opacidades, y un parser que lea "los tres primeros números" da
+    falsos positivos. La medida buena es sobre píxeles.
+- **Calidad del 3D (punto explícito del brief).** Lo que la limitaba no eran
+  los FPS:
+  - **Tirones**: `resize()` recorría toda la geometría para recalcular el
+    encuadre, y la banda de isotipos anima su tamaño 620 ms, así que el
+    `ResizeObserver` lo disparaba en cada fotograma de la transición. El
+    radio se calcula ahora **una sola vez**, con las mitades abiertas del
+    todo, y `resize()` sale antes si las medidas no han cambiado. De paso el
+    encuadre deja de reajustarse a media animación.
+  - **Cantos**: el MSAA de `antialias: true` no llega a unas barras
+    metálicas finas. Se renderiza a 1,5× la densidad del dispositivo
+    (supersampling, tope 3).
+  - **Volumen**: el entorno de estudio estaba calibrado para página oscura.
+    Al aclararlo para el blanco el metal se quedó plano —con `roughness`
+    0,17 refleja casi como un espejo, y un entorno blanco de arriba abajo no
+    tiene nada que reflejar—, así que se le devuelve un **horizonte marcado**
+    y un suelo medio: es el contraste del entorno, no la luz directa, lo que
+    dibuja el volumen. Resolución del entorno doblada a 2048×1024 y silueta a
+    72 segmentos.
+  - Isotipos de 274 px en reposo (antes 216).
+- **Resto de la interfaz.** Cabecera con un único control flotante (cápsula
+  blanca con desenfoque, filete y sombra corta) en vez de la bifurcación por
+  ruta, que además fallaba sobre las franjas de color. Menú a panel blanco
+  translúcido. Pie de azul pleno a gris de descanso. `AnchorNav` clara.
+  `HeroVideo` (Labs y Tech) a blanco con la foto en panel. `/noticias` era
+  51 % azul y pasa a blanco. Grano global retirado.
+- **CLAUDE.md**: reescritas las reglas 4 (radios y sombras pasan de
+  prohibidos a escala de sistema, con las dos condiciones de uso) y 5 (el
+  blanco es el fondo por defecto; el ritmo lo dan el aire y la estructura, no
+  la alternancia de fondos). Añadido el duotono sobre fotografía a la lista
+  de prohibiciones.
+- `npm run typecheck` y `npm run build` limpios. Verificado con Playwright en
+  1440×900 y 390×844 sobre las seis rutas: reparto de superficie por color,
+  contraste real por píxeles, radios y sombras en uso, una sola familia
+  tipográfica, ausencia de blend y filtros en el hero, y sin errores de
+  consola ni 404.

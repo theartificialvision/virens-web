@@ -4,68 +4,83 @@
    SISTEMA VISUAL VIRENS — fuente única de verdad.
    Ningún componente debe declarar un hex, un tamaño de fuente
    ni un espaciado que no esté aquí.
+
+   PIVOTE 2026-09-05 — de oscuro a claro (decisión del cliente).
+   El sistema vuelve a base blanca con criterio Apple HIG: el blanco
+   domina, los colores de marca entran a plena intensidad y en dosis
+   cortas, y el ritmo lo dan el aire y la medida, no las franjas de
+   color. Sustituye al pivote oscuro del 2026-09-01.
    ============================================================ */
 
 @theme {
-  /* --- Color -------------------------------------------------- */
-  --color-blue:      #00285C;  /* corporativo */
+  /* --- Color de marca ------------------------------------------
+     Sin apagar: son los mismos hex corporativos, a plena saturación.
+     El brief pide "minimalismo sin palidez", así que ningún acento se
+     usa rebajado ni en gris. */
+  --color-blue:      #00285C;  /* corporativo — también el texto principal */
   --color-blue-deep: #001C42;  /* profundidad para bloques editoriales */
-  --color-blue-soft: #EAF0F6;  /* fondos técnicos muy claros */
   --color-labs:      #00A099;  /* Virens Labs */
-  --color-labs-soft: #E7F7F5;  /* fondos de apoyo Labs */
   --color-tech:      #A2195B;  /* Virens Tech */
-  --color-tech-soft: #F8EAF1;  /* fondos de apoyo Tech */
 
-  --color-gray-50:   #F7F8FA;
-  --color-gray-100:  #F4F6F8;  /* gris de trabajo */
-  --color-gray-200:  #E4E7EB;  /* filetes sobre blanco */
-  --color-gray-300:  #D9DEE4;  /* filetes sobre gris */
-  --color-gray-500:  #6B7684;  /* texto secundario */
-  --color-gray-700:  #4A5560;  /* cuerpo sobre blanco */
-  --color-ink:       #0B1520;
+  /* Variantes oscurecidas para texto y filetes de acento sobre blanco:
+     #00A099 da 2,9:1 sobre blanco, insuficiente para texto. Estas sí
+     pasan AA (4,9:1 y 7,4:1) y no cambian la identidad. */
+  --color-labs-ink:  #007A75;
+  --color-tech-ink:  #8A144D;
 
-  /* --- Sistema oscuro (pivote 2026-09-01, ver CLAUDE.md) ---------
-     Aditivo: no toca ninguno de los tokens de arriba. --color-ink ya
-     existía sin uso — pasa a ser el fondo base de Home/Labs/Tech. */
-  --color-surface:    #13212F; /* panel elevado, alterna con ink */
-  --color-surface-2:  #1C3040; /* segundo nivel — celdas "glass" */
+  /* Variantes elevadas para el campo molecular, que solo vive sobre los dos
+     bloques de color que quedan (GalenicForms y TypographicBlock): ahí el
+     acento plano no despega del fondo. */
+  --color-labs-glow: #2FE0D0;
+  --color-tech-glow: #E0409A;
 
-  --color-mist:       #A9B4C0; /* cuerpo secundario sobre oscuro (~9:1 sobre ink) */
-  --color-mist-dim:   #7A8CA0; /* metadatos/etiquetas sobre oscuro (~5.4:1 sobre ink) */
+  /* Fondos de apoyo. Nunca como superficie grande: solo relleno de celda
+     y realces puntuales. */
+  --color-labs-soft: #E7F7F5;
+  --color-tech-soft: #F8EAF1;
+  --color-blue-soft: #EAF0F6;
 
-  /* Variantes elevadas de marca para halos/cursor/campo molecular sobre
-     negro: --color-tech (#A2195B) da solo ~2.55:1 sobre ink, insuficiente
-     como texto/icono — de ahí esta variante, no sustituye al color base. */
-  --color-labs-glow:  #2FE0D0;
-  --color-tech-glow:  #E0409A;
+  /* --- Neutros -------------------------------------------------
+     Escala corta y fría: el blanco manda y los grises solo separan
+     planos. */
+  --color-canvas:     #FFFFFF;  /* fondo por defecto de la web */
+  --color-surface:    #F5F5F7;  /* segundo plano, secciones de descanso */
+  --color-surface-2:  #EDEEF1;  /* tercer plano, celdas dentro de surface */
 
-  --glow-labs:        0 0 8rem rgba(0, 160, 153, 0.35);
-  --glow-tech:        0 0 8rem rgba(162, 25, 91, 0.38);
-  --shadow-elevate:   0 24px 48px -24px rgba(0, 0, 0, 0.6);
-  --radius-surface:   0.75rem; /* categoría "glass" puntual, distinta de --radius-panel */
+  --color-hairline:   #E3E5EA;  /* filete sobre blanco */
+  --color-hairline-2: #D6D9E0;  /* filete sobre surface */
 
-  --opacity-grain:    0.05;
+  --color-ink:        #0B1520;  /* texto principal cuando no es azul */
+  --color-muted:      #46505C;  /* cuerpo secundario   — 8,9:1 sobre blanco */
+  --color-subtle:     #626E7C;  /* metadatos y rótulos — 5,7:1 sobre blanco */
 
-  /* --- Tipografía --------------------------------------------- */
-  /* Una sola familia en todo el sistema. La serif editorial (Newsreader) se
-     retira el 2026-09-04: era el H1 de Home y de los heroes de Labs/Tech, y
-     los tres pasan a Montserrat por unificación de jerarquía. Con ella se va
-     su token y su carga en layout.tsx — cuatro archivos de fuente menos. */
+  /* --- Elevación (2026-09-05) ----------------------------------
+     Tres escalones, todos teñidos de azul corporativo en lugar de negro
+     puro: sobre blanco, una sombra negra ensucia y una azulada asienta.
+     Regla: sombra solo donde algo flota de verdad. */
+  --shadow-1: 0 1px 2px rgba(0, 40, 92, 0.06), 0 1px 1px rgba(0, 40, 92, 0.04);
+  --shadow-2: 0 4px 14px rgba(0, 40, 92, 0.08), 0 1px 3px rgba(0, 40, 92, 0.05);
+  --shadow-3: 0 18px 48px -12px rgba(0, 40, 92, 0.18), 0 4px 12px rgba(0, 40, 92, 0.06);
+
+  /* --- Radios (2026-09-05) -------------------------------------
+     Escala de sistema. El radio crece con la superficie, para que el arco
+     se lea igual de suave a cualquier tamaño. */
+  --radius-xs:   0.375rem; /*  6 — etiquetas, chips */
+  --radius-sm:   0.625rem; /* 10 — campos, celdas */
+  --radius-md:   0.875rem; /* 14 — tarjetas pequeñas */
+  --radius-lg:   1.25rem;  /* 20 — paneles, imágenes contenidas */
+  --radius-xl:   1.75rem;  /* 28 — bloques grandes de imagen */
+  --radius-pill: 999px;    /* botones y numeración */
+
+  /* --- Tipografía ----------------------------------------------
+     Una sola familia en todo el sistema. La serif editorial (Newsreader)
+     se retiró el 2026-09-04. */
   --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
 
-  /* Escala fluida: mobile -> desktop.
-     Revisada 2026-09-01 a petición del cliente: la escala original del
-     documento (§10.2, Display 92 / H1 72 / H2 56 / Stat 96) resultaba
-     desproporcionada en la práctica. Escala más medida, criterio Apple HIG.
-
-     Único uso de --text-display: el H1 de los heroes de Labs y Tech
-     (`HeroVideo`). Recalibrado
-     2026-09-04 al retirar la serif también de ahí, con el mismo criterio que
-     --text-display-compact: Montserrat es más ancha que Newsreader al mismo
-     cuerpo, así que el tope baja de 68 a 60 px — ópticamente pesa lo mismo
-     que la serif anterior y sigue un escalón por encima de --text-h1. */
+  /* Escala fluida: mobile -> desktop. Revisada 2026-09-01 (la escala
+     original del documento resultaba desproporcionada) y recalibrada el
+     2026-09-04 al pasar todo a Montserrat, más ancha que la serif. */
   --text-display:   clamp(2.25rem, 1.55rem + 2.8vw, 3.75rem);   /* 36 -> 60 */
-
   --text-h1:        clamp(2.00rem, 1.50rem + 2.2vw, 3.50rem);   /* 32 -> 56 */
   --text-h2:        clamp(1.75rem, 1.40rem + 1.6vw, 2.75rem);   /* 28 -> 44 */
   --text-h3:        clamp(1.375rem, 1.20rem + 0.8vw, 1.875rem); /* 22 -> 30 */
@@ -76,63 +91,55 @@
   --text-eyebrow:   clamp(0.6875rem, 0.65rem + 0.12vw, 0.8125rem); /* 11 -> 13 */
   --text-stat:      clamp(2.75rem, 1.85rem + 3.6vw, 4.75rem);   /* 44 -> 76 */
   /* Igual que --text-stat pero para franjas de 4 columnas donde el valor
-     puede incluir una palabra completa (p. ej. "Desde 2000", "9 formatos"),
-     no solo dígitos: sin esto, la palabra más larga se desborda de su columna. */
+     puede incluir una palabra completa (p. ej. "Desde 2000"). */
   --text-stat-compact: clamp(1.75rem, 1.30rem + 2.3vw, 3.00rem); /* 28 -> 48 */
   --text-note:      0.75rem;                                     /* 12 */
-  /* Único uso: H1 de Home (`DivisionSplit`), a petición del cliente
-     (2026-09-02) para que "Expertos en complementos alimenticios" quepa
-     en una sola línea entre las dos moléculas sin tocarlas. Mismo criterio
-     que --text-stat-compact: un tamaño más contenido para un contexto con
-     menos ancho disponible que un H1 normal a sangre completa.
-     Recalibrado 2026-09-04 al retirar la serif del hero: Montserrat es
-     bastante más ancha que Newsreader al mismo cuerpo, así que el tope baja
-     de 54 a 44 px para que la línea siga entrando entera en desktop. */
+  /* Único uso: H1 de Home (`DivisionSplit`), que debe caber en una línea
+     entre los dos isotipos. */
   --text-display-compact: clamp(1.5rem, 0.90rem + 2.05vw, 2.75rem);  /* 24 -> 44 */
-  /* Claim de la división activa en el hero ("Contract Manufacturing" /
-     "Contract Development"): un escalón por debajo del H1 y por encima del
-     lead. El mínimo (18) es más bajo que el de --text-h3 a propósito — es lo
-     que permite mantenerlo en una línea en móviles de 320 px sin encoger la
-     letra hasta lo ilegible. */
+  /* Claim de la división activa ("Contract Manufacturing"): un escalón
+     por debajo del H1. El mínimo es bajo a propósito, para que entre en
+     una línea en móviles de 320 px. */
   --text-hero-claim: clamp(1.125rem, 0.95rem + 0.85vw, 1.875rem);    /* 18 -> 30 */
 
-  /* --- Hero de Home (`DivisionSplit`) --------------------------- */
-  /* Holgura entre el borde superior del hero y el rótulo/H1. Con los isotipos
-     movidos al centro (2026-09-04), esta franja solo tiene que librar el
-     trigger del menú, así que baja de 184 a 112 px: los 72 px que devuelve son
-     exactamente los que necesita el desplegable de Tech para caber entero en
-     un portátil de 720 px de alto.
-     Tamaño del isotipo: grande en reposo, de firma al activar — con el logo a
-     tamaño de reposo, claim + párrafo + seis servicios no caben en pantalla. */
-  --hero-lead-min: 7rem;    /* 112 */
-  --hero-logo:      clamp(7rem, 18vw, 18rem);    /* 112 -> 288 */
-  --hero-logo-sm:   clamp(4.5rem, 7vw, 8rem);     /*  72 -> 128 */
+  /* --- Hero de Home (`DivisionSplit`) ---------------------------
+     Isotipos más grandes (2026-09-05): con el hero en blanco son el
+     elemento protagonista, no un adorno sobre la foto. */
+  --hero-lead-min: 7rem;                       /* 112 — holgura bajo la nav */
+  --hero-logo:     clamp(8rem, 19vw, 19rem);   /* 128 -> 304 */
+  --hero-logo-sm:  clamp(4.5rem, 7vw, 8rem);   /*  72 -> 128 */
+  /* Altura de la banda de fotografías: cede al activar, que es cuando el
+     texto desplegado necesita el sitio. */
+  --hero-photos:    clamp(8rem, 21vh, 14rem);  /* 128 -> 224 */
+  --hero-photos-sm: clamp(5.5rem, 12vh, 8rem); /*  88 -> 128 */
+  /* Hueco entre las dos mitades. Lo comparten la banda de isotipos y la de
+     fotografías, que es lo que hace que cada logo caiga sobre el eje exacto
+     de su foto. */
+  --hero-gap:       1.25rem;                   /* 20 */
 
   /* --- Layout -------------------------------------------------- */
   --container-max:  90rem;   /* 1440 */
   --measure-max:    42.5rem; /* 680 — ancho máximo de texto corrido */
   --measure-narrow: 32rem;   /* 512 — bloques editoriales compactos */
 
-  /* --- Botones (§10.5) ------------------------------------------ */
-  --btn-py: 1.125rem; /* 18px — padding vertical exacto del botón del sistema */
+  /* --- Botones -------------------------------------------------- */
+  --btn-py: 1.125rem; /* 18px — padding vertical del botón del sistema */
 
-  /* --- Panel flotante (menú desktop) ------------------------------
-     Excepción puntual a "radio 0 / sin sombra": pendiente de confirmar
-     en CLAUDE.md si se adopta como regla general o se queda aquí. */
-  --radius-panel: 1.25rem; /* 20px */
-  --shadow-panel: 0 20px 50px -12px rgba(0, 12, 30, 0.35);
-
-  /* --- Ritmo vertical de sección (§10.4) ----------------------- */
+  /* --- Ritmo vertical de sección ------------------------------- */
   --section-compact: 4rem;   /* 64  mobile */
   --section-base:    5rem;   /* 80  mobile */
   --section-air:     6rem;   /* 96  mobile */
 
-  /* --- Movimiento ---------------------------------------------- */
+  /* --- Movimiento ----------------------------------------------
+     Discreto por sistema: nada por encima de 700 ms y una sola curva de
+     salida para todo lo que no sea la coreografía del hero. */
   --ease-out-quart: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-hero:      cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 @media (min-width: 1024px) {
   @theme {
+    --hero-gap:        2rem;    /* 32 */
     --section-compact: 7.5rem;  /* 120 */
     --section-base:   10rem;    /* 160 */
     --section-air:    12.5rem;  /* 200 */
@@ -144,11 +151,9 @@
   html { scroll-behavior: smooth; }
 
   body {
-    /* Pivote 2026-09-01: fondo base oscuro (antes #fff/--color-blue).
-       Compañía/Contacto/Noticias no dependen de este valor heredado —
-       pintan su propio fondo claro por sección. */
-    background: var(--color-ink);
-    color: #fff;
+    /* Pivote 2026-09-05: vuelta a fondo blanco. */
+    background: var(--color-canvas);
+    color: var(--color-blue);
     font-family: var(--font-sans);
     font-size: var(--text-body);
     line-height: 1.7;
@@ -159,84 +164,112 @@
   h1, h2, h3, h4 { text-wrap: balance; }
   p { text-wrap: pretty; }
 
-  /* Sin sombras en todo el sistema (§10.6). */
   ::selection { background: var(--color-labs); color: #fff; }
 
+  /* Anillo de foco sobre blanco: el teal de Labs da 2,9:1 y no valdría
+     como único indicador, así que el foco va en azul corporativo. */
   :focus-visible {
-    outline: 2px solid var(--color-labs);
+    outline: 2px solid var(--color-blue);
     outline-offset: 3px;
+    border-radius: var(--radius-xs);
   }
 
   /* Compensa el header fijo al saltar a un ancla. */
   [id] { scroll-margin-top: 9.5rem; }
 }
 
-/* --- Split "Dos divisiones" (home, bloque 01) -------------------
-   2026-09-02, segunda vuelta: el seguimiento continuo del ratón (la
-   costura seguía el cursor en tiempo real) se retira por usabilidad —
-   feedback directo del cliente: "se marea mucho con movimientos del
-   mouse". El split vuelve a ser 50/50 fijo (`flex-1` en el JSX, sin JS);
-   la interacción pasa a dos botones explícitos (`DivisionButton`) que
-   activan una difusión de color por `clip-path` — ver `DivisionSplit.tsx`.
-
-   2026-09-03: además de teñir, el botón activo se lleva el ancho completo.
-   El reparto lo publica `DivisionSplit` como `--half-basis` (50% en
-   reposo, 100% la activa, 0% la otra) y solo se aplica de `lg` en
-   adelante: en mobile las mitades se apilan y `flex-basis` gobernaría la
-   altura, no el ancho. La transición vive en la clase del componente. */
-@media (min-width: 1024px) {
-  .division-split > .group\/half { flex-basis: var(--half-basis, 50%); }
+/* --- Botón de división (hero de Home) ---------------------------
+   Sólido, sin brillo ni pulso (pivote 2026-09-05). Los tres rellenos los
+   publica el componente como variables, porque un `color-mix` calculado en
+   runtime no puede pasar por una utilidad `hover:` de Tailwind. */
+.btn-division {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--btn-py) 2.5rem;
+  border-radius: var(--radius-pill);
+  background: var(--btn-bg);
+  color: #fff;
+  font-size: var(--text-small);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  box-shadow: var(--shadow-1);
+  transition:
+    background-color 200ms var(--ease-out-quart),
+    box-shadow 200ms var(--ease-out-quart),
+    transform 200ms var(--ease-out-quart);
+}
+.btn-division:hover {
+  background: var(--btn-bg-hover);
+  box-shadow: var(--shadow-2);
+  transform: translateY(-1px);
+}
+.btn-division:active {
+  background: var(--btn-bg-active);
+  box-shadow: var(--shadow-1);
+  transform: translateY(0);
+}
+/* El área abierta se marca con un anillo exterior del propio color: no toca
+   el relleno, así que no se confunde con el hover ni altera la caja. */
+.btn-division[data-active='true'] {
+  box-shadow: var(--shadow-2), 0 0 0 3px var(--btn-ring);
 }
 
-/* --- Bloque de texto del hero (2026-09-04) ----------------------------
-   Al activar LABS o TECH, el H1 sube a la franja alta del hero y en su
-   hueco aparecen el claim de la división y, bajo los botones, su
-   información. Se resuelve con UNA columna que se mueve, no con dos
-   composiciones que se sustituyen: así no hay salto ni relectura.
-
-   El truco es el reparto del sobrante vertical. `.hero-copy` es una
-   columna flex con un espaciador arriba y otro abajo; en reposo ambos
-   crecen por igual —de ahí el centrado— y al activar, el de arriba deja de
-   crecer y la columna se apoya en su holgura mínima (--hero-lead-min), por
-   debajo de los isotipos. `flex-grow` es un número: se puede interpolar,
-   así que el movimiento es una transición CSS normal, sin JS por fotograma
-   y sin tocar `top` ni `transform`.
-
-   Solo de `lg` en adelante: en mobile el bloque va en el flujo (banda
-   `bg-ink` sobre las fotos) y el desplegable simplemente empuja hacia
-   abajo, que es el gesto natural de un acordeón táctil. */
+/* --- Hero de Home: banda de fotografías -------------------------
+   Las fotos dejan de ser fondo a sangre y pasan a ser dos paneles al pie
+   (pivote 2026-09-05). Conservan el reparto `--half-basis`: al activar una
+   división su panel se lleva el ancho y el otro se repliega. La banda pierde
+   altura en ese estado — es el sitio que necesita el texto desplegado. */
+.hero-photos {
+  flex: none;
+  width: 100%;
+  height: var(--hero-photos);
+  gap: var(--hero-gap);
+  transition:
+    height 620ms var(--ease-hero),
+    gap 620ms var(--ease-hero);
+}
+.hero-copy[data-active='true'] .hero-photos { height: var(--hero-photos-sm); }
+/* Al replegarse una mitad, su hueco también: si no, el panel que se queda
+   aparece descentrado por medio `gap`. */
+.hero-copy[data-active='true'] .hero-logos,
+.hero-copy[data-active='true'] .hero-photos { gap: 0; }
 @media (min-width: 1024px) {
-  /* El titular vive arriba en los dos estados: esta holgura ya no crece. */
+  .hero-photos > .group\/half { flex-basis: var(--half-basis, 50%); }
+}
+
+/* --- Bloque de texto del hero ----------------------------------
+   El titular vive arriba, los isotipos ocupan el centro y bajo los
+   botones se despliega la información de la división activa. El sobrante
+   vertical lo reparten tres espaciadores cuyo `flex-grow` se interpola:
+   es un número, así que el movimiento es una transición CSS normal, sin
+   JS por fotograma. Solo de `lg` en adelante; en mobile el bloque va en
+   el flujo y el desplegable empuja hacia abajo. */
+@media (min-width: 1024px) {
   .hero-lead-space { flex: 0 0 var(--hero-lead-min); }
 
-  /* Los tres espaciadores reparten el sobrante vertical. En reposo crecen por
-     igual, así que el isotipo queda centrado entre el titular y los botones;
-     al activar, cada uno cede una proporción distinta (--grow-active) y el
-     hueco se lo lleva el texto desplegado. `flex-grow` es un número: se
-     interpola, así que el movimiento es una transición CSS normal. */
   .hero-space {
     flex-grow: var(--grow-rest, 1);
     flex-shrink: 1;
     flex-basis: 0;
-    transition: flex-grow 620ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition: flex-grow 620ms var(--ease-hero);
   }
   .hero-copy[data-active='true'] .hero-space { flex-grow: var(--grow-active, 0); }
 }
 
-/* Banda de isotipos. Cada ranura replica el reparto de su mitad
-   (--half-basis, el mismo valor que gobierna las fotos), así que el logo
-   —centrado dentro de su ranura— cae en el centro de su mitad en reposo y en
-   el centro del hero cuando su división se lleva el ancho completo. La ranura
-   que se repliega recorta su logo con overflow, no lo deforma. */
+/* Banda de isotipos. Cada ranura replica el reparto de su mitad, así que
+   el logo —centrado dentro de ella— cae en el centro de su mitad en
+   reposo y en el centro del hero cuando su división se lleva el ancho. */
+/* Los isotipos comparten contenedor y relleno con la banda de fotos, así que
+   el centro de cada ranura coincide con el centro de su panel: el logo cae
+   justo sobre su fotografía sin compensar nada. */
 .hero-logos {
   display: flex;
   justify-content: center;
-  /* La columna de texto lleva px-6 y ese relleno metía cada logo 12 px hacia
-     el eje, descuadrándolo del centro de su mitad. Se cancela aquí y no con
-     utilidades: esta regla va sin capa y le ganaría a una clase w-* de
-     Tailwind, que sí vive en una capa. */
-  width: calc(100% + 3rem);
-  margin-inline: -1.5rem;
+  width: 100%;
+  gap: var(--hero-gap);
 }
 .hero-logo-slot {
   flex: 1 1 50%;
@@ -248,7 +281,7 @@
 @media (min-width: 1024px) {
   .hero-logo-slot {
     flex-basis: var(--half-basis, 50%);
-    transition: flex-basis 620ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition: flex-basis 620ms var(--ease-hero);
   }
 }
 .hero-logo {
@@ -256,29 +289,29 @@
   width: var(--hero-logo);
   height: var(--hero-logo);
   transition:
-    width 620ms cubic-bezier(0.22, 1, 0.36, 1),
-    height 620ms cubic-bezier(0.22, 1, 0.36, 1);
+    width 620ms var(--ease-hero),
+    height 620ms var(--ease-hero);
 }
 .hero-copy[data-active='true'] .hero-logo {
   width: var(--hero-logo-sm);
   height: var(--hero-logo-sm);
 }
 
-/* Ranura que se abre y se cierra sin altura fija: la rejilla interpola de
-   `0fr` a `1fr`, así que el contenido decide cuánto mide y nunca queda
-   recortado — es lo que permite que los seis servicios de Tech quepan sin
-   depender de una altura pactada de antemano. */
+/* Ranura que se abre sin altura fija: la rejilla interpola de `0fr` a
+   `1fr`, así que el contenido decide cuánto mide y nunca queda recortado
+   — es lo que permite que los seis servicios de Tech quepan sin depender
+   de una altura pactada de antemano. */
 .hero-slot {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 620ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition: grid-template-rows 620ms var(--ease-hero);
 }
 .hero-slot[data-open='true'] { grid-template-rows: 1fr; }
 .hero-slot > * { min-height: 0; overflow: hidden; }
 
 /* Las dos variantes (Labs y Tech) comparten celda: la ranura reserva
-   siempre la altura de la más alta, así que cambiar de una a otra es un
-   fundido en el sitio — los botones no se mueven ni un píxel. */
+   siempre la altura de la mayor, así que cambiar de una a otra es un
+   fundido en el sitio y los botones no se mueven ni un píxel. */
 .hero-stack { display: grid; }
 .hero-stack > * { grid-area: 1 / 1; }
 
@@ -297,36 +330,10 @@
   opacity: 1;
   visibility: visible;
   transform: none;
-  /* Entra un pelín después de que la ranura empiece a abrirse: el texto
-     aparece en su sitio, no arrastrado por el borde de la ranura. */
   transition:
     opacity 380ms var(--ease-out-quart) 140ms,
     transform 380ms var(--ease-out-quart) 140ms,
     visibility 0s linear 0s;
-}
-
-/* Pulso en dos capas (revisado 2026-09-02, "mejora el pulso"): un halo
-   suave que respira (18→34px) y, encima, un anillo que nace pegado al
-   borde y se expande hasta desvanecerse — lectura de "latido", no de
-   parpadeo. Más lento (3,4 s) y con la curva del sistema. Al pasar el
-   ratón o el foco, el bucle se para y queda un brillo fijo: el estado
-   activo lo comunica el tinte que inunda el hero, no el pulso. */
-@keyframes glass-pulse {
-  0%   { box-shadow: var(--shadow-elevate),
-                     0 0 0 0    color-mix(in srgb, var(--pulse-glow) 60%, transparent),
-                     0 0 18px 0 color-mix(in srgb, var(--pulse-glow) 28%, transparent); }
-  60%  { box-shadow: var(--shadow-elevate),
-                     0 0 0 14px color-mix(in srgb, var(--pulse-glow) 0%, transparent),
-                     0 0 34px 4px color-mix(in srgb, var(--pulse-glow) 48%, transparent); }
-  100% { box-shadow: var(--shadow-elevate),
-                     0 0 0 14px color-mix(in srgb, var(--pulse-glow) 0%, transparent),
-                     0 0 18px 0 color-mix(in srgb, var(--pulse-glow) 28%, transparent); }
-}
-.glass-pulse { animation: glass-pulse 3.4s var(--ease-out-quart) infinite; }
-
-.glass-pulse:hover, .glass-pulse:focus-visible {
-  animation-play-state: paused;
-  box-shadow: var(--shadow-elevate), 0 0 36px 6px color-mix(in srgb, var(--pulse-glow) 60%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {

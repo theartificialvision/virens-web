@@ -45,7 +45,7 @@ export const labsServices: ServiceBlock[] = [
     ],
     imageSide: 'left',
     imageRatio: 55,
-    tone: 'ink',
+    tone: 'white',
     image: { src: '/img/labs-private-label.jpg', alt: 'Envase neutro de complemento alimenticio sin marca sobre superficie limpia' },
     link: { label: 'Hablar de un proyecto de marca propia', href: '/contacto' },
   },
