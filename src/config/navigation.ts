@@ -50,9 +50,8 @@ export const legalNav: NavItem[] = [
 ];
 
 /**
- * Rutas cuyo hero llega hasta el borde superior, por debajo de la cabecera
- * flotante. Con el pivote claro (2026-09-05) ya no distinguen color —todo el
- * sitio es blanco— pero sí deciden si la cabecera necesita su cápsula: sobre
- * un hero blanco no hace falta, al hacer scroll sí.
+ * Rutas del pivote oscuro 2026-09-01 (Home + las dos divisiones). El resto
+ * del sitio (Compañía/Contacto/Noticias) se queda en el sistema claro hasta
+ * su propia fase — Header y Grain se autolimitan a esta lista.
  */
-export const FULL_BLEED_HERO_ROUTES = ['/', '/virens-labs', '/virens-tech'] as const;
+export const DARK_ROUTES = ['/', '/virens-labs', '/virens-tech'] as const;

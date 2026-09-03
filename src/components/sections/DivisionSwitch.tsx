@@ -18,11 +18,11 @@ const ACCENT: Record<Division, { from: string; to: string; variant: 'primary' | 
 export function DivisionSwitch({ to, label, href }: { to: Division; label: string; href: string }) {
   const a = ACCENT[to];
   return (
-    <div className="relative bg-canvas">
+    <div className="relative bg-ink">
       <span aria-hidden className="absolute inset-x-0 top-0 h-0.5" style={{ background: `linear-gradient(90deg, ${a.from}, ${a.to})` }} />
-      <Section tone="white" rhythm="compact">
+      <Section tone="ink" rhythm="compact">
         <Container className="flex flex-col items-center text-center">
-          <Eyebrow className="text-subtle">La otra mitad del proceso</Eyebrow>
+          <Eyebrow className="text-mist-dim">La otra mitad del proceso</Eyebrow>
           <Button href={href} variant={a.variant} className="mt-8">
             {label} &rarr;
           </Button>

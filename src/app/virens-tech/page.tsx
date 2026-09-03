@@ -30,7 +30,7 @@ export default function VirensTechPage() {
   return (
     <>
       {/* 01 */}
-      <HeroVideo {...techHero} accent="tech">
+      <HeroVideo {...techHero} moleculeVariant="tech">
         <Magnetic className="inline-block">
           <Button href={crossLink.href} variant="labs">
             {crossLink.label} &rarr;
@@ -41,7 +41,7 @@ export default function VirensTechPage() {
       <AnchorNav items={techAnchors} division="tech" />
 
       {/* 02 */}
-      <Section tone="white" rhythm="base">
+      <Section tone="ink" rhythm="base">
         <Container>
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-5">
@@ -53,12 +53,12 @@ export default function VirensTechPage() {
               </h2>
             </div>
             <div className="lg:col-span-6 lg:col-start-7">
-              <p className="max-w-[var(--measure-max)] text-[length:var(--text-lead)] text-muted">
+              <p className="max-w-[var(--measure-max)] text-[length:var(--text-lead)] text-mist">
                 {techIntro.body}
               </p>
-              <ul className="mt-10 grid border-l border-t border-hairline sm:grid-cols-2">
+              <ul className="mt-10 grid border-l border-t border-white/12 sm:grid-cols-2">
                 {techIntro.points.map((p) => (
-                  <li key={p.index} className="flex min-h-28 flex-col justify-between gap-5 border-b border-r border-hairline p-5">
+                  <li key={p.index} className="flex min-h-28 flex-col justify-between gap-5 border-b border-r border-white/12 p-5">
                     <span className="text-[length:var(--text-eyebrow)] font-bold tracking-[0.18em] text-tech">{p.index}</span>
                     <span className="font-medium leading-snug">{p.label}</span>
                   </li>

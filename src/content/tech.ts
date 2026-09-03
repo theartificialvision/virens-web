@@ -65,7 +65,7 @@ export const techServices: ServiceBlock[] = [
     highlight: 'Zonas de fabricación segregadas',
     imageSide: 'left',
     imageRatio: 55,
-    tone: 'white',
+    tone: 'ink',
     image: { src: '/img/tech-formulacion.jpg', alt: 'Técnico de laboratorio pipeteando una muestra sobre material de vidrio' },
   },
   {
@@ -94,7 +94,7 @@ export const techServices: ServiceBlock[] = [
     highlight: 'Validación organoléptica antes de escalar',
     imageSide: 'left',
     imageRatio: 60,
-    tone: 'white',
+    tone: 'ink',
     image: { src: '/img/tech-sabores.jpg', alt: 'Extractos, goteros y ingredientes botánicos en una prueba organoléptica' },
   },
   {
@@ -122,7 +122,7 @@ export const techServices: ServiceBlock[] = [
     ],
     imageSide: 'left',
     imageRatio: 55,
-    tone: 'white',
+    tone: 'ink',
     image: { src: '/img/tech-calidad.jpg', alt: 'Análisis microbiológico con placas de cultivo y material de laboratorio' },
   },
   {

@@ -24,11 +24,11 @@ export function TherapeuticAreas({
       <Container>
         <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
           <div className="max-w-[var(--measure-narrow)] lg:col-span-3 lg:self-center">
-            <Eyebrow className="text-subtle">{eyebrow}</Eyebrow>
+            <Eyebrow className="text-mist-dim">{eyebrow}</Eyebrow>
             <h2 className="mt-6 text-[length:var(--text-h2)] font-bold leading-[1.1] tracking-[-0.015em]">
               {title}
             </h2>
-            <p className="mt-5 text-muted">{lead}</p>
+            <p className="mt-5 text-mist">{lead}</p>
           </div>
 
           <ul className="grid border-l border-t border-white/15 sm:grid-cols-2 lg:col-span-9 lg:grid-cols-5">

@@ -1,8 +1,9 @@
 export type Division = 'labs' | 'tech';
 
-/** Fondo permitido para un bloque (pivote claro 2026-09-05). `white` es el
- * defecto y `surface` el descanso; `blue`/`labs`/`tech` son golpes puntuales. */
-export type SectionTone = 'white' | 'surface' | 'blue' | 'labs' | 'tech';
+/** Fondo permitido para un bloque. El ritmo de la página se construye alternándolos.
+ * `ink`/`surface` son el pivote oscuro 2026-09-01 (Home/Labs/Tech); `white`/`gray`
+ * se mantienen intactos para Compañía/Contacto/Noticias. */
+export type SectionTone = 'white' | 'gray' | 'blue' | 'labs' | 'tech' | 'ink' | 'surface';
 
 /** Origen del dato. Nada se publica sin saber de dónde sale. */
 export type SourceStatus =

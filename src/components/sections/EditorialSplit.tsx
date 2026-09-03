@@ -39,7 +39,7 @@ export function EditorialSplit({ block, accent = 'var(--color-labs)' }: { block:
 
         <div className={cn('flex items-center lg:col-span-5', imageFirst ? 'lg:order-2' : 'lg:order-1')}>
           <Reveal className="w-full px-5 md:px-6 lg:px-14 2xl:px-16">
-            <div className="flex items-center gap-5 border-b border-hairline pb-6">
+            <div className="flex items-center gap-5 border-b border-white/15 pb-6">
               <p className="text-[length:var(--text-eyebrow)] font-bold tracking-[0.24em]" style={{ color: accent }}>
                 {block.index}
               </p>
@@ -48,13 +48,13 @@ export function EditorialSplit({ block, accent = 'var(--color-labs)' }: { block:
             <h3 className="mt-7 text-[length:var(--text-h3)] font-semibold leading-tight tracking-[-0.01em]">
               {block.title}
             </h3>
-            <div className="mt-6 max-w-[var(--measure-max)] space-y-4 text-muted">
+            <div className="mt-6 max-w-[var(--measure-max)] space-y-4 text-mist">
               {block.body.map((p) => (
                 <p key={p}>{p}</p>
               ))}
             </div>
             {block.highlight && (
-              <p className="mt-8 border-t border-hairline pt-4 text-[13px] font-bold uppercase tracking-[0.18em]" style={{ color: accent }}>
+              <p className="mt-8 border-t border-white/15 pt-4 text-[13px] font-bold uppercase tracking-[0.18em]" style={{ color: accent }}>
                 {block.highlight}
               </p>
             )}

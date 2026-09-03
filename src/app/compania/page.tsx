@@ -19,16 +19,16 @@ export default function CompaniaPage() {
         <Container>
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-9">
-              <Eyebrow className="text-labs-ink">Compañía</Eyebrow>
+              <Eyebrow className="text-labs">Compañía</Eyebrow>
               {/* Texto LITERAL (frase real de "Quiénes somos", no un titular corto). */}
               <h1 className="mt-6 max-w-[26ch] text-[length:var(--text-h1)] font-bold leading-[1.15] tracking-[-0.015em]">
                 {companyIntro.title}
               </h1>
-              <p className="mt-8 max-w-[var(--measure-max)] text-[length:var(--text-lead)] text-muted">
+              <p className="mt-8 max-w-[var(--measure-max)] text-[length:var(--text-lead)] text-gray-700">
                 {companyIntro.lead}
               </p>
             </div>
-            <div aria-hidden className="hidden border-l border-hairline lg:col-span-3 lg:block">
+            <div aria-hidden className="hidden border-l border-gray-200 lg:col-span-3 lg:block">
               <span className="block h-28 w-1 bg-labs" />
               <span className="mt-8 block h-px w-full bg-gray-200" />
               <span className="mt-4 block h-px w-2/3 bg-gray-200" />

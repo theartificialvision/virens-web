@@ -9,7 +9,7 @@ export function CtaContact() {
   return (
     <Section tone="surface" rhythm="compact">
       <Container>
-        <div className="grid items-center gap-8 border-y border-hairline py-10 md:grid-cols-[auto_1fr_auto] md:text-left lg:gap-12">
+        <div className="grid items-center gap-8 border-y border-white/15 py-10 md:grid-cols-[auto_1fr_auto] md:text-left lg:gap-12">
           <ContactGlyph />
           <div>
             {/* Tamaño de rol H3: doc maestro §10.2 asigna peso 600 (no 700)
@@ -18,7 +18,7 @@ export function CtaContact() {
             <h2 className="max-w-[24ch] text-[length:var(--text-h3)] font-semibold leading-[1.15] tracking-[-0.015em]">
               {site.ctaContact.title}
             </h2>
-            <p className="mt-4 text-[length:var(--text-small)] text-subtle">
+            <p className="mt-4 text-[length:var(--text-small)] text-mist-dim">
               <a href={`tel:${site.contact.phone}`}>{site.contact.phoneDisplay}</a>
               {' · '}
               <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
@@ -35,13 +35,12 @@ export function CtaContact() {
   );
 }
 
-/* Tesela del CTA: sobre blanco se resuelve con filete y sombra corta, no con
-   relleno oscuro. El color lo pone el trazo del icono. */
+/* "Glass" puntual (CLAUDE.md regla 4, excepción añadida 2026-09-01). */
 function ContactGlyph() {
   return (
     <span
-      className="inline-flex size-16 items-center justify-center rounded-[length:var(--radius-md)] border border-hairline bg-canvas text-tech"
-      style={{ boxShadow: 'var(--shadow-1)' }}
+      className="inline-flex size-16 items-center justify-center rounded-[length:var(--radius-surface)] border border-white/15 bg-surface-2 text-white"
+      style={{ boxShadow: 'var(--shadow-elevate)' }}
       aria-hidden
     >
       <svg viewBox="0 0 48 48" className="size-8" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round">

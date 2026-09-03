@@ -8,12 +8,13 @@ interface Stat { value: string; unit?: string; label: string }
 
 /** El filete cambia según el fondo: gris sobre claro, blanco translúcido sobre color. */
 const DIVIDER: Record<string, string> = {
-  white: 'divide-hairline',
+  white: 'divide-gray-200',
   gray: 'divide-gray-300',
   blue: 'divide-white/15',
   labs: 'divide-white/25',
   tech: 'divide-white/25',
-  surface: 'divide-hairline-2',
+  ink: 'divide-white/12',
+  surface: 'divide-white/15',
 };
 
 /** Franja de grandes números. Filete vertical entre columnas, sin cajas. */

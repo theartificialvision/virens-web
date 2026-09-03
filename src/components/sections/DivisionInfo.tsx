@@ -2,25 +2,23 @@
 
 import type { Division, DivisionInfoData } from '@/lib/types';
 import { Eyebrow } from '@/components/ui/Eyebrow';
-import { divisionInk } from '@/lib/utils';
 
 /**
- * Información de la división activa, desplegada bajo los botones del hero:
- * la web original la publicaba en la portada de cada división y la home de
- * acceso la había perdido entera.
+ * Información de la división activa, desplegada bajo los botones del hero
+ * (2026-09-04): la web original la publicaba en la portada de cada división
+ * y la home de acceso la había perdido entera.
  *
- * Presentación desnuda —párrafo a medida de lectura, rótulo y rejilla de
- * servicios— sin tarjeta, filete ni viñeta por servicio. Lo que separa el
- * párrafo de los servicios es el peso, el color y el aire.
+ * Presentación deliberadamente desnuda —párrafo a medida de lectura, rótulo
+ * y rejilla de servicios— sin tarjeta, filete ni viñeta por servicio
+ * (CLAUDE.md regla 7). Lo que separa el párrafo de los servicios es el peso,
+ * el color y el aire, no una caja.
  *
- * Pivote 2026-09-05 (claro): el párrafo va en `muted` (8,9:1 sobre blanco) y
- * los servicios en el acento oscurecido de su división, que es el único
- * color de la pieza — intenso, no rebajado, y con contraste suficiente para
- * texto de 15 px.
- *
- * Dos columnas en desktop. Como las dos variantes se apilan en la misma
- * celda de rejilla (`.hero-stack`), la altura reservada es siempre la de
- * Tech: pasar de LABS a TECH no mueve un píxel de la composición.
+ * Tres columnas en desktop: los tres servicios de Labs caen en una fila
+ * limpia y los seis de Tech en dos, así que el desplegable más alto sigue
+ * cabiendo en el hero sin recortar nada. Como las dos variantes se apilan en
+ * la misma celda de rejilla (ver `.hero-stack`), la altura reservada es
+ * siempre la de Tech: pasar de LABS a TECH no mueve un píxel de la
+ * composición.
  */
 export function DivisionInfo({
   id,
@@ -44,20 +42,22 @@ export function DivisionInfo({
       // inactiva está en `visibility: hidden`, así que no intercepta nada.
       onMouseEnter={onHover}
     >
-      <p className="mx-auto max-w-[52ch] text-[length:var(--text-body)] font-normal leading-[1.65] text-muted">
+      <p className="mx-auto max-w-[52ch] text-[length:var(--text-body)] font-normal leading-[1.65] text-white/90">
         {info.lead}
       </p>
 
-      <Eyebrow className="mt-7 text-subtle">{info.servicesLabel}</Eyebrow>
+      <Eyebrow className="mt-7 text-white/60">{info.servicesLabel}</Eyebrow>
 
       {/* Dos columnas de 328 px: el rótulo más largo ("Project management de
-          formulaciones") mide 305 px, así que ninguno parte en dos líneas. */}
+          formulaciones") mide 305 px, así que ninguno parte en dos líneas. A
+          tres columnas entrarían igual, pero la rejilla se iría a 1.000 px y
+          se despegaría de la medida del párrafo; así el bloque entero se lee
+          como una sola columna de texto. */}
       <ul className="mx-auto mt-4 grid max-w-[44rem] gap-x-12 gap-y-3 text-center sm:grid-cols-2 sm:text-left">
         {info.services.map((service) => (
           <li
             key={service}
-            className="text-[length:var(--text-small)] font-semibold leading-[1.45] tracking-[-0.005em]"
-            style={{ color: divisionInk[id] }}
+            className="text-[length:var(--text-small)] font-semibold leading-[1.45] tracking-[-0.005em] text-white"
           >
             {service}
           </li>
