@@ -44,8 +44,9 @@ export const homeHero = {
 // `cta`: solo el nombre de la división ("Labs" / "Tech", en mayúsculas vía
 // CSS) — petición explícita del cliente (2026-09-02), sustituye al
 // "Visitar Labs" / "Visitar Tech" literal que se reutilizaba antes.
-// `molecule`: vuelta a los PNG estáticos originales del cliente
-// (2026-09-03, segunda petición) — se retira el sprite de 30 fotogramas.
+// `logoKey` + `molecule` (2026-09-04): el isotipo vuelve a moverse, ahora con
+// el modelo three.js con giro que aportó el cliente (`lib/logoSpin.ts`). El PNG
+// se queda como póster mientras carga el WebGL y como alternativa sin él.
 // `body` deja de pasarse al hero: la línea corta de cada mitad la sustituye
 // el bloque desplegado (`divisionInfo`), que dice lo mismo con más detalle.
 export const divisionSplit = [
@@ -55,6 +56,7 @@ export const divisionSplit = [
     name: 'Virens Labs',
     claim: divisionCards.labs.claim,
     image: { src: '/img/labs-hero-mj.png', alt: '' },
+    logoKey: 'B',
     molecule: '/img/labs-molecule.png',
     cta: 'Labs',
   },
@@ -64,6 +66,7 @@ export const divisionSplit = [
     name: 'Virens Tech',
     claim: divisionCards.tech.claim,
     image: { src: '/img/tech-hero-mj.png', alt: '' },
+    logoKey: 'A',
     molecule: '/img/tech-molecule.png',
     cta: 'Tech',
   },

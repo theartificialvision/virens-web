@@ -689,3 +689,56 @@ cliente: el H1 de `HeroVideo` (heroes de /virens-labs y /virens-tech) era el
   1440, 1280, 390 y 320 sobre las tres rutas con hero: familia, cuerpo, peso,
   interlineado y tracking aplicados, número de líneas, desborde horizontal y
   peticiones de fuente. Sin errores de consola ni 404.
+
+### 2026-09-04 (3) — Claude Code — Isotipos 3D con giro y titular anclado arriba
+
+El cliente aporta una versión nueva de los logos 3D, con giro y apertura
+molecular (`logo-spin.js`), y pide usarla en lugar de los PNG estáticos, con
+los isotipos al centro y el titular arriba.
+
+- **three.js entra en el proyecto.** Se avisó antes de instalarla (regla del
+  stack) con el dato medido: el archivo del cliente pide three a unpkg y
+  `three.module.js` arrastra `three.core.js` — **410 KB gzip desde un CDN de
+  terceros en cada visita**, no los ≈150 KB que anunciaba su demo (esa cifra
+  es la del bundle tree-shakeado). Decisión del cliente: instalarla.
+  Resultado medido tras empaquetar: **130 KB gzip** en chunks diferidos y
+  **First Load JS de / sin cambio, 160 KB** — three no entra en el bundle
+  inicial.
+- **Port a TypeScript** (`lib/logoSpin.ts`). Geometría, degradado por vértice,
+  entorno de estudio y coreografía molecular intactos. Dos cambios: `three` se
+  importa como módulo (Next la empaqueta) y deja de ser un custom element con
+  shadow DOM para montar sobre un contenedor de React. Tipado estricto de
+  verdad: con `noUncheckedIndexedAccess` los `Record` indexados del original
+  no compilan, así que los nodos viajan en un `Map` con lectura que narra.
+- **`LogoSpin.tsx`** carga el motor con `import()` dinámico después del primer
+  pintado y usa el **PNG original como póster** debajo del canvas: es lo que
+  se ve mientras llega three, y se queda si no hay WebGL o falla el chunk.
+  Nunca hay hueco ni salto de layout. Verificado: en el test con render por
+  software el relevo tarda 8-9 s y el póster cubre todo ese hueco.
+- **Composición nueva.** El titular se ancla arriba en los dos estados
+  (`--hero-lead-min` baja de 184 a 112 px) y el centro pasa a ser de los
+  isotipos. Cada uno vive en una ranura que replica `--half-basis`, el mismo
+  reparto que gobierna las fotos: **en reposo cae en el centro exacto de su
+  mitad (desvío medido 0,0 px) y al activarse queda centrado en todo el hero**,
+  porque su mitad se lleva el ancho completo. La ranura contraria se repliega
+  a 0 y recorta su logo.
+  - La banda cancela el `px-6` de la columna (`width: calc(100% + 3rem)`): sin
+    eso cada logo caía 12 px hacia el eje. Se hace en la regla CSS y no con
+    utilidades porque la regla va sin capa y le gana a un `w-*` de Tailwind.
+  - El sobrante vertical lo reparten tres espaciadores con `flex-grow`
+    interpolable. Centrado del isotipo en reposo: exacto a 1440×900, ±15-37 px
+    en el resto de alturas.
+- **Al activar, el isotipo se reduce a tamaño de firma** (259 → 101 px en
+  1440). No es capricho: a tamaño de reposo, claim + párrafo + seis servicios
+  se salen de pantalla en cualquier portátil. Con el recorte, los seis
+  servicios de Tech caben con 12-32 px de holgura entre 720 y 1080 de alto, y
+  los botones siguen dentro del viewport en reposo en todos ellos.
+- **Pendiente de decidir con el cliente:** el ciclo de apertura (`assemble`)
+  mantiene el logo legible como marca solo en los dos reposos de cada vuelta;
+  el resto del tiempo se lee como fragmentos. A tamaño grande funciona, a
+  tamaño de firma se aprecia menos. Se puede pasar a giro puro sin apertura.
+- `npm run typecheck` y `npm run build` limpios. Verificado con Playwright en
+  1920, 1440, 1366, 1280 y 390: dos canvas WebGL activos, relevo del póster,
+  centrado horizontal y vertical, ranura contraria replegada, titular sin
+  moverse al activar, holgura de los seis servicios, botones en viewport y
+  `prefers-reduced-motion` (un fotograma, sin rAF). Sin errores de consola.

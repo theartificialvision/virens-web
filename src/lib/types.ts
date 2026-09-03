@@ -45,6 +45,9 @@ export interface TimelineEntry {
   text: string;
 }
 
+/** Modelo del isotipo 3D: A es azul->magenta (Tech), B azul->turquesa (Labs). */
+export type LogoKey = 'A' | 'B';
+
 /** Una mitad del hero de Home (`DivisionSplit`). */
 export interface DivisionHalfData {
   id: Division;
@@ -52,7 +55,9 @@ export interface DivisionHalfData {
   name: string;
   claim: string;
   image: { src: string; alt: string };
-  /** Isotipo estático original del cliente: PNG cuadrado con alfa. */
+  /** Modelo 3D del isotipo que se renderiza en vivo. */
+  logoKey: LogoKey;
+  /** PNG original del cliente: póster del 3D y alternativa sin WebGL. */
   molecule: string;
   cta: string;
 }

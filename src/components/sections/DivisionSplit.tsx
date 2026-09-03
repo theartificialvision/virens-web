@@ -4,38 +4,36 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Division, DivisionHalfData, DivisionInfoData } from '@/lib/types';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { KineticHeading } from '@/components/ui/KineticHeading';
+import { LogoSpin } from '@/components/ui/LogoSpin';
 import { useCoarsePointer } from '@/lib/usePointer';
 import { DivisionButton } from './DivisionButton';
 import { DivisionHalf } from './DivisionHalf';
 import { DivisionInfo } from './DivisionInfo';
 
+/** Giro del isotipo: vuelta entera, ciclo de apertura y reposo, en segundos. */
+const LOGO_MOTION = { spin: 8, assemble: 14, hold: 1.8 } as const;
+
 /**
  * Hero Labs/Tech de la HOME (bloque 01, sustituye al vídeo). Mitad y mitad a
- * sangre, cada lado con el tono de su marca y su isotipo; sobre la costura,
- * un único bloque de texto centrado con los dos botones.
+ * sangre, cada lado con el tono de su marca; sobre la costura, un único bloque
+ * de texto centrado con los dos isotipos y los dos botones.
  *
- * **2026-09-04, tercera vuelta.** El hero pasa de "dos botones que tiñen" a
- * "dos botones que abren":
+ * **2026-09-04, cuarta vuelta.** El titular deja de estar centrado y se ancla
+ * arriba; el centro pasa a ser de los isotipos, ahora en 3D y girando
+ * (`LogoSpin`). Cada isotipo vive en una ranura que replica el reparto de las
+ * mitades (`--half-basis`): en reposo cae en el centro de SU mitad y, cuando
+ * su división se lleva el ancho completo, queda centrado en todo el hero.
  *
- * - **Reposo:** rótulo, H1 compartido, subtítulo y los dos botones,
- *   centrados. Los botones se separan de verdad (de 16 px a 24/40/56/80 px
- *   según ancho): son dos opciones distintas, no un par.
- * - **Activo:** el H1 sube a la franja alta del hero —dentro de la
- *   composición, sin scroll y sin llegar a la navegación—, en su hueco
- *   aparece «Contract Manufacturing» o «Contract Development» pegado encima
- *   de los botones, y debajo se despliega la información de esa división.
+ * Al activar una división el isotipo se reduce a tamaño de firma. No es
+ * capricho: con el logo a tamaño de reposo, el claim, el párrafo y los seis
+ * servicios de Tech se salen de la pantalla en cualquier portátil, y que esos
+ * seis servicios se lean enteros es requisito explícito.
  *
- * El movimiento es una sola transición contenida, no un cambio de pantalla:
- * el bloque vive en una columna flex con dos espaciadores cuyo `flex-grow`
- * se anima (`.hero-copy`, globals.css). En reposo reparten el sobrante a
- * partes iguales —de ahí el centrado—; al activar, el de arriba se apaga y
- * la columna se apoya en su holgura mínima (`--hero-lead-min`), por debajo
- * de los isotipos. Nada salta: es la misma columna moviéndose.
- *
- * Tipografía unificada (petición del cliente): fuera la serif del H1, todo
- * el hero en la sans del sistema con una sola escala —H1
- * `--text-display-compact`, claim `--text-hero-claim`, subtítulo
- * `--text-lead`, cuerpo `--text-body`, servicios y botones `--text-small`—.
+ * El movimiento sigue siendo una sola transición contenida: la columna reparte
+ * su sobrante entre tres espaciadores cuyo `flex-grow` se interpola
+ * (`.hero-space`, globals.css), y las ranuras de texto abren de `0fr` a `1fr`.
+ * Labs y Tech comparten celda de rejilla, así que cambiar de división no
+ * desplaza nada.
  */
 export function DivisionSplit({
   halves,
@@ -67,10 +65,13 @@ export function DivisionSplit({
     return () => document.removeEventListener('pointerdown', onDown);
   }, [coarse, active, close]);
 
+  /** Mismo reparto que las mitades, para que el isotipo viaje con su lado. */
+  const basisOf = (id: Division) => (!active ? '50%' : active === id ? '100%' : '0%');
+
   return (
     <div
       ref={rootRef}
-      className="division-split relative flex flex-col lg:h-[100svh] lg:min-h-[49rem] lg:flex-row"
+      className="division-split relative flex flex-col lg:h-[100svh] lg:min-h-[50rem] lg:flex-row"
       // Al abandonar el conjunto del hero (no un botón suelto) se vuelve al
       // estado inicial: así el puntero puede bajar del botón a su texto sin
       // que este desaparezca a media lectura.
@@ -89,14 +90,14 @@ export function DivisionSplit({
         data-active={active !== null}
         className="hero-copy relative z-10 flex flex-col items-center bg-ink px-6 py-10 text-center text-white lg:absolute lg:inset-0 lg:bg-transparent lg:py-0"
       >
+        {/* Holgura fija bajo la navegación: el titular vive arriba, en reposo
+            y activo, así que este espaciador ya no crece. */}
         <div aria-hidden className="hero-lead-space hidden lg:block" />
 
         {/* En mobile el logo del header queda justo encima y repetiría este
             rótulo: solo se muestra en desktop. */}
         <Eyebrow className="hidden text-white/70 lg:block">{eyebrow}</Eyebrow>
 
-        {/* Único H1 real de la página. Sans del sistema (antes serif) y a un
-            tamaño que entra en una sola línea entre las dos moléculas. */}
         <KineticHeading
           as="h1"
           text={title}
@@ -104,21 +105,49 @@ export function DivisionSplit({
         />
 
         {/* El subtítulo nombra las dos divisiones a la vez: una vez elegida
-            una, sobra. Se pliega con la misma curva que todo lo demás en vez
-            de quedarse compitiendo con el claim. */}
+            una, sobra. Se pliega con la misma curva que todo lo demás. */}
         <div className="hero-slot w-full" data-open={active === null}>
           <div>
             <p className="mt-4 text-[length:var(--text-lead)] leading-[1.5] text-white/90">{subtitle}</p>
           </div>
         </div>
 
-        {/* Hueco que deja el H1 al subir: aquí entra el claim de la división
-            activa, justo encima de los botones. Las dos variantes se apilan
-            en la misma celda, así que cambiar de LABS a TECH no altera la
-            altura ni desplaza los botones. */}
+        <div aria-hidden className="hero-space hidden lg:block" style={heroSpace(0.66, 0.5)} />
+
+        {/* Banda de isotipos. Cada ranura replica el reparto de su mitad, así
+            que el centrado horizontal del logo dentro de ella lo lleva al
+            centro de la mitad en reposo y al centro del hero al activarse. */}
+        <div className="hero-logos my-8 lg:my-0">
+          {halves.map((half, i) => (
+            <div
+              key={half.id}
+              className="hero-logo-slot"
+              style={{ ['--half-basis' as string]: basisOf(half.id) }}
+            >
+              <LogoSpin
+                logo={half.logoKey}
+                poster={half.molecule}
+                spin={LOGO_MOTION.spin}
+                assemble={LOGO_MOTION.assemble}
+                hold={LOGO_MOTION.hold}
+                // Medio ciclo de desfase entre los dos: se abren y se cierran
+                // alternándose, no al unísono como un metrónomo.
+                phase={i * 0.5}
+                className="hero-logo"
+                sizes="(max-width: 1024px) 128px, 248px"
+              />
+            </div>
+          ))}
+        </div>
+
+        <div aria-hidden className="hero-space hidden lg:block" style={heroSpace(1, 0.28)} />
+
+        {/* Claim de la división activa, justo encima de los botones. Las dos
+            variantes se apilan en la misma celda, así que cambiar de LABS a
+            TECH no altera la altura ni desplaza los botones. */}
         <div className="hero-slot w-full" data-open={active !== null}>
           <div>
-            <div className="hero-stack pt-7">
+            <div className="hero-stack pt-6">
               {halves.map((half) => (
                 <h2
                   key={half.id}
@@ -133,7 +162,7 @@ export function DivisionSplit({
           </div>
         </div>
 
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-6 sm:gap-10 lg:gap-14 2xl:gap-20">
+        <div className="mt-7 flex flex-wrap items-center justify-center gap-6 sm:gap-10 lg:gap-14 2xl:gap-20">
           {halves.map((half) => (
             <DivisionButton
               key={half.id}
@@ -152,7 +181,7 @@ export function DivisionSplit({
             de modo que sus seis servicios nunca quedan cortados. */}
         <div className="hero-slot w-full" data-open={active !== null} aria-live="polite">
           <div>
-            <div className="hero-stack pt-8">
+            <div className="hero-stack pt-6">
               {halves.map((half) => (
                 <DivisionInfo
                   key={half.id}
@@ -166,11 +195,16 @@ export function DivisionSplit({
           </div>
         </div>
 
-        <div aria-hidden className="hidden lg:block lg:grow" />
+        <div aria-hidden className="hero-space hidden lg:block" style={heroSpace(1, 0.12)} />
       </div>
 
       <DivisionHalf {...halves[0]} side="left" activeDivision={active} />
       <DivisionHalf {...halves[1]} side="right" activeDivision={active} />
     </div>
   );
+}
+
+/** Reparto del sobrante vertical de un espaciador: en reposo y al activar. */
+function heroSpace(rest: number, activeGrow: number): React.CSSProperties {
+  return { ['--grow-rest' as string]: rest, ['--grow-active' as string]: activeGrow };
 }

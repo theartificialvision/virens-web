@@ -97,11 +97,16 @@
   --text-hero-claim: clamp(1.125rem, 0.95rem + 0.85vw, 1.875rem);    /* 18 -> 30 */
 
   /* --- Hero de Home (`DivisionSplit`) --------------------------- */
-  /* Holgura mínima entre el borde superior del hero y el rótulo/H1 cuando
-     una división está activa: por debajo de los isotipos (que terminan a
-     152 px en lg y 176 px en 2xl) y muy por debajo del trigger del menú.
-     Sube en 2xl porque allí el isotipo también crece. */
-  --hero-lead-min: 11.5rem; /* 184 */
+  /* Holgura entre el borde superior del hero y el rótulo/H1. Con los isotipos
+     movidos al centro (2026-09-04), esta franja solo tiene que librar el
+     trigger del menú, así que baja de 184 a 112 px: los 72 px que devuelve son
+     exactamente los que necesita el desplegable de Tech para caber entero en
+     un portátil de 720 px de alto.
+     Tamaño del isotipo: grande en reposo, de firma al activar — con el logo a
+     tamaño de reposo, claim + párrafo + seis servicios no caben en pantalla. */
+  --hero-lead-min: 7rem;    /* 112 */
+  --hero-logo:      clamp(7rem, 18vw, 18rem);    /* 112 -> 288 */
+  --hero-logo-sm:   clamp(4.5rem, 7vw, 8rem);     /*  72 -> 128 */
 
   /* --- Layout -------------------------------------------------- */
   --container-max:  90rem;   /* 1440 */
@@ -124,10 +129,6 @@
 
   /* --- Movimiento ---------------------------------------------- */
   --ease-out-quart: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@media (min-width: 1536px) {
-  @theme { --hero-lead-min: 13rem; } /* 208 */
 }
 
 @media (min-width: 1024px) {
@@ -205,13 +206,62 @@
    `bg-ink` sobre las fotos) y el desplegable simplemente empuja hacia
    abajo, que es el gesto natural de un acordeón táctil. */
 @media (min-width: 1024px) {
-  .hero-lead-space {
-    flex-grow: 1;
-    flex-shrink: 0;
-    min-height: var(--hero-lead-min);
+  /* El titular vive arriba en los dos estados: esta holgura ya no crece. */
+  .hero-lead-space { flex: 0 0 var(--hero-lead-min); }
+
+  /* Los tres espaciadores reparten el sobrante vertical. En reposo crecen por
+     igual, así que el isotipo queda centrado entre el titular y los botones;
+     al activar, cada uno cede una proporción distinta (--grow-active) y el
+     hueco se lo lleva el texto desplegado. `flex-grow` es un número: se
+     interpola, así que el movimiento es una transición CSS normal. */
+  .hero-space {
+    flex-grow: var(--grow-rest, 1);
+    flex-shrink: 1;
+    flex-basis: 0;
     transition: flex-grow 620ms cubic-bezier(0.22, 1, 0.36, 1);
   }
-  .hero-copy[data-active='true'] .hero-lead-space { flex-grow: 0; }
+  .hero-copy[data-active='true'] .hero-space { flex-grow: var(--grow-active, 0); }
+}
+
+/* Banda de isotipos. Cada ranura replica el reparto de su mitad
+   (--half-basis, el mismo valor que gobierna las fotos), así que el logo
+   —centrado dentro de su ranura— cae en el centro de su mitad en reposo y en
+   el centro del hero cuando su división se lleva el ancho completo. La ranura
+   que se repliega recorta su logo con overflow, no lo deforma. */
+.hero-logos {
+  display: flex;
+  justify-content: center;
+  /* La columna de texto lleva px-6 y ese relleno metía cada logo 12 px hacia
+     el eje, descuadrándolo del centro de su mitad. Se cancela aquí y no con
+     utilidades: esta regla va sin capa y le ganaría a una clase w-* de
+     Tailwind, que sí vive en una capa. */
+  width: calc(100% + 3rem);
+  margin-inline: -1.5rem;
+}
+.hero-logo-slot {
+  flex: 1 1 50%;
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+  overflow: hidden;
+}
+@media (min-width: 1024px) {
+  .hero-logo-slot {
+    flex-basis: var(--half-basis, 50%);
+    transition: flex-basis 620ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+}
+.hero-logo {
+  flex: none;
+  width: var(--hero-logo);
+  height: var(--hero-logo);
+  transition:
+    width 620ms cubic-bezier(0.22, 1, 0.36, 1),
+    height 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hero-copy[data-active='true'] .hero-logo {
+  width: var(--hero-logo-sm);
+  height: var(--hero-logo-sm);
 }
 
 /* Ranura que se abre y se cierra sin altura fija: la rejilla interpola de

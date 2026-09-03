@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import type { Division, DivisionHalfData } from '@/lib/types';
-import { divisionColor, divisionGlow, cn } from '@/lib/utils';
+import { divisionColor, cn } from '@/lib/utils';
 
 /**
  * Una de las dos mitades a sangre del hero: fotografía teñida con el color
@@ -13,6 +13,11 @@ import { divisionColor, divisionGlow, cn } from '@/lib/utils';
  * 2026-09-02. La expansión a ancho completo de la mitad activa (2026-09-03,
  * confirmada de nuevo el 2026-09-04) viaja como `--half-basis`.
  *
+ * **2026-09-04 (2):** el isotipo sale de aquí y pasa a la banda central del
+ * bloque de texto: al centrarse dentro de su ranura —que replica este mismo
+ * reparto— cae en el centro de su mitad en reposo y en el centro del hero
+ * cuando su división se lleva el ancho completo.
+ *
  * **2026-09-04:** ya no lleva rótulo ni claim propios. «Contract
  * Manufacturing» / «Contract Development» pasan al bloque central, encima de
  * los botones, donde ahora también cuelga la información de la división:
@@ -21,7 +26,6 @@ import { divisionColor, divisionGlow, cn } from '@/lib/utils';
 export function DivisionHalf({
   id,
   image,
-  molecule,
   name,
   side,
   activeDivision,
@@ -87,29 +91,6 @@ export function DivisionHalf({
         className="absolute inset-0 bg-black transition-opacity duration-[620ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
         style={{ opacity: active ? 0.52 : 0.3 }}
       />
-
-      {/* Isotipo original del cliente (PNG estático con alfa, proporción 1:1).
-          2026-09-04: se retira el sprite de 30 fotogramas — el balanceo leía
-          a novedad y no aportaba la sensación inmersiva buscada. Vuelve el
-          archivo original, sin recorte ni recoloreado; solo un halo de marca
-          detrás, que es fondo, no logo. Arriba y fuera del flujo para no
-          empujar el bloque central. */}
-      <span aria-hidden className="pointer-events-none absolute inset-x-0 top-6 flex justify-center lg:top-10 2xl:top-12">
-        <span className="relative block size-16 lg:size-28 2xl:size-32">
-          <span
-            className="absolute inset-0 scale-150 rounded-full blur-2xl transition-opacity duration-700"
-            style={{ background: divisionGlow[id], opacity: active ? 0.7 : 0.35 }}
-          />
-          <Image
-            src={molecule}
-            alt=""
-            width={512}
-            height={512}
-            sizes="(max-width: 1024px) 64px, (max-width: 1536px) 112px, 128px"
-            className="relative size-full object-contain"
-          />
-        </span>
-      </span>
 
       {/* El nombre de la división sigue en el DOM para el lector de pantalla
           (identifica de qué mitad es esta fotografía) sin volver a pintarse
