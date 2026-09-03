@@ -146,8 +146,15 @@
    mouse". El split vuelve a ser 50/50 fijo (`flex-1` en el JSX, sin JS);
    la interacción pasa a dos botones explícitos (`DivisionButton`) que
    activan una difusión de color por `clip-path` — ver `DivisionSplit.tsx`.
-   El pulso de los botones es la única animación en bucle: `--pulse-glow`
-   la fija cada botón a su color de división. */
+
+   2026-09-03: además de teñir, el botón activo se lleva el ancho completo.
+   El reparto lo publica `DivisionSplit` como `--half-basis` (50% en
+   reposo, 100% la activa, 0% la otra) y solo se aplica de `lg` en
+   adelante: en mobile las mitades se apilan y `flex-basis` gobernaría la
+   altura, no el ancho. La transición vive en la clase del componente. */
+@media (min-width: 1024px) {
+  .division-split > .group\/half { flex-basis: var(--half-basis, 50%); }
+}
 /* Pulso en dos capas (revisado 2026-09-02, "mejora el pulso"): un halo
    suave que respira (18→34px) y, encima, un anillo que nace pegado al
    borde y se expande hasta desvanecerse — lectura de "latido", no de
@@ -166,6 +173,31 @@
                      0 0 18px 0 color-mix(in srgb, var(--pulse-glow) 28%, transparent); }
 }
 .glass-pulse { animation: glass-pulse 3.4s var(--ease-out-quart) infinite; }
+
+/* --- Isotipo 3D en movimiento (2026-09-03) ----------------------------
+   El cliente pidió que los logos 3D no fueran estáticos. En vez de cargar
+   three.js (~600 KB de JS en el LCP para una marca de 112 px), se
+   pre-renderizaron 30 fotogramas de un balanceo de ±10° de la misma
+   escena y viajan como una tira horizontal WebP (~90 KB). La tira se
+   desplaza con `steps()`, así que son fotogramas reales de 3D — no un
+   truco 2D sobre una imagen plana. `alternate` hace el vaivén sin tener
+   que renderizar la vuelta. A 42 ms por fotograma son ~24 fps; el
+   componente baja el valor cuando su división está activa. */
+.molecule-sway { position: absolute; inset: 0; overflow: hidden; }
+.molecule-sway-strip {
+  position: absolute;
+  inset: 0;
+  width: calc(var(--frames) * 100%);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  will-change: transform;
+  animation: molecule-sway calc(var(--frames) * var(--sway-ms, 42ms))
+             steps(var(--frames)) infinite alternate;
+}
+@keyframes molecule-sway {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
 .glass-pulse:hover, .glass-pulse:focus-visible {
   animation-play-state: paused;
   box-shadow: var(--shadow-elevate), 0 0 36px 6px color-mix(in srgb, var(--pulse-glow) 60%, transparent);
@@ -178,4 +210,8 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+  /* La regla de arriba no sirve para una animación de `steps()`: con
+     duración ~0 la tira recorrería los 30 fotogramas en un parpadeo. Aquí
+     hay que apagarla del todo — queda el primer fotograma fijo. */
+  .molecule-sway-strip { animation: none !important; }
 }

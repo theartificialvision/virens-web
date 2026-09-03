@@ -52,7 +52,8 @@ export const divisionSplit = [
     claim: divisionCards.labs.claim,
     body: divisionCards.labs.body,
     image: { src: '/img/labs-hero-mj.png', alt: '' },
-    molecule: '/img/labs-molecule-3d.webp',
+    molecule: '/img/labs-molecule-3d-sprite.webp',
+    moleculeFrames: 30,
     cta: 'Labs',
   },
   {
@@ -62,7 +63,8 @@ export const divisionSplit = [
     claim: divisionCards.tech.claim,
     body: divisionCards.tech.body,
     image: { src: '/img/tech-hero-mj.png', alt: '' },
-    molecule: '/img/tech-molecule-3d.webp',
+    molecule: '/img/tech-molecule-3d-sprite.webp',
+    moleculeFrames: 30,
     cta: 'Tech',
   },
 ] as const;

@@ -541,3 +541,38 @@ la raíz del proyecto, fuera de `web/`) y cuatro ajustes más del hero.
   Playwright: rótulos/`text-transform`/animación por computed style,
   carga de los WebP, hover en ambas direcciones, holgura logo↔titular,
   mobile. Sin errores de consola.
+
+### 2026-09-03 — Claude Code — Hero: expansión a ancho completo + isotipo 3D en movimiento
+
+- **Expansión del split:** al pasar el ratón (o el foco) por un botón, esa
+  mitad se lleva el **ancho completo** y la otra se repliega a cero; al
+  salir, vuelven al 50/50. 620 ms con `cubic-bezier(0.22,1,0.36,1)` —
+  "rápido y fluido", petición del cliente. El reparto se publica como
+  `--half-basis` desde el componente y solo se aplica de `lg` en adelante
+  (en mobile las mitades se apilan y `flex-basis` gobernaría la altura).
+  La difusión de tinte se acorta de 1200 a 620 ms para que expansión y
+  color se lean como un solo gesto.
+  - **Detalle que costó una vuelta:** con `flex-basis: 0` la mitad
+    replegada seguía ocupando 96 px — era su propio `padding`, que no
+    colapsa. Ahora el padding se apaga con la misma curva y la expansión
+    llega a 1440/0 de verdad (verificado midiendo los anchos reales).
+- **Isotipo 3D en movimiento** (antes un render estático): se
+  pre-renderizaron **30 fotogramas de un balanceo de ±10°** de la misma
+  escena three.js y viajan como tira horizontal WebP
+  (`*-molecule-3d-sprite.webp`, 89 y 92 KB). La tira se desplaza con
+  `steps(30)` + `alternate`: son fotogramas reales de 3D (la luz recorre
+  el metal), no un truco 2D sobre una imagen plana, y sigue sin entrar
+  three.js en el bundle. 42 ms/fotograma ≈ 24 fps; baja a 26 ms cuando su
+  división está activa.
+  - Descartado el giro completo de 360°: a 30 fotogramas salía a tirones
+    salvo acelerándolo mucho, y un logo girando sin parar leía a novedad.
+    El balanceo corto es más suave y pesa menos.
+  - **`prefers-reduced-motion`:** la regla global (`animation-duration:
+    0.01ms`) no vale para `steps()` — recorrería los 30 fotogramas en un
+    parpadeo. Se apaga explícitamente (`animation: none`) y queda el
+    primer fotograma fijo. Verificado.
+- Retirados los PNG/WebP estáticos del isotipo que quedaban sin uso.
+- `npm run typecheck` limpio. Verificado con Playwright: anchos reales en
+  reposo/hover/vuelta (720-720 → 1440-0 → 0-1440 → 720-720), propiedades
+  computadas de la animación, carga de los sprites, reduced-motion y
+  mobile. Sin errores de consola.

@@ -15,7 +15,9 @@ interface DivisionHalfData {
   claim: string;
   body: string;
   image: { src: string; alt: string };
+  /** Tira horizontal de fotogramas del isotipo 3D (ver `.molecule-sway`). */
   molecule: string;
+  moleculeFrames: number;
   cta: string;
 }
 
@@ -104,6 +106,7 @@ function DivisionHalf({
   body,
   image,
   molecule,
+  moleculeFrames,
   side,
   activeDivision,
 }: DivisionHalfData & { side: 'left' | 'right'; activeDivision: Division | null }) {
@@ -118,8 +121,26 @@ function DivisionHalf({
   // contrario al que da al exterior de la pantalla.
   const origin = side === 'left' ? '100% 50%' : '0% 50%';
 
+  // Expansión (petición del cliente 2026-09-03): al activar un botón, ESA
+  // mitad se lleva el ancho completo y la otra se repliega. Solo en
+  // desktop (`lg`), donde el split es una fila; en mobile las mitades se
+  // apilan y `flex-basis` gobernaría la altura, así que ahí no se toca.
+  // Rápido y fluido: 620 ms con una curva de salida marcada.
+  const own = activeDivision === id;
+  const collapsed = activeDivision !== null && !own;
+  const basis = !activeDivision ? '50%' : own ? '100%' : '0%';
+
   return (
-    <div className="group/half relative flex min-h-[46svh] flex-1 flex-col items-center overflow-hidden p-8 text-center lg:min-h-0 lg:p-12 2xl:p-16">
+    <div
+      className={cn(
+        'group/half relative flex min-h-[46svh] flex-1 flex-col items-center overflow-hidden p-8 text-center',
+        'transition-[flex-basis,padding] duration-[620ms] ease-[cubic-bezier(0.22,1,0.36,1)] lg:min-h-0',
+        // El padding no colapsa con `flex-basis: 0`: sin esto, la mitad
+        // replegada deja un resto de 96px y la otra nunca llega a ancho
+        // completo. Se apaga a la vez y con la misma curva.
+        collapsed ? 'lg:p-0' : 'lg:p-12 2xl:p-16',
+      )}
+      style={{ ['--half-basis' as string]: basis }}>
       <Image
         src={image.src}
         alt={image.alt}
@@ -144,7 +165,7 @@ function DivisionHalf({
           cubrir ESTA mitad entera, sea la suya o la contraria. */}
       <span
         aria-hidden
-        className="absolute inset-0 transition-[clip-path] duration-[1200ms] ease-[var(--ease-out-quart)]"
+        className="absolute inset-0 transition-[clip-path] duration-[620ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
         style={{
           background: flood,
           mixBlendMode: 'color',
@@ -173,7 +194,21 @@ function DivisionHalf({
             className="absolute inset-0 scale-150 rounded-full opacity-50 blur-2xl transition-opacity duration-700"
             style={{ background: divisionGlow[id], opacity: active ? 0.7 : 0.35 }}
           />
-          <img src={molecule} alt="" className="relative h-full w-full object-contain" />
+          {/* Balanceo 3D: la tira de fotogramas avanza con `steps()` (ver
+              `.molecule-sway` en globals.css). Se acelera cuando su
+              división está activa. */}
+          <span className="molecule-sway">
+            <span
+              className="molecule-sway-strip"
+              style={
+                {
+                  backgroundImage: `url(${molecule})`,
+                  '--frames': moleculeFrames,
+                  '--sway-ms': own ? '26ms' : '42ms',
+                } as React.CSSProperties
+              }
+            />
+          </span>
         </span>
       </span>
 
