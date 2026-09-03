@@ -44,3 +44,22 @@ export interface TimelineEntry {
   year: string;
   text: string;
 }
+
+/** Una mitad del hero de Home (`DivisionSplit`). */
+export interface DivisionHalfData {
+  id: Division;
+  href: string;
+  name: string;
+  claim: string;
+  image: { src: string; alt: string };
+  /** Isotipo estático original del cliente: PNG cuadrado con alfa. */
+  molecule: string;
+  cta: string;
+}
+
+/** Lo que se despliega bajo los botones al activar una división. */
+export interface DivisionInfoData {
+  lead: string;
+  servicesLabel: string;
+  services: readonly string[];
+}

@@ -6,7 +6,7 @@ import { Container } from '@/components/ui/Container';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Reveal } from '@/components/ui/Reveal';
 import { valueChain } from '@/content/company';
-import { divisionSplit, homeHero, homeStats, processIntro } from '@/content/home';
+import { divisionInfo, divisionSplit, homeHero, homeStats, processIntro } from '@/content/home';
 import { site } from '@/config/site';
 
 /**
@@ -19,7 +19,13 @@ import { site } from '@/config/site';
 export default function HomePage() {
   return (
     <>
-      <DivisionSplit halves={divisionSplit} eyebrow={homeHero.eyebrow} title={site.claim} subtitle={site.subclaim} />
+      <DivisionSplit
+        halves={divisionSplit}
+        info={divisionInfo}
+        eyebrow={homeHero.eyebrow}
+        title={site.claim}
+        subtitle={site.subclaim}
+      />
 
       <StatRow stats={homeStats} tone="surface" />
 

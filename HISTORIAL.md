@@ -576,3 +576,116 @@ la raíz del proyecto, fuera de `web/`) y cuatro ajustes más del hero.
   reposo/hover/vuelta (720-720 → 1440-0 → 0-1440 → 720-720), propiedades
   computadas de la animación, carga de los sprites, reduced-motion y
   mobile. Sin errores de consola.
+
+### 2026-09-04 — Claude Code — Hero: dos áreas que se abren, tipografía unificada y vuelta a los logos estáticos
+
+- **Separación de LABS y TECH:** de `gap-4` (16 px) a 24 / 40 / 56 / 80 px
+  según ancho. Se leen como dos opciones distintas, no como un par de
+  botones pegados.
+- **Tipografía unificada:** fuera la serif (Newsreader) del hero. Todo en
+  Montserrat con una escala de cuatro escalones: H1
+  `--text-display-compact`, claim `--text-hero-claim` (token nuevo, 18→30),
+  lead `--text-lead`, cuerpo `--text-body`, servicios y botones
+  `--text-small`. `--text-display-compact` se recalibró de 54 a 44 px de
+  tope: Montserrat es bastante más ancha que Newsreader al mismo cuerpo y la
+  línea ya no entraba entera. Verificado por `computed style`: cero serif en
+  el hero (`--font-serif` sigue vivo, pero solo en los heroes de
+  Labs/Tech — **pendiente de decidir si también salen de ahí**).
+- **Comportamiento al activar:** en reposo, la composición de siempre. Al
+  pasar el ratón (o el foco, o un toque), el H1 sube a la franja alta del
+  hero, en su hueco aparece «Contract Manufacturing» / «Contract
+  Development» pegado encima de los botones, y debajo se despliega la
+  información de la división. Una sola línea en desktop en los dos claims.
+  - **Cómo se mueve sin saltos:** `.hero-copy` es una columna flex con dos
+    espaciadores; en reposo ambos crecen por igual (de ahí el centrado) y al
+    activar el de arriba baja a `flex-grow: 0` y la columna se apoya en
+    `--hero-lead-min` (184 px, 208 en 2xl: por debajo de los isotipos y muy
+    lejos del trigger del menú). `flex-grow` interpola, así que es una
+    transición CSS, sin JS por fotograma. El H1 sube 63-143 px según alto de
+    pantalla.
+  - **Las ranuras** (subtítulo, claim, información) son rejillas que van de
+    `0fr` a `1fr`: el contenido decide su altura y nada queda recortado por
+    una altura pactada.
+  - **Labs y Tech comparten celda** (`.hero-stack`, `grid-area: 1/1`), así
+    que la ranura reserva siempre la altura de Tech y cambiar de división es
+    un fundido en el sitio: medido, **0,00 px** de desplazamiento de los
+    botones entre LABS y TECH.
+  - **El área se mantiene** mientras el puntero esté sobre el botón *o* sobre
+    su texto desplegado; solo se cierra al abandonar el hero completo
+    (`onMouseLeave` en la raíz, no en el botón). Teclado: `onFocus` abre y el
+    cierre va por `focusout` de la raíz, mismo criterio.
+- **Táctil:** primer toque abre, segundo navega. El apunte de "¿estaba ya
+  abierta?" se toma en `pointerdown`, no dentro del `click`: al tocar, el
+  navegador sintetiza `mouseenter` **antes** del click, así que mirar el
+  estado ahí hacía que el primer toque navegase siempre (lo hacía, y así
+  salió en la primera pasada de Playwright). `touch-manipulation` en el botón
+  para que dos toques seguidos no se coman como doble toque de zoom.
+  Verificado 12/12 en 360/390/430/768.
+- **Información de cada división recuperada** (`divisionInfo` en
+  `content/home.ts`, textos del cliente): párrafo a 52ch y servicios en dos
+  columnas de 328 px — el rótulo más largo mide 305 px, así que ninguno parte
+  en dos líneas. Sin tarjeta, filete ni viñeta (regla 7); lo que separa
+  párrafo de servicios es peso, color y aire. Cada mitad pierde su rótulo y
+  claim propios: repetían literalmente el mismo texto que ahora va al centro.
+- **Altura del hero:** `min-h` de 46 a **49rem**. Con los seis servicios de
+  Tech, un portátil de 1280×720 se quedaba 3 px corto y los cortaba. Ahora la
+  holgura es de 22-135 px entre 720 y 1080 de alto.
+- **Contraste:** el velo pasa de plano 0,25 a 0,30 en reposo y **0,52 al
+  activar** — el hero "baja la luz" al entrar en modo lectura. Medido
+  ocultando el texto y muestreando el fondo real: el píxel más claro bajo
+  cualquier texto da **4,67:1** contra blanco (AA para texto normal pide
+  4,5:1); las medianas van de 5,1:1 a 12,9:1.
+- **Logos: vuelta a los estáticos originales.** Fuera el sprite de 30
+  fotogramas y todo su CSS (`.molecule-sway`, sus `@keyframes` y su excepción
+  de `prefers-reduced-motion`, que ya no hace falta). Vuelven
+  `labs-molecule.png` / `tech-molecule.png` tal cual: 1254×1254 RGBA, sin
+  recorte ni recoloreado, vía `next/image` (a DPR 2 sirve 256 px para una
+  caja de 112 px). Los `*-molecule-3d-sprite.webp` se quedan en `public/img`
+  sin referencias, por si se retoma la exploración.
+- **Componente partido** (regla de 150 líneas): `DivisionSplit` se queda con
+  el estado y la composición; `DivisionHalf`, `DivisionButton` y
+  `DivisionInfo` salen a archivo propio. Hook nuevo `useCoarsePointer`
+  (`lib/usePointer.ts`).
+- `npm run typecheck` y `npm run build` limpios. Verificado con Playwright en
+  1440×900, 1920×1080, 1366×768, 1280×720, 768×1024, 430, 390, 360 y 320:
+  posiciones subpíxel en reposo/activo/vuelta, cero salto entre divisiones,
+  los seis servicios sin recortar, teclado (Tab abre, Tab fuera cierra),
+  táctil (primer/segundo toque, cambio directo, toque fuera),
+  `prefers-reduced-motion`, resolución de los isotipos y contraste real.
+  Sin errores de consola.
+
+### 2026-09-04 (2) — Claude Code — Fuera la serif también de los heroes de Labs y Tech
+
+Cierre de la unificación tipográfica del punto anterior, a petición del
+cliente: el H1 de `HeroVideo` (heroes de /virens-labs y /virens-tech) era el
+último uso de Newsreader.
+
+- **H1 a Montserrat** con las mismas medidas que el de Home —semibold,
+  interlineado 1,1, tracking −0,02em— y un escalón más de cuerpo: allí el
+  titular está obligado a una línea entre las dos moléculas, aquí tiene una
+  columna de 7/12 donde respirar. `--text-display` recalibrado de 68 a
+  **60 px** de tope (36 en móvil) por el mismo motivo que
+  `--text-display-compact`: Montserrat es más ancha que Newsreader al mismo
+  cuerpo. Medido: 3 líneas en 653 px dentro de una columna de 747 px, sin
+  desborde de 320 a 1920.
+- **Textos sobre imagen:** eyebrow y lead pasan de `mist-dim`/`mist` a blanco
+  con opacidad (70 % / 85 %) — el mismo criterio que ya se aplicó al hero de
+  Home el 2026-09-02 (los tokens `mist` están calibrados para superficies
+  planas ink/surface, no para fotografía). El lead gana además tamaño y
+  interlineado explícitos (`--text-body` / 1,65) para igualar el párrafo del
+  hero de Home.
+- **Newsreader retirada del proyecto:** ya no la usaba ningún componente, así
+  que se va su carga de `layout.tsx` y su token `--font-serif` de
+  `globals.css` (apuntaba a `--font-editorial`, que habría quedado sin
+  definir). Una sola familia en todo el sistema. Verificado en el navegador:
+  **un solo .woff2** por página y cero elementos con Newsreader/Georgia
+  aplicadas en /, /virens-labs y /virens-tech.
+- **Nota de proceso:** los 404 de `main-app.js` que aparecieron a mitad de la
+  verificación no eran del código — se lanzó `npm run build` con `next dev`
+  en marcha y el build sobrescribió `.next/`, dejando obsoleto el manifiesto
+  de chunks del servidor de desarrollo. Se resolvió borrando `.next` y
+  reiniciando. Conviene no solapar ambos comandos.
+- `npm run typecheck` y `npm run build` limpios. Verificado con Playwright en
+  1440, 1280, 390 y 320 sobre las tres rutas con hero: familia, cuerpo, peso,
+  interlineado y tracking aplicados, número de líneas, desborde horizontal y
+  peticiones de fuente. Sin errores de consola ni 404.

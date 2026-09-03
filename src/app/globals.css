@@ -47,14 +47,25 @@
   --opacity-grain:    0.05;
 
   /* --- Tipografía --------------------------------------------- */
+  /* Una sola familia en todo el sistema. La serif editorial (Newsreader) se
+     retira el 2026-09-04: era el H1 de Home y de los heroes de Labs/Tech, y
+     los tres pasan a Montserrat por unificación de jerarquía. Con ella se va
+     su token y su carga en layout.tsx — cuatro archivos de fuente menos. */
   --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-editorial), Georgia, serif;
 
   /* Escala fluida: mobile -> desktop.
      Revisada 2026-09-01 a petición del cliente: la escala original del
      documento (§10.2, Display 92 / H1 72 / H2 56 / Stat 96) resultaba
-     desproporcionada en la práctica. Escala más medida, criterio Apple HIG. */
-  --text-display:   clamp(2.5rem, 1.65rem + 3.4vw, 4.25rem);    /* 40 -> 68 */
+     desproporcionada en la práctica. Escala más medida, criterio Apple HIG.
+
+     Único uso de --text-display: el H1 de los heroes de Labs y Tech
+     (`HeroVideo`). Recalibrado
+     2026-09-04 al retirar la serif también de ahí, con el mismo criterio que
+     --text-display-compact: Montserrat es más ancha que Newsreader al mismo
+     cuerpo, así que el tope baja de 68 a 60 px — ópticamente pesa lo mismo
+     que la serif anterior y sigue un escalón por encima de --text-h1. */
+  --text-display:   clamp(2.25rem, 1.55rem + 2.8vw, 3.75rem);   /* 36 -> 60 */
+
   --text-h1:        clamp(2.00rem, 1.50rem + 2.2vw, 3.50rem);   /* 32 -> 56 */
   --text-h2:        clamp(1.75rem, 1.40rem + 1.6vw, 2.75rem);   /* 28 -> 44 */
   --text-h3:        clamp(1.375rem, 1.20rem + 0.8vw, 1.875rem); /* 22 -> 30 */
@@ -73,8 +84,24 @@
      (2026-09-02) para que "Expertos en complementos alimenticios" quepa
      en una sola línea entre las dos moléculas sin tocarlas. Mismo criterio
      que --text-stat-compact: un tamaño más contenido para un contexto con
-     menos ancho disponible que un H1 normal a sangre completa. */
-  --text-display-compact: clamp(1.375rem, 0.85rem + 2.15vw, 3.375rem); /* 22 -> 54 */
+     menos ancho disponible que un H1 normal a sangre completa.
+     Recalibrado 2026-09-04 al retirar la serif del hero: Montserrat es
+     bastante más ancha que Newsreader al mismo cuerpo, así que el tope baja
+     de 54 a 44 px para que la línea siga entrando entera en desktop. */
+  --text-display-compact: clamp(1.5rem, 0.90rem + 2.05vw, 2.75rem);  /* 24 -> 44 */
+  /* Claim de la división activa en el hero ("Contract Manufacturing" /
+     "Contract Development"): un escalón por debajo del H1 y por encima del
+     lead. El mínimo (18) es más bajo que el de --text-h3 a propósito — es lo
+     que permite mantenerlo en una línea en móviles de 320 px sin encoger la
+     letra hasta lo ilegible. */
+  --text-hero-claim: clamp(1.125rem, 0.95rem + 0.85vw, 1.875rem);    /* 18 -> 30 */
+
+  /* --- Hero de Home (`DivisionSplit`) --------------------------- */
+  /* Holgura mínima entre el borde superior del hero y el rótulo/H1 cuando
+     una división está activa: por debajo de los isotipos (que terminan a
+     152 px en lg y 176 px en 2xl) y muy por debajo del trigger del menú.
+     Sube en 2xl porque allí el isotipo también crece. */
+  --hero-lead-min: 11.5rem; /* 184 */
 
   /* --- Layout -------------------------------------------------- */
   --container-max:  90rem;   /* 1440 */
@@ -97,6 +124,10 @@
 
   /* --- Movimiento ---------------------------------------------- */
   --ease-out-quart: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (min-width: 1536px) {
+  @theme { --hero-lead-min: 13rem; } /* 208 */
 }
 
 @media (min-width: 1024px) {
@@ -155,6 +186,75 @@
 @media (min-width: 1024px) {
   .division-split > .group\/half { flex-basis: var(--half-basis, 50%); }
 }
+
+/* --- Bloque de texto del hero (2026-09-04) ----------------------------
+   Al activar LABS o TECH, el H1 sube a la franja alta del hero y en su
+   hueco aparecen el claim de la división y, bajo los botones, su
+   información. Se resuelve con UNA columna que se mueve, no con dos
+   composiciones que se sustituyen: así no hay salto ni relectura.
+
+   El truco es el reparto del sobrante vertical. `.hero-copy` es una
+   columna flex con un espaciador arriba y otro abajo; en reposo ambos
+   crecen por igual —de ahí el centrado— y al activar, el de arriba deja de
+   crecer y la columna se apoya en su holgura mínima (--hero-lead-min), por
+   debajo de los isotipos. `flex-grow` es un número: se puede interpolar,
+   así que el movimiento es una transición CSS normal, sin JS por fotograma
+   y sin tocar `top` ni `transform`.
+
+   Solo de `lg` en adelante: en mobile el bloque va en el flujo (banda
+   `bg-ink` sobre las fotos) y el desplegable simplemente empuja hacia
+   abajo, que es el gesto natural de un acordeón táctil. */
+@media (min-width: 1024px) {
+  .hero-lead-space {
+    flex-grow: 1;
+    flex-shrink: 0;
+    min-height: var(--hero-lead-min);
+    transition: flex-grow 620ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .hero-copy[data-active='true'] .hero-lead-space { flex-grow: 0; }
+}
+
+/* Ranura que se abre y se cierra sin altura fija: la rejilla interpola de
+   `0fr` a `1fr`, así que el contenido decide cuánto mide y nunca queda
+   recortado — es lo que permite que los seis servicios de Tech quepan sin
+   depender de una altura pactada de antemano. */
+.hero-slot {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.hero-slot[data-open='true'] { grid-template-rows: 1fr; }
+.hero-slot > * { min-height: 0; overflow: hidden; }
+
+/* Las dos variantes (Labs y Tech) comparten celda: la ranura reserva
+   siempre la altura de la más alta, así que cambiar de una a otra es un
+   fundido en el sitio — los botones no se mueven ni un píxel. */
+.hero-stack { display: grid; }
+.hero-stack > * { grid-area: 1 / 1; }
+
+/* `visibility` (y no solo `opacity`) para que la variante en reposo salga
+   del árbol de accesibilidad y no intercepte el puntero de la activa. */
+.hero-face {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(0.5rem);
+  transition:
+    opacity 380ms var(--ease-out-quart),
+    transform 380ms var(--ease-out-quart),
+    visibility 0s linear 380ms;
+}
+.hero-face[data-active='true'] {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  /* Entra un pelín después de que la ranura empiece a abrirse: el texto
+     aparece en su sitio, no arrastrado por el borde de la ranura. */
+  transition:
+    opacity 380ms var(--ease-out-quart) 140ms,
+    transform 380ms var(--ease-out-quart) 140ms,
+    visibility 0s linear 0s;
+}
+
 /* Pulso en dos capas (revisado 2026-09-02, "mejora el pulso"): un halo
    suave que respira (18→34px) y, encima, un anillo que nace pegado al
    borde y se expande hasta desvanecerse — lectura de "latido", no de
@@ -174,30 +274,6 @@
 }
 .glass-pulse { animation: glass-pulse 3.4s var(--ease-out-quart) infinite; }
 
-/* --- Isotipo 3D en movimiento (2026-09-03) ----------------------------
-   El cliente pidió que los logos 3D no fueran estáticos. En vez de cargar
-   three.js (~600 KB de JS en el LCP para una marca de 112 px), se
-   pre-renderizaron 30 fotogramas de un balanceo de ±10° de la misma
-   escena y viajan como una tira horizontal WebP (~90 KB). La tira se
-   desplaza con `steps()`, así que son fotogramas reales de 3D — no un
-   truco 2D sobre una imagen plana. `alternate` hace el vaivén sin tener
-   que renderizar la vuelta. A 42 ms por fotograma son ~24 fps; el
-   componente baja el valor cuando su división está activa. */
-.molecule-sway { position: absolute; inset: 0; overflow: hidden; }
-.molecule-sway-strip {
-  position: absolute;
-  inset: 0;
-  width: calc(var(--frames) * 100%);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  will-change: transform;
-  animation: molecule-sway calc(var(--frames) * var(--sway-ms, 42ms))
-             steps(var(--frames)) infinite alternate;
-}
-@keyframes molecule-sway {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-100%); }
-}
 .glass-pulse:hover, .glass-pulse:focus-visible {
   animation-play-state: paused;
   box-shadow: var(--shadow-elevate), 0 0 36px 6px color-mix(in srgb, var(--pulse-glow) 60%, transparent);
@@ -210,8 +286,4 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  /* La regla de arriba no sirve para una animación de `steps()`: con
-     duración ~0 la tira recorrería los 30 fotogramas en un parpadeo. Aquí
-     hay que apagarla del todo — queda el primer fotograma fijo. */
-  .molecule-sway-strip { animation: none !important; }
 }

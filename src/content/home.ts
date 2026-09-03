@@ -44,16 +44,18 @@ export const homeHero = {
 // `cta`: solo el nombre de la división ("Labs" / "Tech", en mayúsculas vía
 // CSS) — petición explícita del cliente (2026-09-02), sustituye al
 // "Visitar Labs" / "Visitar Tech" literal que se reutilizaba antes.
+// `molecule`: vuelta a los PNG estáticos originales del cliente
+// (2026-09-03, segunda petición) — se retira el sprite de 30 fotogramas.
+// `body` deja de pasarse al hero: la línea corta de cada mitad la sustituye
+// el bloque desplegado (`divisionInfo`), que dice lo mismo con más detalle.
 export const divisionSplit = [
   {
     id: 'labs',
     href: '/virens-labs',
     name: 'Virens Labs',
     claim: divisionCards.labs.claim,
-    body: divisionCards.labs.body,
     image: { src: '/img/labs-hero-mj.png', alt: '' },
-    molecule: '/img/labs-molecule-3d-sprite.webp',
-    moleculeFrames: 30,
+    molecule: '/img/labs-molecule.png',
     cta: 'Labs',
   },
   {
@@ -61,13 +63,44 @@ export const divisionSplit = [
     href: '/virens-tech',
     name: 'Virens Tech',
     claim: divisionCards.tech.claim,
-    body: divisionCards.tech.body,
     image: { src: '/img/tech-hero-mj.png', alt: '' },
-    molecule: '/img/tech-molecule-3d-sprite.webp',
-    moleculeFrames: 30,
+    molecule: '/img/tech-molecule.png',
     cta: 'Tech',
   },
 ] as const;
+
+// REWRITTEN. Información que la web original publica en la portada de cada
+// división y que la home de acceso perdía por completo (§1.2 problema 01):
+// vuelve al hero, desplegada bajo los botones al activar LABS o TECH.
+// Textos facilitados por el cliente (2026-09-03): son una reescritura suya
+// del literal —`labsHero.lead` en Labs, `techIntro.title` + `techIntro.body`
+// en Tech—, no contenido nuevo. Los servicios son los de la web: los tres
+// literales de `labsIntro.points` y, en Tech, la denominación larga que la
+// página usa en el cuerpo (la corta, la de las pestañas, vive en
+// `techIntro.points` y sigue rigiendo dentro de /virens-tech).
+export const divisionInfo = {
+  labs: {
+    lead: 'En Virens Labs ofrecemos la calidad, el servicio, la competitividad y la fidelidad que nuestros clientes necesitan de su fabricante. Nos ocupamos de la producción para que puedan centrarse en vender sus productos.',
+    servicesLabel: 'Servicios',
+    services: [
+      'Servicio integral de producción',
+      'Acondicionado primario y secundario',
+      'Private label',
+    ],
+  },
+  tech: {
+    lead: 'En Virens Tech ayudamos a nuestros clientes a desarrollar los mejores productos, con exclusividad y fórmulas industrialmente viables. Realizamos ensayos en nuestras cámaras de estabilidad para responder a los requisitos de calidad interna y exportación, y ofrecemos controles y análisis avanzados.',
+    servicesLabel: 'Servicios',
+    services: [
+      'Project management de formulaciones',
+      'R+D y desarrollos galénicos',
+      'Centro de sabores',
+      'Estabilidad de productos',
+      'Laboratorio de control de calidad',
+      'Regulatory consulting',
+    ],
+  },
+} as const;
 
 export const processIntro = {
   eyebrow: 'Proceso',

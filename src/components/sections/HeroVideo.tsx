@@ -67,16 +67,26 @@ export function HeroVideo({ eyebrow, title, subtitle, lead, video, children, mol
 
       <Container className="relative pb-20 lg:pb-28">
         <div className="max-w-[58ch] lg:w-7/12">
-          <Eyebrow className="text-mist-dim">{eyebrow}</Eyebrow>
-          {/* Serif editorial (doc maestro §10.2), mismo tratamiento que el
-              H1 de Home: un único titular por página en Newsreader. */}
+          {/* Sobre imagen, `mist`/`mist-dim` se apagan demasiado — el token
+              está calibrado para superficies planas (ink/surface). Mismo
+              criterio ya aplicado al hero de Home: blanco con opacidad alta. */}
+          <Eyebrow className="text-white/70">{eyebrow}</Eyebrow>
+          {/* 2026-09-04: fuera la serif también aquí. Mismas medidas que el H1
+              de Home —Montserrat semibold, interlineado 1,1, tracking
+              -0,02em—, solo un escalón mayor de cuerpo: allí el titular está
+              obligado a una línea entre las dos moléculas y aquí tiene una
+              columna de 7/12 para respirar. */}
           <KineticHeading
             as="h1"
             text={title}
-            className="mt-6 font-serif text-[length:var(--text-display)] font-semibold leading-[1.02] tracking-[-0.01em] text-white"
+            className="mt-6 text-[length:var(--text-display)] font-semibold leading-[1.1] tracking-[-0.02em] text-white"
           />
-          <p className="mt-5 text-[length:var(--text-lead)] font-normal text-white">{subtitle}</p>
-          {lead && <p className="mt-5 max-w-[var(--measure-max)] text-mist">{lead}</p>}
+          <p className="mt-5 text-[length:var(--text-lead)] font-normal leading-[1.5] text-white">{subtitle}</p>
+          {lead && (
+            <p className="mt-5 max-w-[var(--measure-max)] text-[length:var(--text-body)] leading-[1.65] text-white/85">
+              {lead}
+            </p>
+          )}
           {children && <div className="mt-10">{children}</div>}
         </div>
       </Container>
