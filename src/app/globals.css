@@ -126,6 +126,19 @@
   --radius-panel: 1.25rem; /* 20px */
   --shadow-panel: 0 20px 50px -12px rgba(0, 12, 30, 0.35);
 
+  /* --- Menú: franja vertical (2026-09-04, petición del cliente) ----
+     El desplegable deja de ser una cajita anclada al trigger y pasa a una
+     franja pegada al borde derecho que llega de arriba abajo. Vidrio azul
+     profundo: translúcido + desenfoque de fondo, nunca un fondo plano — de
+     ahí que el color sea un color-mix con transparente y no un hex opaco.
+     Radio 0: la franja toca tres bordes de la pantalla; redondear el cuarto
+     la dejaría flotando a medias. */
+  --menu-rail:      min(25rem, 86vw); /* ancho de la franja */
+  --menu-surface:   color-mix(in srgb, var(--color-blue-deep) 84%, transparent);
+  --menu-edge:      color-mix(in srgb, #FFFFFF 12%, transparent);
+  --menu-trigger:   3rem;   /* 48 — diámetro del trigger en desktop */
+  --menu-fab:       3.5rem; /* 56 — diámetro del trigger flotante en mobile */
+
   /* --- Ritmo vertical de sección (§10.4) ----------------------- */
   --section-compact: 4rem;   /* 64  mobile */
   --section-base:    5rem;   /* 80  mobile */

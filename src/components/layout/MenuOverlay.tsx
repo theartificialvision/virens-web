@@ -1,11 +1,19 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { mainNav } from '@/config/navigation';
 import { site } from '@/config/site';
 import { cn, EASE_OUT_QUART } from '@/lib/utils';
+import { usePrefersReducedMotion } from '@/lib/useReducedMotion';
+
+/** Centro del trigger, en px desde el borde derecho y superior de la ventana. */
+export interface MenuOrigin {
+  right: number;
+  top: number;
+}
 
 function getFocusable(container: HTMLElement): HTMLElement[] {
   return Array.from(
@@ -14,30 +22,36 @@ function getFocusable(container: HTMLElement): HTMLElement[] {
 }
 
 /**
- * Menú principal: panel flotante, nunca a pantalla completa — franja
- * anclada al trigger que la abrió, estilo desplegable de macOS/apple.com
- * (blur + radio + elevación sutil, §2 punto 4 de CLAUDE.md).
- * Desktop (>=lg): ancla arriba-derecha (bajo el botón "Menú" del header),
- * cae hacia abajo. Mobile: ancla abajo-derecha (junto al FAB), crece hacia
- * arriba — mismo componente, solo cambia el anclaje y el signo del offset
- * de entrada, que depende del breakpoint vía JS porque Framer Motion anima
- * valores explícitos, no puede leer un breakpoint de CSS.
+ * Menú principal: **franja vertical de altura completa pegada al borde
+ * derecho** (2026-09-04, petición del cliente). Sustituye al desplegable
+ * anclado al trigger — aquella cajita no aguantaba el peso de la marca.
  *
- * Accesible: trampa de foco real, cierre con Esc y con clic fuera del
- * panel, bloqueo de scroll del body, foco devuelto al trigger (lo
- * gestiona `Header`, que pasa `onClose`).
+ * «Morphing glass»: la franja no entra deslizándose, se *revela* — un
+ * recorte circular que nace en el centro exacto del trigger (`origin`, que
+ * mide `Header` al abrir) y crece hasta cubrirla. Como la superficie es
+ * vidrio (azul profundo translúcido + `backdrop-blur`), lo que se ve es el
+ * botón dilatándose hasta convertirse en la franja, no un panel que aparece
+ * encima. El recorte se ancla al borde derecho de la propia franja, así que
+ * vale igual en desktop (trigger arriba-derecha) que en mobile (trigger
+ * flotante abajo-derecha), sin ramas por breakpoint.
+ *
+ * Accesible: trampa de foco real, cierre con Esc y con clic fuera, bloqueo
+ * de scroll del body, foco devuelto al trigger (lo gestiona `Header`). El
+ * aspa de cerrar es el propio trigger, que se queda por encima de la franja.
+ * `prefers-reduced-motion` (regla 8): sin recorte ni escalonado, un fundido.
  */
-export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => void }) {
+export function MenuOverlay({
+  open,
+  onClose,
+  origin,
+}: {
+  open: boolean;
+  onClose: () => void;
+  origin: MenuOrigin;
+}) {
   const panelRef = useRef<HTMLDivElement>(null);
-  const [isDesktop, setIsDesktop] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia('(min-width: 1024px)');
-    const update = () => setIsDesktop(mq.matches);
-    update();
-    mq.addEventListener('change', update);
-    return () => mq.removeEventListener('change', update);
-  }, []);
+  const pathname = usePathname();
+  const reduced = usePrefersReducedMotion();
 
   useEffect(() => {
     if (!open) return;
@@ -63,10 +77,14 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
       }
     };
 
-    // Un clic fuera del panel cierra el menú, como cualquier desplegable
-    // nativo (ya no cubre toda la pantalla en ningún breakpoint).
+    // Un clic fuera cierra, como cualquier desplegable nativo. El trigger
+    // queda excluido: si no, cerraría aquí y su propio onClick volvería a
+    // abrir en el mismo gesto — el aspa no llegaba a cerrar nunca.
     const onPointerDown = (e: PointerEvent) => {
-      if (e.target instanceof Node && !panel.contains(e.target)) onClose();
+      if (!(e.target instanceof Node)) return;
+      if (panel.contains(e.target)) return;
+      if (e.target instanceof Element && e.target.closest('[data-menu-trigger]')) return;
+      onClose();
     };
 
     document.addEventListener('keydown', onKeyDown);
@@ -85,6 +103,12 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
     };
   }, [open, onClose]);
 
+  // Mismo formato en los dos extremos (solo cambia el radio) para que la
+  // interpolación de Framer Motion recorra números equivalentes.
+  const clip = (radius: string) => `circle(${radius} at right ${origin.right}px top ${origin.top}px)`;
+  const closed = clip('0%');
+  const opened = clip('160%');
+
   return (
     <AnimatePresence>
       {open && (
@@ -95,63 +119,106 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
           role="dialog"
           aria-modal="true"
           aria-label="Menú principal"
-          className={cn(
-            'fixed z-[60] flex flex-col overflow-hidden rounded-[length:var(--radius-panel)]',
-            'border border-white/10 bg-blue/95 text-white outline-none backdrop-blur-xl',
-            // Mobile: ancla abajo-derecha, junto al FAB, franja con márgenes.
-            'inset-x-4 bottom-24 max-h-[65vh]',
-            // Desktop: ancla arriba-derecha, bajo el header.
-            'lg:inset-x-auto lg:bottom-auto lg:right-6 lg:top-[4.5rem] lg:max-h-[calc(100vh-6rem)] lg:w-[min(26rem,calc(100vw-3rem))]',
-          )}
-          style={{ boxShadow: 'var(--shadow-panel)' }}
-          initial={{ opacity: 0, y: isDesktop ? -8 : 16, scale: 0.97 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: isDesktop ? -8 : 16, scale: 0.97 }}
-          transition={{ duration: 0.22, ease: EASE_OUT_QUART }}
+          className="fixed inset-y-0 right-0 z-[60] flex flex-col overflow-hidden text-white outline-none backdrop-blur-2xl backdrop-saturate-150"
+          style={{
+            width: 'var(--menu-rail)',
+            background: 'var(--menu-surface)',
+            borderLeft: '1px solid var(--menu-edge)',
+            boxShadow: 'var(--shadow-panel)',
+          }}
+          initial={reduced ? { opacity: 0 } : { clipPath: closed }}
+          animate={reduced ? { opacity: 1 } : { clipPath: opened }}
+          exit={reduced ? { opacity: 0 } : { clipPath: closed }}
+          transition={{ duration: reduced ? 0.15 : 0.62, ease: EASE_OUT_QUART }}
         >
-          <div className="flex h-11 shrink-0 items-center justify-between px-5 lg:px-7">
+          {/* Filete de marca en el canto: teal arriba, magenta abajo — las dos
+              divisiones cruzándose, mismo recurso que `DivisionSwitch` (matiz
+              2026-09-01 sobre degradados: señal de marca, no adorno). */}
+          <span
+            aria-hidden
+            className="pointer-events-none absolute inset-y-0 left-0 w-px opacity-60"
+            style={{
+              background:
+                'linear-gradient(to bottom, var(--color-labs-glow), transparent 42%, transparent 58%, var(--color-tech-glow))',
+            }}
+          />
+
+          {/* El aspa de cerrar es el trigger, que flota encima: esta franja
+              solo le reserva el hueco (pr) para no pasarle por debajo. */}
+          <div className="flex shrink-0 items-center px-8 pb-6 pr-24 pt-6 lg:pt-[1.625rem]">
             <LocaleSwitch />
-            <button type="button" onClick={onClose} className="text-[13px] font-semibold uppercase tracking-[0.18em]">
-              Cerrar &times;
-            </button>
           </div>
 
-          <nav className="min-h-0 flex-1 overflow-y-auto px-5 lg:px-7">
+          <nav className="flex min-h-0 flex-1 flex-col justify-center overflow-y-auto px-8 py-4">
             <ul>
-              {mainNav.map((item, i) => (
-                <motion.li
-                  key={item.href}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.04 + i * 0.03, duration: 0.25 }}
-                  className="border-b border-white/10 last:border-b-0"
-                >
-                  <Link
-                    href={item.href}
-                    onClick={onClose}
-                    className="flex items-center gap-4 py-3.5 text-[1.375rem] font-medium leading-tight"
+              {mainNav.map((item, i) => {
+                const active = pathname === item.href;
+                const accent =
+                  item.division === 'labs'
+                    ? 'var(--color-labs-glow)'
+                    : item.division === 'tech'
+                      ? 'var(--color-tech-glow)'
+                      : undefined;
+
+                return (
+                  <motion.li
+                    key={item.href}
+                    initial={reduced ? false : { opacity: 0, x: 18 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: reduced ? 0 : 0.16 + i * 0.05, duration: 0.5, ease: EASE_OUT_QUART }}
+                    className="border-b border-white/[0.07] last:border-b-0"
                   >
-                    {item.division && (
+                    <Link
+                      href={item.href}
+                      onClick={onClose}
+                      aria-current={active ? 'page' : undefined}
+                      className="group/item flex items-center gap-5 py-4"
+                    >
+                      {/* Filete-guía: crece al pasar el ratón y ya viene crecido
+                          en la página actual. Sustituye al taco de color que
+                          llevaban solo Labs y Tech — ahora las seis entradas
+                          comparten sistema y el color sigue distinguiendo a las
+                          dos divisiones. */}
                       <span
                         aria-hidden
-                        className="block h-5 w-[3px] shrink-0"
-                        style={{ background: item.division === 'labs' ? 'var(--color-labs)' : 'var(--color-tech)' }}
+                        className={cn(
+                          'block h-px shrink-0 transition-[width,opacity] duration-500 ease-[var(--ease-out-quart)]',
+                          active
+                            ? 'w-10 opacity-100'
+                            : 'w-4 opacity-45 group-hover/item:w-10 group-hover/item:opacity-100',
+                        )}
+                        style={{ background: accent ?? 'currentColor' }}
                       />
-                    )}
-                    {item.label}
-                  </Link>
-                </motion.li>
-              ))}
+                      <span
+                        className={cn(
+                          'text-[length:var(--text-h3)] font-medium leading-tight tracking-[-0.015em]',
+                          'transition-[transform,color] duration-500 ease-[var(--ease-out-quart)] group-hover/item:translate-x-1',
+                          active ? 'text-white' : 'text-white/80 group-hover/item:text-white',
+                        )}
+                      >
+                        {item.label}
+                      </span>
+                    </Link>
+                  </motion.li>
+                );
+              })}
             </ul>
           </nav>
 
-          <div className="shrink-0 border-t border-white/10 px-5 py-4 text-[12px] leading-relaxed text-white/70 lg:px-7">
+          {/* Holgura inferior extra en mobile: ahí el trigger flota justo
+              encima de esta esquina. */}
+          <div className="shrink-0 border-t border-white/10 px-8 pb-24 pt-6 text-[length:var(--text-note)] leading-relaxed text-mist lg:pb-8">
             <p>
               {site.contact.street} · {site.contact.city}
             </p>
-            <p>
-              <a href={`tel:${site.contact.phone}`}>{site.contact.phoneDisplay}</a> ·{' '}
-              <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+            <p className="mt-1">
+              <a href={`tel:${site.contact.phone}`} className="transition-colors hover:text-white">
+                {site.contact.phoneDisplay}
+              </a>{' '}
+              ·{' '}
+              <a href={`mailto:${site.contact.email}`} className="transition-colors hover:text-white">
+                {site.contact.email}
+              </a>
             </p>
           </div>
         </motion.div>
@@ -162,15 +229,14 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
 
 /**
  * Trasladado aquí desde `Header` el 2026-09-02 (petición del cliente: fuera
- * de la cabecera fija, junto al trigger). Vive siempre sobre el panel azul
- * del menú, por eso ya no necesita la variante clara/oscura que tenía en
- * el header.
+ * de la cabecera fija, junto al trigger). Vive siempre sobre la franja azul
+ * del menú, por eso ya no necesita la variante clara/oscura del header.
  */
 function LocaleSwitch() {
   return (
-    <div className="flex items-center gap-3 text-[12px] font-semibold tracking-[0.14em] text-white">
+    <div className="flex items-center gap-3 text-[length:var(--text-note)] font-semibold tracking-[0.18em] text-white">
       <span aria-current="true">ES</span>
-      <span className="opacity-40">·</span>
+      <span className="opacity-30">·</span>
       <Link href="/en" className="opacity-60 transition-opacity hover:opacity-100">
         EN
       </Link>

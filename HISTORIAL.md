@@ -778,3 +778,43 @@ ajustes sobre la versión oscura con los isotipos 3D. Nada más.
   64 px. A 0,4 no llegaba a integrar el metal en la foto; a 0,55 lo asienta
   sin leerse como efecto.
 - `npm run typecheck` limpio. Sin errores de consola.
+
+### 2026-09-04 (5) — Claude Code — Menú: franja vertical y trigger sin texto
+
+Petición directa del cliente: "el menú está espantoso, que no diga menú, y
+ese icono de hamburguesa está fatal; al abrirlo quiero una franja vertical
+que llegue hasta abajo, elegante, morphing glass, azul profundo".
+
+- **Fuera la palabra "Menú".** El trigger queda como botón circular de
+  vidrio (48 px en desktop, 56 el flotante de mobile) con el glifo solo.
+  Sobre rutas oscuras es vidrio blanco; sobre las claras, vidrio azul
+  tintado — en blanco sobre blanco el botón desaparecía.
+- **Glifo nuevo.** Tres trazos de 1,5 px alineados a la derecha en escalera
+  descendente (100 / 80 / 60 %), que se igualan al pasar el ratón y, al
+  abrir, giran los dos extremos sobre el centro mientras el del medio se
+  retira. Antes eran dos filetes sueltos sin estado de cierre real.
+- **El desplegable pasa a franja vertical** pegada al borde derecho, de
+  arriba abajo (`--menu-rail`, 25 rem / 86 vw), vidrio azul profundo
+  (`--menu-surface`, 84 % de `--color-blue-deep` + `backdrop-blur`) con
+  filete de marca en el canto (teal arriba, magenta abajo). El 84 % es el
+  punto en que el texto secundario sigue legible cuando la franja cae sobre
+  una página clara (/contacto) sin dejar de leerse como vidrio sobre las
+  oscuras. Radio 0: toca tres bordes de pantalla.
+- **"Morphing glass".** La franja no desliza: se revela con un recorte
+  circular que nace en el centro exacto del trigger —`Header` mide su
+  posición al abrir y la pasa como origen— y crece hasta cubrirla, así que
+  el botón parece dilatarse hasta convertirse en la franja. Mismo mecanismo
+  en los dos breakpoints, sin ramas por tamaño. Con
+  `prefers-reduced-motion`, fundido sin recorte ni escalonado (regla 8).
+- **Entradas del menú:** filete-guía que crece al pasar el ratón y ya viene
+  crecido en la página actual (`aria-current`), con el color de la división
+  en Labs y Tech. Antes solo esas dos llevaban un taco de color y no había
+  señal de página activa.
+- **Arreglado de paso:** el trigger de mobile no llegaba a cerrar nunca (el
+  cierre por clic fuera se disparaba antes y su propio `onClick` volvía a
+  abrir en el mismo gesto); ahora el listener excluye `[data-menu-trigger]`.
+  La franja fija de la cabecera ya no intercepta clics del hero
+  (`pointer-events-none`, solo el botón recupera el puntero).
+- Verificado en 1440×900 y 390×844, ruta oscura (/) y clara (/contacto):
+  apertura, fotograma intermedio del recorte, estado abierto y glifo a 4×.
+  `npm run typecheck` limpio.
