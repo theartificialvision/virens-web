@@ -133,7 +133,7 @@
      ahí que el color sea un color-mix con transparente y no un hex opaco.
      Radio 0: la franja toca tres bordes de la pantalla; redondear el cuarto
      la dejaría flotando a medias. */
-  --menu-rail:      min(25rem, 86vw); /* ancho de la franja */
+  --menu-rail:      min(20rem, 78vw); /* ancho de la franja */
   --menu-surface:   color-mix(in srgb, var(--color-blue-deep) 84%, transparent);
   --menu-edge:      color-mix(in srgb, #FFFFFF 12%, transparent);
   --menu-trigger:   3rem;   /* 48 — diámetro del trigger en desktop */

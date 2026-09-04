@@ -9,12 +9,6 @@ import { site } from '@/config/site';
 import { cn, EASE_OUT_QUART } from '@/lib/utils';
 import { usePrefersReducedMotion } from '@/lib/useReducedMotion';
 
-/** Centro del trigger, en px desde el borde derecho y superior de la ventana. */
-export interface MenuOrigin {
-  right: number;
-  top: number;
-}
-
 function getFocusable(container: HTMLElement): HTMLElement[] {
   return Array.from(
     container.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'),
@@ -26,29 +20,20 @@ function getFocusable(container: HTMLElement): HTMLElement[] {
  * derecho** (2026-09-04, petición del cliente). Sustituye al desplegable
  * anclado al trigger — aquella cajita no aguantaba el peso de la marca.
  *
- * «Morphing glass»: la franja no entra deslizándose, se *revela* — un
- * recorte circular que nace en el centro exacto del trigger (`origin`, que
- * mide `Header` al abrir) y crece hasta cubrirla. Como la superficie es
- * vidrio (azul profundo translúcido + `backdrop-blur`), lo que se ve es el
- * botón dilatándose hasta convertirse en la franja, no un panel que aparece
- * encima. El recorte se ancla al borde derecho de la propia franja, así que
- * vale igual en desktop (trigger arriba-derecha) que en mobile (trigger
- * flotante abajo-derecha), sin ramas por breakpoint.
+ * Entra deslizándose desde el borde derecho (segunda vuelta del cliente el
+ * mismo día: el recorte circular que la revelaba desde el trigger era
+ * demasiado aparatoso). Un solo movimiento, sin rebote y sin escala: la
+ * franja ya está en su sitio, solo estaba fuera de cuadro. Vidrio azul
+ * profundo (`--menu-surface`) para que el contenido siga insinuándose
+ * detrás.
  *
  * Accesible: trampa de foco real, cierre con Esc y con clic fuera, bloqueo
  * de scroll del body, foco devuelto al trigger (lo gestiona `Header`). El
  * aspa de cerrar es el propio trigger, que se queda por encima de la franja.
- * `prefers-reduced-motion` (regla 8): sin recorte ni escalonado, un fundido.
+ * `prefers-reduced-motion` (regla 8): sin deslizamiento ni escalonado, un
+ * fundido.
  */
-export function MenuOverlay({
-  open,
-  onClose,
-  origin,
-}: {
-  open: boolean;
-  onClose: () => void;
-  origin: MenuOrigin;
-}) {
+export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => void }) {
   const panelRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const reduced = usePrefersReducedMotion();
@@ -103,12 +88,6 @@ export function MenuOverlay({
     };
   }, [open, onClose]);
 
-  // Mismo formato en los dos extremos (solo cambia el radio) para que la
-  // interpolación de Framer Motion recorra números equivalentes.
-  const clip = (radius: string) => `circle(${radius} at right ${origin.right}px top ${origin.top}px)`;
-  const closed = clip('0%');
-  const opened = clip('160%');
-
   return (
     <AnimatePresence>
       {open && (
@@ -126,17 +105,17 @@ export function MenuOverlay({
             borderLeft: '1px solid var(--menu-edge)',
             boxShadow: 'var(--shadow-panel)',
           }}
-          initial={reduced ? { opacity: 0 } : { clipPath: closed }}
-          animate={reduced ? { opacity: 1 } : { clipPath: opened }}
-          exit={reduced ? { opacity: 0 } : { clipPath: closed }}
-          transition={{ duration: reduced ? 0.15 : 0.62, ease: EASE_OUT_QUART }}
+          initial={reduced ? { opacity: 0 } : { x: '100%' }}
+          animate={reduced ? { opacity: 1 } : { x: 0 }}
+          exit={reduced ? { opacity: 0 } : { x: '100%' }}
+          transition={{ duration: reduced ? 0.15 : 0.48, ease: EASE_OUT_QUART }}
         >
           {/* Filete de marca en el canto: teal arriba, magenta abajo — las dos
               divisiones cruzándose, mismo recurso que `DivisionSwitch` (matiz
               2026-09-01 sobre degradados: señal de marca, no adorno). */}
           <span
             aria-hidden
-            className="pointer-events-none absolute inset-y-0 left-0 w-px opacity-60"
+            className="pointer-events-none absolute inset-y-0 left-0 w-px opacity-40"
             style={{
               background:
                 'linear-gradient(to bottom, var(--color-labs-glow), transparent 42%, transparent 58%, var(--color-tech-glow))',
@@ -145,11 +124,11 @@ export function MenuOverlay({
 
           {/* El aspa de cerrar es el trigger, que flota encima: esta franja
               solo le reserva el hueco (pr) para no pasarle por debajo. */}
-          <div className="flex shrink-0 items-center px-8 pb-6 pr-24 pt-6 lg:pt-[1.625rem]">
+          <div className="flex shrink-0 items-center px-7 pb-6 pr-24 pt-6 lg:pt-[1.625rem]">
             <LocaleSwitch />
           </div>
 
-          <nav className="flex min-h-0 flex-1 flex-col justify-center overflow-y-auto px-8 py-4">
+          <nav className="flex min-h-0 flex-1 flex-col justify-center overflow-y-auto px-7 py-4">
             <ul>
               {mainNav.map((item, i) => {
                 const active = pathname === item.href;
@@ -161,18 +140,20 @@ export function MenuOverlay({
                       : undefined;
 
                 return (
+                  // La franja ya entra en bloque: los ítems solo se funden,
+                  // escalonados. Un segundo desplazamiento por ítem sobre el
+                  // deslizamiento del panel se leía como movimiento doble.
                   <motion.li
                     key={item.href}
-                    initial={reduced ? false : { opacity: 0, x: 18 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: reduced ? 0 : 0.16 + i * 0.05, duration: 0.5, ease: EASE_OUT_QUART }}
-                    className="border-b border-white/[0.07] last:border-b-0"
+                    initial={reduced ? false : { opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: reduced ? 0 : 0.2 + i * 0.045, duration: 0.45, ease: EASE_OUT_QUART }}
                   >
                     <Link
                       href={item.href}
                       onClick={onClose}
                       aria-current={active ? 'page' : undefined}
-                      className="group/item flex items-center gap-5 py-4"
+                      className="group/item flex items-center gap-4 py-3.5"
                     >
                       {/* Filete-guía: crece al pasar el ratón y ya viene crecido
                           en la página actual. Sustituye al taco de color que
@@ -184,16 +165,16 @@ export function MenuOverlay({
                         className={cn(
                           'block h-px shrink-0 transition-[width,opacity] duration-500 ease-[var(--ease-out-quart)]',
                           active
-                            ? 'w-10 opacity-100'
-                            : 'w-4 opacity-45 group-hover/item:w-10 group-hover/item:opacity-100',
+                            ? 'w-8 opacity-90'
+                            : 'w-3 opacity-30 group-hover/item:w-8 group-hover/item:opacity-90',
                         )}
                         style={{ background: accent ?? 'currentColor' }}
                       />
                       <span
                         className={cn(
-                          'text-[length:var(--text-h3)] font-medium leading-tight tracking-[-0.015em]',
+                          'text-[length:var(--text-h4)] font-normal leading-tight tracking-[0.005em]',
                           'transition-[transform,color] duration-500 ease-[var(--ease-out-quart)] group-hover/item:translate-x-1',
-                          active ? 'text-white' : 'text-white/80 group-hover/item:text-white',
+                          active ? 'text-white' : 'text-white/70 group-hover/item:text-white',
                         )}
                       >
                         {item.label}
@@ -207,11 +188,14 @@ export function MenuOverlay({
 
           {/* Holgura inferior extra en mobile: ahí el trigger flota justo
               encima de esta esquina. */}
-          <div className="shrink-0 border-t border-white/10 px-8 pb-24 pt-6 text-[length:var(--text-note)] leading-relaxed text-mist lg:pb-8">
+          <div className="shrink-0 border-t border-white/[0.08] px-7 pb-24 pt-6 text-[length:var(--text-note)] leading-relaxed text-mist lg:pb-8">
+            {/* Dos líneas, no una con separador: en una franja de 20 rem la
+                dirección partía por donde caía, no por donde tiene sentido. */}
+            <p>{site.contact.street}</p>
             <p>
-              {site.contact.street} · {site.contact.city}
+              {site.contact.postalCode} {site.contact.city}
             </p>
-            <p className="mt-1">
+            <p className="mt-2">
               <a href={`tel:${site.contact.phone}`} className="transition-colors hover:text-white">
                 {site.contact.phoneDisplay}
               </a>{' '}

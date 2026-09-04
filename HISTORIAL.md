@@ -818,3 +818,30 @@ que llegue hasta abajo, elegante, morphing glass, azul profundo".
 - Verificado en 1440×900 y 390×844, ruta oscura (/) y clara (/contacto):
   apertura, fotograma intermedio del recorte, estado abierto y glifo a 4×.
   `npm run typecheck` limpio.
+
+### 2026-09-04 (6) — Claude Code — Menú: deslizamiento, franja más estrecha y tipografía ligera
+
+Segunda vuelta sobre el menú, misma tarde: "animación entra desliza por la
+derecha, menos ancho, más elegante sutil, no tan negrita la letra".
+
+- **Entrada por deslizamiento.** Fuera el recorte circular que revelaba la
+  franja desde el trigger: ahora entra desde el borde derecho (`x` de 100 % a
+  0, 480 ms). Un solo movimiento. `Header` deja de medir la posición de su
+  botón — el movimiento ya no nace de él, solo lo dispara.
+- **Menos ancho.** `--menu-rail` de `min(25rem, 86vw)` a `min(20rem, 78vw)`
+  (400 → 320 px en desktop; 304 px en un móvil de 390). Relleno lateral de
+  32 a 28 px.
+- **Tipografía menos pesada.** Las entradas bajan de `--text-h3` a
+  `--text-h4` y de `font-medium` a `font-normal` (Montserrat solo carga
+  400/500/600/700: 400 es lo más ligero disponible sin sumar un archivo de
+  fuente). Blanco al 70 % en reposo, 100 % en hover y en la página actual.
+- **Más sutil.** Fuera los filetes entre entradas —el ritmo lo da el
+  espacio—, filete-guía de 12 a 32 px (antes 16 → 40) al 30 % de opacidad en
+  reposo, y el filete de marca del canto baja de 60 a 40 %.
+- Los ítems ya solo se funden escalonados: el desplazamiento por ítem sobre
+  el deslizamiento del panel se leía como movimiento doble.
+- La dirección del pie del panel pasa a dos líneas (calle / CP + ciudad): en
+  una franja de 20 rem partía por donde caía.
+- Verificado sobre el build de producción (`next start`) en 1440×900 y
+  390×844: entrada, estado abierto y cierre. `npm run typecheck` limpio y
+  `npm run build` correcto.

@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { DARK_ROUTES } from '@/config/navigation';
-import { MenuOverlay, type MenuOrigin } from './MenuOverlay';
+import { MenuOverlay } from './MenuOverlay';
 
 /**
  * Cabecera: sin barra de fondo, sin logotipo de texto. Solo el trigger del
@@ -21,9 +21,10 @@ import { MenuOverlay, type MenuOrigin } from './MenuOverlay';
  * **2026-09-04, petición del cliente ("el menú está espantoso"):** fuera
  * también la palabra "Menú" — el trigger queda como un botón circular de
  * vidrio con el glifo solo, y el glifo se rehace (ver `MenuGlyph`). El panel
- * pasa a ser una franja vertical de altura completa (`MenuOverlay`), que
- * nace del propio trigger: por eso se mide su centro al abrir y se le pasa
- * como origen del recorte.
+ * pasa a ser una franja vertical de altura completa (`MenuOverlay`), que en
+ * la segunda vuelta del mismo día entra deslizándose desde el borde derecho:
+ * por eso el trigger ya no mide su propia posición — el movimiento no nace
+ * de él, solo lo dispara.
  *
  * El trigger vive arriba-derecha en desktop. En mobile se sustituye por un
  * botón flotante fijo abajo-derecha, al alcance del pulgar.
@@ -32,9 +33,6 @@ export function Header() {
   const pathname = usePathname();
 
   const [open, setOpen] = useState(false);
-  // Centro del trigger que abrió el menú, en px desde el borde derecho y
-  // superior de la ventana: es el punto del que "brota" la franja.
-  const [origin, setOrigin] = useState<MenuOrigin>({ right: 64, top: 44 });
   const desktopTriggerRef = useRef<HTMLButtonElement>(null);
   const mobileTriggerRef = useRef<HTMLButtonElement>(null);
   const lastTrigger = useRef<'desktop' | 'mobile'>('desktop');
@@ -46,11 +44,6 @@ export function Header() {
 
   function openMenu(from: 'desktop' | 'mobile') {
     lastTrigger.current = from;
-    const el = (from === 'desktop' ? desktopTriggerRef : mobileTriggerRef).current;
-    if (el) {
-      const r = el.getBoundingClientRect();
-      setOrigin({ right: window.innerWidth - (r.left + r.width / 2), top: r.top + r.height / 2 });
-    }
     setOpen(true);
   }
 
@@ -107,7 +100,7 @@ export function Header() {
         <MenuGlyph open={open} />
       </button>
 
-      <MenuOverlay open={open} onClose={closeMenu} origin={origin} />
+      <MenuOverlay open={open} onClose={closeMenu} />
     </>
   );
 }
