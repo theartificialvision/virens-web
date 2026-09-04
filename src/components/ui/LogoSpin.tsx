@@ -31,6 +31,7 @@ export function LogoSpin({
   assemble,
   hold,
   phase = 0,
+  glow,
   className,
   sizes,
 }: {
@@ -41,6 +42,9 @@ export function LogoSpin({
   assemble: number;
   hold: number;
   phase?: number;
+  /** Color del contraluz: un halo radial difuso detrás del isotipo, para que
+   *  el volumen metálico asiente sobre la fotografía en vez de flotar. */
+  glow?: string;
   className?: string;
   sizes: string;
 }) {
@@ -78,6 +82,16 @@ export function LogoSpin({
 
   return (
     <span className={cn('relative block', className)}>
+      {/* Contraluz (2026-09-04): radial del color de la división, difuso y
+          por debajo del póster y del canvas. Sutil a propósito — es lo que
+          integra el metal en la foto, no un efecto en sí mismo. */}
+      {glow && (
+        <span
+          aria-hidden
+          className="pointer-events-none absolute inset-0 scale-[1.6] rounded-full opacity-55 blur-3xl"
+          style={{ background: `radial-gradient(circle at 50% 55%, ${glow} 0%, transparent 58%)` }}
+        />
+      )}
       <Image
         src={poster}
         alt=""

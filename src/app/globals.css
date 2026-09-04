@@ -104,9 +104,13 @@
      un portátil de 720 px de alto.
      Tamaño del isotipo: grande en reposo, de firma al activar — con el logo a
      tamaño de reposo, claim + párrafo + seis servicios no caben en pantalla. */
-  --hero-lead-min: 7rem;    /* 112 */
-  --hero-logo:      clamp(7rem, 18vw, 18rem);    /* 112 -> 288 */
-  --hero-logo-sm:   clamp(4.5rem, 7vw, 8rem);     /*  72 -> 128 */
+  /* 2026-09-04 (4): isotipos más grandes en los dos estados. El de firma
+     pasa de 7vw a 10vw —el salto de 2,7× al activar leía como "extremadamente
+     más pequeño"— y el sitio vertical sale de recortar la holgura bajo la nav
+     (112 -> 96) y los espacios del estado activo. */
+  --hero-lead-min: 6rem;    /* 96 */
+  --hero-logo:      clamp(8rem, 22vw, 22rem);    /* 128 -> 352 */
+  --hero-logo-sm:   clamp(5.5rem, 10vw, 10rem);  /*  88 -> 160 */
 
   /* --- Layout -------------------------------------------------- */
   --container-max:  90rem;   /* 1440 */

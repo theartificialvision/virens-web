@@ -6,6 +6,7 @@ import { Eyebrow } from '@/components/ui/Eyebrow';
 import { KineticHeading } from '@/components/ui/KineticHeading';
 import { LogoSpin } from '@/components/ui/LogoSpin';
 import { useCoarsePointer } from '@/lib/usePointer';
+import { divisionGlow } from '@/lib/utils';
 import { DivisionButton } from './DivisionButton';
 import { DivisionHalf } from './DivisionHalf';
 import { DivisionInfo } from './DivisionInfo';
@@ -133,8 +134,9 @@ export function DivisionSplit({
                 // Medio ciclo de desfase entre los dos: se abren y se cierran
                 // alternándose, no al unísono como un metrónomo.
                 phase={i * 0.5}
+                glow={divisionGlow[half.id]}
                 className="hero-logo"
-                sizes="(max-width: 1024px) 128px, 248px"
+                sizes="(max-width: 1024px) 160px, 352px"
               />
             </div>
           ))}
@@ -147,7 +149,7 @@ export function DivisionSplit({
             TECH no altera la altura ni desplaza los botones. */}
         <div className="hero-slot w-full" data-open={active !== null}>
           <div>
-            <div className="hero-stack pt-6">
+            <div className="hero-stack pt-5">
               {halves.map((half) => (
                 <h2
                   key={half.id}
@@ -162,7 +164,7 @@ export function DivisionSplit({
           </div>
         </div>
 
-        <div className="mt-7 flex flex-wrap items-center justify-center gap-6 sm:gap-10 lg:gap-14 2xl:gap-20">
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-6 sm:gap-10 lg:gap-14 2xl:gap-20">
           {halves.map((half) => (
             <DivisionButton
               key={half.id}
@@ -181,7 +183,7 @@ export function DivisionSplit({
             de modo que sus seis servicios nunca quedan cortados. */}
         <div className="hero-slot w-full" data-open={active !== null} aria-live="polite">
           <div>
-            <div className="hero-stack pt-6">
+            <div className="hero-stack pt-5">
               {halves.map((half) => (
                 <DivisionInfo
                   key={half.id}

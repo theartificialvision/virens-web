@@ -22,7 +22,7 @@ const S = 0.001;          // 1 px del logo original = 1 mm
 const R_LINK = 0.04;      // radio de la barra de enlace
 const FILLET = 0.052;     // radio del acuerdo cóncavo nodo↔barra
 const SEPARATION = 0.16;  // fracción del ancho que se aparta cada mitad
-const FIT = 1.3;          // holgura de encuadre para la fase abierta
+const FIT = 1.06;         // holgura sobre la pose ABIERTA (ya medida): casi ninguna
 
 interface LogoSpec {
   /** Eje del degradado en el plano del logo. */
@@ -393,6 +393,30 @@ export function mountLogoSpin(host: HTMLElement, opts: LogoSpinOptions): LogoSpi
   const obj = buildLogo(opts.logo);
   scene.add(obj);
 
+  /* Radio de encuadre, calculado UNA sola vez y con las dos mitades abiertas
+     del todo. Antes se recalculaba en cada `resize()` recorriendo toda la
+     geometría (Box3.setFromObject), y como la banda de isotipos anima su
+     tamaño durante 620 ms, el ResizeObserver lo disparaba en cada fotograma
+     de la transición: ese era el origen de los tirones, no los FPS del bucle.
+     De paso, medir siempre la pose abierta deja el encuadre quieto durante
+     todo el ciclo en vez de reajustarlo según la pose de ese instante. */
+  const fitRadius = (() => {
+    const partes = (obj.userData as { parts: THREE.Group[] }).parts;
+    const guardadas = partes.map((pt) => pt.position.clone());
+    for (const pt of partes) {
+      const d = pt.userData as PartData;
+      pt.position.copy(d.base).addScaledVector(d.dir, d.dist);
+    }
+    obj.updateMatrixWorld(true);
+    const r = new THREE.Box3().setFromObject(obj).getBoundingSphere(new THREE.Sphere()).radius;
+    partes.forEach((pt, i) => {
+      const g = guardadas[i];
+      if (g) pt.position.copy(g);
+    });
+    obj.updateMatrixWorld(true);
+    return r;
+  })();
+
   let stopped = false;
   let visible = true;
   let yaw = 0.6;
@@ -430,24 +454,45 @@ export function mountLogoSpin(host: HTMLElement, opts: LogoSpinOptions): LogoSpi
     renderer.render(scene, camera);
   }
 
+  let lastW = 0;
+  let lastH = 0;
+
   function resize() {
     const w = host.clientWidth || 320;
     const h = host.clientHeight || 320;
+    if (w === lastW && h === lastH) return;
+    lastW = w;
+    lastH = h;
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.setSize(w, h, false);
     camera.aspect = w / h;
-    const sph = new THREE.Box3().setFromObject(obj).getBoundingSphere(new THREE.Sphere());
     const fov = (camera.fov * Math.PI) / 180;
-    const fitH = sph.radius / Math.sin(fov / 2);
-    const fitW = sph.radius / Math.sin(Math.atan(Math.tan(fov / 2) * camera.aspect));
-    const d = Math.max(fitH, fitW) * FIT;
-    camera.position.set(0, 0, d);
+    const fitH = fitRadius / Math.sin(fov / 2);
+    const fitW = fitRadius / Math.sin(Math.atan(Math.tan(fov / 2) * camera.aspect));
+    camera.position.set(0, 0, Math.max(fitH, fitW) * FIT);
     camera.lookAt(0, 0, 0);
     camera.updateProjectionMatrix();
     frame(true);
   }
 
-  const ro = new ResizeObserver(() => resize());
+  let resizeTimer: number | null = null;
+  let lastResizeAt = 0;
+  const RESIZE_EVERY = 160;
+  const onResize = () => {
+    const ahora = performance.now();
+    if (lastW === 0 || ahora - lastResizeAt >= RESIZE_EVERY) {
+      lastResizeAt = ahora;
+      resize();
+    }
+    // Llamada de cola: el último tamaño de la transición siempre se aplica.
+    if (resizeTimer !== null) window.clearTimeout(resizeTimer);
+    resizeTimer = window.setTimeout(() => {
+      resizeTimer = null;
+      lastResizeAt = performance.now();
+      resize();
+    }, RESIZE_EVERY);
+  };
+  const ro = new ResizeObserver(onResize);
   ro.observe(host);
   const io = new IntersectionObserver((entries) => {
     const first = entries[0];
@@ -500,6 +545,7 @@ export function mountLogoSpin(host: HTMLElement, opts: LogoSpinOptions): LogoSpi
       stopped = true;
       ro.disconnect();
       io.disconnect();
+      if (resizeTimer !== null) window.clearTimeout(resizeTimer);
       if (onMove) window.removeEventListener('pointermove', onMove);
       obj.traverse((o) => {
         const m = o as THREE.Mesh;

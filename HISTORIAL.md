@@ -742,3 +742,39 @@ los isotipos al centro y el titular arriba.
   centrado horizontal y vertical, ranura contraria replegada, titular sin
   moverse al activar, holgura de los seis servicios, botones en viewport y
   `prefers-reduced-motion` (un fotograma, sin rAF). Sin errores de consola.
+
+### 2026-09-04 (4) — Claude Code — Isotipos más grandes, contraluz y fluidez
+
+Tras revertir el pivote a claro (`229a49a`, decisión del cliente), tres
+ajustes sobre la versión oscura con los isotipos 3D. Nada más.
+
+- **Fluidez.** Dos causas reales de tirones, ninguna era el bucle de rAF:
+  - `resize()` recorría toda la geometría (`Box3.setFromObject`) para
+    recalcular el encuadre, y como la banda de isotipos anima su tamaño
+    620 ms, el `ResizeObserver` lo disparaba en cada fotograma de la
+    transición. El radio se calcula ahora **una sola vez**, con las mitades
+    abiertas del todo, y `resize()` sale si las medidas no han cambiado.
+  - Cada `resize()` reasigna además el búfer de dibujo WebGL (`setSize`):
+    ~37 reasignaciones por transición y canvas a 60 fps. Se limitan a **una
+    cada 160 ms más una de cola** cuando la transición se asienta; entre
+    medias el canvas se estira por CSS (imperceptible en movimiento) y
+    termina nítido — verificado: búfer 144 px = 144 px CSS × dpr al asentar.
+  - Sin supersampling: costaría GPU y lo que se pide es fluidez.
+  - Nota: la prueba headless con GL por software no puede mostrar la
+    mejora — solo produce ~3 fotogramas en los 620 ms de transición—; la
+    garantía es estructural, no medida en este entorno.
+- **Isotipos más grandes en los dos estados.** Reposo de 18vw a **22vw**
+  (274 → 317 px en 1440) y firma de 7vw a **10vw** (101 → 144 px). El salto al
+  activar baja de 2,7× a 2,2×. Además, **encuadre más ceñido**: el `FIT` de
+  1,3 venía del original, que medía la pose del momento; como el radio ya es
+  el de la pose abierta, era holgura sobre holgura y la marca cerrada se
+  quedaba en ~55 % de su caja. Con 1,06 crece un 23 % más sin tocar el
+  layout. El sitio vertical sale de la holgura bajo la nav (112 → 96 px) y
+  de 4 px en cada uno de los tres espacios del estado activo. Verificado en
+  1280, 1366, 1440 y 1920: botones dentro del viewport en reposo y los seis
+  servicios de Tech sin recortar (holgura mínima 5 px a 1366×768).
+- **Contraluz.** Radial difuso del color de la división (`--color-*-glow`)
+  detrás del póster y del canvas, escala 1,6, opacidad 0,55, desenfoque
+  64 px. A 0,4 no llegaba a integrar el metal en la foto; a 0,55 lo asienta
+  sin leerse como efecto.
+- `npm run typecheck` limpio. Sin errores de consola.
