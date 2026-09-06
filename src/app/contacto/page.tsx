@@ -23,12 +23,15 @@ export const metadata: Metadata = {
 export default function ContactoPage() {
   return (
     <Section tone="white" rhythm="air" className="contact-stage pt-40 lg:pt-52">
-      {/* NO LITERAL: fotografía candidata de la sesión Midjourney, la misma que
-          el hero de Labs, a la espera del reportaje propio de la planta (§9.2).
+      {/* 06/09 (8): fuera la de la sesión Midjourney. Era una nave genérica de
+          IA y el cliente la rechazó por anticuada. Pasa a la línea de envasado
+          en blanco y negro que aportó él mismo —la misma tanda que aprobó para
+          el hero— así que la página deja de depender de material provisional y
+          entra en la dirección visual vigente: fotografía B/N, nada de tinte.
           Decorativa —el contenido lo dan los datos de al lado—, de ahí el alt
-          vacío. */}
+          vacío. Sigue pendiente el reportaje propio de la planta (§9.2). */}
       <div className="contact-photo">
-        <Image src="/img/labs-hero-mj.png" alt="" fill priority sizes="100vw" quality={85} />
+        <Image src="/img/home-scene-labs.jpg" alt="" fill priority sizes="100vw" quality={85} />
       </div>
 
       <Container>

@@ -1367,3 +1367,40 @@ pasando. Móvil real a 390 sin desbordamiento. Sin errores de consola.
 `prefers-reduced-motion` lo cubre el bloque que ya existía: dentro de
 `.home-stage` se anulan `animation` y `transition`, así que el latido no
 arranca y la flecha aparece sin deslizarse.
+
+### 2026-09-06 (8) — Claude Code — Contacto: fuera la foto de Midjourney
+
+Rechazo directo de Toni: la fotografía de `/contacto` "es antigua". Era
+`labs-hero-mj.png`, la nave genérica de la sesión Midjourney, que ya estaba
+marcada en el propio código como material provisional a la espera del reportaje
+de planta. Tenía razón: es una imagen de IA sin relación con las instalaciones
+reales y además se quedó fuera de la dirección aprobada en (5), que pide
+fotografía en blanco y negro.
+
+- **Pasa a `home-scene-labs.jpg`**, la línea de envasado en B/N de la misma
+  tanda que aportó el cliente y que él mismo aprobó para el hero. Con eso la
+  página deja de depender de material provisional y entra en la dirección
+  vigente: una sola familia fotográfica en toda la web.
+- **Encuadre a `68% center`** en vez de `center 62%`. No es estético: en esa
+  foto la operaria y la línea llena están a la derecha, así que desplazando el
+  encuadre el lado izquierdo —donde caen el titular, la dirección, el teléfono
+  y el párrafo— queda sobre la mesa vacía y se lee mucho mejor.
+- **`grayscale(1)` explícito** aunque el archivo ya venga en gris: así la página
+  no depende de que el siguiente que se cuelgue aquí también lo esté.
+- El velo no se toca. Estaba calibrado para una foto con maquinaria oscura en la
+  banda media y la nueva es más clara justo ahí, así que solo puede mejorar.
+
+**Contraste medido** (se oculta el texto, se captura el fondo real bajo cada
+bloque y se calcula WCAG píxel a píxel; el peor caso para texto oscuro es el
+píxel más oscuro del fondo):
+
+| bloque | medio | peor |
+|---|---|---|
+| dirección (`--color-blue`) | 12,88:1 | 10,81:1 |
+| nota (`--color-gray-700`) | 7,27:1 | 6,80:1 |
+
+Muy por encima del 4,5:1 de AA. Verificado también a 390 px de viewport real:
+sin desbordamiento y el trigger flotante libre de los campos.
+
+**Sigue pendiente** el reportaje fotográfico propio de la planta (§9.2). Esto
+es la mejor foto disponible, no la definitiva.

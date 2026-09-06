@@ -655,7 +655,15 @@
 }
 /* El encuadre baja del centro: la nave es simétrica y con el centro exacto la
    línea de fuga queda demasiado alta detrás del titular. */
-.contact-photo img { object-fit: cover; object-position: center 62%; }
+/* B/N explícito: el archivo ya viene en gris, pero así la página no depende de
+   que el siguiente que se cuelgue aquí también lo esté. Encuadre a la derecha:
+   ahí está la operaria y la línea llena; el lado izquierdo, que es donde cae el
+   texto, queda con la mesa vacía y se lee mucho mejor. */
+.contact-photo img {
+  object-fit: cover;
+  object-position: 68% center;
+  filter: grayscale(1) contrast(1.06);
+}
 
 /* Velo. En el mockup la esquina superior izquierda es casi blanca —ahí caen el
    rótulo y el H1— y la planta se va destapando hacia abajo. Se resuelve con
