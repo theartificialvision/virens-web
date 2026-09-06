@@ -845,3 +845,476 @@ derecha, menos ancho, más elegante sutil, no tan negrita la letra".
 - Verificado sobre el build de producción (`next start`) en 1440×900 y
   390×844: entrada, estado abierto y cierre. `npm run typecheck` limpio y
   `npm run build` correcto.
+
+
+### 2026-09-06 — Codex — Home de presentación: azul, Labs y Tech
+
+- Referencias aportadas por el cliente: Home(V2).jpg, Home(Labs).jpg y Home(Tech).jpg.
+- Confirmación explícita: titular en inglés y composición limpia; sin párrafo ni listado de servicios dentro del hero.
+- Hero inicial con fotografía azul a sangre, dos marcas 3D y wordmarks VIRENS labs / VIRENS tech. Montserrat 700 en titular, nombres y botones; 400 en subtítulo y VIRENS.
+- Al pulsar una división, su marca y botón se centran y el fondo cambia a turquesa o magenta. La siguiente pulsación navega a la división. Flecha de retorno y Escape recuperan la composición azul; el foco vuelve al enlace correspondiente.
+- Tres fondos derivados de las referencias con ImageGen, sin textos ni logos incrustados. Guardados como home-presentation-{blue,labs,tech}.jpg. Son imágenes de presentación, no fotografía documental de instalaciones.
+- Se mantienen los modelos 3D del proyecto, sin pasar el halo `glow`; movimiento más pausado. Los textos y fotos ya no se apilan en bandas separadas en móvil.
+- Se conserva el contenido corporativo inferior de Inicio y las otras rutas.
+- Verificación: build de producción completado en el proyecto original; Montserrat 700/400 comprobado; ambos estados y retorno por teclado; navegación a Labs; sin desbordamiento horizontal en 1920, 1265, 390 y 320 px. Ajuste de altura para evitar que el menú flotante se superponga a los botones en 320×568.
+- Dependencias reinstaladas con npm ci para este Mac, conservando package.json y package-lock.json.
+
+### 2026-09-06 (2) — Claude Code — Revisión del pase de Codex: higiene de git, código muerto y carga de fondos
+
+Repaso de la entrada anterior. No se toca la composición ni el copy: la
+decisión de diseño es del cliente y está tomada.
+
+- **Finales de línea.** `git status` marcaba 36 archivos; solo 5 tenían cambio
+  real. Los otros 31 eran puro CRLF del ida y vuelta con el VPS Windows, y
+  enterraban el trabajo bajo 3.159 líneas de ruido. Restaurados los 31
+  (`git checkout`, el diff con `--ignore-cr-at-eol` confirmaba que no perdían
+  nada), normalizado `HISTORIAL.md` —venía mezclado CRLF/LF— y añadido
+  `.gitattributes` con `* text=auto eol=lf` más los binarios marcados, para
+  que no vuelva a ocurrir. El diff queda en **335 líneas, 5 archivos**.
+- **Código muerto del hero anterior.** El rediseño dejó huérfano todo el
+  mecanismo del split: se eliminan `DivisionHalf.tsx`, `DivisionInfo.tsx`,
+  `DivisionButton.tsx` y `lib/usePointer.ts` (el hook existía solo para
+  decidir qué hacía el primer toque sobre LABS/TECH), más 180 líneas de
+  `globals.css`: el bloque `.division-split`, los nueve `.hero-*`, el
+  `glass-pulse` y las variables `--text-hero-claim`, `--hero-lead-min`,
+  `--hero-logo` y `--hero-logo-sm`. globals.css baja de 539 a 359 líneas.
+- **`homeHero` y `divisionInfo` NO se borran.** También están sin uso, pero son
+  copy que escribió el cliente a mano y no existe con esa redacción en ningún
+  otro sitio del repo. Quedan marcados en `content/home.ts` como "SIN USO desde
+  el 06/09/2026" para que nadie los dé por vivos.
+- **Carga de los tres fondos.** Los tres se pedían antes del primer pintado
+  (`loading="eager"` en Labs y Tech). `loading="lazy"` no habría servido: los
+  tres ocupan el viewport entero, así que para el navegador ya están a la
+  vista aunque su opacidad sea 0 — el aplazamiento tenía que ser **de
+  montaje**. El azul sigue con `priority` (es el LCP); Labs y Tech se montan
+  en `requestIdleCallback` (timeout 3 s, `setTimeout` de 1,2 s donde no
+  exista), y también de inmediato si el clic llega antes que el hueco de idle,
+  así que el cambio de división sigue sin parpadeo. Verificado sobre el HTML
+  servido: **una sola `<img>` y un solo `preload`, los dos del azul**; Labs y
+  Tech ya solo viajan como dato en el payload RSC.
+- **Medición de los fondos.** El optimizador sirve AVIF: 46 KB el azul, 70 el
+  de Labs, 66 el de Tech. `w=1920` y `w=3840` devuelven **exactamente los
+  mismos bytes**, que es la prueba de que Next topa en el ancho del original.
+- **Pendiente, no resuelto aquí:** los tres originales miden 1672×941. Para un
+  hero a sangre de `100svh` se quedan cortos —en un portátil retina de 1440 el
+  navegador los estira ×1,72— y en el disco no hay fuente mejor: las
+  referencias del cliente son 1920×1080 pero llevan texto y logos incrustados,
+  y la sesión de Midjourney es de 1456×816. Hay que regenerarlos a ≥2880 px de
+  ancho. El código no necesita ningún cambio para aprovecharlo: basta sustituir
+  los archivos.
+- **Detectado, sin tocar:** los JPEG **ya vienen teñidos** (azul, turquesa,
+  magenta) y `.home-backdrop::after` les aplica encima otro tinte en
+  `mix-blend-mode: multiply`. Como los tres tintes tienen el canal rojo a 0
+  (`#00658b`, `#00ada3`, `#bd1064`), el multiply **anula el rojo entero** y
+  además oscurece: el azul deja el verde al 40 % y el azul al 55 %. Es doble
+  trabajo y conviene decidirlo mirándolo — no se cambia porque es una decisión
+  de imagen, no un fallo de código.
+- `npm run typecheck` y `npm run build` limpios (11 rutas estáticas, First Load
+  JS de `/` en 159 kB). `next lint` no se ejecuta: el proyecto no tiene ESLint
+  configurado y la orden abre un asistente interactivo — es previo a este pase.
+
+### 2026-09-06 (3) — Claude Code — Contacto: composición del mockup del cliente
+
+Fase E, primera mitad. Referencia: `contactos.png` del pack
+"virens_web_finales". **El envío del formulario NO se configura** — instrucción
+directa del cliente; aquí solo se levanta la composición y el comportamiento de
+interfaz. `/contacto` era hasta hoy un placeholder con un `TODO`.
+
+- **Composición.** Sección clara a sangre: fotografía de planta al fondo, datos
+  de empresa a la izquierda (rótulo, razón social, filete de marca, dirección,
+  teléfono, GPS y la nota de ubicación) y panel blanco de formulario a la
+  derecha. En móvil se apilan, con los datos primero.
+- **Regla 4 (radio y sombra).** El panel es un elemento flotante único sobre la
+  fotografía, el mismo caso que el desplegable del menú, así que **reutiliza
+  `--radius-panel` y `--shadow-panel`** en vez de estrenar tokens. Para los
+  campos se añade `--radius-field` (10 px): un campo es un control, la misma
+  familia que un botón —al que la regla ya permite radio—, no un bloque de
+  contenido. No abre la puerta a redondear secciones ni rejillas.
+- **Velo sobre la foto, recalibrado.** La del mockup es un primer plano claro y
+  aguanta un velo suave; la disponible es una nave entera con maquinaria oscura
+  en la banda media, justo donde caen el teléfono, el GPS y el párrafo. Con el
+  velo del mockup ese texto no se leía. El blanco sube al 86-94 % en la banda
+  del texto y baja al 58 % por debajo, donde no hay nada escrito y la planta sí
+  puede verse.
+  - De paso, un fallo real: los dos pseudo-elementos del velo caían **detrás**
+    de la foto. `next/image` con `fill` deja un `<img>` posicionado y, entre
+    posicionados sin `z-index`, manda el orden del árbol — el `::before` se
+    pintaba antes que la imagen. Con `z-index: 1` en ambos, resuelto.
+- **Desbordamiento horizontal en móvil.** Los tres botones de departamento
+  usaban `1fr`, que no baja del `min-content`: con los iconos sumaban ≈410 px y
+  ensanchaban toda la página en un móvil de 390. Pasan a `minmax(0, 1fr)`, el
+  panel gana `min-width: 0`, y por debajo de 480 px los tres siguen en línea
+  pero sin icono (el rótulo es lo que hay que conservar). El "Máx. 10MB" del
+  adjunto baja a su propia línea: compartiendo fila partía el rótulo en
+  "Adjuntar arc…".
+  - Nota de método: `--headless` de Chrome **no baja de 500 px de ventana**, así
+    que una captura pedida a 390 es en realidad un recorte de 500 y los media
+    queries de móvil no llegan a dispararse. Lo de arriba se vio metiendo la
+    página en un `<iframe>` de 390, que sí da un viewport real.
+- **Accesibilidad.** Un solo H1; H2 "Dónde estamos" (oculto visualmente, lo pide
+  §14.1 y el mockup no lo dibuja) y "Contactar con". Cada campo lleva `<label>`
+  real aunque el mockup solo enseñe el placeholder: un placeholder desaparece al
+  escribir y no todos los lectores lo anuncian. Departamentos en `fieldset` con
+  `legend`, estado en `aria-pressed`, y el aviso de archivo demasiado grande en
+  `role="alert"`.
+- **Contenido en `content/contacto.ts`** (regla 2). Los datos de empresa no se
+  reescriben: salen de `config/site.ts`. Se mantiene la dirección de `site.ts` y
+  **no** se adopta el "48B" del mockup como confirmación — el conflicto 48-A/48B
+  sigue abierto en `pendingClientConfirmation`.
+
+**Dos cosas que hay que decidir con el cliente:**
+
+1. **Campos.** El mockup pide Nombre · e-mail · Teléfono · Asunto · Mensaje. La
+   recomendación 5 del documento maestro pide Nombre · Empresa · Email · País ·
+   Mensaje. Coinciden en el número (cinco + departamento + adjunto, que era el
+   objetivo: bajar de los 13 actuales) pero no en cuáles: el mockup cambia
+   Empresa y País por Teléfono y Asunto. Se ha seguido el mockup por ser lo más
+   reciente y venir del cliente. Para un CDMO, "Empresa" es probablemente el
+   campo más valioso de los cuatro en disputa.
+2. **H1.** §14.1 fija "Contacto" como H1 de la página; el mockup pone ahí la
+   razón social en grande. Se ha seguido el mockup —es el elemento dominante y
+   un H1 debería serlo— y "Contacto" se queda como rótulo en `<p>`, que es lo
+   que exige la propia regla de §14.1 para los eyebrow.
+
+- Fotografía: se reutiliza `labs-hero-mj.png` (sesión Midjourney), a la espera
+  del reportaje propio de la planta (§9.2). Decorativa, `alt` vacío.
+- Detectado y no tocado: en móvil el trigger flotante del menú se superpone al
+  botón ENVIAR cuando este cae en la esquina inferior derecha. No es de esta
+  página —le pasará a cualquier control ancho al pie— así que se deja para
+  decidirlo en conjunto.
+- `npm run typecheck` y `npm run build` limpios. `/contacto` queda en 3,02 kB y
+  121 kB de First Load JS, estática. Verificado a 1440 y en viewport real de
+  390.
+
+### 2026-09-06 (4) — Claude Code — Hero: fotos en B/N, duotono, líquido, profundidad WebGL y Liquid Glass
+
+Cuatro peticiones del cliente en la misma tarde, todas sobre el hero de Home.
+El resto del trabajo queda aparcado por indicación suya.
+
+**1. Las tres fotos pasan a las copias en blanco y negro** que aportó el
+cliente (`Home Main.jpg`, `Home(Labs) copia.jpg`, `Home(Tech) copia.jpg`),
+guardadas como `home-scene-{blue,labs,tech}.jpg`. Son 1920×1080 — mejor que
+las 1672×941 que había, aunque siguen por debajo de los ~2880 que pediría un
+hero a sangre en un portátil retina. Las tres anteriores
+(`home-presentation-*.jpg`) quedan sin uso; se pueden borrar.
+
+**2. El color deja de venir quemado en el archivo y lo pone el CSS.** Esto es
+lo que resuelve, de paso, el doble tinte que quedó anotado el 06/09: antes el
+JPEG ya venía teñido y encima se le aplicaba otro tinte en `multiply` cuyo
+canal rojo era 0, así que anulaba ese canal entero.
+
+- **Primer intento: `mix-blend-mode: color`.** Respeta la luminancia de la foto,
+  que en teoría es lo que define un duotono. En la práctica no servía: las tres
+  fotos son de estudio y casi todo el encuadre son luces, así que teñía la
+  pantalla del color de la división por igual —Tech salía **rosa chicle**— y el
+  titular blanco se quedaba sin fondo contra el que leerse.
+- **Duotono real, encadenando dos modos.** `multiply(C)` lleva el blanco a C y
+  `screen(D)` lleva el negro a D: en ese orden, las luces acaban en C y las
+  sombras en D. Por eso C es el tono CLARO y D el OSCURO, que leyendo los
+  nombres de los modos resulta contraintuitivo. El color de marca vive ahora en
+  sombras y medios, las luces quedan casi neutras, y eso es lo que se lee como
+  fotografía tratada. Dos capas reales (`.home-tint`, `.home-tone`), no
+  pseudo-elementos: entre posicionados sin `z-index` manda el orden del árbol y
+  un `::before` habría caído por detrás de la foto.
+- Calibrado en tres vueltas mirando las capturas: primero pálido, luego con la
+  base bajada (`brightness .76`, `contrast 1.24`) para que más encuadre caiga
+  en la sombra teñida y el color tuviera dónde vivir.
+
+**3. El líquido.** Tres manchas muy difusas a la deriva por debajo del duotono,
+en `screen`, cada una con su periodo (27/34/41 s) y su vector, para que el
+conjunto no repita un ciclo reconocible. Sin `filter: blur()`: el desenfoque va
+en las paradas del propio degradado, que es gratis; un blur a pantalla completa
+costaría GPU en cada fotograma. Solo se anima `transform`. Las escenas ocultas
+pausan su animación — si no, se paga la GPU de tres fondos para ver uno.
+
+**4. Capa de profundidad en WebGL** (`lib/heroDepth.ts` + `ui/HeroDepth.tsx`),
+a petición directa: "profundidad lab, química". Campo molecular en 3D —nodos y
+enlaces, la identidad del sistema, nunca polvo de estrellas—, con niebla
+exponencial que se come el fondo y `sizeAttenuation` que agranda lo cercano:
+eso es lo que da volumen y no se puede fingir con el `MolecularField` de canvas
+2D, que dibuja en un plano. `three` ya era dependencia (los isotipos): no se ha
+añadido ninguna. Carga por `import()` dinámico tras el primer pintado, pausa
+fuera de pantalla y con la pestaña oculta, y con `prefers-reduced-motion` pinta
+un fotograma y no abre bucle (regla 8). Enmascarada en el centro, que es donde
+vive el titular y donde un punto de luz por detrás de una letra la rompe.
+**First Load JS de `/` sin cambio real: 160 kB** — three sigue fuera del bundle
+inicial.
+
+**5. Liquid Glass** como material único del sistema (`.glass` en globals.css),
+aplicado a los botones de división, la flecha de retorno, el trigger del menú y
+la franja del menú. Cuatro cosas lo definen y las cuatro tienen que estar:
+desenfoque **con saturación** (sin ella parece plástico esmerilado), un cuerpo
+blanco muy bajo, un filo especular de 1 px que cambia de brillo a lo largo del
+contorno (resuelto con `mask-composite`, porque un `border` solo admite un
+color) y una sombra de contacto corta. Variante `.glass-ink` para las rutas
+claras, donde un vidrio blanco sobre blanco desaparecería.
+
+- **Fallo propio, corregido:** `.glass` llevaba `position: relative`. Esa regla
+  va sin capa, así que **le gana al `fixed` de Tailwind**: la franja del menú
+  se salió de su sitio y empujó la página entera. El material ya no declara ni
+  posición ni color — solo de qué está hecho el elemento; dónde va y de qué
+  color es su texto lo decide quien lo usa.
+
+**6. Interacción del hero, según lo pedido:** el primer paso enseña, el segundo
+entra. Con ratón, pasar por encima ya desplaza la sección y el clic entra; en
+táctil el primer toque desplaza y el segundo entra; con teclado el foco
+desplaza y Enter entra. **El hover no navega solo**, y es deliberado: con el
+puntero cruzando la pantalla, navegar sin clic significa acabar en Labs sin
+haberlo pedido.
+
+Dos errores reales encontrados al probarlo con el navegador conducido, no
+leyendo el código:
+
+- **Escape no cerraba** si habías llegado por hover. El `onKeyDown` estaba en el
+  `<section>` y el foco seguía en el `<body>`: la tecla no burbujea desde fuera.
+  Pasa a un listener de documento.
+- **Al cerrar, se reabría solo.** El botón vuelve a su mitad barriendo por
+  debajo del cursor, que sigue quieto, y ese barrido dispara un `mouseenter`.
+  Se ignora el hover hasta que el ratón se mueva de verdad: un elemento que
+  pasa por debajo del puntero no es un gesto del usuario.
+- **En táctil, un solo toque hacía los dos pasos.** Tocar un enlace lo enfoca, el
+  `onFocus` seleccionaba y el `click` que viene detrás ya veía la división
+  activa y navegaba. El foco solo selecciona con puntero fino.
+
+Nota de método: el `--headless` de Chrome **no baja de 500 px de ventana**, así
+que una captura pedida a 390 es un recorte de 500 y los media queries de móvil
+no llegan a dispararse; y para probar el táctil hay que emular `hover: none` y
+`pointer: coarse` por CDP, porque Playwright no toca esas media features. Las
+tres cosas se comprobaron con el navegador real conducido desde el scratchpad
+(`playwright-core` instalado **fuera del proyecto**: no se ha añadido ninguna
+dependencia a `package.json`).
+
+- `npm run typecheck` y `npm run build` limpios. Sin errores de consola.
+- **Pendiente:** `DivisionSplit.tsx` está en 285 líneas y la regla del proyecto
+  pide separar a partir de 150. Toca partirlo (fondos por un lado, composición
+  por otro) en la próxima pasada.
+
+---
+
+# TRASPASO — 2026-09-06, cierre de sesión
+
+Escrito para que otra herramienta (Muse u otra) lo lea **en frío**, sin contexto
+previo de la conversación. Si acabas de abrir este proyecto, empieza aquí.
+
+## Veredicto del cliente sobre lo último: RECHAZADO
+
+Literal: *"efectos 2007 pusiste"*. Se refiere al hero de Home tras la sesión del
+06/09 (entrada 4 de más arriba). **Tiene razón y conviene no discutirlo**: un
+campo de partículas con enlaces, mezcla aditiva y halos de color sobre una
+fotografía es el lenguaje visual de la web "tecnológica" de 2007-2012 (Flash,
+`particles.js`, fondos de constelaciones). Hoy lee como plantilla, no como
+laboratorio farmacéutico premium.
+
+El código está escrito, comentado, probado y funciona. **El problema no es la
+ejecución: es la dirección de arte.** No hace falta depurarlo — hace falta
+decidir otra cosa.
+
+### Qué es exactamente lo que no funciona
+
+1. **`lib/heroDepth.ts` + `ui/HeroDepth.tsx`** — el campo molecular WebGL. Es lo
+   que dispara el "2007". Candidato claro a eliminarse entero.
+2. **`.home-liquid`** (globals.css) — las manchas de color a la deriva. Mismo
+   problema en menor grado: color que se mueve por moverse.
+3. **El duotono** (`.home-tint` / `.home-tone`) es defendible como tratamiento
+   fotográfico, pero está haciendo demasiado trabajo: tiñe la pantalla entera de
+   un color plano y eso aplana la imagen en vez de darle cuerpo.
+4. **El `.glass`** es correcto como material y está bien construido (filo
+   especular con `mask-composite`, desenfoque con saturación). Se puede
+   conservar. Lo que sobra es la cantidad de efecto alrededor.
+
+### La lección, para no repetirla
+
+Se llegó aquí **parcheando**: el cliente pedía una cosa, se añadía una capa;
+pedía otra, otra capa. Cinco capas después el hero tiene duotono + líquido +
+partículas 3D + viñeta + scrim + vidrio, y ninguna decisión viene de una
+dirección de arte, solo de la petición anterior. Lo premium casi nunca es
+*añadir* — es tipografía, fotografía buena, espacio y un movimiento contenido.
+
+**No seguir añadiendo capas al hero. Parar y decidir la dirección primero.**
+
+## Estado real del proyecto
+
+Next.js 15 (App Router) · TypeScript estricto · Tailwind v4 · Framer Motion ·
+three.js. `npm run typecheck` y `npm run build` pasan limpios. 11 rutas
+estáticas. Nada commiteado: **todo está en el working tree**, pendiente de
+revisión.
+
+| Ruta | Estado |
+|---|---|
+| `/` | Hero de presentación. Composición y UX correctas; **el tratamiento visual, rechazado**. Debajo, contenido corporativo heredado sin revisar. |
+| `/contacto` | Hecha esta sesión desde el mockup del cliente. **No rechazada.** El envío del formulario NO está configurado, por decisión del cliente. |
+| `/compania` `/virens-labs` `/virens-tech` `/noticias` | De sesiones anteriores. Sin revisar en esta. |
+
+### Lo que sí funciona y conviene conservar
+
+- **La interacción del hero.** Dos pasos: el primero enseña, el segundo entra.
+  Con ratón el hover desplaza y el clic entra; en táctil el primer toque
+  desplaza y el segundo entra; con teclado el foco desplaza y Enter entra. Está
+  probada con navegador real y resuelve tres fallos nada evidentes (ver entrada
+  4). Si se rehace el hero, **conservar esta lógica**: costó encontrarla.
+- **`/contacto`**, íntegra.
+- **El material `.glass`**, como material.
+- **Toda la higiene**: `.gitattributes` (el CRLF del VPS Windows enterraba los
+  diffs), la carga diferida de los fondos, el código muerto ya retirado.
+
+### Deuda conocida
+
+- `DivisionSplit.tsx`: 285 líneas. La regla del proyecto pide separar a partir
+  de 150.
+- `public/img/home-presentation-{blue,labs,tech}.jpg`: sin uso desde que
+  entraron las copias en B/N. Borrables.
+- `homeHero` y `divisionInfo` en `content/home.ts`: sin uso, conservados a
+  propósito por ser copy del cliente. Marcados en el archivo.
+- Fotos de hero a 1920×1080; un hero a sangre en retina pediría ~2880.
+- Sin ESLint configurado: `next lint` abre un asistente interactivo. Es previo.
+- `divisionColor` / `divisionGlow` en `lib/utils.ts`: sin uso.
+
+### Decisiones cerradas que NO hay que volver a abrir
+
+- Stack cerrado (nada de Astro, Vite, Remix). Se resuelve dentro de Next.
+- Titular de Home en inglés y composición limpia, sin párrafo ni servicios.
+- Departamentos del formulario: Comercial / Compras / RRHH.
+- Menú como franja vertical derecha, sin la palabra "Menú".
+- Sin seguimiento continuo del ratón: el cliente se marea.
+
+### Abierto, pendiente del cliente
+
+- **Campos del formulario**: el mockup pide Nombre/e-mail/Teléfono/Asunto/
+  Mensaje; el documento maestro pide Nombre/Empresa/Email/País/Mensaje. Para un
+  CDMO, "Empresa" es probablemente el campo más valioso de los que el mockup
+  quita.
+- **Dirección postal**: 48-A vs 48B, sin unificar (ya en
+  `site.pendingClientConfirmation`).
+- **H1 de `/contacto`**: se siguió el mockup (razón social) en vez del documento
+  ("Contacto").
+- Y ahora, lo principal: **la dirección de arte del hero**.
+
+## Cómo se prueba esto (ahorra una tarde)
+
+- `npm run dev` → http://localhost:3000
+- El `--headless` de Chrome **no baja de 500 px de ventana**: una captura pedida
+  a 390 es un recorte de 500 y los media queries de móvil no se disparan. Para
+  ver móvil de verdad, meter la página en un `<iframe width="390">`.
+- Para probar el táctil hay que emular `hover: none` y `pointer: coarse` por
+  CDP: Playwright no toca esas media features y sin ello el código cree que hay
+  ratón.
+- Se usó `playwright-core` con `channel: 'chrome'` (el Chrome ya instalado, sin
+  descargar navegadores), **instalado fuera del proyecto**. `package.json` no
+  tiene dependencias nuevas y no debe tenerlas sin avisar.
+
+## Prompt de arranque para la siguiente sesión
+
+En `docs/PROMPT-direccion-de-arte.md`. Está escrito para pegarse tal cual en una
+terminal nueva —Muse o la herramienta que sea— y obliga a leer las reglas, el
+histórico, el documento maestro y los mockups **antes de escribir una línea**, y
+a entregar una dirección de arte defendida antes que código. Se le prohíbe
+explícitamente añadir otra capa de efecto al hero, que es como se llegó aquí.
+
+### 2026-09-06 (5) — Muse — Dirección aprobada e implementada: fuera el "2007"
+
+El cliente aprobó la dirección (foto como protagonista, color como señal,
+movimiento casi nulo) y pidió tirar para adelante. Se implementa tal cual,
+sin reabrir nada cerrado.
+
+**Dirección (resumen de lo defendido):** en 3 segundos, un comprador farma
+debe sentir que esto fabrica de verdad — *industrial, preciso, solvente*. La
+calidad sale de la fotografía (prueba documental), no del efecto; tipografía
+y espacio se subordinan (sin cambios: Montserrat, aire, filetes). Movimiento:
+casi ninguno — solo las transiciones de estado de la interacción ya aprobada.
+Referencias robadas: Lonza (foto de planta a sangre, cero decoración),
+Catalent (divisiones como puertas, color mínimo como señal), Sartorius/
+instrumentación científica (aire, numeración, filete 1px).
+
+**Qué se ha quitado:**
+- `lib/heroDepth.ts` + `ui/HeroDepth.tsx` — el campo molecular WebGL entero
+  (era lo que disparaba el "2007"; además violaba §9.4 del maestro, que
+  prohíbe partículas/redes genéricas). three.js sigue como dependencia: la
+  usa `LogoSpin`, que se conserva por decisión vigente del cliente.
+- `.home-tint` / `.home-tone` — el duotono a pantalla completa. Sobre fotos
+  tan claras aplanaba en vez de dar cuerpo (Tech rosa chicle).
+- `.home-liquid` + derivas — color en deriva sin significado.
+- `home-breathe` — la foto queda quieta; solo transiciona al cambiar de escena
+  (fundido 800 ms, parte de la interacción aprobada, no ambiente).
+- Viñeta + scrim elíptico (`--home-depth`, `--home-scrim`, `--home-hi/lo-*`,
+  `--home-liquid-*`, `--home-labs/tech-ink`, `divisionColor`/`divisionGlow`).
+- `home-presentation-{blue,labs,tech}.jpg` (sin uso desde las B/N) y los
+  `*-molecule-3d-sprite.webp` siguen en disco sin referencias — si en un mes
+  nadie los reclama, fuera.
+
+**Qué se ha puesto:** un velo neutro tinta único (`.home-shade`,
+`--home-veil-top/mid/low` 0.44/0.52/0.66, más cargado abajo) y un
+filete-señal de 3 px bajo cada wordmark con el color de su división
+(`.home-rule`, `--color-labs`/`--color-tech`). Botones `.glass` intactos.
+
+**Qué NO se ha tocado:** la interacción de dos pasos (misma lógica, mismos
+tres gestos, mismos guardias `hoverLocked`/`skipFocusSelect`), el copy, la
+tipografía, `/contacto`, el material `.glass`, la carga diferida de fondos.
+
+**Deuda saldada:** `DivisionSplit` (285 líneas) partido en cuatro —
+`DivisionSplit` (estado + gestos, 150), `DivisionBackdrops` (fondos),
+`DivisionMarks` (isotipos + wordmarks + filete), `DivisionActions`
+(botones). Comentario de `content/home.ts` actualizado (ya no hay tinte
+que se mueva).
+
+**Verificación:** `npm run typecheck` y `npm run build` limpios (11 rutas,
+`/` en 3.48 kB / 159 kB First Load — three sigue fuera del inicial).
+**PENDIENTE, no verificado aquí:** el navegador. Este entorno no puede
+levantar el servidor (el sandbox bloquea `listen` y no hay perfil para
+escalar), así que faltan por mirar: contraste real del velo sobre cada foto
+(el cálculo anterior daba 4,67:1 con el duotono; el velo nuevo hay que
+remedirlo — el texto del hero es grande, objetivo 3:1), los tres gestos en
+navegador real y el táctil por CDP. Hacerlo antes de enseñar al cliente.
+
+**Nota de build:** el primer `npm run build` de la sesión falló con
+`Cannot find module './vendor-chunks/framer-motion.js'` — caché `.next`
+rancia, no del código. `rm -rf .next` y a la primera, como ya pasó el 04/09.
+
+### 2026-09-06 (6) — Claude Code — Verificación en navegador de la entrada (5)
+
+Muse dejó la entrada (5) marcada como **"PENDIENTE, no verificado aquí: el
+navegador"** — su entorno no puede levantar el servidor. Esto es exactamente
+eso: no se ha cambiado ni una línea de su trabajo, solo se ha comprobado.
+
+**Veredicto: la dirección funciona y no hay regresiones.** Se puede enseñar al
+cliente.
+
+- **Limpieza real.** `lib/heroDepth.ts` y `ui/HeroDepth.tsx` borrados de disco;
+  cero referencias huérfanas a `HeroDepth`, `heroDepth`, `home-liquid`,
+  `home-tint`, `home-tone`, `home-breathe` ni `divisionGlow` en todo `src/`.
+- **La interacción sobrevive al refactor**, que era el riesgo real de partir el
+  componente en cuatro. Comprobados con navegador conducido los siete pasos:
+  inicio → home; hover labs → labs; ratón fuera → home; hover tech → tech;
+  Escape → home; foco labs → labs; clic → navega a /virens-labs. Y en táctil,
+  con `hover: none` y `pointer: coarse` emulados por CDP: primer toque → labs
+  sin salir de `/`, segundo toque → `/virens-labs`. Los dos guardias
+  (`hoverLocked`, `skipFocusSelect`) siguen haciendo su trabajo.
+- **Contraste del velo, medido.** Se oculta la composición, se captura el
+  fondo real bajo la caja del H1 y se calcula la luminancia WCAG píxel a píxel
+  contra el blanco del titular:
+
+  | escena | medio | p95 | peor píxel |
+  |---|---|---|---|
+  | home | 10,17:1 | 6,84:1 | 5,53:1 |
+  | labs | 8,93:1 | 5,21:1 | 4,77:1 |
+  | tech | 7,24:1 | 5,27:1 | 4,72:1 |
+
+  El objetivo que se fijó era 3:1 (texto grande). **Incluso el peor píxel
+  aislado da 4,72:1**, que además cumple el 4,5:1 de texto normal. El velo
+  neutro no solo no empeoró el contraste respecto al duotono (4,67:1): lo
+  mejora en todas las escenas. Queda cerrado el punto que quedaba abierto.
+- **Móvil real (viewport de 390 dentro de un `<iframe>`, no un recorte de las
+  capturas headless):** isotipos sobre wordmarks, filete de marca visible,
+  titular a dos líneas, los dos botones en fila y sin desbordamiento
+  horizontal. El trigger flotante no pisa los botones.
+- `npm run typecheck` y `npm run build` limpios tras `rm -rf .next`. 11 rutas
+  estáticas, `/` en 3,56 kB y 159 kB de First Load JS. Sin errores de consola.
+
+**Lo que sigue abierto y no lo arregla esto:** las fotos son 1920×1080 y un
+hero a sangre en retina pediría ~2880; el `LogoSpin` sigue siendo el único uso
+de three.js; y quedan en disco `*-molecule-3d-sprite.webp` sin referencias.
+
+Nota para quien retome: el `--headless` de Chrome **no baja de 500 px de
+ventana**, así que una captura pedida a 390 es un recorte de 500 y los media
+queries de móvil ni se disparan. Y Playwright no emula `hover`/`pointer`: hay
+que hacerlo por CDP con `Emulation.setEmulatedMedia`. Sin esas dos cosas, la
+verificación de móvil y táctil es falsa.

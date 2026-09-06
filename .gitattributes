@@ -1,0 +1,17 @@
+# El proyecto se sincroniza desde un VPS Windows: sin esto, cada ida y vuelta
+# reescribe los finales de línea de todos los archivos y el diff real
+# (5 archivos) queda enterrado bajo 31 de puro CRLF.
+* text=auto eol=lf
+
+# Binarios: que git no intente normalizarlos nunca.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
+*.avif binary
+*.mp4 binary
+*.woff binary
+*.woff2 binary
+*.psd binary
+*.ai  binary
+*.pdf binary

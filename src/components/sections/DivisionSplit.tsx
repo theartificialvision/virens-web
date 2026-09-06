@@ -1,212 +1,150 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
-import type { Division, DivisionHalfData, DivisionInfoData } from '@/lib/types';
-import { Eyebrow } from '@/components/ui/Eyebrow';
-import { KineticHeading } from '@/components/ui/KineticHeading';
-import { LogoSpin } from '@/components/ui/LogoSpin';
+import { useEffect, useRef, useState } from 'react';
+import type { Division, DivisionHalfData } from '@/lib/types';
+import { DivisionActions } from '@/components/sections/DivisionActions';
+import { DivisionBackdrops } from '@/components/sections/DivisionBackdrops';
+import { DivisionMarks } from '@/components/sections/DivisionMarks';
 import { useCoarsePointer } from '@/lib/usePointer';
-import { divisionGlow } from '@/lib/utils';
-import { DivisionButton } from './DivisionButton';
-import { DivisionHalf } from './DivisionHalf';
-import { DivisionInfo } from './DivisionInfo';
 
-/** Giro del isotipo: vuelta entera, ciclo de apertura y reposo, en segundos. */
-const LOGO_MOTION = { spin: 8, assemble: 14, hold: 1.8 } as const;
-
-/**
- * Hero Labs/Tech de la HOME (bloque 01, sustituye al vídeo). Mitad y mitad a
- * sangre, cada lado con el tono de su marca; sobre la costura, un único bloque
- * de texto centrado con los dos isotipos y los dos botones.
- *
- * **2026-09-04, cuarta vuelta.** El titular deja de estar centrado y se ancla
- * arriba; el centro pasa a ser de los isotipos, ahora en 3D y girando
- * (`LogoSpin`). Cada isotipo vive en una ranura que replica el reparto de las
- * mitades (`--half-basis`): en reposo cae en el centro de SU mitad y, cuando
- * su división se lleva el ancho completo, queda centrado en todo el hero.
- *
- * Al activar una división el isotipo se reduce a tamaño de firma. No es
- * capricho: con el logo a tamaño de reposo, el claim, el párrafo y los seis
- * servicios de Tech se salen de la pantalla en cualquier portátil, y que esos
- * seis servicios se lean enteros es requisito explícito.
- *
- * El movimiento sigue siendo una sola transición contenida: la columna reparte
- * su sobrante entre tres espaciadores cuyo `flex-grow` se interpola
- * (`.hero-space`, globals.css), y las ranuras de texto abren de `0fr` a `1fr`.
- * Labs y Tech comparten celda de rejilla, así que cambiar de división no
- * desplaza nada.
- */
-export function DivisionSplit({
-  halves,
-  info,
-  eyebrow,
-  title,
-  subtitle,
-}: {
-  halves: readonly [DivisionHalfData, DivisionHalfData];
-  info: Record<Division, DivisionInfoData>;
-  eyebrow: string;
+type Presentation = {
   title: string;
   subtitle: string;
+  brand: string;
+  resetLabel: string;
+  previewLabel: string;
+  enterLabel: string;
+  image: { src: string; alt: string };
+};
+
+/**
+ * Hero de Home: presentación de dos divisiones (dirección 06/09/2026 (5)).
+ *
+ * **Interacción (06/09/2026 (2), petición del cliente).** Son siempre DOS
+ * pasos: el primero enseña la división, el segundo entra. Lo que cambia es el
+ * gesto según con qué se navegue, porque un ratón puede señalar sin decidir y
+ * un dedo no:
+ *
+ * - Ratón: pasar por encima ya desplaza la sección; el clic entra.
+ * - Táctil: el primer toque desplaza; el segundo entra.
+ * - Teclado: el foco desplaza; Enter entra.
+ *
+ * El hover **no** navega por sí solo, y es deliberado: con el puntero cruzando
+ * la pantalla, navegar sin clic significa acabar en Labs sin haberlo pedido.
+ * El primer paso siempre informa, el segundo siempre decide.
+ *
+ * Se vuelve al azul saliendo del hero con el ratón, sacando el foco, con
+ * Escape o con la flecha. Logos y controles conservan sus nodos al centrarse.
+ *
+ * Los fondos viven en `DivisionBackdrops` y las marcas en `DivisionMarks`:
+ * aquí solo quedan el estado, los gestos y la composición.
+ */
+export function DivisionSplit({ halves, presentation }: {
+  halves: readonly [DivisionHalfData, DivisionHalfData];
+  presentation: Presentation;
 }) {
   const [active, setActive] = useState<Division | null>(null);
+  const links = useRef<Partial<Record<Division, HTMLAnchorElement | null>>>({});
+  const stage = useRef<HTMLElement>(null);
   const coarse = useCoarsePointer();
-  const rootRef = useRef<HTMLDivElement>(null);
+  // `reset()` devuelve el foco al enlace de la división que se cierra, y ese
+  // foco volvería a seleccionarla al instante. Esta bandera se salta ese
+  // primer `focus` — sin ella, cerrar con Escape reabre en el mismo gesto.
+  const skipFocusSelect = useRef(false);
+  // Al cerrar, el botón vuelve a su mitad barriendo por debajo del cursor, que
+  // sigue quieto donde estaba. Ese barrido dispara un `mouseenter` que
+  // reseleccionaba la división y hacía que Escape pareciera no funcionar. Se
+  // ignora el hover hasta que el ratón se mueva de verdad: un elemento que
+  // pasa por debajo del puntero no es un gesto del usuario.
+  const hoverLocked = useRef(false);
 
-  const close = useCallback(() => setActive(null), []);
+  /** Cierre deliberado (flecha de retorno): devuelve el foco a su enlace,
+   *  porque el botón que se acaba de pulsar desaparece con el cierre. */
+  function reset() {
+    const previous = active;
+    hoverLocked.current = true;
+    setActive(null);
+    if (previous) {
+      skipFocusSelect.current = true;
+      links.current[previous]?.focus({ preventScroll: true });
+    }
+  }
 
-  // Táctil: sin puntero que pueda "salir del hero", el cierre lo da un toque
-  // fuera. Con ratón esto no se monta — ahí manda `onMouseLeave`.
+  // Escape a nivel de documento, no de la sección: si se ha llegado por hover
+  // el foco sigue en el <body> y un `onKeyDown` en el <section> no llega a
+  // enterarse — la tecla no burbujea desde fuera. Solo se devuelve el foco si
+  // ya estaba dentro del hero; si el gesto vino del ratón, moverlo sobraría.
   useEffect(() => {
-    if (!coarse || !active) return;
-    const onDown = (e: PointerEvent) => {
-      if (!rootRef.current?.contains(e.target as Node)) close();
-    };
-    document.addEventListener('pointerdown', onDown);
-    return () => document.removeEventListener('pointerdown', onDown);
-  }, [coarse, active, close]);
-
-  /** Mismo reparto que las mitades, para que el isotipo viaje con su lado. */
-  const basisOf = (id: Division) => (!active ? '50%' : active === id ? '100%' : '0%');
+    if (active === null) return;
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key !== 'Escape') return;
+      const inside = stage.current?.contains(document.activeElement);
+      hoverLocked.current = true;
+      setActive(null);
+      if (inside && active) {
+        skipFocusSelect.current = true;
+        links.current[active]?.focus({ preventScroll: true });
+      }
+    }
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [active]);
 
   return (
-    <div
-      ref={rootRef}
-      className="division-split relative flex flex-col lg:h-[100svh] lg:min-h-[50rem] lg:flex-row"
-      // Al abandonar el conjunto del hero (no un botón suelto) se vuelve al
-      // estado inicial: así el puntero puede bajar del botón a su texto sin
-      // que este desaparezca a media lectura.
-      onMouseLeave={coarse ? undefined : close}
-      // Paridad de teclado: el área se cierra cuando el foco sale del hero,
-      // no al abandonar el botón — el mismo criterio que con el ratón.
-      onBlur={(e) => {
-        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) close();
+    <section
+      ref={stage}
+      className="home-stage"
+      data-division={active ?? 'home'}
+      aria-labelledby="home-title"
+      lang="en"
+      // Se sale del hero con el ratón: vuelve el azul. Sin devolver el foco —
+      // el gesto ha sido del puntero, mover el foco aquí daría un salto de
+      // scroll que nadie ha pedido.
+      onMouseLeave={coarse ? undefined : () => setActive(null)}
+      // Un movimiento real del ratón es lo que levanta el bloqueo de arriba.
+      onMouseMove={coarse ? undefined : () => { hoverLocked.current = false; }}
+      // Paridad de teclado con el `mouseleave`: el foco sale del hero, se
+      // cierra. `relatedTarget` nulo (clic fuera) también cuenta como salir.
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setActive(null);
       }}
     >
-      {/* Mobile: banda normal, primero en el flujo (antes de las fotos) — el
-          titular/CTA es lo primero que se lee. Desktop (lg): fuera del flujo,
-          centrada sobre la costura, así que el orden del DOM deja de importar
-          ahí (el z-10 fija el apilado). */}
-      <div
-        data-active={active !== null}
-        className="hero-copy relative z-10 flex flex-col items-center bg-ink px-6 py-10 text-center text-white lg:absolute lg:inset-0 lg:bg-transparent lg:py-0"
+      <DivisionBackdrops halves={halves} presentationImage={presentation.image} active={active} />
+
+      <button
+        type="button"
+        className="home-reset glass"
+        data-visible={active !== null}
+        aria-label={presentation.resetLabel}
+        aria-hidden={active === null}
+        tabIndex={active === null ? -1 : 0}
+        onClick={reset}
       >
-        {/* Holgura fija bajo la navegación: el titular vive arriba, en reposo
-            y activo, así que este espaciador ya no crece. */}
-        <div aria-hidden className="hero-lead-space hidden lg:block" />
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="m14 5-7 7 7 7M7 12h14" />
+        </svg>
+      </button>
 
-        {/* En mobile el logo del header queda justo encima y repetiría este
-            rótulo: solo se muestra en desktop. */}
-        <Eyebrow className="hidden text-white/70 lg:block">{eyebrow}</Eyebrow>
+      <div className="home-composition">
+        <DivisionMarks halves={halves} brand={presentation.brand} active={active} />
 
-        <KineticHeading
-          as="h1"
-          text={title}
-          className="mt-4 max-w-[68rem] text-[length:var(--text-display-compact)] font-semibold leading-[1.1] tracking-[-0.02em] lg:whitespace-nowrap"
+        <div className="home-heading">
+          <h1 id="home-title">{presentation.title}</h1>
+          <p>{presentation.subtitle}</p>
+        </div>
+
+        <DivisionActions
+          halves={halves}
+          active={active}
+          coarse={coarse}
+          previewLabel={presentation.previewLabel}
+          enterLabel={presentation.enterLabel}
+          links={links}
+          skipFocusSelect={skipFocusSelect}
+          hoverLocked={hoverLocked}
+          onSelect={setActive}
         />
-
-        {/* El subtítulo nombra las dos divisiones a la vez: una vez elegida
-            una, sobra. Se pliega con la misma curva que todo lo demás. */}
-        <div className="hero-slot w-full" data-open={active === null}>
-          <div>
-            <p className="mt-4 text-[length:var(--text-lead)] leading-[1.5] text-white/90">{subtitle}</p>
-          </div>
-        </div>
-
-        <div aria-hidden className="hero-space hidden lg:block" style={heroSpace(0.66, 0.5)} />
-
-        {/* Banda de isotipos. Cada ranura replica el reparto de su mitad, así
-            que el centrado horizontal del logo dentro de ella lo lleva al
-            centro de la mitad en reposo y al centro del hero al activarse. */}
-        <div className="hero-logos my-8 lg:my-0">
-          {halves.map((half, i) => (
-            <div
-              key={half.id}
-              className="hero-logo-slot"
-              style={{ ['--half-basis' as string]: basisOf(half.id) }}
-            >
-              <LogoSpin
-                logo={half.logoKey}
-                poster={half.molecule}
-                spin={LOGO_MOTION.spin}
-                assemble={LOGO_MOTION.assemble}
-                hold={LOGO_MOTION.hold}
-                // Medio ciclo de desfase entre los dos: se abren y se cierran
-                // alternándose, no al unísono como un metrónomo.
-                phase={i * 0.5}
-                glow={divisionGlow[half.id]}
-                className="hero-logo"
-                sizes="(max-width: 1024px) 160px, 352px"
-              />
-            </div>
-          ))}
-        </div>
-
-        <div aria-hidden className="hero-space hidden lg:block" style={heroSpace(1, 0.28)} />
-
-        {/* Claim de la división activa, justo encima de los botones. Las dos
-            variantes se apilan en la misma celda, así que cambiar de LABS a
-            TECH no altera la altura ni desplaza los botones. */}
-        <div className="hero-slot w-full" data-open={active !== null}>
-          <div>
-            <div className="hero-stack pt-5">
-              {halves.map((half) => (
-                <h2
-                  key={half.id}
-                  id={`hero-claim-${half.id}`}
-                  className="hero-face text-[length:var(--text-hero-claim)] font-semibold leading-[1.2] tracking-[-0.015em] text-white lg:whitespace-nowrap"
-                  data-active={active === half.id}
-                >
-                  {half.claim}
-                </h2>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-6 sm:gap-10 lg:gap-14 2xl:gap-20">
-          {halves.map((half) => (
-            <DivisionButton
-              key={half.id}
-              id={half.id}
-              href={half.href}
-              cta={half.cta}
-              active={active === half.id}
-              coarse={coarse}
-              onActivate={() => setActive(half.id)}
-            />
-          ))}
-        </div>
-
-        {/* Información del área activa. `aria-live` la anuncia al abrirse con
-            el teclado; la altura reservada es siempre la de Tech (la mayor),
-            de modo que sus seis servicios nunca quedan cortados. */}
-        <div className="hero-slot w-full" data-open={active !== null} aria-live="polite">
-          <div>
-            <div className="hero-stack pt-5">
-              {halves.map((half) => (
-                <DivisionInfo
-                  key={half.id}
-                  id={half.id}
-                  info={info[half.id]}
-                  active={active === half.id}
-                  onHover={() => setActive(half.id)}
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div aria-hidden className="hero-space hidden lg:block" style={heroSpace(1, 0.12)} />
       </div>
-
-      <DivisionHalf {...halves[0]} side="left" activeDivision={active} />
-      <DivisionHalf {...halves[1]} side="right" activeDivision={active} />
-    </div>
+    </section>
   );
-}
-
-/** Reparto del sobrante vertical de un espaciador: en reposo y al activar. */
-function heroSpace(rest: number, activeGrow: number): React.CSSProperties {
-  return { ['--grow-rest' as string]: rest, ['--grow-active' as string]: activeGrow };
 }

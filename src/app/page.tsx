@@ -6,25 +6,17 @@ import { Container } from '@/components/ui/Container';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Reveal } from '@/components/ui/Reveal';
 import { valueChain } from '@/content/company';
-import { divisionInfo, divisionSplit, homeHero, homeStats, processIntro } from '@/content/home';
-import { site } from '@/config/site';
+import { divisionSplit, homePresentation, homeStats, processIntro } from '@/content/home';
 
-/**
- * HOME. La web actual es una pantalla de acceso con dos palabras en inglés:
- * aquí informa antes de bifurcar (§13.1) — pero el hero pasa a ser el split
- * Labs/Tech (pivote 2026-09-02, decisión directa del cliente): "3 segundos
- * para entender que Virens son dos divisiones" es ahora lo primero, no el
- * vídeo. El titular compartido (claim/subclaim de `site`) hace de H1.
+/** Home: hero de presentación (referencias del cliente, 06/09/2026).
+ * Composición limpia en inglés; se conserva el contenido corporativo inferior.
  */
 export default function HomePage() {
   return (
     <>
       <DivisionSplit
         halves={divisionSplit}
-        info={divisionInfo}
-        eyebrow={homeHero.eyebrow}
-        title={site.claim}
-        subtitle={site.subclaim}
+        presentation={homePresentation}
       />
 
       <StatRow stats={homeStats} tone="surface" />

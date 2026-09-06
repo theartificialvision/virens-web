@@ -68,3 +68,32 @@ export interface DivisionInfoData {
   servicesLabel: string;
   services: readonly string[];
 }
+
+/** Un dato de contacto de la columna izquierda: dirección, teléfono o GPS.
+ *  `href` solo lo llevan los que son accionables (el teléfono). */
+export interface ContactDetail {
+  id: string;
+  icon: string;               // clave de `ContactIcon`
+  label: string;
+  lines: readonly string[];
+  href?: string;
+}
+
+/** Departamento al que se dirige el formulario de contacto. */
+export interface ContactDepartment {
+  id: string;
+  label: string;
+  icon: string;               // clave de `ContactIcon`
+}
+
+/** Campo del formulario de contacto. `span` es el reparto en la rejilla de dos
+ *  columnas del panel: `half` ocupa una, `full` las dos. */
+export interface ContactField {
+  id: string;
+  name: string;
+  label: string;
+  type: 'text' | 'email' | 'tel' | 'textarea';
+  autoComplete?: string;
+  required: boolean;
+  span: 'half' | 'full';
+}

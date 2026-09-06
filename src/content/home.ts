@@ -34,13 +34,21 @@ export const divisionCards = {
 // titular compartido. `lead` deja de mostrarse en el hero (la composición
 // centrada mitad/mitad no tiene sitio para un párrafo largo) — se queda
 // definido aquí por si vuelve a hacer falta, no se ha borrado el dato.
+//
+// SIN USO desde el 06/09/2026: el hero de presentación no lleva rótulo ni
+// párrafo, así que `eyebrow` corrió la misma suerte que `lead`. Se conserva
+// como copy, no como código vivo — si a los tres meses sigue sin usarse, fuera.
 export const homeHero = {
   eyebrow: 'Laboratorios Virens',
   lead: 'Desarrollamos, fabricamos y acondicionamos complementos alimenticios en instalaciones propias en Barcelona.',
 } as const;
 
-// NO LITERAL: fotografía candidata (carpeta de sesión Midjourney del
-// cliente) a la espera de reportaje fotográfico propio.
+// NO LITERAL: fotografía candidata a la espera de reportaje propio.
+// 06/09/2026 (2): los tres fondos pasan a las copias en BLANCO Y NEGRO que
+// aportó el cliente (1920×1080). 06/09/2026 (5): el CSS ya no tiñe la escena
+// —solo un velo neutro para legibilidad (ver `.home-shade` en globals.css)—
+// así que la foto se lee tal cual entra. Sustituir el archivo no exige tocar
+// código.
 // `cta`: solo el nombre de la división ("Labs" / "Tech", en mayúsculas vía
 // CSS) — petición explícita del cliente (2026-09-02), sustituye al
 // "Visitar Labs" / "Visitar Tech" literal que se reutilizaba antes.
@@ -55,20 +63,20 @@ export const divisionSplit = [
     href: '/virens-labs',
     name: 'Virens Labs',
     claim: divisionCards.labs.claim,
-    image: { src: '/img/labs-hero-mj.png', alt: '' },
+    image: { src: '/img/home-scene-labs.jpg', alt: '' },
     logoKey: 'B',
     molecule: '/img/labs-molecule.png',
-    cta: 'Labs',
+    cta: 'labs',
   },
   {
     id: 'tech',
     href: '/virens-tech',
     name: 'Virens Tech',
     claim: divisionCards.tech.claim,
-    image: { src: '/img/tech-hero-mj.png', alt: '' },
+    image: { src: '/img/home-scene-tech.jpg', alt: '' },
     logoKey: 'A',
     molecule: '/img/tech-molecule.png',
-    cta: 'Tech',
+    cta: 'tech',
   },
 ] as const;
 
@@ -81,6 +89,12 @@ export const divisionSplit = [
 // literales de `labsIntro.points` y, en Tech, la denominación larga que la
 // página usa en el cuerpo (la corta, la de las pestañas, vive en
 // `techIntro.points` y sigue rigiendo dentro de /virens-tech).
+//
+// SIN USO desde el 06/09/2026: el hero de presentación no despliega servicios
+// —decisión del cliente, composición limpia—, así que ya no lo lee nadie. NO
+// se borra: es copy que el cliente escribió a mano y no existe en ningún otro
+// sitio del repo con esta redacción. Si vuelve un bloque de servicios en la
+// home, sale de aquí.
 export const divisionInfo = {
   labs: {
     lead: 'En Virens Labs ofrecemos la calidad, el servicio, la competitividad y la fidelidad que nuestros clientes necesitan de su fabricante. Nos ocupamos de la producción para que puedan centrarse en vender sus productos.',
@@ -116,3 +130,16 @@ export const homeStats = [
   { value: '+20 países', label: 'Exportación (dato de 2015)' },
   { value: '9 formatos', label: 'Formas y presentaciones' },
 ] as const;
+
+/** Presentación del 06/09: copy y jerarquía de las tres referencias del cliente.
+ * Los fondos son imágenes de presentación, no un reportaje de las instalaciones.
+ */
+export const homePresentation = {
+  title: 'Experts in food supplements',
+  subtitle: 'Contract Manufacturing & Development',
+  brand: 'VIRENS',
+  resetLabel: 'Back to both divisions',
+  previewLabel: 'Explore',
+  enterLabel: 'Enter',
+  image: { src: '/img/home-scene-blue.jpg', alt: '' },
+} as const;

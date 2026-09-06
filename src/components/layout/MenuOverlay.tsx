@@ -98,13 +98,12 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
           role="dialog"
           aria-modal="true"
           aria-label="Menú principal"
-          className="fixed inset-y-0 right-0 z-[60] flex flex-col overflow-hidden text-white outline-none backdrop-blur-2xl backdrop-saturate-150"
-          style={{
-            width: 'var(--menu-rail)',
-            background: 'var(--menu-surface)',
-            borderLeft: '1px solid var(--menu-edge)',
-            boxShadow: 'var(--shadow-panel)',
-          }}
+          // `glass menu-glass`: el material del sistema (globals.css) con el
+          // cuerpo en azul profundo. Desenfoque, saturación, filo especular y
+          // sombra salen de ahí — antes estaban escritos a mano aquí y eran un
+          // vidrio distinto al de los botones del hero.
+          className="glass menu-glass fixed inset-y-0 right-0 z-[60] flex flex-col overflow-hidden text-white outline-none"
+          style={{ width: 'var(--menu-rail)' }}
           initial={reduced ? { opacity: 0 } : { x: '100%' }}
           animate={reduced ? { opacity: 1 } : { x: 0 }}
           exit={reduced ? { opacity: 0 } : { x: '100%' }}

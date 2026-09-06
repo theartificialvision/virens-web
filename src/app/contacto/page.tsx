@@ -1,8 +1,11 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
+import { ContactForm } from '@/components/sections/ContactForm';
 import { Section } from '@/components/ui/Section';
 import { Container } from '@/components/ui/Container';
+import { ContactIcon } from '@/components/ui/ContactIcon';
 import { Eyebrow } from '@/components/ui/Eyebrow';
-import { site } from '@/config/site';
+import { contactDepartments, contactDetails, contactFields, contactIntro } from '@/content/contacto';
 
 export const metadata: Metadata = {
   title: 'Contacto',
@@ -10,31 +13,67 @@ export const metadata: Metadata = {
   alternates: { canonical: '/contacto' },
 };
 
-/** TODO: formulario corto (5 campos + departamento + adjunto) — §13.5. */
+/**
+ * CONTACTO — composición del mockup del cliente (`contactos.png`, 06/09/2026):
+ * datos de empresa sobre la fotografía de planta a la izquierda, panel blanco
+ * de formulario a la derecha. En mobile se apilan, con los datos primero.
+ *
+ * El envío del formulario NO está configurado: ver `ContactForm`.
+ */
 export default function ContactoPage() {
   return (
-    <Section tone="white" rhythm="air" className="relative overflow-hidden pt-40 lg:pt-52">
+    <Section tone="white" rhythm="air" className="contact-stage pt-40 lg:pt-52">
+      {/* NO LITERAL: fotografía candidata de la sesión Midjourney, la misma que
+          el hero de Labs, a la espera del reportaje propio de la planta (§9.2).
+          Decorativa —el contenido lo dan los datos de al lado—, de ahí el alt
+          vacío. */}
+      <div className="contact-photo">
+        <Image src="/img/labs-hero-mj.png" alt="" fill priority sizes="100vw" quality={85} />
+      </div>
+
       <Container>
-        <div className="grid border-l border-t border-gray-200 lg:grid-cols-12">
-          <div className="border-b border-r border-gray-200 p-8 lg:col-span-5 lg:p-14">
-            <Eyebrow className="text-labs">Contacto</Eyebrow>
-            <h1 className="mt-6 text-[length:var(--text-h1)] font-bold leading-[1.05] tracking-[-0.02em]">Contacto</h1>
-            <span aria-hidden className="mt-8 block h-1 w-16 bg-labs" />
-          </div>
-          <div className="border-b border-r border-gray-200 bg-blue p-8 text-white lg:col-span-7 lg:p-14">
-            <address className="not-italic text-[length:var(--text-lead)]">
-              {site.legalName}
-              <br />
-              {site.contact.street}
-              <br />
-              {site.contact.postalCode} {site.contact.city}, {site.contact.region} ({site.contact.country})
+        <div className="grid gap-14 lg:grid-cols-2 lg:items-start lg:gap-16 xl:gap-24">
+          <div>
+            <Eyebrow className="text-labs">{contactIntro.eyebrow}</Eyebrow>
+
+            <h1 className="mt-6 max-w-[14ch] text-[length:var(--text-h1)] font-bold leading-[1.05] tracking-[-0.02em] text-blue">
+              {contactIntro.title}
+            </h1>
+            <span aria-hidden className="contact-rule mt-8" />
+
+            {/* §14.1 pide "Dónde estamos" como H2 de la página. El mockup no lo
+                dibuja —la jerarquía la da el tamaño del titular— así que va en
+                el DOM y se oculta visualmente; no se inventa un rótulo. */}
+            <h2 className="sr-only">{contactIntro.locationHeading}</h2>
+
+            <address className="mt-10 not-italic">
+              <ul className="grid gap-6">
+                {contactDetails.map((detail) => (
+                  <li key={detail.id} className="flex items-start gap-4">
+                    <ContactIcon name={detail.icon} className="mt-1 size-6 shrink-0 text-labs" />
+                    <div className="text-[length:var(--text-body)] leading-relaxed text-blue">
+                      {detail.href ? (
+                        <a href={detail.href} className="font-medium hover:text-labs">
+                          {detail.lines[0]}
+                        </a>
+                      ) : (
+                        detail.lines.map((line) => <p key={line}>{line}</p>)
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ul>
             </address>
-            <div className="mt-10 grid gap-4 border-t border-white/15 pt-8 sm:grid-cols-2">
-              <a href={`tel:${site.contact.phone}`} className="text-[length:var(--text-h4)] font-semibold">{site.contact.phoneDisplay}</a>
-              <a href={`mailto:${site.contact.email}`} className="text-[length:var(--text-h4)] font-semibold">{site.contact.email}</a>
-            </div>
-            <p className="mt-10 max-w-[var(--measure-max)] text-white/65">{site.contact.distanceNote}, en zona industrial.</p>
+
+            {/* Mismo filete que en Compañía: un bloque de 1 px, no un <hr> con
+                borde — sobre el velo, el borde del <hr> no llegaba a verse. */}
+            <span aria-hidden className="mt-10 block h-px w-full max-w-[var(--measure-narrow)] bg-gray-200" />
+            <p className="mt-8 max-w-[var(--measure-narrow)] text-[length:var(--text-body)] leading-relaxed text-gray-700">
+              {contactIntro.note}
+            </p>
           </div>
+
+          <ContactForm departments={contactDepartments} fields={contactFields} />
         </div>
       </Container>
     </Section>

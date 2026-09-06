@@ -93,8 +93,9 @@ export function Header() {
           'fixed bottom-5 right-5 z-[70] flex size-[var(--menu-fab)] lg:hidden',
           // Cerrado va sobre contenido cualquiera (foto, vídeo, fondo claro):
           // el azul de marca le da contraste propio; abierto se funde con la
-          // franja y basta el vidrio.
-          !open && 'border-white/20 bg-blue/85 text-white',
+          // franja y basta el vidrio. Se sube el cuerpo del material en vez de
+          // pintarle un fondo opaco encima, que anularía el vidrio.
+          !open && '[--glass-body:color-mix(in_srgb,var(--color-blue)_78%,transparent)]',
         )}
       >
         <MenuGlyph open={open} />
@@ -108,16 +109,21 @@ export function Header() {
 /**
  * Botón circular de vidrio (excepción 4 de CLAUDE.md: elemento flotante de
  * navegación). Abierto vive sobre la franja azul, así que siempre en claro.
+ *
+ * 06/09/2026 (2): pasa al material `.glass` del sistema (globals.css). Antes
+ * llevaba su propio vidrio a mano —borde de un solo color y desenfoque sin
+ * saturar— y no casaba con los botones del hero. Ahora hay un solo vidrio en
+ * toda la web y se ajusta en un sitio.
  */
 function triggerClass(open: boolean, light: boolean) {
   return cn(
-    'group items-center justify-center rounded-full border backdrop-blur-xl',
-    'transition-[background-color,border-color,color] duration-300 ease-[var(--ease-out-quart)]',
-    open
-      ? 'border-white/25 bg-white/10 text-white hover:bg-white/20'
-      : light
-        ? 'border-white/25 bg-white/10 text-white hover:bg-white/20'
-        : 'border-blue/15 bg-blue/[0.06] text-blue hover:bg-blue/10',
+    // `relative` explícito: `.glass` ya no posiciona (le ganaba al `fixed` de
+    // la franja del menú), y sus pseudo-elementos necesitan este ancestro.
+    'glass group relative items-center justify-center rounded-full',
+    // Sobre las rutas claras un vidrio blanco desaparecería: ahí el cuerpo
+    // tiñe de azul y el glifo va en azul. Con la franja abierta manda siempre
+    // el claro, porque lo que hay detrás es la propia franja azul.
+    open || light ? 'text-white' : 'glass-ink text-blue',
   );
 }
 

@@ -89,28 +89,6 @@
      bastante más ancha que Newsreader al mismo cuerpo, así que el tope baja
      de 54 a 44 px para que la línea siga entrando entera en desktop. */
   --text-display-compact: clamp(1.5rem, 0.90rem + 2.05vw, 2.75rem);  /* 24 -> 44 */
-  /* Claim de la división activa en el hero ("Contract Manufacturing" /
-     "Contract Development"): un escalón por debajo del H1 y por encima del
-     lead. El mínimo (18) es más bajo que el de --text-h3 a propósito — es lo
-     que permite mantenerlo en una línea en móviles de 320 px sin encoger la
-     letra hasta lo ilegible. */
-  --text-hero-claim: clamp(1.125rem, 0.95rem + 0.85vw, 1.875rem);    /* 18 -> 30 */
-
-  /* --- Hero de Home (`DivisionSplit`) --------------------------- */
-  /* Holgura entre el borde superior del hero y el rótulo/H1. Con los isotipos
-     movidos al centro (2026-09-04), esta franja solo tiene que librar el
-     trigger del menú, así que baja de 184 a 112 px: los 72 px que devuelve son
-     exactamente los que necesita el desplegable de Tech para caber entero en
-     un portátil de 720 px de alto.
-     Tamaño del isotipo: grande en reposo, de firma al activar — con el logo a
-     tamaño de reposo, claim + párrafo + seis servicios no caben en pantalla. */
-  /* 2026-09-04 (4): isotipos más grandes en los dos estados. El de firma
-     pasa de 7vw a 10vw —el salto de 2,7× al activar leía como "extremadamente
-     más pequeño"— y el sitio vertical sale de recortar la holgura bajo la nav
-     (112 -> 96) y los espacios del estado activo. */
-  --hero-lead-min: 6rem;    /* 96 */
-  --hero-logo:      clamp(8rem, 22vw, 22rem);    /* 128 -> 352 */
-  --hero-logo-sm:   clamp(5.5rem, 10vw, 10rem);  /*  88 -> 160 */
 
   /* --- Layout -------------------------------------------------- */
   --container-max:  90rem;   /* 1440 */
@@ -119,6 +97,12 @@
 
   /* --- Botones (§10.5) ------------------------------------------ */
   --btn-py: 1.125rem; /* 18px — padding vertical exacto del botón del sistema */
+
+  /* Controles de formulario (contacto, 06/09/2026). La regla 4 permite radio
+     en los botones; un campo es el mismo tipo de pieza —un control que se
+     pulsa o se escribe—, no un bloque de contenido, así que comparte criterio.
+     No abre la puerta a redondear secciones ni rejillas. */
+  --radius-field: 0.625rem; /* 10px */
 
   /* --- Panel flotante (menú desktop) ------------------------------
      Excepción puntual a "radio 0 / sin sombra": pendiente de confirmar
@@ -188,164 +172,6 @@
   [id] { scroll-margin-top: 9.5rem; }
 }
 
-/* --- Split "Dos divisiones" (home, bloque 01) -------------------
-   2026-09-02, segunda vuelta: el seguimiento continuo del ratón (la
-   costura seguía el cursor en tiempo real) se retira por usabilidad —
-   feedback directo del cliente: "se marea mucho con movimientos del
-   mouse". El split vuelve a ser 50/50 fijo (`flex-1` en el JSX, sin JS);
-   la interacción pasa a dos botones explícitos (`DivisionButton`) que
-   activan una difusión de color por `clip-path` — ver `DivisionSplit.tsx`.
-
-   2026-09-03: además de teñir, el botón activo se lleva el ancho completo.
-   El reparto lo publica `DivisionSplit` como `--half-basis` (50% en
-   reposo, 100% la activa, 0% la otra) y solo se aplica de `lg` en
-   adelante: en mobile las mitades se apilan y `flex-basis` gobernaría la
-   altura, no el ancho. La transición vive en la clase del componente. */
-@media (min-width: 1024px) {
-  .division-split > .group\/half { flex-basis: var(--half-basis, 50%); }
-}
-
-/* --- Bloque de texto del hero (2026-09-04) ----------------------------
-   Al activar LABS o TECH, el H1 sube a la franja alta del hero y en su
-   hueco aparecen el claim de la división y, bajo los botones, su
-   información. Se resuelve con UNA columna que se mueve, no con dos
-   composiciones que se sustituyen: así no hay salto ni relectura.
-
-   El truco es el reparto del sobrante vertical. `.hero-copy` es una
-   columna flex con un espaciador arriba y otro abajo; en reposo ambos
-   crecen por igual —de ahí el centrado— y al activar, el de arriba deja de
-   crecer y la columna se apoya en su holgura mínima (--hero-lead-min), por
-   debajo de los isotipos. `flex-grow` es un número: se puede interpolar,
-   así que el movimiento es una transición CSS normal, sin JS por fotograma
-   y sin tocar `top` ni `transform`.
-
-   Solo de `lg` en adelante: en mobile el bloque va en el flujo (banda
-   `bg-ink` sobre las fotos) y el desplegable simplemente empuja hacia
-   abajo, que es el gesto natural de un acordeón táctil. */
-@media (min-width: 1024px) {
-  /* El titular vive arriba en los dos estados: esta holgura ya no crece. */
-  .hero-lead-space { flex: 0 0 var(--hero-lead-min); }
-
-  /* Los tres espaciadores reparten el sobrante vertical. En reposo crecen por
-     igual, así que el isotipo queda centrado entre el titular y los botones;
-     al activar, cada uno cede una proporción distinta (--grow-active) y el
-     hueco se lo lleva el texto desplegado. `flex-grow` es un número: se
-     interpola, así que el movimiento es una transición CSS normal. */
-  .hero-space {
-    flex-grow: var(--grow-rest, 1);
-    flex-shrink: 1;
-    flex-basis: 0;
-    transition: flex-grow 620ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-  .hero-copy[data-active='true'] .hero-space { flex-grow: var(--grow-active, 0); }
-}
-
-/* Banda de isotipos. Cada ranura replica el reparto de su mitad
-   (--half-basis, el mismo valor que gobierna las fotos), así que el logo
-   —centrado dentro de su ranura— cae en el centro de su mitad en reposo y en
-   el centro del hero cuando su división se lleva el ancho completo. La ranura
-   que se repliega recorta su logo con overflow, no lo deforma. */
-.hero-logos {
-  display: flex;
-  justify-content: center;
-  /* La columna de texto lleva px-6 y ese relleno metía cada logo 12 px hacia
-     el eje, descuadrándolo del centro de su mitad. Se cancela aquí y no con
-     utilidades: esta regla va sin capa y le ganaría a una clase w-* de
-     Tailwind, que sí vive en una capa. */
-  width: calc(100% + 3rem);
-  margin-inline: -1.5rem;
-}
-.hero-logo-slot {
-  flex: 1 1 50%;
-  display: flex;
-  justify-content: center;
-  min-width: 0;
-  overflow: hidden;
-}
-@media (min-width: 1024px) {
-  .hero-logo-slot {
-    flex-basis: var(--half-basis, 50%);
-    transition: flex-basis 620ms cubic-bezier(0.22, 1, 0.36, 1);
-  }
-}
-.hero-logo {
-  flex: none;
-  width: var(--hero-logo);
-  height: var(--hero-logo);
-  transition:
-    width 620ms cubic-bezier(0.22, 1, 0.36, 1),
-    height 620ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-.hero-copy[data-active='true'] .hero-logo {
-  width: var(--hero-logo-sm);
-  height: var(--hero-logo-sm);
-}
-
-/* Ranura que se abre y se cierra sin altura fija: la rejilla interpola de
-   `0fr` a `1fr`, así que el contenido decide cuánto mide y nunca queda
-   recortado — es lo que permite que los seis servicios de Tech quepan sin
-   depender de una altura pactada de antemano. */
-.hero-slot {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 620ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-.hero-slot[data-open='true'] { grid-template-rows: 1fr; }
-.hero-slot > * { min-height: 0; overflow: hidden; }
-
-/* Las dos variantes (Labs y Tech) comparten celda: la ranura reserva
-   siempre la altura de la más alta, así que cambiar de una a otra es un
-   fundido en el sitio — los botones no se mueven ni un píxel. */
-.hero-stack { display: grid; }
-.hero-stack > * { grid-area: 1 / 1; }
-
-/* `visibility` (y no solo `opacity`) para que la variante en reposo salga
-   del árbol de accesibilidad y no intercepte el puntero de la activa. */
-.hero-face {
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(0.5rem);
-  transition:
-    opacity 380ms var(--ease-out-quart),
-    transform 380ms var(--ease-out-quart),
-    visibility 0s linear 380ms;
-}
-.hero-face[data-active='true'] {
-  opacity: 1;
-  visibility: visible;
-  transform: none;
-  /* Entra un pelín después de que la ranura empiece a abrirse: el texto
-     aparece en su sitio, no arrastrado por el borde de la ranura. */
-  transition:
-    opacity 380ms var(--ease-out-quart) 140ms,
-    transform 380ms var(--ease-out-quart) 140ms,
-    visibility 0s linear 0s;
-}
-
-/* Pulso en dos capas (revisado 2026-09-02, "mejora el pulso"): un halo
-   suave que respira (18→34px) y, encima, un anillo que nace pegado al
-   borde y se expande hasta desvanecerse — lectura de "latido", no de
-   parpadeo. Más lento (3,4 s) y con la curva del sistema. Al pasar el
-   ratón o el foco, el bucle se para y queda un brillo fijo: el estado
-   activo lo comunica el tinte que inunda el hero, no el pulso. */
-@keyframes glass-pulse {
-  0%   { box-shadow: var(--shadow-elevate),
-                     0 0 0 0    color-mix(in srgb, var(--pulse-glow) 60%, transparent),
-                     0 0 18px 0 color-mix(in srgb, var(--pulse-glow) 28%, transparent); }
-  60%  { box-shadow: var(--shadow-elevate),
-                     0 0 0 14px color-mix(in srgb, var(--pulse-glow) 0%, transparent),
-                     0 0 34px 4px color-mix(in srgb, var(--pulse-glow) 48%, transparent); }
-  100% { box-shadow: var(--shadow-elevate),
-                     0 0 0 14px color-mix(in srgb, var(--pulse-glow) 0%, transparent),
-                     0 0 18px 0 color-mix(in srgb, var(--pulse-glow) 28%, transparent); }
-}
-.glass-pulse { animation: glass-pulse 3.4s var(--ease-out-quart) infinite; }
-
-.glass-pulse:hover, .glass-pulse:focus-visible {
-  animation-play-state: paused;
-  box-shadow: var(--shadow-elevate), 0 0 36px 6px color-mix(in srgb, var(--pulse-glow) 60%, transparent);
-}
-
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after {
@@ -353,4 +179,567 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* Home de presentación — Home(V2), Home(Labs), Home(Tech), 06/09/2026.
+   Una composición estable: marcas arriba, claim y subtítulo, botones blancos.
+   Solo cambian el fondo y el centrado de la división; no hay halo ni pulso. */
+@theme {
+  --home-blue: #00364e;
+  /* --- Velo neutro (dirección 06/09/2026 (5)) --------------------------
+     Las tres fotos entran en BLANCO Y NEGRO y así se quedan: el color de
+     división ya no baña la escena. El duotono a pantalla completa se retiró
+     porque aplanaba la foto en vez de darle cuerpo —sobre unas imágenes tan
+     claras teñía todo del color de marca y el titular blanco se quedaba sin
+     fondo— y el líquido y el campo WebGL porque eran el "efectos 2007" que
+     rechazó el cliente. La legibilidad la da este velo neutro tinta, más
+     cargado abajo donde caen titular y botones. El color de división vive
+     solo como señal: el filete bajo cada wordmark y el brillo del botón. */
+  --home-veil-top: rgba(2, 10, 20, 0.44);
+  --home-veil-mid: rgba(2, 10, 20, 0.52);
+  --home-veil-low: rgba(2, 10, 20, 0.66);
+
+  /* --- Liquid Glass (06/09/2026 (2), petición del cliente) --------------
+     Material único para todo control flotante: los botones de división, la
+     flecha de retorno y el trigger del menú. Cuatro cosas lo definen, y las
+     cuatro tienen que estar o no se lee como vidrio:
+
+     1. Refracción — `backdrop-filter: blur + saturate`. La saturación es la
+        que hace que el color de detrás "moje" el cristal en vez de quedar
+        lechoso; sin ella parece plástico esmerilado.
+     2. Cuerpo — un tinte blanco muy bajo. Por encima de 0,25 deja de ser
+        vidrio y pasa a ser un botón blanco translúcido.
+     3. Filo especular — un borde de 1 px que NO es uniforme: brilla arriba a
+        la izquierda, se apaga en diagonal y vuelve tenue abajo. Es el detalle
+        que más trabaja; un borde plano mata el efecto entero.
+     4. Sombra de contacto — separa el control del fondo. Corta y baja, no un
+        halo: el cristal está apoyado, no levitando. */
+  --glass-body:        rgba(255, 255, 255, 0.14);
+  --glass-body-strong: rgba(255, 255, 255, 0.22);
+  --glass-blur:        20px;
+  --glass-saturate:    170%;
+  --glass-sheen:       rgba(255, 255, 255, 0.45);
+  --glass-shadow:
+    0 10px 30px -8px rgba(0, 18, 38, 0.45),
+    0 2px 8px -2px rgba(0, 18, 38, 0.30);
+  /* Contraste para el texto: sobre una foto clara, el cuerpo del vidrio no
+     basta y el rótulo blanco se pierde. Esta capa oscura muy tenue vive por
+     debajo del tinte y sostiene la legibilidad sin ensuciar el material. */
+  --glass-ink-guard:   rgba(0, 22, 42, 0.20);
+  --home-content: 82rem;
+  --home-gutter: clamp(1.25rem, 4vw, 5rem);
+  --home-mark-height: clamp(11rem, 22svh, 16.5rem);
+  --home-molecule: clamp(11rem, 15vw, 17.5rem);
+  --home-brand-size: clamp(1.125rem, 1.65vw, 2rem);
+  --home-division-size: clamp(2.75rem, 4vw, 4.75rem);
+  --home-title-size: clamp(1.75rem, 2.92vw, 3.5rem);
+  --home-subtitle-size: clamp(1.25rem, 2.5vw, 3rem);
+  --home-button-size: clamp(1.125rem, 1.85vw, 2.125rem);
+  --home-copy-gap: clamp(2rem, 4.5svh, 3.25rem);
+  --home-action-gap: clamp(2.5rem, 6.5svh, 4.5rem);
+  --home-button-height: clamp(2.875rem, 5.25svh, 3.5rem);
+  --home-button-width: clamp(7rem, 8vw, 9.25rem);
+  --home-transition: 800ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.home-stage {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  min-height: max(42rem, 100svh);
+  overflow: hidden;
+  background: var(--home-blue);
+  color: var(--home-white);
+  padding: 5.5rem var(--home-gutter);
+}
+.home-backdrops, .home-backdrop, .home-shade { position: absolute; inset: 0; }
+.home-backdrops { z-index: -1; }
+.home-backdrop {
+  opacity: 0;
+  transform: scale(1.035);
+  transition: opacity var(--home-transition), transform 1400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.home-backdrop[data-visible='true'] { opacity: 1; transform: scale(1); }
+
+/* La foto es la prueba: entra en blanco y negro y así se queda.
+   `grayscale(1)` es un seguro —si algún archivo volviera en color, el
+   tratamiento no se ensucia. El contraste se abre solo un poco; el rango
+   que pedía el duotono (brightness .76) ya no hace falta. Sin movimiento
+   ambiente: la escena visible está quieta y solo transiciona al cambiar. */
+.home-photo {
+  object-fit: cover;
+  object-position: center;
+  filter: grayscale(1) contrast(1.08) brightness(0.94);
+}
+
+
+/* Velo neutro único. Va una sola vez, sobre las tres escenas: no cambia
+   con la división, así que no tiene por qué vivir dentro de cada backdrop.
+   No es decoración: es lo que garantiza que el texto blanco tenga siempre un
+   fondo contra el que leerse, caiga donde caiga el detalle de la foto. Más
+   cargado abajo, donde caen titular y botones. */
+.home-shade {
+  background: linear-gradient(
+    180deg,
+    var(--home-veil-top) 0%,
+    var(--home-veil-mid) 55%,
+    var(--home-veil-low) 100%
+  );
+}
+/* Campo molecular en profundidad (WebGL). Aditivo por definicion del material,
+   asi que aqui solo se le da sitio y se modera: a plena opacidad tapa la
+   fotografia y el efecto pasa de "profundidad" a "salvapantallas". */
+
+.home-composition { width: min(100%, var(--home-content)); margin-inline: auto; }
+.home-marks { position: relative; height: var(--home-mark-height); }
+.home-mark-slot, .home-action-slot {
+  position: absolute;
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  transition: transform var(--home-transition), opacity 400ms ease, visibility 0s;
+}
+.home-mark-slot { height: 100%; align-items: center; }
+.home-mark-slot[data-side='labs'], .home-action-slot[data-side='labs'] { left: 0; }
+.home-mark-slot[data-side='tech'], .home-action-slot[data-side='tech'] { right: 0; }
+.home-mark-slot[data-side='labs'][data-selected='true'],
+.home-action-slot[data-side='labs'][data-selected='true'] { transform: translateX(50%); }
+.home-mark-slot[data-side='tech'][data-selected='true'],
+.home-action-slot[data-side='tech'][data-selected='true'] { transform: translateX(-50%); }
+.home-mark-slot[data-hidden='true'], .home-action-slot[data-hidden='true'] {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform var(--home-transition), opacity 300ms ease, visibility 0s 300ms;
+}
+.home-mark { display: flex; align-items: center; flex-shrink: 0; }
+.home-molecule { width: var(--home-molecule); height: var(--home-molecule); flex: none; }
+.home-wordmark {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: -1.25rem;
+  transform: translateY(1.75rem);
+}
+.home-brand { font-size: var(--home-brand-size); font-weight: 400; line-height: 1.1; letter-spacing: -0.025em; }
+.home-division { font-size: var(--home-division-size); font-weight: 700; line-height: .96; letter-spacing: -0.05em; }
+/* Filete-señal: la única mancha de color de división sobre la foto. */
+.home-rule {
+  width: 3rem;
+  height: 3px;
+  margin-top: 0.625rem;
+}
+.home-mark-slot[data-side='labs'] .home-rule { background: var(--color-labs); }
+.home-mark-slot[data-side='tech'] .home-rule { background: var(--color-tech); }
+.home-heading { margin-top: var(--home-copy-gap); text-align: center; }
+.home-heading h1 {
+  margin: 0;
+  font-size: var(--home-title-size);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -.025em;
+  text-transform: uppercase;
+}
+.home-heading p {
+  margin-top: .625rem;
+  font-size: var(--home-subtitle-size);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -.025em;
+}
+.home-actions { position: relative; height: var(--home-button-height); margin-top: var(--home-action-gap); }
+/* --- El material -------------------------------------------------------
+   `.glass` es el material; quien lo use pone su forma (radio y tamaño). El
+   filo va en ::before y el reflejo en ::after, así que un elemento con
+   `.glass` no puede gastarse sus pseudo-elementos en otra cosa. */
+/* OJO: aqui NO se declara `position` ni `color`. Esta regla va sin capa, asi
+   que le gana a cualquier utilidad de Tailwind: un `position: relative` aqui
+   anulaba el `fixed` de la franja del menu, la sacaba de su sitio y empujaba
+   la pagina entera. El material no decide donde va el elemento ni de que color
+   es su texto: solo de que esta hecho. Quien lo use tiene que estar posicionado
+   por su cuenta — los pseudo-elementos son absolutos y necesitan un ancestro
+   que lo este. */
+.glass {
+  background-color: var(--glass-body);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+          backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  box-shadow: var(--glass-shadow);
+  transition:
+    background-color 320ms var(--ease-out-quart),
+    transform 320ms var(--ease-out-quart),
+    box-shadow 320ms var(--ease-out-quart);
+}
+/* Filo especular. El truco del borde en degradado: se pinta un relleno y se
+   recorta todo menos el anillo de 1 px (`mask-composite`). Es la única forma
+   de tener un borde que cambia de brillo a lo largo del contorno — `border`
+   solo admite un color. */
+.glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(255, 255, 255, 0.25) 32%,
+    rgba(255, 255, 255, 0.05) 52%,
+    rgba(255, 255, 255, 0.4) 100%
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+          mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+/* Reflejo: la luz entra por arriba y muere a media altura, como en un cuerpo
+   curvo. Se mueve en hover — es lo que da la sensación de líquido. */
+.glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(72% 130% at 28% -18%, var(--glass-sheen) 0%, transparent 58%);
+  opacity: 0.75;
+  transition: opacity 320ms var(--ease-out-quart), transform 520ms var(--ease-out-quart);
+  pointer-events: none;
+}
+.glass:hover::after { opacity: 1; transform: translate3d(12%, 6%, 0) scale(1.12); }
+
+/* Variante sobre fondo claro (/contacto, /compania, /noticias). El mismo
+   material, pero el cuerpo tiñe de azul en vez de blanco: un vidrio blanco
+   sobre blanco desaparece. */
+.glass-ink {
+  --glass-body: rgba(0, 40, 92, 0.07);
+  --glass-body-strong: rgba(0, 40, 92, 0.13);
+  --glass-sheen: rgba(255, 255, 255, 0.85);
+  --glass-shadow:
+    0 10px 28px -10px rgba(0, 30, 70, 0.22),
+    0 2px 6px -2px rgba(0, 30, 70, 0.14);
+}
+
+/* La franja del menú. Mismo material que los botones, con el cuerpo en azul
+   profundo y más desenfoque: es una superficie grande y tiene que dejar
+   insinuarse la página de detrás sin que se lea nada de ella. */
+.menu-glass {
+  --glass-body: color-mix(in srgb, var(--color-blue-deep) 74%, transparent);
+  --glass-body-strong: color-mix(in srgb, var(--color-blue-deep) 82%, transparent);
+  --glass-blur: 30px;
+  --glass-saturate: 190%;
+  --glass-sheen: rgba(255, 255, 255, 0.16);
+  --glass-shadow: var(--shadow-panel);
+}
+/* El filo y el reflejo de `.glass` son absolutos y se pintan por encima del
+   contenido en flujo: los hijos de la franja suben por delante. */
+.menu-glass > * { position: relative; z-index: 1; }
+
+/* --- Botones de división ----------------------------------------------- */
+.home-division-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--home-button-width);
+  height: var(--home-button-height);
+  padding: 0 1.5rem;
+  border-radius: 999px;
+  font-size: var(--home-button-size);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -.025em;
+  /* Posicionado por su cuenta: `.glass` ya no lo hace, y sin esto sus
+     pseudo-elementos absolutos se colgarian del primer ancestro posicionado
+     (`.home-actions`) y cubririan la franja entera en vez del boton. */
+  position: relative;
+  z-index: 0;
+}
+.home-division-link > * { position: relative; z-index: 1; }
+/* Colchón de contraste bajo el vidrio: la escena de Tech es muy clara y sin
+   esto el rótulo blanco se despega mal del fondo. */
+.home-division-link {
+  background-image: linear-gradient(var(--glass-ink-guard), var(--glass-ink-guard));
+  text-shadow: 0 1px 2px rgba(0, 18, 38, 0.28);
+}
+.home-division-link:hover {
+  background-color: var(--glass-body-strong);
+  transform: translateY(-2px);
+}
+.home-division-link:active { transform: translateY(0) scale(0.985); }
+
+.home-stage :focus-visible { outline: 2px solid var(--home-white); outline-offset: 6px; }
+/* La flecha usa el mismo material que los botones: un solo vidrio en toda la
+   pantalla, no dos parecidos. Solo añade su posición, su forma y el aparecer. */
+.home-reset {
+  position: absolute;
+  top: 1.25rem;
+  left: var(--home-gutter);
+  width: 3rem;
+  height: 3rem;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  opacity: 0;
+  visibility: hidden;
+  cursor: pointer;
+  /* Entra deslizándose desde la izquierda, en la dirección que significa
+     "volver". La transición del material (fondo, sombra) la pone `.glass`. */
+  transform: translateX(-0.75rem);
+  transition:
+    opacity 300ms var(--ease-out-quart),
+    visibility 300ms var(--ease-out-quart),
+    transform 420ms var(--ease-out-quart),
+    background-color 320ms var(--ease-out-quart),
+    box-shadow 320ms var(--ease-out-quart);
+}
+.home-reset[data-visible='true'] { opacity: 1; visibility: visible; transform: translateX(0); }
+.home-reset:hover { background-color: var(--glass-body-strong); }
+.home-reset svg {
+  position: relative;
+  z-index: 1;
+  width: 1.25rem;
+  height: 1.25rem;
+  stroke: currentColor;
+  stroke-width: 1.5;
+}
+@media (max-width: 600px) {
+  .home-stage {
+    min-height: max(36rem, 100svh);
+    --home-mark-height: 11.5rem;
+    --home-molecule: 8rem;
+    --home-brand-size: .9375rem;
+    --home-division-size: 2.25rem;
+    --home-title-size: clamp(1.625rem, 6.5vw, 2.25rem);
+    --home-subtitle-size: clamp(1.0625rem, 4.35vw, 1.5rem);
+    --home-copy-gap: 2rem;
+    --home-action-gap: 2.5rem;
+    padding-block: 5rem;
+  }
+  .home-mark { flex-direction: column; }
+  .home-wordmark { align-items: center; margin-left: 0; transform: none; margin-top: -.75rem; }
+  .home-brand { letter-spacing: .04em; }
+  .home-heading { max-width: 28rem; margin-inline: auto; }
+  .home-heading h1 { line-height: 1.2; }
+  .home-heading p { margin-top: 1rem; line-height: 1.5; }
+  .home-stage[data-division='home'] .home-photo { object-position: 40% center; }
+  .home-stage[data-division='labs'] .home-photo { object-position: 62% center; }
+  .home-stage[data-division='tech'] .home-photo { object-position: 62% center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-stage *, .home-stage *::before, .home-stage *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* Móviles de poca altura: libera el área del menú flotante sin reducir
+   el tamaño táctil de los botones de división. */
+@media (max-width: 600px) and (max-height: 640px) {
+  .home-stage {
+    --home-mark-height: 9rem;
+    --home-copy-gap: 1.5rem;
+    --home-action-gap: 1.75rem;
+    padding-block: 4rem;
+  }
+}
+
+/* --- Contacto (mockup `contactos.png` del cliente, 06/09/2026) ----------
+   Mitad izquierda con los datos de empresa sobre la fotografía de planta,
+   panel blanco de formulario a la derecha.
+
+   Regla 4: el panel es un elemento flotante único sobre la fotografía —no una
+   rejilla de tarjetas—, el mismo caso que el desplegable del menú, así que
+   reutiliza `--radius-panel` y `--shadow-panel` en vez de estrenar tokens.
+   Los campos llevan `--radius-field` por ser controles (ver el token). */
+.contact-stage {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+.contact-photo {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+/* El encuadre baja del centro: la nave es simétrica y con el centro exacto la
+   línea de fuga queda demasiado alta detrás del titular. */
+.contact-photo img { object-fit: cover; object-position: center 62%; }
+
+/* Velo. En el mockup la esquina superior izquierda es casi blanca —ahí caen el
+   rótulo y el H1— y la planta se va destapando hacia abajo. Se resuelve con
+   dos capas para que ninguna tenga que hacer las dos cosas a la vez.
+
+   Calibrado sobre la foto real: la del mockup es un primer plano claro (pastillas
+   blancas, poca profundidad) y aguanta un velo suave; la de la sesión Midjourney
+   es una nave entera con maquinaria oscura en la banda media, justo donde caen
+   el teléfono, el GPS y el párrafo. Con el velo del mockup ese texto no se leía,
+   así que el suelo del blanco sube al 80 %: la planta sigue reconociéndose como
+   fotografía, pero como fondo, no como imagen protagonista. */
+.contact-photo::before,
+.contact-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* Imprescindible: `next/image` con `fill` deja un <img> posicionado, y entre
+     posicionados sin z-index manda el orden del árbol — el ::before caería
+     DETRÁS de la foto y el velo no se vería. */
+  z-index: 1;
+}
+.contact-photo::before {
+  /* El tramo 22–62 % es la banda donde cae el texto de la izquierda y va casi
+     opaco; por debajo no hay nada escrito, así que el blanco se retira y la
+     planta aparece. */
+  background: linear-gradient(
+    to bottom,
+    #fff 0%,
+    rgba(255, 255, 255, 0.94) 22%,
+    rgba(255, 255, 255, 0.86) 58%,
+    rgba(255, 255, 255, 0.72) 78%,
+    rgba(255, 255, 255, 0.58) 100%
+  );
+}
+/* La capa horizontal solo existe en desktop: es la que limpia el lado del
+   panel. En mobile el panel va debajo, sobre blanco, y sobraría. */
+.contact-photo::after { background: none; }
+@media (min-width: 1024px) {
+  .contact-photo::after {
+    background: linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0) 32%,
+      rgba(255, 255, 255, 0.62) 54%,
+      #fff 72%
+    );
+  }
+}
+
+/* Filete de marca bajo el titular. */
+.contact-rule {
+  display: block;
+  width: 4.5rem;
+  height: 0.25rem;
+  background: var(--color-labs);
+}
+
+/* --- Panel del formulario ------------------------------------------- */
+.contact-panel {
+  background: #fff;
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-panel);
+  padding: clamp(1.75rem, 3.2vw, 3rem);
+  /* Un item de rejilla no baja de su `min-content` salvo que se le diga: sin
+     esto el panel ensancha la columna y con ella toda la página. */
+  min-width: 0;
+}
+
+/* Selector de departamento: tres controles en línea que se reparten el ancho.
+   `minmax(0, 1fr)` y no `1fr` por lo mismo que el panel — con `1fr` los tres
+   botones imponían su min-content (≈410 px con los iconos) y desbordaban la
+   pantalla en un móvil de 390. */
+.contact-departments {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+.contact-department {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 3.25rem;
+  padding: 0 0.75rem;
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-field);
+  color: var(--color-gray-700);
+  font-size: var(--text-small);
+  line-height: 1.2;
+  text-align: center;
+  transition: border-color 200ms var(--ease-out-quart), color 200ms var(--ease-out-quart);
+}
+.contact-department:hover { border-color: var(--color-gray-300); }
+/* Seleccionado: filete y texto en color de Labs. El relleno se queda blanco a
+   propósito — un fondo sólido lo convertiría en un botón de acción y aquí solo
+   marca cuál de los tres está elegido. */
+.contact-department[aria-pressed='true'] {
+  border-color: var(--color-labs);
+  color: var(--color-labs);
+  font-weight: 600;
+}
+/* En pantallas estrechas los tres siguen en línea —es como se leen: tres
+   opciones de lo mismo— pero sin icono: con él, "Comercial" no cabe en su
+   tercio y el rótulo es lo que hay que conservar. */
+@media (max-width: 480px) {
+  .contact-department { padding: 0 0.375rem; }
+  .contact-department-icon { display: none; }
+}
+
+/* --- Campos ----------------------------------------------------------- */
+.contact-field {
+  width: 100%;
+  padding: 1rem 1.125rem;
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-field);
+  background: var(--color-gray-50);
+  color: var(--color-blue);
+  font: inherit;
+  font-size: var(--text-body);
+  line-height: 1.5;
+  transition: border-color 200ms var(--ease-out-quart), background-color 200ms var(--ease-out-quart);
+}
+.contact-field::placeholder { color: var(--color-gray-500); }
+.contact-field:hover { border-color: var(--color-gray-300); }
+.contact-field:focus {
+  outline: none;
+  border-color: var(--color-labs);
+  background: #fff;
+}
+textarea.contact-field { min-height: 9.5rem; resize: vertical; }
+
+/* --- Adjunto ---------------------------------------------------------- */
+.contact-attach {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 1rem 1.125rem;
+  border: 1px dashed var(--color-gray-300);
+  border-radius: var(--radius-field);
+  text-align: left;
+  transition: border-color 200ms var(--ease-out-quart), background-color 200ms var(--ease-out-quart);
+}
+.contact-attach:hover { border-color: var(--color-labs); background: var(--color-labs-soft); }
+/* En móvil el "Máx. 10MB" baja a su propia línea: compartiendo fila dejaba el
+   rótulo en ~120 px, que lo partía en "Adjuntar arc…". */
+@media (max-width: 480px) {
+  .contact-attach { flex-wrap: wrap; }
+  .contact-attach-max { width: 100%; padding-left: 3.75rem; }
+}
+.contact-attach-icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  background: var(--color-labs);
+  color: #fff;
+}
+
+/* --- Consentimiento --------------------------------------------------- */
+.contact-consent {
+  appearance: none;
+  flex: none;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin-top: 0.15rem;
+  border: 1px solid var(--color-gray-300);
+  border-radius: 0.25rem;
+  background: #fff;
+  transition: border-color 200ms var(--ease-out-quart), background-color 200ms var(--ease-out-quart);
+}
+.contact-consent:checked {
+  border-color: var(--color-labs);
+  background: var(--color-labs)
+    /* La marca va en el propio fondo: sin pseudo-elemento no hay salto de
+       layout al marcar y el control sigue siendo un input nativo. */
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23fff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3.5 8.5 3 3 6-7'/%3E%3C/svg%3E")
+    center / 0.8rem no-repeat;
 }
