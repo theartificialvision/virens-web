@@ -1318,3 +1318,52 @@ ventana**, así que una captura pedida a 390 es un recorte de 500 y los media
 queries de móvil ni se disparan. Y Playwright no emula `hover`/`pointer`: hay
 que hacerlo por CDP con `Emulation.setEmulatedMedia`. Sin esas dos cosas, la
 verificación de móvil y táctil es falsa.
+
+### 2026-09-06 (7) — Claude Code — Pulso de marca, CTAs con más presencia y dos microinteracciones
+
+Sobre la dirección aprobada en (5), sin tocarla. Petición del cliente: *"botones
+tech y lab pulso glassmorphing con los colores, subamos los CTAs, y las
+microfantasías"*.
+
+Se implementa con cuidado deliberado de no repetir lo del "2007": son cuatro
+cosas pequeñas y atadas a un estado, no capas de ambiente. Ninguna se mueve
+porque sí — cada una dice algo.
+
+- **Pulso de marca en los dos botones.** Vuelve el latido que se retiró el
+  06/09 al quedarse sin uso, ahora sobre el vidrio y con el color de cada
+  división. Dos capas: un anillo que nace pegado al canto y se expande hasta
+  desvanecerse, y por debajo un halo que respira. El anillo solo se leería como
+  parpadeo; juntos, como latido. Los dos botones van **desfasados medio ciclo**
+  (`animation-delay: -1.7s` en Tech): al unísono se leen como un metrónomo.
+  - Se usan las variantes `-glow` y no los colores base. No es capricho: sobre
+    el velo oscuro, `--color-tech` (#A2195B) da ~2,5:1 y no llega a verse como
+    halo. Es exactamente para lo que existen esos tokens.
+  - Se para al señalar, al enfocar y cuando la división ya está abierta: ahí el
+    estado lo comunica el desplazamiento de la escena entera, y algo latiendo
+    bajo el cursor estorba en vez de guiar.
+- **CTAs con más cuerpo y más arriba.** El hueco baja de 6,5 a 5 svh —se acercan
+  al subtítulo, que es lo que los ata al mensaje en vez de dejarlos sueltos al
+  pie— y crecen a 130×52 px en 1440 (antes ~118×48), lo justo para sostener el
+  latido y la flecha sin que el rótulo baile.
+- **Flecha de afordancia.** Invisible en reposo —el cliente pidió el nombre de
+  la división a secas— y aparece **cuando su división está abierta**, que es
+  cuando el botón deja de significar "mira esto" y pasa a significar "entra".
+  Hace visible el modelo de dos pasos, que era su punto flojo.
+  - Se ató al estado y no solo al hover por una razón medida: al señalar, la
+    escena se desplaza y el botón se va de debajo del cursor, así que con
+    `:hover` la flecha se veía un instante y desaparecía. Comprobado: opacidad
+    0 tras el desplazamiento; con `[data-selected]`, 0,9 estable.
+  - Absoluta a la derecha, para que el rótulo no se mueva ni un píxel.
+    Decorativa (`aria-hidden`): el destino ya lo anuncia el `aria-label`.
+- **El filete de marca se alarga** (3 → 5 rem) cuando su división se abre. El
+  mismo gesto que hace la escena —la señal de color gana presencia— en pequeño.
+
+**Verificado en navegador:** pulso corriendo a 3,4 s con `#2FE0D0` en Labs y
+`#E0409A` en Tech y el desfase aplicado; parado en hover y con la división
+abierta; flecha a 0,9 y filete a 80 px con Labs abierta. **Sin regresión en la
+interacción**: los siete pasos de escritorio y los dos de táctil siguen
+pasando. Móvil real a 390 sin desbordamiento. Sin errores de consola.
+
+`prefers-reduced-motion` lo cubre el bloque que ya existía: dentro de
+`.home-stage` se anulan `animation` y `transition`, así que el latido no
+arranca y la flecha aparece sin deslizarse.

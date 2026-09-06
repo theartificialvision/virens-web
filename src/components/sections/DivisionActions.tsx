@@ -71,6 +71,12 @@ export function DivisionActions({ halves, active, coarse, previewLabel, enterLab
               {/* En un <span>, no suelto: el filo y el reflejo de `.glass`
                   son absolutos y taparían un nodo de texto plano. */}
               <span>{half.cta}</span>
+              {/* Flecha de afordancia: invisible en reposo —el cliente pidió el
+                  nombre de la división a secas— y entra al señalar. Decorativa:
+                  el destino ya lo anuncia el `aria-label` del enlace. */}
+              <svg className="home-division-arrow" viewBox="0 0 16 16" aria-hidden="true">
+                <path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </Link>
           </div>
         );

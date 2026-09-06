@@ -236,9 +236,13 @@
   --home-subtitle-size: clamp(1.25rem, 2.5vw, 3rem);
   --home-button-size: clamp(1.125rem, 1.85vw, 2.125rem);
   --home-copy-gap: clamp(2rem, 4.5svh, 3.25rem);
-  --home-action-gap: clamp(2.5rem, 6.5svh, 4.5rem);
-  --home-button-height: clamp(2.875rem, 5.25svh, 3.5rem);
-  --home-button-width: clamp(7rem, 8vw, 9.25rem);
+  /* 06/09 (7): los CTAs suben y ganan cuerpo. El hueco baja de 6,5 a 5 svh —se
+     acercan al subtitulo, que es lo que los ata al mensaje en vez de dejarlos
+     sueltos al pie— y crecen lo justo para sostener el latido y la flecha sin
+     que el rotulo baile. */
+  --home-action-gap: clamp(2rem, 5svh, 3.5rem);
+  --home-button-height: clamp(3.125rem, 5.75svh, 3.875rem);
+  --home-button-width: clamp(8rem, 9vw, 10.5rem);
   --home-transition: 800ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 .home-stage {
@@ -331,6 +335,10 @@
 }
 .home-mark-slot[data-side='labs'] .home-rule { background: var(--color-labs); }
 .home-mark-slot[data-side='tech'] .home-rule { background: var(--color-tech); }
+/* Al abrirse su division, el filete se alarga. Es el mismo gesto que ya hace
+   la escena —la senal de color gana presencia— pero en pequeno. */
+.home-rule { transition: width 620ms var(--ease-out-quart); }
+.home-mark-slot[data-selected='true'] .home-rule { width: 5rem; }
 .home-heading { margin-top: var(--home-copy-gap); text-align: center; }
 .home-heading h1 {
   margin: 0;
@@ -464,6 +472,92 @@
   transform: translateY(-2px);
 }
 .home-division-link:active { transform: translateY(0) scale(0.985); }
+
+/* --- Pulso de marca -----------------------------------------------------
+   Vuelve el latido que se retiro el 06/09 al quedarse sin uso, pero ahora
+   sobre el vidrio y con el color de cada division, que es la senal que rige
+   toda la escena.
+
+   Dos capas y no una: un anillo que nace pegado al canto y se expande hasta
+   desvanecerse, y por debajo un halo suave que respira. Juntas se leen como
+   latido; el anillo solo se lee como parpadeo.
+
+   Se usan las variantes `-glow` y no los colores base: sobre el velo oscuro,
+   --color-tech (#A2195B) da ~2,5:1 y no llega a verse como halo. Es
+   exactamente para lo que existen esos tokens.
+
+   Los dos botones van desfasados medio ciclo. Al unisono se leen como un
+   metronomo — dos cosas parpadeando a la vez cansan; alternandose, respiran. */
+.home-division-link {
+  animation: home-pulse 3.4s var(--ease-out-quart) infinite;
+}
+.home-action-slot[data-side='labs'] .home-division-link { --home-pulse: var(--color-labs-glow); }
+.home-action-slot[data-side='tech'] .home-division-link {
+  --home-pulse: var(--color-tech-glow);
+  animation-delay: -1.7s;
+}
+
+@keyframes home-pulse {
+  0% {
+    box-shadow: var(--glass-shadow),
+                0 0 0 0    color-mix(in srgb, var(--home-pulse) 55%, transparent),
+                0 0 18px 0 color-mix(in srgb, var(--home-pulse) 20%, transparent);
+  }
+  60% {
+    box-shadow: var(--glass-shadow),
+                0 0 0 13px  color-mix(in srgb, var(--home-pulse) 0%, transparent),
+                0 0 34px 5px color-mix(in srgb, var(--home-pulse) 40%, transparent);
+  }
+  100% {
+    box-shadow: var(--glass-shadow),
+                0 0 0 13px  color-mix(in srgb, var(--home-pulse) 0%, transparent),
+                0 0 18px 0  color-mix(in srgb, var(--home-pulse) 20%, transparent);
+  }
+}
+
+/* Al senalar o enfocar, el latido para y queda un halo fijo: ahi el estado ya
+   lo comunica el desplazamiento de la escena entera, y algo latiendo debajo
+   del cursor estorba en vez de guiar. */
+.home-division-link:hover,
+.home-division-link:focus-visible {
+  animation-play-state: paused;
+  box-shadow: var(--glass-shadow),
+              0 0 38px 6px color-mix(in srgb, var(--home-pulse) 52%, transparent);
+}
+/* La division que ya esta abierta no necesita reclamar nada. */
+.home-action-slot[data-selected='true'] .home-division-link { animation-play-state: paused; }
+
+/* --- Flecha del CTA -----------------------------------------------------
+   Solo aparece al senalar. En reposo la composicion se queda como esta —el
+   cliente pidio el nombre de la division a secas— pero en cuanto el puntero
+   llega, el boton dice que lleva a alguna parte. Absoluta para que el rotulo
+   no se mueva ni un pixel al entrar. */
+.home-division-arrow {
+  position: absolute;
+  right: 0.85rem;
+  width: 1rem;
+  height: 1rem;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  opacity: 0;
+  transform: translateX(-0.35rem);
+  transition: opacity 260ms var(--ease-out-quart), transform 260ms var(--ease-out-quart);
+}
+.home-division-link:hover .home-division-arrow,
+.home-division-link:focus-visible .home-division-arrow {
+  opacity: 0.9;
+  transform: translateX(0);
+}
+/* Y, sobre todo, cuando su division ya esta abierta: ahi el boton ha dejado de
+   significar "mira esto" para significar "entra", y la flecha es lo que lo
+   dice. Hace visible el modelo de dos pasos, que era el punto flojo de la
+   interaccion. Con hover no basta: al senalar, la escena se desplaza y el
+   boton se va de debajo del cursor, asi que la flecha se veria un instante. */
+.home-action-slot[data-selected='true'] .home-division-arrow {
+  opacity: 0.9;
+  transform: translateX(0);
+}
 
 .home-stage :focus-visible { outline: 2px solid var(--home-white); outline-offset: 6px; }
 /* La flecha usa el mismo material que los botones: un solo vidrio en toda la
