@@ -57,6 +57,12 @@ export function DivisionBackdrops({ halves, presentationImage, active }: {
                 className="home-photo"
               />
             )}
+            {/* Gradacion de color. Va DESPUES de la foto y en este orden:
+                `grade` levanta las sombras y `glow` mete la saturacion en los
+                medios. Entre posicionados sin z-index manda el orden del arbol,
+                asi que invertirlas cambia el resultado. */}
+            <div className="home-grade" />
+            <div className="home-glow" />
           </div>
         );
       })}

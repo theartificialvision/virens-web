@@ -1474,3 +1474,46 @@ bajo del botón; al abrir, el isotipo recupera su degradado entero.**
 Verificado en navegador: blanco en reposo, degradado azul→turquesa al abrir
 Labs y azul→magenta al abrir Tech; botones con su tinte; sin regresión en los
 siete pasos de escritorio ni en los dos de táctil.
+
+### 2026-09-06 (11) — Claude Code — El color entra como luz: gradación sobre las fotos B/N
+
+Aclaración del cliente que cambia una premisa: *"las pantallas no son byn, si
+te di los recursos en byn para que tú mismo hagas el efecto color"*. Las fotos
+en blanco y negro eran **materia prima**, no el resultado. La dirección (5) las
+dejó tal cual con un velo neutro; eso era una lectura equivocada del encargo.
+
+Es el tercer intento de teñir estas fotos. Los dos anteriores están anotados en
+el código para que nadie los repita:
+
+1. **`mix-blend-mode: color` uniforme.** Tiñe claros y oscuros por igual, así
+   que se lee como un cristal de color por delante de la foto — plástico. Tech
+   salía rosa chicle.
+2. **Duotono uniforme (multiply + screen).** Correcto de manual y premium, pero
+   plano en toda la superficie: sin un punto de color más intenso, el ojo lo lee
+   como una foto desteñida. El cliente lo llamó "pálido".
+
+**Lo que sí funciona: tratar el color como LUZ y no como filtro** — que entre
+por un sitio y caiga. Dos capas con papeles distintos, dentro de cada escena:
+
+- **`.home-grade`, en `screen`.** Levanta los negros al color de la división.
+  Va en degradado radial y no plano, para que las sombras no compartan
+  exactamente el mismo tono, que es lo que delataba el filtro.
+- **`.home-glow`, en `soft-light`.** Mete la saturación en los medios desde una
+  esquina y cae a nada. `soft-light` respeta el detalle: sube el color sin
+  aplanar el relieve, que es lo que hace un colorista.
+
+El centro queda más neutro a propósito: es donde vive el titular. Y el orden
+importa —van después de la foto y `grade` antes que `glow`— porque entre
+posicionados sin `z-index` manda el orden del árbol.
+
+**Contraste, remedido tras la gradación.** Al aliviar el velo para dejar salir
+el color, el peor píxel bajó a 3,15:1: pasa el 3:1 de texto grande, pero sin
+margen. El velo sube un punto (0,34 / 0,45 / 0,62) y queda así:
+
+| escena | medio | p95 | peor píxel |
+|---|---|---|---|
+| home | 7,99:1 | 5,39:1 | 4,17:1 |
+| labs | 6,77:1 | 4,24:1 | 3,90:1 |
+| tech | 6,13:1 | 4,46:1 | 4,01:1 |
+
+Sin regresión en los siete pasos de escritorio ni en los dos de táctil.

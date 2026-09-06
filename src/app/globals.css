@@ -195,9 +195,12 @@
      rechazó el cliente. La legibilidad la da este velo neutro tinta, más
      cargado abajo donde caen titular y botones. El color de división vive
      solo como señal: el filete bajo cada wordmark y el brillo del botón. */
-  --home-veil-top: rgba(2, 10, 20, 0.44);
-  --home-veil-mid: rgba(2, 10, 20, 0.52);
-  --home-veil-low: rgba(2, 10, 20, 0.66);
+  /* 06/09 (11): el velo se alivia porque las capas de gradacion ya aportan
+     densidad propia. Sigue siendo lo que sostiene el titular, pero si mantiene
+     los valores anteriores ahoga el color que acaba de entrar. */
+  --home-veil-top: rgba(2, 10, 20, 0.34);
+  --home-veil-mid: rgba(2, 10, 20, 0.45);
+  --home-veil-low: rgba(2, 10, 20, 0.62);
 
   /* --- Liquid Glass (06/09/2026 (2), petición del cliente) --------------
      Material único para todo control flotante: los botones de división, la
@@ -273,7 +276,55 @@
 .home-photo {
   object-fit: cover;
   object-position: center;
-  filter: grayscale(1) contrast(1.08) brightness(0.94);
+  filter: grayscale(1) contrast(1.1) brightness(0.9);
+}
+
+/* --- Gradacion de color (06/09 (11)) -----------------------------------
+   Las fotos llegan en blanco y negro porque son MATERIA PRIMA: el color lo
+   pone el codigo. Aqui esta el porque de como, despues de dos intentos
+   fallidos que conviene no repetir:
+
+   1. `mix-blend-mode: color` uniforme sobre toda la pantalla. Tine claros y
+      oscuros por igual, asi que se lee como un cristal de color delante de la
+      foto — plastico. Tech salia rosa chicle.
+   2. Duotono uniforme (multiply + screen). Correcto de manual y premium, pero
+      al ser plano en toda la superficie se quedaba palido: sin un punto de
+      color mas intenso, el ojo lo lee como una foto desteñida.
+
+   Lo que si funciona es tratar el color como LUZ y no como filtro: que entre
+   por un sitio y caiga. Dos capas con papeles distintos:
+
+   - `.home-grade` en `screen` levanta los negros al color de la division. Va
+     en degradado radial, no plano, para que las sombras no tengan todas
+     exactamente el mismo tono — que es lo que delataba el filtro.
+   - `.home-glow` en `soft-light` mete la saturacion en los medios desde una
+     esquina y cae a nada. `soft-light` respeta el detalle de la foto: sube el
+     color sin aplanar el relieve, que es justo lo que hace un colorista.
+
+   El centro queda mas neutro a proposito: es donde vive el titular. */
+.home-grade, .home-glow { position: absolute; inset: 0; pointer-events: none; }
+.home-grade { mix-blend-mode: screen; }
+.home-glow  { mix-blend-mode: soft-light; }
+
+.home-backdrop[data-scene='home'] .home-grade {
+  background: radial-gradient(125% 95% at 26% 16%, #12507e 0%, #082742 52%, #04121f 100%);
+}
+.home-backdrop[data-scene='home'] .home-glow {
+  background: radial-gradient(95% 75% at 22% 20%, #5cb4ea 0%, rgba(92, 180, 234, 0.35) 38%, transparent 72%);
+}
+
+.home-backdrop[data-scene='labs'] .home-grade {
+  background: radial-gradient(125% 95% at 26% 16%, #05655c 0%, #033530 52%, #021b1a 100%);
+}
+.home-backdrop[data-scene='labs'] .home-glow {
+  background: radial-gradient(95% 75% at 22% 20%, #3fe3d2 0%, rgba(63, 227, 210, 0.35) 38%, transparent 72%);
+}
+
+.home-backdrop[data-scene='tech'] .home-grade {
+  background: radial-gradient(125% 95% at 26% 16%, #5c1345 0%, #330a27 52%, #1a0514 100%);
+}
+.home-backdrop[data-scene='tech'] .home-glow {
+  background: radial-gradient(95% 75% at 22% 20%, #ef61ad 0%, rgba(239, 97, 173, 0.32) 38%, transparent 72%);
 }
 
 
