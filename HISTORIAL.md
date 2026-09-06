@@ -1404,3 +1404,41 @@ sin desbordamiento y el trigger flotante libre de los campos.
 
 **Sigue pendiente** el reportaje fotográfico propio de la planta (§9.2). Esto
 es la mejor foto disponible, no la definitiva.
+
+### 2026-09-06 (9) — Claude Code — Isotipos a vidrio líquido blanco; el color responde al gesto
+
+Petición del cliente: los isotipos en blanco, "más acorde a Apple HIG, liquid
+glass". Ante la ambigüedad —él mismo pidió preguntar— se plantearon las dos
+decisiones reales y eligió: **blanco en reposo con el color apareciendo al
+abrir la división**, y acabado **vidrio líquido** (no cerámica ni aluminio).
+
+- **Rampa `GLASS`** (`#ffffff → #fbfdff → #f4f8fb → #dce5ed → #b9c6d2`),
+  compartida por los dos isotipos. No es blanco plano a propósito: un `#fff`
+  uniforme mata el volumen y el isotipo se lee como una silueta recortada. La
+  rampa baja a un gris azulado en las sombras, que es lo que deja ver el relieve
+  de nodos y enlaces. Las rampas de marca originales quedan anotadas en el
+  archivo por si el color vuelve a los isotipos.
+- **Material de metal a vidrio.** `MeshStandardMaterial` (metalness 0,88) pasa a
+  `MeshPhysicalMaterial` con `clearcoat: 1` y `clearcoatRoughness: 0,06`: una
+  segunda capa especular sobre el cuerpo, que es lo que da el reflejo nítido y
+  el canto luminoso del `.glass` de los botones. **Sin `transmission`**: sería
+  vidrio de verdad, pero se vería la fotografía a través del isotipo y costaría
+  una pasada de render extra por fotograma para nada.
+- **`setTint(hex | null)` en el motor.** Vira `material.color`, que multiplica
+  los colores por vértice — teñir así respeta el relieve de la rampa en vez de
+  aplanarlo, que es lo que pasaría repintando los vértices. El cambio se
+  interpola en el propio bucle (~3,4/s, que a ojo dura lo que la transición de
+  la escena) en vez de saltar de golpe. Con `prefers-reduced-motion` se aplica
+  directo y se repinta el único fotograma.
+- **Wiring.** `tint` queda **fuera** del array de dependencias del efecto que
+  monta el motor: si entrara, cambiar de división lo remontaría, reiniciando el
+  giro y el ciclo de apertura, y el isotipo daría un salto en cada cambio. Un
+  segundo efecto aplica el color. Y un `tintRef` lleva el tinte vigente al
+  montar, porque con la carga diferida el motor puede nacer con la división ya
+  abierta.
+- **Qué queda en color:** el isotipo de la división abierta, el filete de 3 px y
+  el latido de los botones. En reposo la escena es **monocroma entera**.
+
+Verificado en navegador: blanco en los dos isotipos en reposo; teal al abrir
+Labs y magenta al abrir Tech; sin regresión en los siete pasos de escritorio ni
+en los dos de táctil.

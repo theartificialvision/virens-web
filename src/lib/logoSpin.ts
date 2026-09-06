@@ -34,10 +34,27 @@ interface LogoSpec {
   links: ReadonlyArray<readonly [string, string]>;
 }
 
+/**
+ * Rampa de vidrio liquido (06/09/2026 (9), decision del cliente). Los dos
+ * isotipos pasan a blanco: en reposo la escena es monocroma y el color de
+ * division aparece SOLO al abrirla, via `setTint` — el color deja de ser
+ * decoracion y pasa a ser la respuesta al gesto.
+ *
+ * No es blanco plano: un `#fff` uniforme mata el volumen y el isotipo se lee
+ * como una silueta recortada. La rampa baja a un gris azulado en las sombras,
+ * que es lo que deja leer el relieve de los nodos y los enlaces.
+ *
+ * Las rampas de marca originales, muestreadas del logo 2D del cliente, eran
+ * A (Tech) ['#1b4a8f','#4b3389','#7d2283','#b8157e','#e60c7c'] y
+ * B (Labs) ['#0b4a78','#0c6081','#0d7c8c','#08a5a0','#02c7b3']. Se dejan
+ * anotadas aqui: si el color vuelve a los isotipos, salen de aqui.
+ */
+const GLASS = ['#ffffff', '#fbfdff', '#f4f8fb', '#dce5ed', '#b9c6d2'] as const;
+
 const SPECS: Record<LogoKey, LogoSpec> = {
   A: {
     grad: [0.3, 1.0],
-    keys: ['#1b4a8f', '#4b3389', '#7d2283', '#b8157e', '#e60c7c'],
+    keys: GLASS,
     nodes: {
       A1: [215, 230, 105], A2: [492, 230, 118], A3: [500, 1012, 105],
       B1: [752, 225, 100], B2: [1035, 232, 105], B3: [752, 1012, 105],
@@ -46,7 +63,7 @@ const SPECS: Record<LogoKey, LogoSpec> = {
   },
   B: {
     grad: [1.0, 0.75],
-    keys: ['#0b4a78', '#0c6081', '#0d7c8c', '#08a5a0', '#02c7b3'],
+    keys: GLASS,
     nodes: {
       C1: [320, 190, 118], C2: [320, 1090, 112], C3: [680, 1100, 105],
       D1: [645, 415, 110], D2: [645, 790, 105], D3: [960, 790, 100],
@@ -138,13 +155,24 @@ function buildLogo(key: LogoKey): THREE.Group {
   const group = new THREE.Group();
   group.name = 'logo_' + key;
 
-  const mat = new THREE.MeshStandardMaterial({
-    name: `metal_${key}`,
+  // Vidrio liquido, no metal. El `clearcoat` es la clave: una segunda capa
+  // especular por encima del cuerpo, que es lo que da el reflejo nitido y el
+  // canto luminoso del material de los botones. Sin `transmission`: seria
+  // vidrio de verdad, pero se veria la fotografia a traves del isotipo y
+  // costaria una pasada de render extra por fotograma para nada.
+  //
+  // `color` arranca en blanco y es lo que `setTint` vira: multiplica los
+  // colores por vertice, asi que tenirlo respeta el relieve de la rampa en vez
+  // de aplanarlo.
+  const mat = new THREE.MeshPhysicalMaterial({
+    name: `glass_${key}`,
     color: 0xffffff,
     vertexColors: true,
-    metalness: 0.88,
-    roughness: 0.19,
-    envMapIntensity: 1.6,
+    metalness: 0.12,
+    roughness: 0.14,
+    clearcoat: 1,
+    clearcoatRoughness: 0.06,
+    envMapIntensity: 1.9,
   });
 
   const cx = 620;
@@ -362,6 +390,10 @@ export interface LogoSpinOptions {
 
 /** Instancia montada; `dispose()` libera el contexto WebGL. */
 export interface LogoSpinHandle {
+  /** Vira el isotipo al color dado, o vuelve a blanco con `null`. El cambio no
+   *  es instantaneo: se interpola en el propio bucle para que acompane a la
+   *  transicion de la escena en vez de dar un salto de color. */
+  setTint: (hex: string | null) => void;
   dispose: () => void;
 }
 
@@ -392,6 +424,17 @@ export function mountLogoSpin(host: HTMLElement, opts: LogoSpinOptions): LogoSpi
   const camera = new THREE.PerspectiveCamera(32, 1, 0.05, 60);
   const obj = buildLogo(opts.logo);
   scene.add(obj);
+
+  // Los materiales se recogen del arbol: `buildLogo` crea uno por logo y lo
+  // reparte entre sus mallas, pero recorrerlo evita dar por hecho cuantos hay.
+  const materials: THREE.MeshPhysicalMaterial[] = [];
+  obj.traverse((o) => {
+    const m = o as THREE.Mesh;
+    if (m.isMesh && m.material instanceof THREE.MeshPhysicalMaterial) materials.push(m.material);
+  });
+  // Blanco en reposo; `tintTarget` es a donde va, y el bucle lo persigue.
+  const tintTarget = new THREE.Color(0xffffff);
+  const tintNow = new THREE.Color(0xffffff);
 
   /* Radio de encuadre, calculado UNA sola vez y con las dos mitades abiertas
      del todo. Antes se recalculaba en cada `resize()` recorriendo toda la
@@ -533,6 +576,12 @@ export function mountLogoSpin(host: HTMLElement, opts: LogoSpinOptions): LogoSpi
         u = opts.assemble > 0 ? (u + dt / opts.assemble) % 1 : 0;
         px += (targetPx - px) * Math.min(dt * 3.2, 1);
         py += (targetPy - py) * Math.min(dt * 3.2, 1);
+        // El color persigue a su objetivo al mismo ritmo que el paralaje: ~3
+        // veces por segundo, que a ojo dura lo que la transicion de la escena.
+        if (!tintNow.equals(tintTarget)) {
+          tintNow.lerp(tintTarget, Math.min(dt * 3.4, 1));
+          for (const m of materials) m.color.copy(tintNow);
+        }
         frame();
       }
       requestAnimationFrame(loop);
@@ -541,6 +590,16 @@ export function mountLogoSpin(host: HTMLElement, opts: LogoSpinOptions): LogoSpi
   }
 
   return {
+    setTint(hex: string | null) {
+      tintTarget.set(hex ?? 0xffffff);
+      // Con reducir-movimiento no hay bucle que interpole: se aplica de golpe
+      // y se repinta el unico fotograma (CLAUDE.md regla 8).
+      if (reduced) {
+        tintNow.copy(tintTarget);
+        for (const m of materials) m.color.copy(tintNow);
+        frame(true);
+      }
+    },
     dispose() {
       stopped = true;
       ro.disconnect();
