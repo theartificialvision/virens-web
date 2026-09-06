@@ -1517,3 +1517,26 @@ margen. El velo sube un punto (0,34 / 0,45 / 0,62) y queda así:
 | tech | 6,13:1 | 4,46:1 | 4,01:1 |
 
 Sin regresión en los siete pasos de escritorio ni en los dos de táctil.
+
+### 2026-09-06 (12) — Claude Code — Fuera el pulso de los botones; luz de fondo +30 %
+
+Dos correcciones del cliente.
+
+- **Se retira el latido de los botones**, que se había añadido en (7) a petición
+  suya. *"Ese efecto queda raro"* — y visto en conjunto tiene razón: dos cosas
+  respirando a destiempo dentro de una composición que por lo demás está quieta
+  se lee como un banner, no como una marca. Con la gradación de color en el
+  fondo ya entrada, el latido competía además con ella. **El color de cada botón
+  se queda; el movimiento, no.** El halo sí sobrevive en `:hover` y
+  `:focus-visible`: ahí no es ambiente, es la respuesta al gesto — aparece y se
+  mantiene mientras dure, que es lo contrario de un latido. `--home-pulse` pasa
+  a llamarse `--home-accent`, que es lo que de verdad hace ahora.
+- **Luz de fondo, +30 %.** Se sube el **color** de las paradas de los degradados,
+  no la opacidad de las capas: en `screen` y en `soft-light` lo que manda es lo
+  brillante que sea la fuente, así que subir el color aporta saturación mientras
+  que subir la opacidad solo habría aportado densidad — y densidad es justo lo
+  que no se quiere aquí, porque se come el contraste sin dar color.
+
+Contraste remedido con la luz más fuerte: peor píxel 4,11:1 (home), 3,83:1
+(labs), 3,95:1 (tech), todos por encima del 3:1 de texto grande. El velo no ha
+hecho falta tocarlo. Sin regresión en escritorio ni en táctil.

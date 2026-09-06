@@ -301,30 +301,35 @@
      esquina y cae a nada. `soft-light` respeta el detalle de la foto: sube el
      color sin aplanar el relieve, que es justo lo que hace un colorista.
 
-   El centro queda mas neutro a proposito: es donde vive el titular. */
+   El centro queda mas neutro a proposito: es donde vive el titular.
+
+   06/09 (12): intensidad subida ~30% a peticion del cliente. Se sube el COLOR
+   de las paradas, no la opacidad de la capa: en `screen` y en `soft-light` lo
+   que manda es lo brillante que sea la fuente, asi que subir el color aporta
+   saturacion, mientras que subir la opacidad solo habria aportado densidad. */
 .home-grade, .home-glow { position: absolute; inset: 0; pointer-events: none; }
 .home-grade { mix-blend-mode: screen; }
 .home-glow  { mix-blend-mode: soft-light; }
 
 .home-backdrop[data-scene='home'] .home-grade {
-  background: radial-gradient(125% 95% at 26% 16%, #12507e 0%, #082742 52%, #04121f 100%);
+  background: radial-gradient(125% 95% at 26% 16%, #1768a4 0%, #0a3356 52%, #051728 100%);
 }
 .home-backdrop[data-scene='home'] .home-glow {
-  background: radial-gradient(95% 75% at 22% 20%, #5cb4ea 0%, rgba(92, 180, 234, 0.35) 38%, transparent 72%);
+  background: radial-gradient(95% 75% at 22% 20%, #7ac6f2 0%, rgba(122, 198, 242, 0.46) 38%, transparent 78%);
 }
 
 .home-backdrop[data-scene='labs'] .home-grade {
-  background: radial-gradient(125% 95% at 26% 16%, #05655c 0%, #033530 52%, #021b1a 100%);
+  background: radial-gradient(125% 95% at 26% 16%, #078378 0%, #04453e 52%, #032322 100%);
 }
 .home-backdrop[data-scene='labs'] .home-glow {
-  background: radial-gradient(95% 75% at 22% 20%, #3fe3d2 0%, rgba(63, 227, 210, 0.35) 38%, transparent 72%);
+  background: radial-gradient(95% 75% at 22% 20%, #5ff0e1 0%, rgba(95, 240, 225, 0.46) 38%, transparent 78%);
 }
 
 .home-backdrop[data-scene='tech'] .home-grade {
-  background: radial-gradient(125% 95% at 26% 16%, #5c1345 0%, #330a27 52%, #1a0514 100%);
+  background: radial-gradient(125% 95% at 26% 16%, #78195a 0%, #420d33 52%, #22071a 100%);
 }
 .home-backdrop[data-scene='tech'] .home-glow {
-  background: radial-gradient(95% 75% at 22% 20%, #ef61ad 0%, rgba(239, 97, 173, 0.32) 38%, transparent 72%);
+  background: radial-gradient(95% 75% at 22% 20%, #f57ec0 0%, rgba(245, 126, 192, 0.42) 38%, transparent 78%);
 }
 
 
@@ -524,73 +529,37 @@
 }
 .home-division-link:active { transform: translateY(0) scale(0.985); }
 
-/* --- Pulso de marca -----------------------------------------------------
-   Vuelve el latido que se retiro el 06/09 al quedarse sin uso, pero ahora
-   sobre el vidrio y con el color de cada division, que es la senal que rige
-   toda la escena.
+/* --- Color de cada boton -------------------------------------------------
+   El latido que hubo aqui se retira el 06/09 (12): al cliente le resultaba
+   raro, y visto en conjunto tenia razon — dos cosas respirando a destiempo en
+   una composicion que por lo demas esta quieta se lee como un banner, no como
+   una marca. El color se queda; el movimiento, no.
 
-   Dos capas y no una: un anillo que nace pegado al canto y se expande hasta
-   desvanecerse, y por debajo un halo suave que respira. Juntas se leen como
-   latido; el anillo solo se lee como parpadeo.
-
-   Se usan las variantes `-glow` y no los colores base: sobre el velo oscuro,
-   --color-tech (#A2195B) da ~2,5:1 y no llega a verse como halo. Es
-   exactamente para lo que existen esos tokens.
-
-   Los dos botones van desfasados medio ciclo. Al unisono se leen como un
-   metronomo — dos cosas parpadeando a la vez cansan; alternandose, respiran. */
-.home-division-link {
-  animation: home-pulse 3.4s var(--ease-out-quart) infinite;
-}
-/* Cada boton lleva su color, no solo en el latido: el cuerpo del vidrio se tine
-   (06/09 (10), peticion del cliente). Se tine el CUERPO —la variable que ya usa
-   `.glass`— y no se le pinta un fondo encima: un fondo opaco anularia el
+   Se tine el CUERPO del vidrio (`--glass-body`, la variable que ya usa
+   `.glass`) y no se le pinta un fondo encima: un fondo opaco anularia el
    desenfoque y dejaria de ser vidrio.
 
    Porcentajes bajos a proposito. Por encima de ~30 el boton deja de leerse como
-   cristal teñido y pasa a boton de color, y ademas se come el contraste del
-   rotulo blanco. Aqui el color identifica; el que grita es el latido. */
+   cristal tenido y pasa a boton de color, y ademas se come el contraste del
+   rotulo blanco. */
 .home-action-slot[data-side='labs'] .home-division-link {
-  --home-pulse: var(--color-labs-glow);
+  --home-accent: var(--color-labs-glow);
   --glass-body: color-mix(in srgb, var(--color-labs) 24%, transparent);
   --glass-body-strong: color-mix(in srgb, var(--color-labs) 38%, transparent);
 }
 .home-action-slot[data-side='tech'] .home-division-link {
-  --home-pulse: var(--color-tech-glow);
+  --home-accent: var(--color-tech-glow);
   --glass-body: color-mix(in srgb, var(--color-tech) 26%, transparent);
   --glass-body-strong: color-mix(in srgb, var(--color-tech) 40%, transparent);
-  animation-delay: -1.7s;
 }
 
-@keyframes home-pulse {
-  0% {
-    box-shadow: var(--glass-shadow),
-                0 0 0 0    color-mix(in srgb, var(--home-pulse) 55%, transparent),
-                0 0 18px 0 color-mix(in srgb, var(--home-pulse) 20%, transparent);
-  }
-  60% {
-    box-shadow: var(--glass-shadow),
-                0 0 0 13px  color-mix(in srgb, var(--home-pulse) 0%, transparent),
-                0 0 34px 5px color-mix(in srgb, var(--home-pulse) 40%, transparent);
-  }
-  100% {
-    box-shadow: var(--glass-shadow),
-                0 0 0 13px  color-mix(in srgb, var(--home-pulse) 0%, transparent),
-                0 0 18px 0  color-mix(in srgb, var(--home-pulse) 20%, transparent);
-  }
-}
-
-/* Al senalar o enfocar, el latido para y queda un halo fijo: ahi el estado ya
-   lo comunica el desplazamiento de la escena entera, y algo latiendo debajo
-   del cursor estorba en vez de guiar. */
+/* Al senalar o enfocar si hay halo: no es ambiente, es la respuesta al gesto.
+   Aparece y se queda mientras dure, que es lo contrario de un latido. */
 .home-division-link:hover,
 .home-division-link:focus-visible {
-  animation-play-state: paused;
   box-shadow: var(--glass-shadow),
-              0 0 38px 6px color-mix(in srgb, var(--home-pulse) 52%, transparent);
+              0 0 38px 6px color-mix(in srgb, var(--home-accent) 52%, transparent);
 }
-/* La division que ya esta abierta no necesita reclamar nada. */
-.home-action-slot[data-selected='true'] .home-division-link { animation-play-state: paused; }
 
 /* --- Flecha del CTA -----------------------------------------------------
    Solo aparece al senalar. En reposo la composicion se queda como esta —el
