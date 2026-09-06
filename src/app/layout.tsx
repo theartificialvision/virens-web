@@ -3,7 +3,7 @@ import { Montserrat } from 'next/font/google';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Grain } from '@/components/ui/Grain';
-import { site } from '@/config/site';
+import { isIndexable, site } from '@/config/site';
 import './globals.css';
 
 const montserrat = Montserrat({
@@ -23,7 +23,10 @@ export const metadata: Metadata = {
     'Fabricación por contrato y desarrollo de complementos alimenticios en Barcelona. Más de 2.000 m², nueve formatos, ISO 22000 y GMP.',
   alternates: { canonical: '/', languages: { 'es-ES': '/', en: '/en' } },
   openGraph: { type: 'website', locale: 'es_ES', siteName: site.name },
-  robots: { index: true, follow: true },
+  // Cerrado mientras sea prototipo. `robots.txt` por sí solo no basta: si
+  // alguien enlaza una URL, Google puede indexarla igual. Esta etiqueta sí lo
+  // impide. Ver `isIndexable` en config/site.ts.
+  robots: isIndexable ? { index: true, follow: true } : { index: false, follow: false },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

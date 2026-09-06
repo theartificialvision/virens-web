@@ -46,3 +46,16 @@ export const site = {
 } as const;
 
 export type Locale = (typeof site.locales)[number];
+
+/**
+ * ¿Puede indexarse esta build? Cerrado por defecto y a propósito.
+ *
+ * Esto es un prototipo del rediseño de una web que ESTÁ EN PRODUCCIÓN
+ * (lvirens.com) y que todavía publica datos sin confirmar (ver
+ * `pendingClientConfirmation`). Indexarlo bajo la marca del cliente significa
+ * competir con su web real en resultados y confundir a quien lo encuentre.
+ *
+ * Se abre poniendo `NEXT_PUBLIC_INDEXABLE=true` en el entorno de Netlify, y
+ * solo debería hacerse el día que esto sustituya a la web de verdad.
+ */
+export const isIndexable = process.env.NEXT_PUBLIC_INDEXABLE === 'true';
