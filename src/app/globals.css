@@ -491,9 +491,23 @@
 .home-division-link {
   animation: home-pulse 3.4s var(--ease-out-quart) infinite;
 }
-.home-action-slot[data-side='labs'] .home-division-link { --home-pulse: var(--color-labs-glow); }
+/* Cada boton lleva su color, no solo en el latido: el cuerpo del vidrio se tine
+   (06/09 (10), peticion del cliente). Se tine el CUERPO —la variable que ya usa
+   `.glass`— y no se le pinta un fondo encima: un fondo opaco anularia el
+   desenfoque y dejaria de ser vidrio.
+
+   Porcentajes bajos a proposito. Por encima de ~30 el boton deja de leerse como
+   cristal teñido y pasa a boton de color, y ademas se come el contraste del
+   rotulo blanco. Aqui el color identifica; el que grita es el latido. */
+.home-action-slot[data-side='labs'] .home-division-link {
+  --home-pulse: var(--color-labs-glow);
+  --glass-body: color-mix(in srgb, var(--color-labs) 24%, transparent);
+  --glass-body-strong: color-mix(in srgb, var(--color-labs) 38%, transparent);
+}
 .home-action-slot[data-side='tech'] .home-division-link {
   --home-pulse: var(--color-tech-glow);
+  --glass-body: color-mix(in srgb, var(--color-tech) 26%, transparent);
+  --glass-body-strong: color-mix(in srgb, var(--color-tech) 40%, transparent);
   animation-delay: -1.7s;
 }
 

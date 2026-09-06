@@ -27,7 +27,8 @@ const FIT = 1.06;         // holgura sobre la pose ABIERTA (ya medida): casi nin
 interface LogoSpec {
   /** Eje del degradado en el plano del logo. */
   grad: readonly [number, number];
-  /** Colores clave muestreados del logo 2D. */
+  /** Rampa de marca, muestreada del logo 2D del cliente. Es la que vuelve
+   *  cuando su division se abre. */
   keys: readonly string[];
   /** `nodo: [x, y, radio]` en píxeles del original de 1240 px. */
   nodes: Readonly<Record<string, readonly [number, number, number]>>;
@@ -44,17 +45,17 @@ interface LogoSpec {
  * como una silueta recortada. La rampa baja a un gris azulado en las sombras,
  * que es lo que deja leer el relieve de los nodos y los enlaces.
  *
- * Las rampas de marca originales, muestreadas del logo 2D del cliente, eran
- * A (Tech) ['#1b4a8f','#4b3389','#7d2283','#b8157e','#e60c7c'] y
- * B (Labs) ['#0b4a78','#0c6081','#0d7c8c','#08a5a0','#02c7b3']. Se dejan
- * anotadas aqui: si el color vuelve a los isotipos, salen de aqui.
+ * 06/09 (10): al abrir una division, el isotipo NO se tine de un color plano
+ * — eso aplastaba el degradado de marca en una sola tinta. Vuelve su rampa
+ * original entera (`spec.keys`), interpolando vertice a vertice entre esta y
+ * aquella. El blanco es el reposo, no el estado final.
  */
 const GLASS = ['#ffffff', '#fbfdff', '#f4f8fb', '#dce5ed', '#b9c6d2'] as const;
 
 const SPECS: Record<LogoKey, LogoSpec> = {
   A: {
     grad: [0.3, 1.0],
-    keys: GLASS,
+    keys: ['#1b4a8f', '#4b3389', '#7d2283', '#b8157e', '#e60c7c'],
     nodes: {
       A1: [215, 230, 105], A2: [492, 230, 118], A3: [500, 1012, 105],
       B1: [752, 225, 100], B2: [1035, 232, 105], B3: [752, 1012, 105],
@@ -63,7 +64,7 @@ const SPECS: Record<LogoKey, LogoSpec> = {
   },
   B: {
     grad: [1.0, 0.75],
-    keys: GLASS,
+    keys: ['#0b4a78', '#0c6081', '#0d7c8c', '#08a5a0', '#02c7b3'],
     nodes: {
       C1: [320, 190, 118], C2: [320, 1090, 112], C3: [680, 1100, 105],
       D1: [645, 415, 110], D2: [645, 790, 105], D3: [960, 790, 100],
@@ -108,9 +109,25 @@ function rampAt(cs: readonly THREE.Color[], t: number) {
   return b ? a.clone().lerp(b, u - j) : a.clone();
 }
 
-/** Degradado como color por vértice: fundido continuo, sin escalones por tramo. */
-function paintGradient(group: THREE.Group, keys: readonly string[], grad: readonly [number, number]) {
-  const cs = keys.map((h) => new THREE.Color(h));
+/** Lo que hace falta para pasar del blanco a la marca sin recalcular nada: el
+ *  atributo vivo de cada malla y sus dos juegos de colores ya resueltos. */
+interface GradientPaint {
+  attrs: THREE.BufferAttribute[];
+  glass: Float32Array[];
+  brand: Float32Array[];
+}
+
+/** Degradado como color por vértice: fundido continuo, sin escalones por tramo.
+ *  Se resuelven las DOS rampas de una vez —la proyección sobre el eje, que es
+ *  lo caro, se calcula una sola— y se deja pintada la de vidrio. */
+function paintGradient(
+  group: THREE.Group,
+  glassKeys: readonly string[],
+  brandKeys: readonly string[],
+  grad: readonly [number, number],
+): GradientPaint {
+  const csGlass = glassKeys.map((h) => new THREE.Color(h));
+  const csBrand = brandKeys.map((h) => new THREE.Color(h));
   const axis = new THREE.Vector3(grad[0], -grad[1], 0).normalize();
   const meshes: THREE.Mesh[] = [];
   group.traverse((o) => {
@@ -136,21 +153,32 @@ function paintGradient(group: THREE.Group, keys: readonly string[], grad: readon
     proj.push(d);
   }
   const span = hi - lo || 1;
+  const paint: GradientPaint = { attrs: [], glass: [], brand: [] };
   meshes.forEach((m, k) => {
     const d = proj[k];
     if (!d) return;
-    const col = new Float32Array(d.length * 3);
+    const glass = new Float32Array(d.length * 3);
+    const brand = new Float32Array(d.length * 3);
     for (let i = 0; i < d.length; i++) {
-      const c = rampAt(cs, ((d[i] ?? lo) - lo) / span);
-      col[i * 3] = c.r;
-      col[i * 3 + 1] = c.g;
-      col[i * 3 + 2] = c.b;
+      const t = ((d[i] ?? lo) - lo) / span;
+      const g = rampAt(csGlass, t);
+      const b = rampAt(csBrand, t);
+      glass[i * 3] = g.r; glass[i * 3 + 1] = g.g; glass[i * 3 + 2] = g.b;
+      brand[i * 3] = b.r; brand[i * 3 + 1] = b.g; brand[i * 3 + 2] = b.b;
     }
-    m.geometry.setAttribute('color', new THREE.BufferAttribute(col, 3));
+    // El atributo vivo arranca en blanco y es una COPIA: `glass` y `brand` se
+    // quedan intactos como extremos de la interpolacion.
+    const attr = new THREE.BufferAttribute(glass.slice(), 3);
+    attr.setUsage(THREE.DynamicDrawUsage);
+    m.geometry.setAttribute('color', attr);
+    paint.attrs.push(attr);
+    paint.glass.push(glass);
+    paint.brand.push(brand);
   });
+  return paint;
 }
 
-function buildLogo(key: LogoKey): THREE.Group {
+function buildLogo(key: LogoKey): { group: THREE.Group; paint: GradientPaint } {
   const spec = SPECS[key];
   const group = new THREE.Group();
   group.name = 'logo_' + key;
@@ -261,7 +289,7 @@ function buildLogo(key: LogoKey): THREE.Group {
   }
 
   // Cada L pivota sobre su propio centroide; el conjunto se centra en el origen.
-  paintGradient(group, spec.keys, spec.grad);
+  const paint = paintGradient(group, GLASS, spec.keys, spec.grad);
   group.updateMatrixWorld(true);
   parts.forEach((p) => {
     const c = new THREE.Box3().setFromObject(p).getCenter(new THREE.Vector3());
@@ -299,7 +327,7 @@ function buildLogo(key: LogoKey): THREE.Group {
     p.userData = data;
   });
   group.userData = { parts };
-  return group;
+  return { group, paint };
 }
 
 /** Entorno de estudio para el reflejo metálico, pintado a canvas. */
@@ -390,10 +418,12 @@ export interface LogoSpinOptions {
 
 /** Instancia montada; `dispose()` libera el contexto WebGL. */
 export interface LogoSpinHandle {
-  /** Vira el isotipo al color dado, o vuelve a blanco con `null`. El cambio no
-   *  es instantaneo: se interpola en el propio bucle para que acompane a la
-   *  transicion de la escena en vez de dar un salto de color. */
-  setTint: (hex: string | null) => void;
+  /** `true` devuelve al isotipo su rampa de marca original; `false` lo deja en
+   *  el vidrio blanco de reposo. No se tine de un color plano: se interpola
+   *  vertice a vertice entre las dos rampas, asi que el degradado de marca
+   *  llega entero. El cambio se interpola en el bucle para acompanar a la
+   *  transicion de la escena en vez de dar un salto. */
+  setBranded: (on: boolean) => void;
   dispose: () => void;
 }
 
@@ -422,19 +452,29 @@ export function mountLogoSpin(host: HTMLElement, opts: LogoSpinOptions): LogoSpi
   scene.add(rim);
 
   const camera = new THREE.PerspectiveCamera(32, 1, 0.05, 60);
-  const obj = buildLogo(opts.logo);
+  const { group: obj, paint } = buildLogo(opts.logo);
   scene.add(obj);
 
-  // Los materiales se recogen del arbol: `buildLogo` crea uno por logo y lo
-  // reparte entre sus mallas, pero recorrerlo evita dar por hecho cuantos hay.
-  const materials: THREE.MeshPhysicalMaterial[] = [];
-  obj.traverse((o) => {
-    const m = o as THREE.Mesh;
-    if (m.isMesh && m.material instanceof THREE.MeshPhysicalMaterial) materials.push(m.material);
-  });
-  // Blanco en reposo; `tintTarget` es a donde va, y el bucle lo persigue.
-  const tintTarget = new THREE.Color(0xffffff);
-  const tintNow = new THREE.Color(0xffffff);
+  // 0 = vidrio blanco (reposo), 1 = rampa de marca (division abierta).
+  // `mix` persigue a `mixTarget` en el bucle; no se salta de un extremo a otro.
+  let mix = 0;
+  let mixTarget = 0;
+
+  /** Interpola vertice a vertice entre las dos rampas ya resueltas. Es una
+   *  pasada lineal sobre el buffer: no recalcula proyecciones ni geometria. */
+  function applyMix() {
+    for (let k = 0; k < paint.attrs.length; k += 1) {
+      const attr = paint.attrs[k];
+      const a = paint.glass[k];
+      const b = paint.brand[k];
+      if (!attr || !a || !b) continue;
+      const out = attr.array as Float32Array;
+      for (let i = 0; i < out.length; i += 1) {
+        out[i] = (a[i] ?? 0) + ((b[i] ?? 0) - (a[i] ?? 0)) * mix;
+      }
+      attr.needsUpdate = true;
+    }
+  }
 
   /* Radio de encuadre, calculado UNA sola vez y con las dos mitades abiertas
      del todo. Antes se recalculaba en cada `resize()` recorriendo toda la
@@ -578,9 +618,9 @@ export function mountLogoSpin(host: HTMLElement, opts: LogoSpinOptions): LogoSpi
         py += (targetPy - py) * Math.min(dt * 3.2, 1);
         // El color persigue a su objetivo al mismo ritmo que el paralaje: ~3
         // veces por segundo, que a ojo dura lo que la transicion de la escena.
-        if (!tintNow.equals(tintTarget)) {
-          tintNow.lerp(tintTarget, Math.min(dt * 3.4, 1));
-          for (const m of materials) m.color.copy(tintNow);
+        if (Math.abs(mixTarget - mix) > 0.002) {
+          mix += (mixTarget - mix) * Math.min(dt * 3.4, 1);
+          applyMix();
         }
         frame();
       }
@@ -590,13 +630,13 @@ export function mountLogoSpin(host: HTMLElement, opts: LogoSpinOptions): LogoSpi
   }
 
   return {
-    setTint(hex: string | null) {
-      tintTarget.set(hex ?? 0xffffff);
+    setBranded(on: boolean) {
+      mixTarget = on ? 1 : 0;
       // Con reducir-movimiento no hay bucle que interpole: se aplica de golpe
       // y se repinta el unico fotograma (CLAUDE.md regla 8).
       if (reduced) {
-        tintNow.copy(tintTarget);
-        for (const m of materials) m.color.copy(tintNow);
+        mix = mixTarget;
+        applyMix();
         frame(true);
       }
     },

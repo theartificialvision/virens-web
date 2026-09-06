@@ -32,7 +32,7 @@ export function LogoSpin({
   hold,
   phase = 0,
   glow,
-  tint = null,
+  branded = false,
   className,
   sizes,
 }: {
@@ -46,18 +46,19 @@ export function LogoSpin({
   /** Color del contraluz: un halo radial difuso detrás del isotipo, para que
    *  el volumen metálico asiente sobre la fotografía en vez de flotar. */
   glow?: string;
-  /** Color al que vira el isotipo. `null` lo deja en blanco, que es el reposo
-   *  desde el 06/09 (9): el color aparece solo cuando su division se abre. */
-  tint?: string | null;
+  /** `true` devuelve al isotipo su degradado de marca; `false` lo deja en el
+   *  vidrio blanco de reposo. El color aparece solo cuando su division se
+   *  abre (06/09 (9)), y vuelve la rampa entera, no una tinta plana (10). */
+  branded?: boolean;
   className?: string;
   sizes: string;
 }) {
   const hostRef = useRef<HTMLDivElement>(null);
   const handleRef = useRef<LogoSpinHandle | null>(null);
   // El motor puede montarse cuando la division ya esta abierta (carga diferida):
-  // este ref lleva el tinte vigente para aplicarlo nada mas nacer.
-  const tintRef = useRef<string | null>(tint);
-  tintRef.current = tint;
+  // este ref lleva el estado vigente para aplicarlo nada mas nacer.
+  const brandedRef = useRef(branded);
+  brandedRef.current = branded;
   const [live, setLive] = useState(false);
 
   useEffect(() => {
@@ -76,7 +77,7 @@ export function LogoSpin({
         if (cancelled) return;
         handle = mountLogoSpin(host, { logo, spin, assemble, hold, phase, pointer });
         handleRef.current = handle;
-        handle.setTint(tintRef.current);
+        handle.setBranded(brandedRef.current);
         setLive(true);
       })
       .catch(() => {
@@ -91,15 +92,15 @@ export function LogoSpin({
       handleRef.current = null;
       setLive(false);
     };
-    // `tint` fuera a proposito: cambiarlo NO debe remontar el motor —
+    // `branded` fuera a proposito: cambiarlo NO debe remontar el motor —
     // reiniciaria el giro y el ciclo de apertura, y el isotipo daria un salto
     // en cada cambio de division. Lo aplica el efecto de abajo.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [logo, spin, assemble, hold, phase]);
 
   useEffect(() => {
-    handleRef.current?.setTint(tint);
-  }, [tint]);
+    handleRef.current?.setBranded(branded);
+  }, [branded]);
 
   return (
     <span className={cn('relative block', className)}>

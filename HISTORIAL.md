@@ -1442,3 +1442,35 @@ abrir la división**, y acabado **vidrio líquido** (no cerámica ni aluminio).
 Verificado en navegador: blanco en los dos isotipos en reposo; teal al abrir
 Labs y magenta al abrir Tech; sin regresión en los siete pasos de escritorio ni
 en los dos de táctil.
+
+### 2026-09-06 (10) — Claude Code — Vuelve el degradado de marca al abrir, y botones tintados
+
+Corrección del cliente sobre (9), y con razón: *"los logos en labs o tech deben
+tener el color original"*. Lo que había hecho era teñir el isotipo de un color
+plano (`material.color` multiplicando la rampa blanca), y eso **aplastaba el
+degradado de marca en una sola tinta**. El logo de Labs no es "turquesa": va de
+azul profundo a turquesa, y ese recorrido es la marca.
+
+- **Las dos rampas conviven.** `paintGradient` resuelve de una vez la de vidrio
+  y la de marca, y deja pintada la de vidrio. Lo caro es la proyección de cada
+  vértice sobre el eje del degradado, y eso se calcula **una sola vez** para las
+  dos. Cada malla guarda sus dos `Float32Array` como extremos, y el atributo
+  vivo es una copia que se interpola entre ellos.
+- **`setBranded(on)`** sustituye a `setTint(hex)`. Mueve un factor `mix` de 0
+  (vidrio blanco) a 1 (marca) que el bucle persigue, y una pasada lineal sobre
+  el buffer interpola vértice a vértice. No recalcula geometría ni proyecciones:
+  solo suma y multiplica sobre arrays ya resueltos.
+- **Botones tintados**, cada uno con su color, también a petición. Se tiñe el
+  **cuerpo del vidrio** (`--glass-body`, la variable que ya usa `.glass`) y no
+  se le pinta un fondo encima: un fondo opaco anularía el desenfoque y dejaría
+  de ser vidrio. Porcentajes bajos (24 % Labs, 26 % Tech; 38/40 en hover) —
+  por encima de ~30 deja de leerse como cristal teñido, pasa a botón de color y
+  se come el contraste del rótulo blanco. Aquí el color identifica; el que
+  grita es el latido.
+
+Con esto el reparto queda: **en reposo, monocromo salvo el filete y el tinte
+bajo del botón; al abrir, el isotipo recupera su degradado entero.**
+
+Verificado en navegador: blanco en reposo, degradado azul→turquesa al abrir
+Labs y azul→magenta al abrir Tech; botones con su tinte; sin regresión en los
+siete pasos de escritorio ni en los dos de táctil.
