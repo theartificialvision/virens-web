@@ -40,7 +40,7 @@ export function CapacityGrid({ eyebrow, title, stats, items, operations, note }:
                   {s.value}
                   {s.unit && <span className="ml-1 text-[0.42em] align-top">{s.unit}</span>}
                 </dd>
-                <dt className="mt-4 text-[length:var(--text-eyebrow)] font-bold uppercase tracking-[0.2em] text-gray-500">
+                <dt className="mt-4 text-[length:var(--text-eyebrow)] font-bold uppercase tracking-eyebrow text-gray-500">
                   {s.label}
                 </dt>
               </Reveal>
@@ -50,27 +50,27 @@ export function CapacityGrid({ eyebrow, title, stats, items, operations, note }:
 
         {/* Mismo criterio: sin caja de celda. El icono ya funciona como ancla
             visual, así que el aire entre items basta para separarlos. */}
-        <ul className="mt-20 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-5">
+        <ul className="mt-10 grid gap-x-8 gap-y-8 lg:mt-20 lg:gap-y-12 sm:grid-cols-2 lg:grid-cols-5">
           {items.map((item, i) => (
             <li key={item.id}>
               <Reveal delay={(i % 5) * 0.04} className="flex flex-col gap-6">
                 <FormIcon name={item.icon} className="size-12 shrink-0 text-gray-500 lg:size-14" />
                 <div>
-                  <p className="text-[length:var(--text-eyebrow)] font-bold uppercase tracking-[0.18em] text-gray-500">
+                  <p className="text-[length:var(--text-eyebrow)] font-bold uppercase tracking-label text-gray-500">
                     {item.label}
                   </p>
-                  <p className="mt-3 text-[clamp(1.75rem,1.35rem+1.2vw,3rem)] font-bold leading-none tracking-[-0.02em] text-labs">
+                  <p className="mt-3 text-[length:var(--text-stat-compact)] font-bold leading-none tracking-[-0.02em] text-labs">
                     {item.units}
                   </p>
-                  {item.range && <p className="mt-2 text-[13px] text-gray-500">{item.range}</p>}
+                  {item.range && <p className="mt-2 text-[length:var(--text-micro)] text-gray-500">{item.range}</p>}
                 </div>
               </Reveal>
             </li>
           ))}
         </ul>
 
-        <div className="mt-12 grid gap-6 border-t border-gray-200 pt-8 lg:grid-cols-12">
-          <p className="text-[length:var(--text-eyebrow)] font-bold uppercase tracking-[0.24em] text-gray-500">
+        <div className="mt-10 grid gap-6 lg:mt-12 lg:grid-cols-12">
+          <p className="text-[length:var(--text-eyebrow)] font-bold uppercase tracking-eyebrow text-gray-500">
             Acondicionamiento
           </p>
           <ul className="flex flex-wrap gap-x-10 gap-y-2 text-gray-700 lg:col-span-8">

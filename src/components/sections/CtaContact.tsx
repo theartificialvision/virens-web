@@ -1,7 +1,6 @@
 import { Container } from '@/components/ui/Container';
 import { Section } from '@/components/ui/Section';
 import { Button } from '@/components/ui/Button';
-import { Magnetic } from '@/components/ui/Magnetic';
 import { site } from '@/config/site';
 
 /** CTA global. Un único objetivo de conversión en toda la web (§13.7). */
@@ -9,7 +8,7 @@ export function CtaContact() {
   return (
     <Section tone="gray" rhythm="compact">
       <Container>
-        <div className="grid items-center gap-8 border-y border-gray-200 py-10 md:grid-cols-[auto_1fr_auto] md:text-left lg:gap-12">
+        <div className="grid items-center gap-6 md:gap-8 md:grid-cols-[auto_1fr_auto] md:text-left lg:gap-12">
           <ContactGlyph />
           <div>
             {/* Tamaño de rol H3: doc maestro §10.2 asigna peso 600 (no 700)
@@ -24,11 +23,11 @@ export function CtaContact() {
               <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
             </p>
           </div>
-          <Magnetic className="w-full md:w-auto">
+          <div className="w-full md:w-auto">
             <Button href="/contacto" className="w-full md:w-auto">
               {site.ctaContact.button} <span aria-hidden>&rarr;</span>
             </Button>
-          </Magnetic>
+          </div>
         </div>
       </Container>
     </Section>

@@ -1884,3 +1884,55 @@ desbordes y sin puntos huérfanos.
 
 **Queda pendiente** lo señalado en (20): en el hero de Labs el isotipo blanco
 cae sobre la bata blanca de la operaria y pierde definición.
+
+
+### 2026-09-07 (23) — Codex — Correcciones de coherencia visual del diagnóstico
+
+- Intro de Labs a `soft`; Timeline y pilares de TypographicBlock sin filetes,
+  fondos de celda ni alturas mínimas de tabla. DivisionSwitch usa hueso.
+- Tamaños señalados reutilizan la escala; 13/14 px se centralizan como roles
+  micro/label. Los microrrótulos usan dos trackings: eyebrow y label.
+- Velos de HeroVideo y FullBleedImage tokenizados conservando intensidad;
+  caption alineado mediante Container. Anclas: 4.75 rem (antes 9.5 rem).
+- EN oculto hasta disponer de rutas traducidas. El menú consulta la superficie
+  bajo su centro mediante `data-header-tone`, incluida la barra sticky; mide
+  en scroll/resize/cambio de ruta, sin RAF continuo. FAB móvil conserva su
+  cuerpo azul con contraste propio.
+- MolecularField estático por defecto en sus tres usos. Animación opcional
+  mediante `animated`, siempre subordinada a reduced-motion.
+- Validación: typecheck y build de producción correctos; diff sin errores.
+  Revisados en Chrome desktop: heroes, pilares de Tech, salto a Formulación,
+  Timeline, selector sin EN y contraste del menú sobre contenido claro de Home.
+  La revisión móvil quedó bloqueada al perderse la ventana de Chrome
+  (`cgWindowNotFound`); no se da por verificada.
+- Pendiente de decisión del cliente, tal como indicaba el diagnóstico:
+  acabado del submit de contacto (plano/vidrio) y retirada de Magnetic.
+  Se conservan sus comportamientos actuales. No se ha publicado.
+
+
+### 2026-09-07 (24) — Codex — Blanco hueso neutro, ritmo móvil y microinteracciones
+
+- Fondo base a #F8F9F7: retirado el matiz crema de #F7F5F1.
+- Corregida la causa del exceso de espacio móvil: Tailwind elevaba el `@theme`
+  anidado en media query y publicaba los valores desktop globalmente.
+  Los overrides ahora usan `:root` dentro de media queries y referencias a
+  tokens: móvil 40/48/64 px, tablet 56/64/80 px, desktop 120/160/200 px.
+- Retirados filetes de numeraciones, fotografías, destacados editoriales,
+  cifras, certificaciones, CTA, cambio de división y pie de página. Compañía
+  pierde su antigua rejilla con bordes y alturas mínimas. Se conservan bordes
+  funcionales de controles y la indicación de ancla activa.
+- Imágenes editoriales móviles en 4:3; compactados márgenes de listas y
+  cabeceras, sin acumular paddings de celda dentro de las secciones.
+- Reveal usa observación de viewport y transición CSS corta, solo una vez;
+  contenido visible de inmediato si ya está en pantalla, sin JS o con
+  movimiento reducido. Titulares entran completos, sin cascada de palabras.
+- CTA sin Magnetic; presión táctil y teclado, hover limitado a puntero fino,
+  reflejo más discreto y menú más rápido. Submit de contacto comparte material
+  de vidrio magenta y microinteracción con los CTA. Quedan resueltas las dos
+  decisiones pendientes de la entrada 23 por el encargo de esta pasada.
+- Verificación: TypeScript y build; CSS compilado con los tres niveles de
+  espacio correctamente acotados; seis rutas principales responden 200.
+  Chrome responsive a 390 px: Labs (intro, Private Label, transición a Full
+  Service) y cronología de Compañía. La ventana dejó de estar disponible al
+  intentar ampliar la revisión a 320 px, por lo que ese ancho no se certifica.
+- Actualizado el servidor local en http://localhost:3001; sin publicar.

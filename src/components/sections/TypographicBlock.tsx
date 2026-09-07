@@ -25,11 +25,11 @@ export function TypographicBlock({
       <MolecularField variant="tech" className="hidden lg:block" />
       <Container className="relative text-center">
         <div className="mx-auto max-w-[56rem]">
-          <p className="text-[length:var(--text-eyebrow)] font-bold uppercase tracking-[0.24em] text-blue">
+          <p className="text-[length:var(--text-eyebrow)] font-bold uppercase tracking-eyebrow text-blue">
             {eyebrow}
           </p>
           <Reveal>
-            <h2 className="mt-8 text-[clamp(2.75rem,1.6rem+3.6vw,4.5rem)] font-bold leading-[1.05] tracking-[-0.02em]">
+            <h2 className="mt-8 text-[length:var(--text-stat)] font-bold leading-[1.05] tracking-[-0.02em]">
               {title}
             </h2>
           </Reveal>
@@ -37,10 +37,10 @@ export function TypographicBlock({
           <p className="mx-auto mt-8 max-w-[var(--measure-max)] text-[length:var(--text-lead)] text-white">{body}</p>
         </div>
 
-        <ul className="mt-16 grid grid-cols-2 divide-x divide-y divide-white/25 border-y border-white/25 lg:grid-cols-4 lg:divide-y-0">
+        <ul className="mt-8 grid lg:mt-16 grid-cols-2 gap-x-8 gap-y-8 lg:gap-y-12 lg:grid-cols-4">
           {pillars.map((p, i) => (
-            <li key={p} className="flex min-h-32 flex-col items-center justify-center gap-4 px-4 py-8 text-[16px] font-semibold lg:px-8">
-              <span className="text-[length:var(--text-eyebrow)] tracking-[0.2em] text-blue">{String(i + 1).padStart(2, '0')}</span>
+            <li key={p} className="flex flex-col items-center gap-4 text-[length:var(--text-body)] font-semibold">
+              <span className="text-[length:var(--text-eyebrow)] tracking-eyebrow text-blue">{String(i + 1).padStart(2, '0')}</span>
               {p}
             </li>
           ))}

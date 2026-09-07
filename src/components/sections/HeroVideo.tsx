@@ -60,7 +60,7 @@ export function HeroVideo({ eyebrow, title, subtitle, lead, video, children, mol
   // a claro eso dejo de funcionar y el titular se quedo azul sobre azul. Un
   // bloque de fondo oscuro declara su propio color y no depende del de fuera.
   return (
-    <section className="relative flex h-[100svh] min-h-[600px] items-end overflow-hidden bg-blue text-white">
+    <section data-header-tone="dark" className="relative flex h-[100svh] min-h-[600px] items-end overflow-hidden bg-blue text-white">
       {play ? (
         <video
           ref={ref}
@@ -81,8 +81,8 @@ export function HeroVideo({ eyebrow, title, subtitle, lead, video, children, mol
       )}
 
       {/* Velo de legibilidad (§9.3) */}
-      <div aria-hidden className="absolute inset-0 bg-[rgba(0,40,92,0.20)]" />
-      <div aria-hidden className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-b from-transparent to-black/45" />
+      <div aria-hidden className="absolute inset-0 bg-[var(--hero-veil)]" />
+      <div aria-hidden className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-b from-transparent to-[var(--hero-veil-end)]" />
 
       {moleculeVariant && <MolecularField variant={moleculeVariant} className="opacity-30" />}
 
@@ -136,7 +136,7 @@ export function HeroVideo({ eyebrow, title, subtitle, lead, video, children, mol
                 <li key={item.href}>
                   <a
                     href={item.href}
-                    className="text-[13px] font-semibold uppercase tracking-[0.1em] text-white/65 transition-colors duration-200 hover:text-white"
+                    className="text-[length:var(--text-micro)] font-semibold uppercase tracking-label text-white/65 transition-colors duration-200 hover:text-white"
                   >
                     {item.label}
                   </a>

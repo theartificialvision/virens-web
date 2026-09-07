@@ -16,9 +16,8 @@
   --color-tech:      #A2195B;  /* Virens Tech */
   --color-tech-soft: #F8EAF1;  /* fondos de apoyo Tech */
 
-  /* 07/09 (19): "blanco mate hueso". El blanco puro dejaba las secciones
-     demasiado crudas; este es calido y mate, y sigue leyendose como blanco. */
-  --color-bone:      #F7F5F1;
+  /* Blanco hueso neutro: sin el matiz amarillo/crema anterior. */
+  --color-bone:      #F8F9F7;
   --color-gray-50:   #F7F8FA;
   --color-gray-100:  #F4F6F8;  /* gris de trabajo */
   --color-gray-200:  #E4E7EB;  /* filetes sobre blanco */
@@ -82,6 +81,14 @@
      puede incluir una palabra completa (p. ej. "Desde 2000", "9 formatos"),
      no solo dígitos: sin esto, la palabra más larga se desborda de su columna. */
   --text-stat-compact: clamp(1.75rem, 1.30rem + 2.3vw, 3.00rem); /* 28 -> 48 */
+  --text-label:     0.875rem; /* 14: numeración de controles */
+  --text-micro:     0.8125rem; /* 13: metadatos y navegación */
+  --tracking-eyebrow: 0.24em;
+  --tracking-label: 0.12em;
+  --hero-veil: color-mix(in srgb, var(--color-blue) 20%, transparent);
+  --hero-veil-end: rgba(0, 0, 0, 0.45);
+  --image-veil: color-mix(in srgb, var(--color-blue) 25%, transparent);
+  --anchor-offset: 4.75rem;
   --text-note:      0.75rem;                                     /* 12 */
   /* Único uso: H1 de Home (`DivisionSplit`), a petición del cliente
      (2026-09-02) para que "Expertos en complementos alimenticios" quepa
@@ -127,19 +134,42 @@
   --menu-fab:       3.5rem; /* 56 — diámetro del trigger flotante en mobile */
 
   /* --- Ritmo vertical de sección (§10.4) ----------------------- */
-  --section-compact: 4rem;   /* 64  mobile */
-  --section-base:    5rem;   /* 80  mobile */
-  --section-air:     6rem;   /* 96  mobile */
+  --section-compact: 2.5rem; /* 40 móvil */
+  --section-base:    3rem;   /* 48 móvil */
+  --section-air:     4rem;   /* 64 móvil */
+  --section-compact-tablet: 3.5rem;
+  --section-base-tablet: 4rem;
+  --section-air-tablet: 5rem;
+  --section-compact-desktop: 7.5rem;
+  --section-base-desktop: 10rem;
+  --section-air-desktop: 12.5rem;
+  --motion-fast: 160ms;
+  --motion-control: 220ms;
+  --motion-enter: 420ms;
+  --motion-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --reveal-distance: 0.5rem;
+  --action-lift: -0.125rem;
+  --action-press: 0.98;
+  --link-nudge: 0.25rem;
 
   /* --- Movimiento ---------------------------------------------- */
   --ease-out-quart: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* @theme se eleva a :root al compilar: los overrides responsive deben
+   vivir en selectores normales, con valores procedentes de los tokens. */
+@media (min-width: 768px) {
+  :root {
+    --section-compact: var(--section-compact-tablet);
+    --section-base: var(--section-base-tablet);
+    --section-air: var(--section-air-tablet);
+  }
+}
 @media (min-width: 1024px) {
-  @theme {
-    --section-compact: 7.5rem;  /* 120 */
-    --section-base:   10rem;    /* 160 */
-    --section-air:    12.5rem;  /* 200 */
+  :root {
+    --section-compact: var(--section-compact-desktop);
+    --section-base: var(--section-base-desktop);
+    --section-air: var(--section-air-desktop);
   }
 }
 
@@ -173,8 +203,8 @@
     outline-offset: 3px;
   }
 
-  /* Compensa el header fijo al saltar a un ancla. */
-  [id] { scroll-margin-top: 9.5rem; }
+  /* Barra sticky de 56 px + separación, sin la antigua cabecera-franja. */
+  [id] { scroll-margin-top: var(--anchor-offset); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -497,7 +527,10 @@
   transition: opacity 320ms var(--ease-out-quart), transform 520ms var(--ease-out-quart);
   pointer-events: none;
 }
-.glass:hover::after { opacity: 1; transform: translate3d(12%, 6%, 0) scale(1.12); }
+@media (hover: hover) and (pointer: fine) {
+  .glass:hover::after { opacity: 1; transform: translate3d(4%, 2%, 0); }
+}
+.glass:focus-visible::after { opacity: 1; }
 
 /* Variante sobre fondo claro (/contacto, /compania, /noticias). El mismo
    material, pero el cuerpo tiñe de azul en vez de blanco: un vidrio blanco
@@ -944,4 +977,45 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
        layout al marcar y el control sigue siendo un input nativo. */
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23fff' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3.5 8.5 3 3 6-7'/%3E%3C/svg%3E")
     center / 0.8rem no-repeat;
+}
+
+
+/* --- Microinteracciones: entrada breve, feedback inmediato, sin magnetismo. */
+.reveal {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .reveal[data-visible='false'] {
+    opacity: 0;
+    transform: translateY(var(--reveal-distance));
+  }
+  .reveal {
+    transition: opacity var(--motion-enter) var(--motion-ease) var(--reveal-delay, 0s),
+                transform var(--motion-enter) var(--motion-ease) var(--reveal-delay, 0s);
+  }
+  .heading-enter { animation: heading-enter var(--motion-enter) var(--motion-ease) both; }
+}
+@keyframes heading-enter {
+  from { opacity: 0; transform: translateY(var(--reveal-distance)); }
+  to { opacity: 1; transform: none; }
+}
+.action-control {
+  touch-action: manipulation;
+  transition: background-color var(--motion-control) var(--motion-ease),
+              transform var(--motion-fast) var(--motion-ease),
+              box-shadow var(--motion-control) var(--motion-ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  .action-control:hover { background-color: var(--glass-body-strong); transform: translateY(var(--action-lift)); }
+  .text-link:hover .text-link-arrow { transform: translateX(var(--link-nudge)); }
+}
+.action-control:focus-visible { background-color: var(--glass-body-strong); }
+.action-control:active { transform: scale(var(--action-press)); }
+.text-link { touch-action: manipulation; }
+.text-link-arrow { transition: transform var(--motion-control) var(--motion-ease); }
+.text-link:focus-visible .text-link-arrow { transform: translateX(var(--link-nudge)); }
+.text-link:active .text-link-arrow { transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .action-control, .text-link-arrow, .glass::after { transform: none !important; }
 }

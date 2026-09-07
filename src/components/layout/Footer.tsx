@@ -5,12 +5,12 @@ import { labsAnchors, legalNav, techAnchors } from '@/config/navigation';
 
 export function Footer() {
   return (
-    <footer className="bg-blue-deep text-white">
-      <Container className="py-16 lg:py-24">
+    <footer data-header-tone="dark" className="bg-blue-deep text-white">
+      <Container className="py-10 lg:py-24">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div>
-            <p className="text-[13px] font-bold uppercase tracking-[0.24em]">{site.legalName}</p>
-            <address className="mt-5 not-italic text-[15px] leading-relaxed text-white/70">
+            <p className="text-[length:var(--text-micro)] font-bold uppercase tracking-eyebrow">{site.legalName}</p>
+            <address className="mt-5 not-italic text-[length:var(--text-small)] leading-relaxed text-white/70">
               {site.contact.street}
               <br />
               {site.contact.postalCode} {site.contact.city}
@@ -23,8 +23,8 @@ export function Footer() {
           <FooterColumn title="Virens Tech" href="/virens-tech" items={techAnchors.map((a) => ({ ...a, href: `/virens-tech${a.href}` }))} />
 
           <div>
-            <p className="text-[13px] font-bold uppercase tracking-[0.24em]">Contacto</p>
-            <ul className="mt-5 space-y-2 text-[15px] text-white/70">
+            <p className="text-[length:var(--text-micro)] font-bold uppercase tracking-eyebrow">Contacto</p>
+            <ul className="mt-5 space-y-2 text-[length:var(--text-small)] text-white/70">
               <li><a href={`tel:${site.contact.phone}`} className="hover:text-white">{site.contact.phoneDisplay}</a></li>
               <li><a href={`mailto:${site.contact.email}`} className="hover:text-white">{site.contact.email}</a></li>
               <li><Link href="/compania" className="hover:text-white">Compañía</Link></li>
@@ -33,7 +33,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-16 flex flex-col gap-4 border-t border-white/15 pt-8 text-[13px] text-white/60 lg:flex-row lg:items-center lg:justify-between">
+        <div className="mt-10 flex flex-col gap-4 lg:mt-16 text-[length:var(--text-micro)] text-white/60 lg:flex-row lg:items-center lg:justify-between">
           <p>&copy; {new Date().getFullYear()} {site.legalName}</p>
           <ul className="flex flex-wrap gap-x-6 gap-y-2">
             {legalNav.map((l) => (
@@ -51,10 +51,10 @@ export function Footer() {
 function FooterColumn({ title, href, items }: { title: string; href: string; items: { label: string; href: string }[] }) {
   return (
     <div>
-      <Link href={href} className="text-[13px] font-bold uppercase tracking-[0.24em] hover:opacity-80">
+      <Link href={href} className="text-[length:var(--text-micro)] font-bold uppercase tracking-eyebrow hover:opacity-80">
         {title}
       </Link>
-      <ul className="mt-5 space-y-2 text-[15px] text-white/70">
+      <ul className="mt-5 space-y-2 text-[length:var(--text-small)] text-white/70">
         {items.map((i) => (
           <li key={i.href}>
             <Link href={i.href} className="hover:text-white">{i.label}</Link>

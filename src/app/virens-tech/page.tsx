@@ -10,7 +10,6 @@ import { Section } from '@/components/ui/Section';
 import { Container } from '@/components/ui/Container';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Button } from '@/components/ui/Button';
-import { Magnetic } from '@/components/ui/Magnetic';
 import { techAnchors } from '@/config/navigation';
 import { crossLink, integratedSolutions, techHero, techIntro, techServices, techStats } from '@/content/tech';
 
@@ -31,11 +30,11 @@ export default function VirensTechPage() {
     <>
       {/* 01 */}
       <HeroVideo {...techHero} moleculeVariant="tech" sections={techAnchors}>
-        <Magnetic className="inline-block">
+        <div className="inline-block">
           <Button href={crossLink.href} variant="labs">
             {crossLink.label} &rarr;
           </Button>
-        </Magnetic>
+        </div>
       </HeroVideo>
 
       <AnchorNav items={techAnchors} division="tech" />
@@ -59,7 +58,7 @@ export default function VirensTechPage() {
               <ul className="mt-10 grid gap-x-8 gap-y-8 sm:grid-cols-2">
                 {techIntro.points.map((p) => (
                   <li key={p.index} className="flex flex-col gap-3">
-                    <span className="text-[length:var(--text-eyebrow)] font-bold tracking-[0.18em] text-tech">{p.index}</span>
+                    <span className="text-[length:var(--text-eyebrow)] font-bold tracking-label text-tech">{p.index}</span>
                     <span className="font-medium leading-snug">{p.label}</span>
                   </li>
                 ))}

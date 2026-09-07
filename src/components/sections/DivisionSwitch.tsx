@@ -4,9 +4,9 @@ import { Eyebrow } from '@/components/ui/Eyebrow';
 import { Button } from '@/components/ui/Button';
 import type { Division } from '@/lib/types';
 
-const ACCENT: Record<Division, { from: string; to: string; variant: 'primary' | 'labs' }> = {
-  labs: { from: 'var(--color-tech)', to: 'var(--color-labs)', variant: 'labs' },
-  tech: { from: 'var(--color-labs)', to: 'var(--color-tech)', variant: 'primary' },
+const ACCENT: Record<Division, { variant: 'primary' | 'labs' }> = {
+  labs: { variant: 'labs' },
+  tech: { variant: 'primary' },
 };
 
 /**
@@ -18,8 +18,7 @@ const ACCENT: Record<Division, { from: string; to: string; variant: 'primary' | 
 export function DivisionSwitch({ to, label, href }: { to: Division; label: string; href: string }) {
   const a = ACCENT[to];
   return (
-    <div className="relative bg-white">
-      <span aria-hidden className="absolute inset-x-0 top-0 h-0.5" style={{ background: `linear-gradient(90deg, ${a.from}, ${a.to})` }} />
+    <div className="relative bg-bone">
       <Section tone="white" rhythm="compact">
         <Container className="flex flex-col items-center text-center">
           <Eyebrow className="text-gray-500">La otra mitad del proceso</Eyebrow>

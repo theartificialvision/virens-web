@@ -28,8 +28,8 @@ export const metadata: Metadata = {
 
 /**
  * ONE PAGE de Virens Labs.
- * Ritmo de fondos (pivote oscuro 2026-09-01): vídeo → ink → ink → surface →
- * verde (labs) → surface → foto → ink → azul → ink → surface.
+ * Ritmo de fondos: foto → soft → hueso → gris → labs → gris → foto →
+ * hueso → soft → hueso → gris.
  * Ninguna estructura ni fondo se repite en dos bloques consecutivos.
  */
 export default function VirensLabsPage() {
@@ -41,15 +41,15 @@ export default function VirensLabsPage() {
       <AnchorNav items={labsAnchors} division="labs" />
 
       {/* 02 — declaración de división: solo el eyebrow + los 3 puntos, ambos literales */}
-      <Section tone="white" rhythm="base">
+      <Section tone="soft" rhythm="base">
         <Container>
           <Eyebrow className="text-labs">{labsIntro.eyebrow}</Eyebrow>
           {/* 07/09 (22): fuera la caja de tabla; el numero ya ancla el item. */}
-          <ul className="mt-10 grid gap-x-10 gap-y-12 sm:grid-cols-3">
+          <ul className="mt-10 grid gap-x-10 gap-y-8 lg:gap-y-12 sm:grid-cols-3">
             {labsIntro.points.map((p) => (
               <li key={p.index} className="flex flex-col">
                 <span className="text-[length:var(--text-h3)] font-bold leading-none tracking-[-0.03em] text-labs">{p.index}</span>
-                <span className="mt-6 max-w-[18ch] text-[length:var(--text-lead)] font-medium leading-snug">{p.label}</span>
+                <span className="mt-3 lg:mt-6 max-w-[18ch] text-[length:var(--text-lead)] font-medium leading-snug">{p.label}</span>
               </li>
             ))}
           </ul>

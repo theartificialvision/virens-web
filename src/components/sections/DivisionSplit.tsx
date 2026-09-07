@@ -92,6 +92,7 @@ export function DivisionSplit({ halves, presentation }: {
 
   return (
     <section
+      data-header-tone="dark"
       ref={stage}
       className="home-stage"
       data-division={active ?? 'home'}

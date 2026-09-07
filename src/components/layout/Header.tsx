@@ -3,14 +3,14 @@
 import { usePathname } from 'next/navigation';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
-import { DARK_ROUTES } from '@/config/navigation';
+import { useHeaderSurface } from '@/lib/useHeaderSurface';
 import { MenuOverlay } from './MenuOverlay';
 
 /**
  * Cabecera: sin barra de fondo, sin logotipo de texto. Solo el trigger del
  * menú, flotante sobre el contenido — nunca una franja de ancho completo
- * con fondo/filete. Solo cambia el color del trazo (blanco en DARK_ROUTES,
- * azul en el resto) para mantener contraste sin necesitar una caja detrás.
+ * con fondo/filete. El trazo sigue la superficie bajo el botón: blanco sobre
+ * fotografía, marca o barra sticky; azul sobre contenido claro.
  *
  * **2026-09-02, petición directa del cliente:** fuera el wordmark
  * "Laboratorios Virens" de arriba-izquierda y fuera el selector ES/EN de
@@ -40,7 +40,7 @@ export function Header() {
   // Cierra el menú al cambiar de ruta (navegación por teclado o enlace directo).
   useEffect(() => setOpen(false), [pathname]);
 
-  const light = DARK_ROUTES.includes(pathname as (typeof DARK_ROUTES)[number]) && !open;
+  const light = useHeaderSurface(desktopTriggerRef, pathname);
 
   function openMenu(from: 'desktop' | 'mobile') {
     lastTrigger.current = from;
@@ -119,8 +119,8 @@ function triggerClass(open: boolean, light: boolean) {
   return cn(
     // `relative` explícito: `.glass` ya no posiciona (le ganaba al `fixed` de
     // la franja del menú), y sus pseudo-elementos necesitan este ancestro.
-    'glass group relative items-center justify-center rounded-full',
-    // Sobre las rutas claras un vidrio blanco desaparecería: ahí el cuerpo
+    'glass action-control group relative items-center justify-center rounded-full',
+    // Sobre las superficies claras un vidrio blanco desaparecería: ahí el cuerpo
     // tiñe de azul y el glifo va en azul. Con la franja abierta manda siempre
     // el claro, porque lo que hay detrás es la propia franja azul.
     open || light ? 'text-white' : 'glass-ink text-blue',

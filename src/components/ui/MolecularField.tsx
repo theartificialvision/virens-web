@@ -20,16 +20,18 @@ interface Node { x: number; y: number; vx: number; vy: number }
  * Identidad molecular del sistema oscuro (CLAUDE.md, "Identidad molecular"):
  * nodos + enlaces a la deriva, nunca polvo de estrellas genérico — conecta
  * con los isotipos de molécula de Labs/Tech. Sustituye a MoleculeField.tsx
- * (estático). Bajo prefers-reduced-motion dibuja un único frame fijo, sin
- * requestAnimationFrame (CLAUDE.md regla 8).
+ * (estático). Por defecto dibuja un único frame fijo. La animación requiere
+ * opt-in y sigue desactivada bajo prefers-reduced-motion (regla 8).
  */
 export function MolecularField({
   variant,
   density = 'base',
+  animated = false,
   className,
 }: {
   variant: Variant;
   density?: Density;
+  animated?: boolean;
   className?: string;
 }) {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -111,7 +113,7 @@ export function MolecularField({
     }
 
     resize();
-    if (reduced) {
+    if (reduced || !animated) {
       draw();
     } else {
       raf = requestAnimationFrame(step);
@@ -119,7 +121,7 @@ export function MolecularField({
 
     const onResize = () => {
       resize();
-      if (reduced) draw();
+      if (reduced || !animated) draw();
     };
     window.addEventListener('resize', onResize);
 
@@ -127,7 +129,7 @@ export function MolecularField({
       window.removeEventListener('resize', onResize);
       if (raf) cancelAnimationFrame(raf);
     };
-  }, [variant, density, reduced]);
+  }, [variant, density, reduced, animated]);
 
   return (
     <canvas

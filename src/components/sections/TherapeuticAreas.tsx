@@ -37,7 +37,7 @@ export function TherapeuticAreas({
               <li key={area}>
                 <Reveal delay={(i % 5) * 0.04} className="flex flex-col items-start gap-5">
                   <NumberBadge n={i + 1} />
-                  <span className="text-[clamp(1rem,0.92rem+0.45vw,1.375rem)] font-medium leading-snug">{area}</span>
+                  <span className="text-[length:var(--text-h4)] font-medium leading-snug">{area}</span>
                 </Reveal>
               </li>
             ))}

@@ -25,6 +25,16 @@ const VARIANT: Record<Variant, string> = {
   onDark: 'glass relative text-white [--glass-body:rgba(255,255,255,0.12)]',
 };
 
+/** Compartido con el submit nativo para conservar el mismo material y gesto. */
+export function buttonStyles(variant: Variant = 'primary') {
+  return cn(
+    'action-control inline-flex items-center justify-center gap-2 rounded-full px-10 py-[length:var(--btn-py)]',
+    'text-[length:var(--text-small)] font-semibold tracking-[0.04em] leading-none',
+    '[&>*]:relative [&>*]:z-[1]',
+    VARIANT[variant],
+  );
+}
+
 interface ButtonProps {
   href: string;
   variant?: Variant;
@@ -40,15 +50,7 @@ export function Button({ href, variant = 'primary', className, children }: Butto
     <Link
       href={href}
       className={cn(
-        'inline-flex items-center justify-center gap-2 rounded-full px-10 py-[length:var(--btn-py)]',
-        'text-[length:var(--text-small)] font-semibold tracking-[0.04em] leading-none',
-        'transition-all duration-200 ease-[var(--ease-out-quart)] hover:-translate-y-px',
-        // Por encima del filo y el reflejo, que son absolutos.
-        '[&>*]:relative [&>*]:z-[1]',
-        // `.glass` transiciona el fondo pero no lo cambia solo: el estado de
-        // hover lo declara quien usa el material.
-        'hover:bg-[var(--glass-body-strong)]',
-        VARIANT[variant],
+        buttonStyles(variant),
         className,
       )}
     >
@@ -60,9 +62,9 @@ export function Button({ href, variant = 'primary', className, children }: Butto
 /** Enlace de texto con flecha. La flecha se desplaza 4 px en hover. */
 export function TextLink({ href, children, className }: { href: string; children: React.ReactNode; className?: string }) {
   return (
-    <Link href={href} className={cn('group inline-flex items-center gap-2 text-[length:var(--text-small)] font-semibold', className)}>
-      <span className="underline decoration-1 underline-offset-[6px] group-hover:decoration-2">{children}</span>
-      <span className="transition-transform duration-200 group-hover:translate-x-1">&rarr;</span>
+    <Link href={href} className={cn('text-link inline-flex items-center gap-2 text-[length:var(--text-small)] font-semibold', className)}>
+      <span className="underline decoration-1 underline-offset-4">{children}</span>
+      <span aria-hidden className="text-link-arrow">&rarr;</span>
     </Link>
   );
 }

@@ -38,7 +38,7 @@ interface SectionProps {
  */
 export function Section({ id, tone = 'white', rhythm = 'base', className, children }: SectionProps) {
   return (
-    <section id={id} className={cn(TONE[tone], RHYTHM[rhythm], className)}>
+    <section data-header-tone={['white', 'gray', 'soft'].includes(tone) ? 'light' : 'dark'} id={id} className={cn(TONE[tone], RHYTHM[rhythm], className)}>
       {children}
     </section>
   );

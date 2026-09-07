@@ -19,14 +19,14 @@ export function Timeline({ entries }: { entries: TimelineEntry[] }) {
           </h2>
         </div>
 
-        <ol className="mt-16 grid gap-px bg-gray-200 md:grid-cols-3 lg:grid-cols-6">
+        <ol className="mt-8 grid lg:mt-16 gap-x-8 gap-y-12 md:grid-cols-3 lg:grid-cols-6">
           {entries.map((e, i) => (
-            <li key={e.year} className="bg-white">
-              <Reveal delay={(i % 6) * 0.05} className="flex h-full flex-col gap-4 py-8 md:px-6 lg:px-5">
-                <span className="text-[clamp(1.75rem,1.3rem+1.2vw,2.5rem)] font-bold leading-none tracking-[-0.02em] text-labs">
+            <li key={e.year}>
+              <Reveal delay={(i % 6) * 0.05} className="flex flex-col gap-4">
+                <span className="text-[length:var(--text-h2)] font-bold leading-none tracking-[-0.02em] text-labs">
                   {e.year}
                 </span>
-                <p className="text-[15px] leading-relaxed text-gray-700">{e.text}</p>
+                <p className="text-[length:var(--text-small)] leading-relaxed text-gray-700">{e.text}</p>
               </Reveal>
             </li>
           ))}

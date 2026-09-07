@@ -36,13 +36,13 @@ export default function HomePage() {
               como cuadrícula de hoja de cálculo — regla 6, "el ritmo lo da el
               espacio, no el borde", tomada en serio: el número ya hace de
               ancla visual y no necesita una caja alrededor. */}
-          <ol className="mt-16 grid gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
+          <ol className="mt-8 grid lg:mt-16 gap-x-10 gap-y-8 lg:gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
             {valueChain.map((step, i) => (
               <li key={step.index}>
                 <Reveal delay={i * 0.06} className="flex flex-col">
                   <span className="text-[length:var(--text-h3)] font-bold leading-none tracking-[-0.03em] text-labs">{step.index}</span>
                   <h3 className="mt-6 text-[length:var(--text-h4)] font-semibold">{step.title}</h3>
-                  <ul className="mt-4 space-y-2 text-[15px] text-gray-700">
+                  <ul className="mt-4 space-y-2 text-[length:var(--text-small)] text-gray-700">
                     {step.items.map((it) => (
                       <li key={it}>{it}</li>
                     ))}

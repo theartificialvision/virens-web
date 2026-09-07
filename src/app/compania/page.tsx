@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 export default function CompaniaPage() {
   return (
     <>
-      <Section tone="white" rhythm="air" className="pt-40 lg:pt-52">
+      <Section tone="white" rhythm="air" className="pt-20 md:pt-28 lg:pt-52">
         <Container>
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-9">
@@ -28,24 +28,19 @@ export default function CompaniaPage() {
                 {companyIntro.lead}
               </p>
             </div>
-            <div aria-hidden className="hidden border-l border-gray-200 lg:col-span-3 lg:block">
-              <span className="block h-28 w-1 bg-labs" />
-              <span className="mt-8 block h-px w-full bg-gray-200" />
-              <span className="mt-4 block h-px w-2/3 bg-gray-200" />
-            </div>
           </div>
         </Container>
       </Section>
 
       <Section tone="soft" rhythm="base">
         <Container>
-          <ul className="grid border-l border-t border-gray-200 md:grid-cols-2 lg:grid-cols-5">
+          <ul className="grid gap-x-10 gap-y-8 md:grid-cols-2 lg:grid-cols-5">
             {pillars.map((p, i) => (
-              <li key={p} className="flex min-h-64 flex-col justify-between border-b border-r border-gray-200 p-7 lg:p-8">
+              <li key={p} className="flex flex-col gap-4 lg:gap-6">
                 <span className="text-[length:var(--text-h3)] font-bold leading-none tracking-[-0.03em] text-labs">
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <p className="mt-12 text-[17px] font-medium leading-snug text-blue">{p}</p>
+                <p className="text-[length:var(--text-body)] font-medium leading-snug text-blue">{p}</p>
               </li>
             ))}
           </ul>

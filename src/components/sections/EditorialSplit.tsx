@@ -15,10 +15,10 @@ export function EditorialSplit({ block, accent = 'var(--color-labs)' }: { block:
 
   return (
     <Section id={block.id} tone={block.tone} rhythm="base">
-      <div className="group mx-auto grid max-w-[var(--container-max)] items-stretch gap-10 lg:grid-cols-12 lg:gap-0">
+      <div className="mx-auto grid max-w-[var(--container-max)] items-stretch gap-7 md:gap-10 lg:grid-cols-12 lg:gap-0">
         <div
           className={cn(
-            'relative aspect-[4/5] w-full overflow-hidden lg:aspect-[4/3]',
+            'relative aspect-[4/3] w-full overflow-hidden',
             imageFirst ? 'lg:order-1 lg:col-span-7' : 'lg:order-2 lg:col-span-7',
           )}
           style={{ ['--split' as string]: `${block.imageRatio}%` }}
@@ -28,24 +28,18 @@ export function EditorialSplit({ block, accent = 'var(--color-labs)' }: { block:
             alt={block.image.alt}
             fill
             sizes="(max-width: 1024px) 100vw, 55vw"
-            className="object-cover transition-transform duration-700 ease-[var(--ease-out-quart)] group-hover:scale-[1.02]"
-          />
-          <span
-            aria-hidden
-            className={cn('absolute bottom-0 h-1 w-24', imageFirst ? 'right-0' : 'left-0')}
-            style={{ background: accent }}
+            className="object-cover"
           />
         </div>
 
         <div className={cn('flex items-center lg:col-span-5', imageFirst ? 'lg:order-2' : 'lg:order-1')}>
           <Reveal className="w-full px-5 md:px-6 lg:px-14 2xl:px-16">
-            <div className="flex items-center gap-5 border-b border-gray-200 pb-6">
-              <p className="text-[length:var(--text-eyebrow)] font-bold tracking-[0.24em]" style={{ color: accent }}>
+            <div>
+              <p className="text-[length:var(--text-eyebrow)] font-bold tracking-eyebrow" style={{ color: accent }}>
                 {block.index}
               </p>
-              <span aria-hidden className="h-px flex-1" style={{ background: accent, opacity: 0.35 }} />
             </div>
-            <h3 className="mt-7 text-[length:var(--text-h3)] font-semibold leading-tight tracking-[-0.01em]">
+            <h3 className="mt-3 lg:mt-5 text-[length:var(--text-h3)] font-semibold leading-tight tracking-[-0.01em]">
               {block.title}
             </h3>
             <div className="mt-6 max-w-[var(--measure-max)] space-y-4 text-gray-700">
@@ -54,7 +48,7 @@ export function EditorialSplit({ block, accent = 'var(--color-labs)' }: { block:
               ))}
             </div>
             {block.highlight && (
-              <p className="mt-8 border-t border-gray-200 pt-4 text-[13px] font-bold uppercase tracking-[0.18em]" style={{ color: accent }}>
+              <p className="mt-6 lg:mt-8 text-[length:var(--text-micro)] font-bold uppercase tracking-label" style={{ color: accent }}>
                 {block.highlight}
               </p>
             )}

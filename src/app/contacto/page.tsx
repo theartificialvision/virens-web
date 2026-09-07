@@ -22,7 +22,7 @@ export const metadata: Metadata = {
  */
 export default function ContactoPage() {
   return (
-    <Section tone="white" rhythm="air" className="contact-stage pt-40 lg:pt-52">
+    <Section tone="white" rhythm="air" className="contact-stage pt-20 md:pt-28 lg:pt-52">
       {/* 06/09 (8): fuera la de la sesión Midjourney. Era una nave genérica de
           IA y el cliente la rechazó por anticuada. Pasa a la línea de envasado
           en blanco y negro que aportó él mismo —la misma tanda que aprobó para
@@ -42,7 +42,6 @@ export default function ContactoPage() {
             <h1 className="mt-6 max-w-[14ch] text-[length:var(--text-h1)] font-bold leading-[1.05] tracking-[-0.02em] text-blue">
               {contactIntro.title}
             </h1>
-            <span aria-hidden className="contact-rule mt-8" />
 
             {/* §14.1 pide "Dónde estamos" como H2 de la página. El mockup no lo
                 dibuja —la jerarquía la da el tamaño del titular— así que va en
@@ -68,9 +67,6 @@ export default function ContactoPage() {
               </ul>
             </address>
 
-            {/* Mismo filete que en Compañía: un bloque de 1 px, no un <hr> con
-                borde — sobre el velo, el borde del <hr> no llegaba a verse. */}
-            <span aria-hidden className="mt-10 block h-px w-full max-w-[var(--measure-narrow)] bg-gray-200" />
             <p className="mt-8 max-w-[var(--measure-narrow)] text-[length:var(--text-body)] leading-relaxed text-gray-700">
               {contactIntro.note}
             </p>

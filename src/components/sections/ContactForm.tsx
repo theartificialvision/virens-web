@@ -1,6 +1,8 @@
 'use client';
 
 import Link from 'next/link';
+import { buttonStyles } from '@/components/ui/Button';
+import { cn } from '@/lib/utils';
 import { useId, useState } from 'react';
 import type { ContactDepartment, ContactField } from '@/lib/types';
 import { ContactIcon } from '@/components/ui/ContactIcon';
@@ -110,9 +112,9 @@ export function ContactForm({
         type="submit"
         // Ancho: en el mockup el botón no llega al borde derecho del panel —ocupa
         // unos dos tercios y ancla a la izquierda, alineado con los campos.
-        className="mt-7 w-full rounded-full bg-tech px-10 py-[length:var(--btn-py)] text-[length:var(--text-small)] font-semibold uppercase leading-none tracking-[0.12em] text-white transition-all duration-200 ease-[var(--ease-out-quart)] hover:-translate-y-px hover:brightness-90 sm:w-2/3"
+        className={cn(buttonStyles(), 'mt-7 w-full uppercase tracking-label sm:w-2/3')}
       >
-        {contactForm.submit}
+        <span>{contactForm.submit}</span>
       </button>
     </form>
   );

@@ -51,11 +51,12 @@ export function AnchorNav({ items, division }: { items: NavItem[]; division: Div
 
   return (
     <nav
+      data-header-tone="dark"
       aria-label="Secciones de esta página"
       // `top-0`: antes se pegaba a 64/80 px del borde, un hueco heredado de cuando
       // la cabecera era una franja. Hoy el header es un boton flotante, asi que ese
       // hueco solo dejaba ver el contenido pasando por encima de la barra.
-      className="glass sticky top-0 z-40 border-b border-white/10 [--glass-blur:22px] [--glass-body:color-mix(in_srgb,var(--color-ink)_82%,transparent)]"
+      className="glass sticky top-0 z-40 [--glass-blur:22px] [--glass-body:color-mix(in_srgb,var(--color-ink)_82%,transparent)]"
     >
       <div className="mx-auto max-w-[var(--container-max)] px-5 md:px-6 lg:px-12 2xl:px-20">
         <ul ref={list} className="flex h-14 items-stretch gap-8 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -68,7 +69,7 @@ export function AnchorNav({ items, division }: { items: NavItem[]; division: Div
                   href={item.href}
                   data-anchor={id}
                   className={cn(
-                    'whitespace-nowrap border-b-2 pb-1 text-[13px] font-semibold uppercase tracking-[0.12em] transition-colors',
+                    'whitespace-nowrap border-b-2 pb-1 text-[length:var(--text-micro)] font-semibold uppercase tracking-label transition-colors',
                     isActive ? 'text-white' : 'border-transparent text-mist-dim hover:text-white',
                   )}
                   style={isActive ? { borderColor: accent } : undefined}

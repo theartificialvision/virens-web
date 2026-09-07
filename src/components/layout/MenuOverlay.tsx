@@ -107,7 +107,7 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
           initial={reduced ? { opacity: 0 } : { x: '100%' }}
           animate={reduced ? { opacity: 1 } : { x: 0 }}
           exit={reduced ? { opacity: 0 } : { x: '100%' }}
-          transition={{ duration: reduced ? 0.15 : 0.48, ease: EASE_OUT_QUART }}
+          transition={{ duration: reduced ? 0 : 0.32, ease: EASE_OUT_QUART }}
         >
           {/* Filete de marca en el canto: teal arriba, magenta abajo — las dos
               divisiones cruzándose, mismo recurso que `DivisionSwitch` (matiz
@@ -146,7 +146,7 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
                     key={item.href}
                     initial={reduced ? false : { opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: reduced ? 0 : 0.2 + i * 0.045, duration: 0.45, ease: EASE_OUT_QUART }}
+                    transition={{ delay: reduced ? 0 : 0.08 + i * 0.025, duration: reduced ? 0 : 0.22, ease: EASE_OUT_QUART }}
                   >
                     <Link
                       href={item.href}
@@ -217,12 +217,9 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
  */
 function LocaleSwitch() {
   return (
-    <div className="flex items-center gap-3 text-[length:var(--text-note)] font-semibold tracking-[0.18em] text-white">
+    <div className="flex items-center gap-3 text-[length:var(--text-note)] font-semibold tracking-label text-white">
+      {/* EN se oculta hasta que existan sus rutas en la fase de i18n. */}
       <span aria-current="true">ES</span>
-      <span className="opacity-30">·</span>
-      <Link href="/en" className="opacity-60 transition-opacity hover:opacity-100">
-        EN
-      </Link>
     </div>
   );
 }
