@@ -1570,3 +1570,49 @@ botón labs más azul verdoso que verde"*.
 Contraste remedido: peor píxel 4,07:1 (home), 3,84:1 (labs), 3,97:1 (tech). Por
 encima del 3:1 de texto grande y sin tocar el velo. Sin regresión en escritorio
 ni en táctil.
+
+### 2026-09-07 (14) — Claude Code — Fondos calibrados contra las referencias del cliente
+
+*"Los fondos están muy clariticos los tres, más oscuros como los jpg que te pasé
+de referencia"*. En vez de volver a ajustar a ojo —que es lo que llevaba tres
+vueltas sin acertar— se **midieron** las referencias (`Home(V2).jpg`,
+`Home(Labs).jpg`, `Home(Tech).jpg`) y se calibró contra ese dato.
+
+**Lo que decía la medición.** Luminancia media y saturación HSL de la banda
+superior, ignorando los blancos del texto y los logos:
+
+| escena | ref lum | web lum (antes) | ref sat | web sat (antes) |
+|---|---|---|---|---|
+| home | 0,020 | 0,195 | 0,974 | 0,186 |
+| labs | 0,109 | 0,209 | 0,955 | 0,259 |
+| tech | 0,051 | 0,198 | 0,777 | 0,138 |
+
+Es decir: la web estaba entre **4 y 10 veces más clara** y **4 o 5 veces menos
+saturada** que la referencia. No era un matiz, era otra imagen.
+
+**El cambio de fondo.** `.home-grade` pasa de `screen` a **`multiply`**. `screen`
+aclara por definición, así que por ese camino no se llegaba nunca: lo que pide
+la referencia es una imagen mucho más oscura Y más saturada, y `multiply` hace
+las dos cosas de una vez. La foto baja además a `brightness(0.62)`.
+
+**Y el velo se aligera mucho** (0,34/0,45/0,62 → 0,12/0,18/0,32). Con la escena
+ya oscura de por sí, el contraste del titular subió a 8-16:1 — muy por encima
+del 3:1 necesario — así que mantener el velo anterior solo servía para apagar
+el color que se acababa de meter.
+
+**Resultado, medido igual que el objetivo:**
+
+| escena | ref lum | web lum | ref sat | web sat | contraste (peor píxel) |
+|---|---|---|---|---|---|
+| home | 0,020 | 0,029 | 0,974 | 0,748 | 14,01:1 |
+| labs | 0,109 | 0,124 | 0,955 | 0,902 | 4,96:1 |
+| tech | 0,051 | 0,056 | 0,777 | 0,721 | 9,61:1 |
+
+Luminancia prácticamente clavada en las tres. La saturación se queda algo por
+debajo en home, donde la referencia (0,97) es casi monocroma pura. Sin regresión
+en escritorio ni en táctil.
+
+**Nota de método:** las cuatro vueltas anteriores de color se hicieron a ojo y
+ninguna acertó. Esta se hizo midiendo el objetivo primero. Para la próxima
+—Labs, Tech, Compañía— medir la referencia antes de tocar nada; el script está
+en el scratchpad y se rehace en cinco minutos.

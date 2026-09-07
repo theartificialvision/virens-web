@@ -198,9 +198,13 @@
   /* 06/09 (11): el velo se alivia porque las capas de gradacion ya aportan
      densidad propia. Sigue siendo lo que sostiene el titular, pero si mantiene
      los valores anteriores ahoga el color que acaba de entrar. */
-  --home-veil-top: rgba(2, 10, 20, 0.34);
-  --home-veil-mid: rgba(2, 10, 20, 0.45);
-  --home-veil-low: rgba(2, 10, 20, 0.62);
+  /* 07/09 (14): el velo se aligera mucho. Con la gradacion en `multiply` la
+     escena ya es de por si oscura —el contraste del titular sube a 8-16:1, muy
+     por encima del 3:1 que hace falta— asi que mantener el velo anterior solo
+     servia para apagar el color que se acababa de meter. */
+  --home-veil-top: rgba(2, 10, 20, 0.12);
+  --home-veil-mid: rgba(2, 10, 20, 0.18);
+  --home-veil-low: rgba(2, 10, 20, 0.32);
 
   /* --- Liquid Glass (06/09/2026 (2), petición del cliente) --------------
      Material único para todo control flotante: los botones de división, la
@@ -276,7 +280,7 @@
 .home-photo {
   object-fit: cover;
   object-position: center;
-  filter: grayscale(1) contrast(1.1) brightness(0.9);
+  filter: grayscale(1) contrast(1.16) brightness(0.62);
 }
 
 /* --- Gradacion de color (06/09 (11)) -----------------------------------
@@ -294,9 +298,12 @@
    Lo que si funciona es tratar el color como LUZ y no como filtro: que entre
    por un sitio y caiga. Dos capas con papeles distintos:
 
-   - `.home-grade` en `screen` levanta los negros al color de la division. Va
-     en degradado radial, no plano, para que las sombras no tengan todas
-     exactamente el mismo tono — que es lo que delataba el filtro.
+   - `.home-grade` en `multiply` oscurece y tine a la vez. Empezo en `screen`
+     (levantar los negros), pero medidas las referencias del cliente quedo claro
+     que ese camino no llega: `screen` aclara, y lo que pide la referencia es
+     una imagen MUCHO mas oscura y saturada. Multiply es lo que hace eso en un
+     solo paso. Va en degradado radial, no plano, para que las sombras no
+     tengan todas exactamente el mismo tono — que es lo que delata un filtro.
    - `.home-glow` en `soft-light` mete la saturacion en los medios desde una
      esquina y cae a nada. `soft-light` respeta el detalle de la foto: sube el
      color sin aplanar el relieve, que es justo lo que hace un colorista.
@@ -319,25 +326,25 @@
    que manda es lo brillante que sea la fuente, asi que subir el color aporta
    saturacion, mientras que subir la opacidad solo habria aportado densidad. */
 .home-grade, .home-glow { position: absolute; inset: 0; pointer-events: none; }
-.home-grade { mix-blend-mode: screen; }
+.home-grade { mix-blend-mode: multiply; }
 .home-glow  { mix-blend-mode: soft-light; }
 
 .home-backdrop[data-scene='home'] .home-grade {
-  background: radial-gradient(125% 95% at 26% 16%, #1768a4 0%, #0a3356 52%, #051728 100%);
+  background: radial-gradient(125% 95% at 26% 16%, #2f76ae 0%, #10375c 52%, #071d33 100%);
 }
 .home-backdrop[data-scene='home'] .home-glow {
   background: radial-gradient(95% 75% at 22% 20%, #7ac6f2 0%, rgba(122, 198, 242, 0.52) 40%, rgba(122, 198, 242, 0.20) 100%);
 }
 
 .home-backdrop[data-scene='labs'] .home-grade {
-  background: radial-gradient(125% 95% at 26% 16%, #05966c 0%, #034a37 52%, #02251d 100%);
+  background: radial-gradient(125% 95% at 26% 16%, #22f7d2 0%, #0ac6a6 52%, #06977e 100%);
 }
 .home-backdrop[data-scene='labs'] .home-glow {
   background: radial-gradient(95% 75% at 22% 20%, #3df0b4 0%, rgba(61, 240, 180, 0.66) 40%, rgba(61, 240, 180, 0.30) 100%);
 }
 
 .home-backdrop[data-scene='tech'] .home-grade {
-  background: radial-gradient(125% 95% at 26% 16%, #93154f 0%, #500c2b 52%, #280716 100%);
+  background: radial-gradient(125% 95% at 26% 16%, #ff5399 0%, #cf1a78 52%, #921351 100%);
 }
 .home-backdrop[data-scene='tech'] .home-glow {
   background: radial-gradient(95% 75% at 22% 20%, #ff6ba6 0%, rgba(255, 107, 166, 0.64) 40%, rgba(255, 107, 166, 0.30) 100%);
