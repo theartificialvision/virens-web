@@ -1540,3 +1540,33 @@ Dos correcciones del cliente.
 Contraste remedido con la luz más fuerte: peor píxel 4,11:1 (home), 3,83:1
 (labs), 3,95:1 (tech), todos por encima del 3:1 de texto grande. El velo no ha
 hecho falta tocarlo. Sin regresión en escritorio ni en táctil.
+
+### 2026-09-07 (13) — Claude Code — Corrección de tono en los botones y más saturación en Labs y Tech
+
+Dos observaciones del cliente, y la primera trae su propio diagnóstico, que era
+correcto: *"el azul hace que el botón tech sea más violeta que rosa granate y el
+botón labs más azul verdoso que verde"*.
+
+- **El azul del fondo contaminaba los botones.** No era un problema de los
+  tokens: el botón es vidrio, así que lo que se ve es la mezcla del tinte con lo
+  que hay detrás, y detrás hay una escena azul. Con `--color-tech` (#A2195B) sin
+  corregir, esa mezcla lo empuja a violeta; con `--color-labs` (#00A099), a azul
+  verdoso.
+  - Se corrige **desplazando el tono en sentido contrario**, igual que se
+    corrige un color bajo una luz de color: Tech se calienta hacia el rojo
+    (`#c4174c`) para volver a leerse granate, y Labs se desplaza hacia el verde
+    (`#00a877`). **En pantalla dan el color de marca; en el token, no** — y eso
+    queda avisado en el CSS, porque si el fondo deja de ser azul hay que
+    rehacer la corrección.
+  - De paso sube el cuerpo del tinte (30/34 %, y 44/48 en hover): con más tinte
+    propio, el fondo pesa menos en la mezcla.
+- **Labs y Tech, más saturadas.** Eran las dos pálidas. Suben las paradas de los
+  degradados y, sobre todo, **la caída de `.home-glow` deja de llegar a
+  transparente**: termina en el mismo color a baja opacidad. Con caída a cero,
+  media escena se quedaba en gris y la foto se leía despintada por un lado;
+  ahora hay saturación de base en todo el encuadre y la gradación sigue estando,
+  solo que entre "mucho" y "algo" en vez de entre "mucho" y "nada".
+
+Contraste remedido: peor píxel 4,07:1 (home), 3,84:1 (labs), 3,97:1 (tech). Por
+encima del 3:1 de texto grande y sin tocar el velo. Sin regresión en escritorio
+ni en táctil.

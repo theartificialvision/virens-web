@@ -303,6 +303,17 @@
 
    El centro queda mas neutro a proposito: es donde vive el titular.
 
+   07/09 (13, segunda vuelta): la caida de `.home-glow` ya no llega a
+   transparente: termina en el mismo color a baja opacidad. Con caida a cero, la
+   mitad del cuadro se quedaba en gris y la escena se leia despintada por un
+   lado; asi hay saturacion de base en todo el encuadre y la gradacion sigue
+   estando — solo que entre "mucho" y "algo", no entre "mucho" y "nada".
+
+   07/09 (13): Labs y Tech suben mas —eran las dos palidas— y ademas se les
+   corrige el TONO: Labs tira a verde en vez de a turquesa azulado, y Tech a
+   rosa granate en vez de a violeta. El violeta y el azul verdoso no salian de
+   estos degradados: salian de mezclarse con el azul que hay debajo.
+
    06/09 (12): intensidad subida ~30% a peticion del cliente. Se sube el COLOR
    de las paradas, no la opacidad de la capa: en `screen` y en `soft-light` lo
    que manda es lo brillante que sea la fuente, asi que subir el color aporta
@@ -315,21 +326,21 @@
   background: radial-gradient(125% 95% at 26% 16%, #1768a4 0%, #0a3356 52%, #051728 100%);
 }
 .home-backdrop[data-scene='home'] .home-glow {
-  background: radial-gradient(95% 75% at 22% 20%, #7ac6f2 0%, rgba(122, 198, 242, 0.46) 38%, transparent 78%);
+  background: radial-gradient(95% 75% at 22% 20%, #7ac6f2 0%, rgba(122, 198, 242, 0.52) 40%, rgba(122, 198, 242, 0.20) 100%);
 }
 
 .home-backdrop[data-scene='labs'] .home-grade {
-  background: radial-gradient(125% 95% at 26% 16%, #078378 0%, #04453e 52%, #032322 100%);
+  background: radial-gradient(125% 95% at 26% 16%, #05966c 0%, #034a37 52%, #02251d 100%);
 }
 .home-backdrop[data-scene='labs'] .home-glow {
-  background: radial-gradient(95% 75% at 22% 20%, #5ff0e1 0%, rgba(95, 240, 225, 0.46) 38%, transparent 78%);
+  background: radial-gradient(95% 75% at 22% 20%, #3df0b4 0%, rgba(61, 240, 180, 0.66) 40%, rgba(61, 240, 180, 0.30) 100%);
 }
 
 .home-backdrop[data-scene='tech'] .home-grade {
-  background: radial-gradient(125% 95% at 26% 16%, #78195a 0%, #420d33 52%, #22071a 100%);
+  background: radial-gradient(125% 95% at 26% 16%, #93154f 0%, #500c2b 52%, #280716 100%);
 }
 .home-backdrop[data-scene='tech'] .home-glow {
-  background: radial-gradient(95% 75% at 22% 20%, #f57ec0 0%, rgba(245, 126, 192, 0.42) 38%, transparent 78%);
+  background: radial-gradient(95% 75% at 22% 20%, #ff6ba6 0%, rgba(255, 107, 166, 0.64) 40%, rgba(255, 107, 166, 0.30) 100%);
 }
 
 
@@ -542,15 +553,24 @@
    Porcentajes bajos a proposito. Por encima de ~30 el boton deja de leerse como
    cristal tenido y pasa a boton de color, y ademas se come el contraste del
    rotulo blanco. */
+/* OJO con los tonos de aqui: NO son los colores de marca tal cual, y es
+   deliberado. El boton es vidrio, asi que lo que se ve es la mezcla del tinte
+   con lo que haya detras — y detras hay una escena azul. Poniendo
+   `--color-tech` (#A2195B) sin corregir, esa mezcla lo empuja a violeta; con
+   `--color-labs` (#00A099), a azul verdoso. Se compensa desplazando el tono en
+   sentido contrario, exactamente igual que se corrige un color bajo una luz de
+   color: Tech se calienta hacia el rojo para volver a leerse granate, y Labs se
+   desplaza hacia el verde. En pantalla dan el color de marca; en el token, no.
+   Si algun dia el fondo deja de ser azul, hay que rehacer esta correccion. */
 .home-action-slot[data-side='labs'] .home-division-link {
-  --home-accent: var(--color-labs-glow);
-  --glass-body: color-mix(in srgb, var(--color-labs) 24%, transparent);
-  --glass-body-strong: color-mix(in srgb, var(--color-labs) 38%, transparent);
+  --home-accent: #29e0a6;
+  --glass-body: color-mix(in srgb, #00a877 30%, transparent);
+  --glass-body-strong: color-mix(in srgb, #00a877 44%, transparent);
 }
 .home-action-slot[data-side='tech'] .home-division-link {
-  --home-accent: var(--color-tech-glow);
-  --glass-body: color-mix(in srgb, var(--color-tech) 26%, transparent);
-  --glass-body-strong: color-mix(in srgb, var(--color-tech) 40%, transparent);
+  --home-accent: #ff5f96;
+  --glass-body: color-mix(in srgb, #c4174c 34%, transparent);
+  --glass-body-strong: color-mix(in srgb, #c4174c 48%, transparent);
 }
 
 /* Al senalar o enfocar si hay halo: no es ambiente, es la respuesta al gesto.
