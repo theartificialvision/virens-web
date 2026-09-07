@@ -1776,3 +1776,33 @@ hero.
 **Lección, y es la segunda vez esta semana:** heredar el color de texto del
 `body` funciona hasta que el `body` cambia. Los cuatro sitios que se rompieron
 lo hacían por lo mismo.
+
+### 2026-09-07 (20) — Claude Code — Las 12 fotografías de Labs y Tech sustituyen a los placeholders
+
+El cliente entregó las doce imágenes que faltaban, generadas con ImageGen, en
+`IMAGENES PARA CLAUDE/` (con README, hoja de contactos y los masters en PNG).
+Con esto **desaparece el último placeholder gris** de las dos páginas de
+división.
+
+- **Comprobada la correspondencia antes de copiar**, cruzando los nombres
+  entregados contra las rutas que referencia el código: las doce se usan y no
+  falta ninguna. Las cinco que no venían son justo las que no debían venir —los
+  tres fondos de Home (fotografías B/N del propio cliente) y los dos isotipos.
+- Las doce miden 1672×941, 16:9, neutras y sin virado de color: el tinte de
+  división lo sigue aplicando la web, que es lo correcto.
+- **Trampa evitada:** Next cachea las imágenes optimizadas en `.next/cache/images`
+  y aquí los **nombres no cambian**, así que sin borrar esa caché el servidor
+  habría seguido sirviendo los grises indefinidamente. Se borró `.next` entero.
+  Anotar para futuras sustituciones de imagen con el mismo nombre.
+- Verificado en navegador: heroes de Labs y Tech con fotografía real, bloques
+  editoriales con la suya, y **cero peticiones fallidas**.
+
+**Pendiente menor:** `public/img/home-hero-poster.jpg` se queda sin referencias
+—resto del hero de vídeo que tuvo Home antes del pivote—; se puede borrar.
+
+**Observación de encuadre:** en el hero de Labs el isotipo blanco cae sobre la
+bata blanca de la operaria y pierde definición; en Tech, sobre fondo oscuro,
+funciona. Se puede resolver moviendo el isotipo o eligiendo otro encuadre de esa
+foto — no se toca sin decidirlo con el cliente.
+
+Siguen siendo material conceptual hasta que haya reportaje real de la planta.
