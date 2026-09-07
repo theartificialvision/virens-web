@@ -1683,3 +1683,21 @@ doce responden. **Buscar ids en el JSX no vale; hay que mirar el HTML.**
 
 Verificado en navegador: clic en un ancla propia queda en `/virens-labs#calidad`
 y el de la otra columna lleva a `/virens-tech#formulacion`.
+
+### 2026-09-07 (17) — Claude Code — Los isotipos del hero, blancos también al abrir
+
+*"Los logos 3D en blanco también en tech y lab hero preview"*. Revierte lo que
+se hizo el 06/09 (10), que era justo lo contrario: recuperar la rampa de marca
+al abrir la división.
+
+Ahora el isotipo es **vidrio blanco en los dos estados**, igual que en los heroes
+de Labs y Tech. Y tiene sentido: la distinción entre divisiones ya la llevan el
+fondo —que vira a verde o a granate—, el filete bajo el wordmark y el tinte del
+botón. Repetirla también en el isotipo era la cuarta vez que se decía lo mismo.
+
+`setBranded` se queda en el motor, sin uso. La decisión ha cambiado dos veces en
+dos días; borrarlo solo garantiza tener que reescribirlo. Está anotado en
+`DivisionMarks` para que nadie lo tome por olvido.
+
+Verificado: blanco en reposo y con Labs y Tech abiertas, sin regresión en los
+siete pasos de escritorio ni en los dos de táctil.
