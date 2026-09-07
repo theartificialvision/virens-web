@@ -1741,3 +1741,38 @@ también las clases de color a mano.**
 Lo que sigue siendo oscuro a propósito: los heroes, la franja del menú, la barra
 de anclas de Labs/Tech y el footer. `GalenicForms` sigue en teal de marca — es
 color, no modo oscuro.
+
+### 2026-09-07 (19) — Claude Code — Corrección del pivote claro: hero roto, hueso y bloques oscuros
+
+La entrada (18) se pasó de alcance y rompió cosas. Corrección con el detalle del
+cliente: *"las home botones etc queden igual, solo aclarar (blanco mate hueso)
+las secciones... el hero estaba bien antes... básicamente cuando hay fondo oscuro
+o de color las tipos blancas como antes"*.
+
+- **El hero de Home se quedó con el titular azul sobre azul, y el fallo era
+  mío de antes.** `--home-white` **nunca estuvo declarado**: `.home-stage` lo
+  usaba para su color de texto, así que esa declaración era inválida y el hero
+  venía heredando el blanco del `body`, que era oscuro. Funcionaba por
+  casualidad. Al pasar el `body` a claro, se cayó. Token declarado; ahora el
+  hero no depende de cuál sea el fondo global.
+- **Mismo fallo en `HeroVideo`** (heroes de Labs y Tech): sección con `bg-blue` y
+  sin color de texto propio. Se le pone `text-white` explícito. La regla que
+  deja esto: **un bloque de fondo oscuro o de color declara su propio color de
+  texto y no lo hereda de fuera.**
+- **Blanco hueso.** Nuevo token `--color-bone` (#F7F5F1), cálido y mate. El tono
+  `white` del sistema pasa a pintarlo, y con él la base del `body`. El blanco
+  puro dejaba las secciones demasiado crudas. El nombre del tono se mantiene
+  —es el fondo base del sistema— y lo que cambia es su valor.
+- **`DivisionIndex` vuelve a azul de marca con tipografía blanca.** Al aclarar
+  todo se aclaró también, y junto al footer quedaban dos bandas azul-claro
+  seguidas. En oscuro cierra la página y separa el contenido del pie.
+
+Comprobado sobre el estilo calculado de cada sección, no a ojo: los cuatro
+fondos oscuros o de color (hero de Home, hero de división, bloque tipográfico de
+Tech y el índice) dan `color: rgb(255,255,255)`; los claros dan hueso o gris con
+`rgb(0,40,92)`. Footer en `rgb(0,28,66)`. Sin regresión en la interacción del
+hero.
+
+**Lección, y es la segunda vez esta semana:** heredar el color de texto del
+`body` funciona hasta que el `body` cambia. Los cuatro sitios que se rompieron
+lo hacían por lo mismo.

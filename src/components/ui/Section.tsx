@@ -2,7 +2,9 @@ import type { SectionTone } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
 const TONE: Record<SectionTone, string> = {
-  white: 'bg-white text-blue',
+  // 07/09 (19): "white" pinta hueso, no blanco puro. El nombre se mantiene
+  // porque es el tono base del sistema; lo que cambia es su valor.
+  white: 'bg-bone text-blue',
   gray: 'bg-gray-100 text-blue',
   // 07/09 (18): tercer fondo claro. Con solo blanco y gris, una pagina de diez
   // bloques no puede alternar sin repetir; este da el respiro azul sin volver

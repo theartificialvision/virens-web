@@ -17,20 +17,25 @@ import type { Division } from '@/lib/types';
  * recurso que ya usa el menú y que el cliente dio por bueno: filete-guía que
  * crece al pasar el ratón.
  *
+ * Se queda en azul de marca con tipografía blanca (07/09 (19)): al pasar el
+ * resto de la página a claro este bloque tambien se aclaro, y junto al footer
+ * quedaban dos bandas azul-claro seguidas. En oscuro cierra la pagina y separa
+ * el contenido del pie.
+ *
  * No duplica contenido: son las mismas anclas de la barra sticky. Dentro de su
  * propia página van como ancla suelta; hacia la otra división, con su ruta
  * delante — y ahí sí hay navegación de verdad, que es lo que aporta el bloque.
  */
 export function DivisionIndex({ current }: { current: Division }) {
   return (
-    <Section tone="soft" rhythm="base">
+    <Section tone="blue" rhythm="base">
       <Container>
         <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
           {divisionSections.map((division) => {
             const here = division.id === current;
             return (
               <nav key={division.id} aria-label={division.label}>
-                <Eyebrow className={here ? 'text-blue' : 'text-blue/55'}>
+                <Eyebrow className={here ? 'text-white' : 'text-white/55'}>
                   {division.label}
                 </Eyebrow>
                 <ul className="mt-8 grid gap-1">
@@ -40,7 +45,7 @@ export function DivisionIndex({ current }: { current: Division }) {
                         // En su propia página el ancla va suelta: así el
                         // navegador salta sin recargar la ruta entera.
                         href={here ? item.href : `${division.href}${item.href}`}
-                        className="group flex items-center gap-4 py-2 text-[length:var(--text-h4)] font-normal text-blue/70 transition-colors duration-200 hover:text-blue"
+                        className="group flex items-center gap-4 py-2 text-[length:var(--text-h4)] font-normal text-white/70 transition-colors duration-200 hover:text-white"
                       >
                         <span
                           aria-hidden

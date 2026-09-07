@@ -44,8 +44,12 @@ export function HeroVideo({ eyebrow, title, subtitle, lead, video, children, mol
     if (play) ref.current?.play().catch(() => undefined);
   }, [play]);
 
+  // `text-white` explicito en la seccion: el fondo es azul de marca y hasta el
+  // 07/09 el blanco venia heredado del `body`, que era oscuro. Al pasar la web
+  // a claro eso dejo de funcionar y el titular se quedo azul sobre azul. Un
+  // bloque de fondo oscuro declara su propio color y no depende del de fuera.
   return (
-    <section className="relative flex h-[100svh] min-h-[600px] items-end overflow-hidden bg-blue">
+    <section className="relative flex h-[100svh] min-h-[600px] items-end overflow-hidden bg-blue text-white">
       {play ? (
         <video
           ref={ref}

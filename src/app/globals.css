@@ -16,6 +16,9 @@
   --color-tech:      #A2195B;  /* Virens Tech */
   --color-tech-soft: #F8EAF1;  /* fondos de apoyo Tech */
 
+  /* 07/09 (19): "blanco mate hueso". El blanco puro dejaba las secciones
+     demasiado crudas; este es calido y mate, y sigue leyendose como blanco. */
+  --color-bone:      #F7F5F1;
   --color-gray-50:   #F7F8FA;
   --color-gray-100:  #F4F6F8;  /* gris de trabajo */
   --color-gray-200:  #E4E7EB;  /* filetes sobre blanco */
@@ -150,7 +153,7 @@
        aire"). Los heroes NO cambian: son fotografia a sangre y su tratamiento
        oscuro esta calibrado contra las referencias del propio cliente. Lo que
        pasa a claro es todo el contenido de debajo. */
-    background: #fff;
+    background: var(--color-bone);
     color: var(--color-blue);
     font-family: var(--font-sans);
     font-size: var(--text-body);
@@ -188,6 +191,12 @@
    Solo cambian el fondo y el centrado de la división; no hay halo ni pulso. */
 @theme {
   --home-blue: #00364e;
+  /* 07/09 (19): este token NO estaba declarado. `.home-stage` lo usaba para su
+     color de texto, asi que la declaracion era invalida y el hero heredaba el
+     blanco del `body` sin que nadie se diera cuenta. Al pasar el `body` a claro,
+     el hero se quedo con texto azul sobre azul. Declarado, ya no depende de que
+     el fondo global sea oscuro. */
+  --home-white: #fff;
   /* --- Velo neutro (dirección 06/09/2026 (5)) --------------------------
      Las tres fotos entran en BLANCO Y NEGRO y así se quedan: el color de
      división ya no baña la escena. El duotono a pantalla completa se retiró
