@@ -541,9 +541,35 @@
   background-image: linear-gradient(var(--glass-ink-guard), var(--glass-ink-guard));
   text-shadow: 0 1px 2px rgba(0, 18, 38, 0.28);
 }
+/* --- Realce estatico (07/09 (15)) ---------------------------------------
+   El cliente pidio destaque premium pero NO otro latido. Asi que el boton no
+   gana presencia moviendose: la gana por material, como una pieza fisica.
+   Tres sombras que hacen tres cosas distintas y solo funcionan juntas:
+
+   1. la de contacto, mas larga y baja que la del resto del vidrio: separa el
+      boton de la fotografia y lo apoya en vez de dejarlo flotando;
+   2. un filo alto interior, casi blanco: es donde pega la luz en un canto
+      redondeado, y es lo que hace que el borde superior parezca biselado;
+   3. una sombra interior abajo: cierra el volumen por el lado contrario. Sin
+      ella el filo alto solo se lee como una raya blanca.
+
+   Quieto siempre. Lo unico que se mueve es la respuesta al gesto. */
+.home-division-link {
+  box-shadow:
+    0 14px 34px -10px rgba(0, 14, 30, 0.55),
+    0 3px 10px -3px rgba(0, 14, 30, 0.38),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    inset 0 -10px 18px -12px rgba(0, 16, 34, 0.75);
+}
 .home-division-link:hover {
   background-color: var(--glass-body-strong);
   transform: translateY(-2px);
+  box-shadow:
+    0 20px 44px -12px rgba(0, 14, 30, 0.6),
+    0 4px 12px -3px rgba(0, 14, 30, 0.42),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -10px 18px -12px rgba(0, 16, 34, 0.75),
+    0 0 34px 4px color-mix(in srgb, var(--home-accent) 45%, transparent);
 }
 .home-division-link:active { transform: translateY(0) scale(0.985); }
 
@@ -580,12 +606,14 @@
   --glass-body-strong: color-mix(in srgb, #c4174c 48%, transparent);
 }
 
-/* Al senalar o enfocar si hay halo: no es ambiente, es la respuesta al gesto.
-   Aparece y se queda mientras dure, que es lo contrario de un latido. */
-.home-division-link:hover,
+/* El foco comparte el realce del hover: quien navega con teclado tiene que ver
+   lo mismo que quien senala. */
 .home-division-link:focus-visible {
-  box-shadow: var(--glass-shadow),
-              0 0 38px 6px color-mix(in srgb, var(--home-accent) 52%, transparent);
+  box-shadow:
+    0 20px 44px -12px rgba(0, 14, 30, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7),
+    inset 0 -10px 18px -12px rgba(0, 16, 34, 0.75),
+    0 0 34px 4px color-mix(in srgb, var(--home-accent) 45%, transparent);
 }
 
 /* --- Flecha del CTA -----------------------------------------------------

@@ -5,6 +5,8 @@ import { Container } from '@/components/ui/Container';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { KineticHeading } from '@/components/ui/KineticHeading';
 import { MolecularField } from '@/components/ui/MolecularField';
+import { LogoSpin } from '@/components/ui/LogoSpin';
+import type { LogoKey } from '@/lib/types';
 
 interface HeroVideoProps {
   eyebrow: string;
@@ -15,6 +17,10 @@ interface HeroVideoProps {
   children?: React.ReactNode; // CTA opcional (p. ej. el enlace a la otra división)
   /** Campo molecular ambiental detrás del texto (pivote 2026-09-01). */
   moleculeVariant?: 'labs' | 'tech' | 'neutral';
+  /** Isotipo 3D de la división (07/09 (15)). Va en vidrio BLANCO, sin la rampa
+   *  de marca: aquí ya no hace falta identificar cuál es —lo dice el titular y
+   *  la URL—, así que el color sobraría y competiría con la fotografía. */
+  mark?: { logoKey: LogoKey; molecule: string };
 }
 
 /**
@@ -23,7 +29,7 @@ interface HeroVideoProps {
  * - El poster es la imagen LCP: el vídeo nunca bloquea la carga.
  * - Bajo `prefers-reduced-motion` o en pantallas pequeñas se muestra solo el poster.
  */
-export function HeroVideo({ eyebrow, title, subtitle, lead, video, children, moleculeVariant }: HeroVideoProps) {
+export function HeroVideo({ eyebrow, title, subtitle, lead, video, children, moleculeVariant, mark }: HeroVideoProps) {
   const ref = useRef<HTMLVideoElement>(null);
   const [play, setPlay] = useState(false);
   const hasVideo = Boolean(video.webm || video.mp4);
@@ -64,6 +70,23 @@ export function HeroVideo({ eyebrow, title, subtitle, lead, video, children, mol
       <div aria-hidden className="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-b from-transparent to-black/45" />
 
       {moleculeVariant && <MolecularField variant={moleculeVariant} className="opacity-30" />}
+
+      {/* El isotipo ocupa el hueco de la derecha, que el texto deja libre en
+          desktop. Oculto por debajo de lg: ahí la columna es completa y el
+          isotipo se le echaría encima. */}
+      {mark && (
+        <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 hidden w-5/12 items-center justify-center lg:flex">
+          <LogoSpin
+            logo={mark.logoKey}
+            poster={mark.molecule}
+            spin={14}
+            assemble={20}
+            hold={3.5}
+            className="w-[min(26vw,20rem)] aspect-square opacity-90"
+            sizes="(max-width: 1024px) 0px, 320px"
+          />
+        </div>
+      )}
 
       <Container className="relative pb-20 lg:pb-28">
         <div className="max-w-[58ch] lg:w-7/12">

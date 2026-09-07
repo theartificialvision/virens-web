@@ -1616,3 +1616,38 @@ en escritorio ni en táctil.
 ninguna acertó. Esta se hizo midiendo el objetivo primero. Para la próxima
 —Labs, Tech, Compañía— medir la referencia antes de tocar nada; el script está
 en el scratchpad y se rehace en cinco minutos.
+
+### 2026-09-07 (15) — Claude Code — Isotipo blanco en Labs y Tech; realce estático en los botones
+
+Dos peticiones. La primera venía con una ambigüedad —*"los logos de las páginas
+labs y tech"*, cuando en esas páginas **no había ningún isotipo**: lo único de
+marca era el campo molecular de fondo— así que se preguntó antes de tocar. El
+cliente eligió **añadir el isotipo 3D en blanco**.
+
+- **`HeroVideo` acepta un `mark`** con la clave del modelo y su póster, y lo
+  monta a la derecha del hero, en el hueco que el texto deja libre. Va en
+  **vidrio blanco, sin la rampa de marca**: aquí ya no hace falta identificar la
+  división —lo dicen el titular y la URL— así que el color sobraría y competiría
+  con la fotografía. Es justo al revés que en Home, donde el color SÍ aparece
+  porque hay que distinguir entre dos.
+- Oculto por debajo de `lg`: ahí la columna de texto es completa y el isotipo se
+  le echaría encima. Los datos (`mark`) viven en `content/labs.ts` y
+  `content/tech.ts`, no en el componente (regla 2).
+- **Realce estático de los botones**, que era la otra petición: destaque premium
+  **sin otro latido**. El botón no gana presencia moviéndose sino por material,
+  con tres sombras que hacen tres cosas distintas y solo funcionan juntas: la de
+  contacto —más larga y baja— lo apoya sobre la foto en vez de dejarlo flotando;
+  un filo alto interior casi blanco simula la luz pegando en un canto
+  redondeado; y una sombra interior abajo cierra el volumen por el lado
+  contrario. Sin esa tercera, el filo alto solo se lee como una raya blanca.
+  Quieto siempre: lo único que se mueve es la respuesta al gesto, y el foco
+  recibe el mismo realce que el hover.
+
+Verificado: isotipo blanco en las dos páginas (el canvas WebGL monta y releva al
+póster), H1 en su sitio, y sin regresión en los siete pasos de escritorio ni en
+los dos de táctil.
+
+**Nota:** los heroes de Labs y Tech siguen con la imagen de relleno
+(`labs-hero-poster.jpg` / `tech-hero-poster.jpg`, los grises con el texto
+"1920 x 1080"). No es de este cambio, pero salta a la vista en cuanto el
+isotipo entra: son las siguientes fotos que hay que sustituir.

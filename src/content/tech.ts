@@ -14,6 +14,10 @@ export const techHero = {
   subtitle: 'Desarrollo',
   lead: 'Desarrollamos fórmulas propias, verificamos su factibilidad industrial y las validamos antes de fabricar.',
   video: { poster: '/img/tech-hero-poster.jpg' },
+  // 07/09 (15): el isotipo entra tambien en el hero de la division, en
+  // vidrio blanco. Mismo modelo 3D que en Home; el PNG hace de poster
+  // mientras carga el WebGL y de alternativa si no lo hay.
+  mark: { logoKey: 'A', molecule: '/img/tech-molecule.png' },
 } as const;
 
 // LITERAL (§2.4): "CTA final: banner Visitar Labs -> /virens-labs".

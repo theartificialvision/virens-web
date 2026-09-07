@@ -15,6 +15,10 @@ export const labsHero = {
   // LITERAL de la intro de Labs (§2.3).
   lead: 'En Virens Labs sabemos de la importancia de nuestros clientes con sus necesidades de calidad, servicio, competitividad y fidelidad de su fabricante. Virens Labs le ofrece todo ello para que nuestros clientes se preocupen únicamente de vender sus productos.',
   video: { poster: '/img/labs-hero-poster.jpg' },
+  // 07/09 (15): el isotipo entra tambien en el hero de la division, en
+  // vidrio blanco. Mismo modelo 3D que en Home; el PNG hace de poster
+  // mientras carga el WebGL y de alternativa si no lo hay.
+  mark: { logoKey: 'B', molecule: '/img/labs-molecule.png' },
 } as const;
 
 // LITERAL (§2.3): "CTA final: banner Visitar Tech -> /virens-tech".
