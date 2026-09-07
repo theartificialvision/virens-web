@@ -41,6 +41,21 @@ export const techAnchors: NavItem[] = [
   { href: '#regulatory-consulting', label: 'Regulatory consulting' },
 ];
 
+/**
+ * Índice de las dos divisiones, para el bloque de cierre de /virens-labs y
+ * /virens-tech (07/09 (16)). No duplica contenido: reutiliza las mismas anclas
+ * que ya alimentan la barra sticky, así que si se añade o quita un bloque en
+ * una página, la barra de arriba y el índice de abajo cambian a la vez.
+ *
+ * `href` es la base de la división: dentro de su propia página los enlaces
+ * quedan como ancla suelta (`#calidad`) y hacia la otra se anteponen
+ * (`/virens-tech#calidad`).
+ */
+export const divisionSections = [
+  { id: 'labs', label: 'Virens Labs', href: '/virens-labs', items: labsAnchors },
+  { id: 'tech', label: 'Virens Tech', href: '/virens-tech', items: techAnchors },
+] as const;
+
 /** Pie de página, legales agrupados bajo /legal (§5.2, redirecciones §14). */
 export const legalNav: NavItem[] = [
   { href: '/legal/aviso-legal', label: 'Aviso legal' },

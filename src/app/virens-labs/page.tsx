@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { AnchorNav } from '@/components/layout/AnchorNav';
+import { DivisionIndex } from '@/components/sections/DivisionIndex';
 import { HeroVideo } from '@/components/sections/HeroVideo';
 import { EditorialSplit } from '@/components/sections/EditorialSplit';
 import { GalenicForms } from '@/components/sections/GalenicForms';
@@ -103,6 +104,8 @@ export default function VirensLabsPage() {
       <DivisionSwitch to="tech" label={crossLink.label} href={crossLink.href} />
 
       {/* 11 */}
+      <DivisionIndex current="labs" />
+
       <CtaContact />
     </>
   );

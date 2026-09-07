@@ -1651,3 +1651,35 @@ los dos de táctil.
 (`labs-hero-poster.jpg` / `tech-hero-poster.jpg`, los grises con el texto
 "1920 x 1080"). No es de este cambio, pero salta a la vista en cuanto el
 isotipo entra: son las siguientes fotos que hay que sustituir.
+
+### 2026-09-07 (16) — Claude Code — Índice de divisiones al cierre de Labs y Tech
+
+Petición del cliente, con una pregunta de diseño incluida: *"quiero abajo estos
+links, ¿chips? ¿links? ¿cómo lo resolvemos?"*, y las dos listas de las seis
+secciones de cada división.
+
+**Enlaces, no chips.** Un chip comunica algo seleccionable —un filtro que se
+activa y se apaga— y esto no selecciona nada, lleva a un sitio. Además un chip
+es una píldora, y la regla 4 reserva el radio a los botones; una rejilla de doce
+píldoras acabaría leyéndose como la rejilla de tarjetas que prohíbe la regla 7.
+Se resuelve con el recurso que ya usa el menú y que el cliente dio por bueno:
+filete-guía que crece al pasar el ratón.
+
+- **No duplica contenido.** Reutiliza `labsAnchors` y `techAnchors`, las mismas
+  que alimentan la barra sticky de arriba. Si mañana se añade o quita un bloque,
+  la barra y el índice cambian a la vez y no hay dos listas que mantener.
+- **Dentro de su propia división el enlace va como ancla suelta** (`#calidad`),
+  para que el navegador salte sin recargar la ruta; hacia la otra se antepone su
+  ruta (`/virens-tech#formulacion`) — y ahí sí hay navegación de verdad, que es
+  lo que justifica el bloque frente a la barra de arriba.
+- Va en `tone="blue"`, entre el `DivisionSwitch` (ink) y el `CtaContact`
+  (surface): tres fondos distintos seguidos, como pide la regla 5.
+
+**Falsa alarma que conviene dejar escrita:** al empezar parecía que las doce
+anclas no existían, porque no aparecen como literales en los archivos de página.
+Sí existen: las pinta `EditorialSplit` desde `block.id`, y las otras cuatro de
+Labs salen de sus propios componentes. Comprobado sobre el HTML servido, las
+doce responden. **Buscar ids en el JSX no vale; hay que mirar el HTML.**
+
+Verificado en navegador: clic en un ancla propia queda en `/virens-labs#calidad`
+y el de la otra columna lleva a `/virens-tech#formulacion`.
