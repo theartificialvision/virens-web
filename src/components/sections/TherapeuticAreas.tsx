@@ -20,20 +20,20 @@ export function TherapeuticAreas({
   areas: readonly string[];
 }) {
   return (
-    <Section id="areas-terapeuticas" tone="blue" rhythm="base">
+    <Section id="areas-terapeuticas" tone="soft" rhythm="base">
       <Container>
         <div className="grid gap-14 lg:grid-cols-12 lg:gap-16">
           <div className="max-w-[var(--measure-narrow)] lg:col-span-3 lg:self-center">
-            <Eyebrow className="text-mist-dim">{eyebrow}</Eyebrow>
+            <Eyebrow className="text-gray-500">{eyebrow}</Eyebrow>
             <h2 className="mt-6 text-[length:var(--text-h2)] font-bold leading-[1.1] tracking-[-0.015em]">
               {title}
             </h2>
-            <p className="mt-5 text-mist">{lead}</p>
+            <p className="mt-5 text-gray-700">{lead}</p>
           </div>
 
-          <ul className="grid border-l border-t border-white/15 sm:grid-cols-2 lg:col-span-9 lg:grid-cols-5">
+          <ul className="grid border-l border-t border-gray-200 sm:grid-cols-2 lg:col-span-9 lg:grid-cols-5">
             {areas.map((area, i) => (
-              <li key={area} className="min-h-44 border-b border-r border-white/15">
+              <li key={area} className="min-h-44 border-b border-r border-gray-200">
                 <Reveal delay={(i % 5) * 0.04} className="flex h-full flex-col items-start justify-between gap-8 p-6 lg:p-7">
                   <NumberBadge n={i + 1} />
                   <span className="text-[clamp(1rem,0.92rem+0.45vw,1.375rem)] font-medium leading-snug">{area}</span>

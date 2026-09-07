@@ -4,6 +4,10 @@ import { cn } from '@/lib/utils';
 const TONE: Record<SectionTone, string> = {
   white: 'bg-white text-blue',
   gray: 'bg-gray-100 text-blue',
+  // 07/09 (18): tercer fondo claro. Con solo blanco y gris, una pagina de diez
+  // bloques no puede alternar sin repetir; este da el respiro azul sin volver
+  // al fondo oscuro.
+  soft: 'bg-blue-soft text-blue',
   blue: 'bg-blue text-white',
   labs: 'bg-labs text-white',
   tech: 'bg-tech text-white',

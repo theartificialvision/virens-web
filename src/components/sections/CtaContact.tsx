@@ -7,9 +7,9 @@ import { site } from '@/config/site';
 /** CTA global. Un único objetivo de conversión en toda la web (§13.7). */
 export function CtaContact() {
   return (
-    <Section tone="surface" rhythm="compact">
+    <Section tone="gray" rhythm="compact">
       <Container>
-        <div className="grid items-center gap-8 border-y border-white/15 py-10 md:grid-cols-[auto_1fr_auto] md:text-left lg:gap-12">
+        <div className="grid items-center gap-8 border-y border-gray-200 py-10 md:grid-cols-[auto_1fr_auto] md:text-left lg:gap-12">
           <ContactGlyph />
           <div>
             {/* Tamaño de rol H3: doc maestro §10.2 asigna peso 600 (no 700)
@@ -18,7 +18,7 @@ export function CtaContact() {
             <h2 className="max-w-[24ch] text-[length:var(--text-h3)] font-semibold leading-[1.15] tracking-[-0.015em]">
               {site.ctaContact.title}
             </h2>
-            <p className="mt-4 text-[length:var(--text-small)] text-mist-dim">
+            <p className="mt-4 text-[length:var(--text-small)] text-gray-500">
               <a href={`tel:${site.contact.phone}`}>{site.contact.phoneDisplay}</a>
               {' · '}
               <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
@@ -39,7 +39,7 @@ export function CtaContact() {
 function ContactGlyph() {
   return (
     <span
-      className="inline-flex size-16 items-center justify-center rounded-[length:var(--radius-surface)] border border-white/15 bg-surface-2 text-white"
+      className="inline-flex size-16 items-center justify-center rounded-[length:var(--radius-surface)] border border-gray-200 bg-gray-50 text-blue"
       style={{ boxShadow: 'var(--shadow-elevate)' }}
       aria-hidden
     >

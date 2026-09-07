@@ -16,7 +16,7 @@ export const metadata: Metadata = {
  */
 export default function NoticiasPage() {
   return (
-    <Section tone="blue" rhythm="air" className="pt-40 lg:pt-52">
+    <Section tone="white" rhythm="air" className="pt-40 lg:pt-52">
       <Container>
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-9">
@@ -25,7 +25,7 @@ export default function NoticiasPage() {
               Noticias y actualidad de Laboratorios Virens
             </h1>
           </div>
-          <div aria-hidden className="hidden border-l border-white/15 lg:col-span-3 lg:block">
+          <div aria-hidden className="hidden border-l border-gray-200 lg:col-span-3 lg:block">
             <span className="block h-28 w-1 bg-tech" />
           </div>
         </div>

@@ -145,11 +145,13 @@
   html { scroll-behavior: smooth; }
 
   body {
-    /* Pivote 2026-09-01: fondo base oscuro (antes #fff/--color-blue).
-       Compañía/Contacto/Noticias no dependen de este valor heredado —
-       pintan su propio fondo claro por sección. */
-    background: var(--color-ink);
-    color: #fff;
+    /* 07/09 (18): vuelta al sistema claro. El pivote a oscuro del 01/09 se
+       revierte a peticion del cliente ("muy dark mode coded, necesito blanco
+       aire"). Los heroes NO cambian: son fotografia a sangre y su tratamiento
+       oscuro esta calibrado contra las referencias del propio cliente. Lo que
+       pasa a claro es todo el contenido de debajo. */
+    background: #fff;
+    color: var(--color-blue);
     font-family: var(--font-sans);
     font-size: var(--text-body);
     line-height: 1.7;

@@ -5,7 +5,7 @@ import { labsAnchors, legalNav, techAnchors } from '@/config/navigation';
 
 export function Footer() {
   return (
-    <footer className="bg-blue text-white">
+    <footer className="bg-blue-deep text-white">
       <Container className="py-16 lg:py-24">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div>

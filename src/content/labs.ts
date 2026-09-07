@@ -49,7 +49,7 @@ export const labsServices: ServiceBlock[] = [
     ],
     imageSide: 'left',
     imageRatio: 55,
-    tone: 'ink',
+    tone: 'white',
     image: { src: '/img/labs-private-label.jpg', alt: 'Envase neutro de complemento alimenticio sin marca sobre superficie limpia' },
     link: { label: 'Hablar de un proyecto de marca propia', href: '/contacto' },
   },
@@ -64,7 +64,7 @@ export const labsServices: ServiceBlock[] = [
     ],
     imageSide: 'right',
     imageRatio: 55,
-    tone: 'surface',
+    tone: 'gray',
     image: { src: '/img/labs-full-service.jpg', alt: 'Línea de acondicionamiento en funcionamiento en la planta de Laboratorios Virens' },
   },
 ];

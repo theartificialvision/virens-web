@@ -10,6 +10,9 @@ interface Stat { value: string; unit?: string; label: string }
 const DIVIDER: Record<string, string> = {
   white: 'divide-gray-200',
   gray: 'divide-gray-300',
+  soft: 'divide-blue/15',
+  // Los cuatro de abajo siguen siendo fondos oscuros o de color, aunque el
+  // contenido ya no los use: ahi el filete tiene que ser blanco translucido.
   blue: 'divide-white/15',
   labs: 'divide-white/25',
   tech: 'divide-white/25',

@@ -1701,3 +1701,43 @@ dos días; borrarlo solo garantiza tener que reescribirlo. Está anotado en
 
 Verificado: blanco en reposo y con Labs y Tech abiertas, sin regresión en los
 siete pasos de escritorio ni en los dos de táctil.
+
+### 2026-09-07 (18) — Claude Code — Vuelta al sistema claro, y footer al azul profundo
+
+*"Hay dos tipos de azules (el del footer no me gusta, usa el otro), luego está
+muy dark mode coded la página, necesito blanco aire. Cambia eso (toda la web)"*.
+
+**Contexto que se le dio antes de empezar:** el 04/09 ya se hizo un *"Pivote a
+claro: estética Apple en toda la web"* (`af1705f`, 39 archivos) y **se revirtió
+al día siguiente por decisión suya** (`229a49a`). Se le avisó y confirmó el
+cambio. El alcance lo acotó él: **en Home, todo lo que va después del hero**.
+
+- **Los heroes NO cambian.** Son fotografía a sangre y su tratamiento oscuro
+  está calibrado contra las referencias del propio cliente (entrada 14). Lo que
+  pasa a claro es el contenido de debajo, en las seis páginas.
+- **Footer a `--color-blue-deep` (#001C42)**, el mismo azul de la franja del
+  menú. Verificado sobre el estilo calculado: `rgb(0, 28, 66)`.
+- **Tono nuevo `soft`** (`--color-blue-soft`, #EAF0F6). Con solo blanco y gris,
+  una página de diez bloques no puede alternar sin repetir fondo y se salta la
+  regla 5; este da el respiro azul sin volver al oscuro.
+- **Mapeo:** `ink` → `white`, `surface` → `gray`, `blue` de contenido → `soft`.
+  Se aplicó en los componentes de sección, en las páginas y en los tonos por
+  bloque de `content/labs.ts` y `content/tech.ts`.
+- **La base del `body` vuelve a blanco.** Estaba en `--color-ink` desde el
+  pivote a oscuro del 01/09.
+- **Y lo que más trabajo dio:** los componentes traían el color escrito a mano
+  para fondo oscuro —`text-mist`, `text-mist-dim`, `border-white/12`,
+  `bg-surface`, `divide-white/15`—, así que cambiar el tono de la sección no
+  bastaba: el texto se quedaba oscuro sobre oscuro. Se sustituyeron por sus
+  equivalentes claros uno a uno.
+
+**Dos cosas que se colaron y se corrigieron mirando la web, no el código:** en
+Home, las celdas de "Cómo trabajamos" seguían con `bg-surface` (el gris oscuro),
+así que el titular quedaba invisible; y `DivisionSwitch` mantenía `bg-ink` en su
+contenedor exterior. Ninguna de las dos aparecía en la lista de tonos, porque no
+son `tone=` sino clases sueltas. **Buscar `tone=` no basta: hay que barrer
+también las clases de color a mano.**
+
+Lo que sigue siendo oscuro a propósito: los heroes, la franja del menú, la barra
+de anclas de Labs/Tech y el footer. `GalenicForms` sigue en teal de marca — es
+color, no modo oscuro.

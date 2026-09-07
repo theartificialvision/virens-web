@@ -37,15 +37,15 @@ export default function CompaniaPage() {
         </Container>
       </Section>
 
-      <Section tone="blue" rhythm="base">
+      <Section tone="soft" rhythm="base">
         <Container>
-          <ul className="grid border-l border-t border-white/15 md:grid-cols-2 lg:grid-cols-5">
+          <ul className="grid border-l border-t border-gray-200 md:grid-cols-2 lg:grid-cols-5">
             {pillars.map((p, i) => (
-              <li key={p} className="flex min-h-64 flex-col justify-between border-b border-r border-white/15 p-7 lg:p-8">
+              <li key={p} className="flex min-h-64 flex-col justify-between border-b border-r border-gray-200 p-7 lg:p-8">
                 <span className="text-[length:var(--text-h3)] font-bold leading-none tracking-[-0.03em] text-labs">
                   {String(i + 1).padStart(2, '0')}
                 </span>
-                <p className="mt-12 text-[17px] font-medium leading-snug text-white">{p}</p>
+                <p className="mt-12 text-[17px] font-medium leading-snug text-blue">{p}</p>
               </li>
             ))}
           </ul>

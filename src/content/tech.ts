@@ -69,7 +69,7 @@ export const techServices: ServiceBlock[] = [
     highlight: 'Zonas de fabricación segregadas',
     imageSide: 'left',
     imageRatio: 55,
-    tone: 'ink',
+    tone: 'white',
     image: { src: '/img/tech-formulacion.jpg', alt: 'Técnico de laboratorio pipeteando una muestra sobre material de vidrio' },
   },
   {
@@ -82,7 +82,7 @@ export const techServices: ServiceBlock[] = [
     ],
     imageSide: 'right',
     imageRatio: 55,
-    tone: 'surface',
+    tone: 'gray',
     image: { src: '/img/tech-galenicos.jpg', alt: 'Cápsulas, comprimidos y polvos en bandeja de laboratorio' },
     link: { label: 'Ver formas galénicas disponibles', href: '/virens-labs#formas-galenicas' },
   },
@@ -98,7 +98,7 @@ export const techServices: ServiceBlock[] = [
     highlight: 'Validación organoléptica antes de escalar',
     imageSide: 'left',
     imageRatio: 60,
-    tone: 'ink',
+    tone: 'white',
     image: { src: '/img/tech-sabores.jpg', alt: 'Extractos, goteros y ingredientes botánicos en una prueba organoléptica' },
   },
   {
@@ -113,7 +113,7 @@ export const techServices: ServiceBlock[] = [
     highlight: 'Cámara de estabilidad propia',
     imageSide: 'right',
     imageRatio: 55,
-    tone: 'surface',
+    tone: 'gray',
     image: { src: '/img/tech-estabilidad.jpg', alt: 'Interior de una cámara climática con bandejas de muestras etiquetadas' },
   },
   {
@@ -126,7 +126,7 @@ export const techServices: ServiceBlock[] = [
     ],
     imageSide: 'left',
     imageRatio: 55,
-    tone: 'ink',
+    tone: 'white',
     image: { src: '/img/tech-calidad.jpg', alt: 'Análisis microbiológico con placas de cultivo y material de laboratorio' },
   },
   {
@@ -140,7 +140,7 @@ export const techServices: ServiceBlock[] = [
     ],
     imageSide: 'right',
     imageRatio: 55,
-    tone: 'surface',
+    tone: 'gray',
     image: { src: '/img/tech-regulatory.jpg', alt: 'Documentación técnica y dosier de producto sobre una mesa de trabajo' },
   },
 ];

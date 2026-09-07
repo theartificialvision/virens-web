@@ -23,14 +23,14 @@ import type { Division } from '@/lib/types';
  */
 export function DivisionIndex({ current }: { current: Division }) {
   return (
-    <Section tone="blue" rhythm="base">
+    <Section tone="soft" rhythm="base">
       <Container>
         <div className="grid gap-14 lg:grid-cols-2 lg:gap-20">
           {divisionSections.map((division) => {
             const here = division.id === current;
             return (
               <nav key={division.id} aria-label={division.label}>
-                <Eyebrow className={here ? 'text-white' : 'text-white/55'}>
+                <Eyebrow className={here ? 'text-blue' : 'text-blue/55'}>
                   {division.label}
                 </Eyebrow>
                 <ul className="mt-8 grid gap-1">
@@ -40,7 +40,7 @@ export function DivisionIndex({ current }: { current: Division }) {
                         // En su propia página el ancla va suelta: así el
                         // navegador salta sin recargar la ruta entera.
                         href={here ? item.href : `${division.href}${item.href}`}
-                        className="group flex items-center gap-4 py-2 text-[length:var(--text-h4)] font-normal text-white/70 transition-colors duration-200 hover:text-white"
+                        className="group flex items-center gap-4 py-2 text-[length:var(--text-h4)] font-normal text-blue/70 transition-colors duration-200 hover:text-blue"
                       >
                         <span
                           aria-hidden

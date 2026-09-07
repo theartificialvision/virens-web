@@ -42,7 +42,7 @@ export default function VirensTechPage() {
       <AnchorNav items={techAnchors} division="tech" />
 
       {/* 02 */}
-      <Section tone="ink" rhythm="base">
+      <Section tone="white" rhythm="base">
         <Container>
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-5">
@@ -54,12 +54,12 @@ export default function VirensTechPage() {
               </h2>
             </div>
             <div className="lg:col-span-6 lg:col-start-7">
-              <p className="max-w-[var(--measure-max)] text-[length:var(--text-lead)] text-mist">
+              <p className="max-w-[var(--measure-max)] text-[length:var(--text-lead)] text-gray-700">
                 {techIntro.body}
               </p>
-              <ul className="mt-10 grid border-l border-t border-white/12 sm:grid-cols-2">
+              <ul className="mt-10 grid border-l border-t border-gray-200 sm:grid-cols-2">
                 {techIntro.points.map((p) => (
-                  <li key={p.index} className="flex min-h-28 flex-col justify-between gap-5 border-b border-r border-white/12 p-5">
+                  <li key={p.index} className="flex min-h-28 flex-col justify-between gap-5 border-b border-r border-gray-200 p-5">
                     <span className="text-[length:var(--text-eyebrow)] font-bold tracking-[0.18em] text-tech">{p.index}</span>
                     <span className="font-medium leading-snug">{p.label}</span>
                   </li>
@@ -79,7 +79,7 @@ export default function VirensTechPage() {
       ))}
 
       {/* 10 */}
-      <StatRow stats={techStats} tone="blue" accent="var(--color-labs)" />
+      <StatRow stats={techStats} tone="soft" accent="var(--color-labs)" />
 
       {/* 11 — no hay botón "Virens Tech" en esta página */}
       <DivisionSwitch to="labs" label={crossLink.label} href={crossLink.href} />
