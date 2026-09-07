@@ -31,13 +31,18 @@ export default function HomePage() {
             </h2>
           </div>
 
-          <ol className="mt-16 grid border-l border-t border-gray-200 lg:grid-cols-4">
+          {/* 07/09 (22): fuera la rejilla de tabla (border-l/border-t + celda
+              border-b/border-r). Sobre fondo claro esas líneas grises se leen
+              como cuadrícula de hoja de cálculo — regla 6, "el ritmo lo da el
+              espacio, no el borde", tomada en serio: el número ya hace de
+              ancla visual y no necesita una caja alrededor. */}
+          <ol className="mt-16 grid gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
             {valueChain.map((step, i) => (
-              <li key={step.index} className="min-h-72 border-b border-r border-gray-200 bg-gray-50">
-                <Reveal delay={i * 0.06} className="flex h-full flex-col p-7 lg:p-8">
+              <li key={step.index}>
+                <Reveal delay={i * 0.06} className="flex flex-col">
                   <span className="text-[length:var(--text-h3)] font-bold leading-none tracking-[-0.03em] text-labs">{step.index}</span>
-                  <h3 className="mt-10 text-[length:var(--text-h4)] font-semibold">{step.title}</h3>
-                  <ul className="mt-6 space-y-2 text-[15px] text-gray-700">
+                  <h3 className="mt-6 text-[length:var(--text-h4)] font-semibold">{step.title}</h3>
+                  <ul className="mt-4 space-y-2 text-[15px] text-gray-700">
                     {step.items.map((it) => (
                       <li key={it}>{it}</li>
                     ))}

@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { AnchorNav } from '@/components/layout/AnchorNav';
-import { DivisionIndex } from '@/components/sections/DivisionIndex';
 import { HeroVideo } from '@/components/sections/HeroVideo';
 import { EditorialSplit } from '@/components/sections/EditorialSplit';
 import { TypographicBlock } from '@/components/sections/TypographicBlock';
@@ -31,7 +30,7 @@ export default function VirensTechPage() {
   return (
     <>
       {/* 01 */}
-      <HeroVideo {...techHero} moleculeVariant="tech">
+      <HeroVideo {...techHero} moleculeVariant="tech" sections={techAnchors}>
         <Magnetic className="inline-block">
           <Button href={crossLink.href} variant="labs">
             {crossLink.label} &rarr;
@@ -57,9 +56,9 @@ export default function VirensTechPage() {
               <p className="max-w-[var(--measure-max)] text-[length:var(--text-lead)] text-gray-700">
                 {techIntro.body}
               </p>
-              <ul className="mt-10 grid border-l border-t border-gray-200 sm:grid-cols-2">
+              <ul className="mt-10 grid gap-x-8 gap-y-8 sm:grid-cols-2">
                 {techIntro.points.map((p) => (
-                  <li key={p.index} className="flex min-h-28 flex-col justify-between gap-5 border-b border-r border-gray-200 p-5">
+                  <li key={p.index} className="flex flex-col gap-3">
                     <span className="text-[length:var(--text-eyebrow)] font-bold tracking-[0.18em] text-tech">{p.index}</span>
                     <span className="font-medium leading-snug">{p.label}</span>
                   </li>
@@ -83,9 +82,6 @@ export default function VirensTechPage() {
 
       {/* 11 — no hay botón "Virens Tech" en esta página */}
       <DivisionSwitch to="labs" label={crossLink.label} href={crossLink.href} />
-
-      {/* 12 */}
-      <DivisionIndex current="tech" />
 
       <CtaContact />
     </>

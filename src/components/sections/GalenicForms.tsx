@@ -40,10 +40,12 @@ export function GalenicForms({
               <p className="mt-5 text-white">{intro}</p>
             </div>
 
-            <ul className="mt-14 grid grid-cols-2 border-l border-t border-white/25 sm:grid-cols-3">
+            {/* 07/09 (22): sin caja de celda, ni siquiera en blanco/25 — el
+                icono ya ancla el item; el aire hace el resto. */}
+            <ul className="mt-14 grid grid-cols-2 gap-x-6 gap-y-8 sm:grid-cols-3">
               {forms.map((f, i) => (
-                <li key={f.id} className="min-h-32 border-b border-r border-white/25">
-                  <Reveal delay={(i % 5) * 0.04} className="flex h-full flex-col items-start justify-between gap-5 p-4 md:p-5">
+                <li key={f.id}>
+                  <Reveal delay={(i % 5) * 0.04} className="flex flex-col items-start gap-4">
                     <FormIcon name={f.id} className="size-10 md:size-12" />
                     <span className="text-[length:var(--text-small)] font-semibold leading-snug">{f.label}</span>
                   </Reveal>

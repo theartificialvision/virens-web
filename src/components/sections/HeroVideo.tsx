@@ -7,6 +7,7 @@ import { KineticHeading } from '@/components/ui/KineticHeading';
 import { MolecularField } from '@/components/ui/MolecularField';
 import { LogoSpin } from '@/components/ui/LogoSpin';
 import type { LogoKey } from '@/lib/types';
+import type { NavItem } from '@/config/navigation';
 
 interface HeroVideoProps {
   eyebrow: string;
@@ -21,6 +22,16 @@ interface HeroVideoProps {
    *  de marca: aquí ya no hace falta identificar cuál es —lo dice el titular y
    *  la URL—, así que el color sobraría y competiría con la fotografía. */
   mark?: { logoKey: LogoKey; molecule: string };
+  /** Preview de titulares de la one-page (07/09 (22), petición del cliente:
+   *  "como en la web original"). La web original tenía pestañas en el hero;
+   *  aquí NO son pestañas —regla 2 de las recomendaciones UX, "eliminar todas
+   *  las pestañas", sigue vigente— son enlaces de ancla en texto corrido, sin
+   *  caja ni estado de selección: un adelanto de lo que hay más abajo, no un
+   *  conmutador de contenido. Quien ya bajó lo suficiente para que la barra
+   *  sticky (`AnchorNav`) aparezca no necesita esto; es para quien todavía
+   *  está en el hero. Mismos datos que la barra —no se duplica contenido,
+   *  solo el punto donde se enseña. */
+  sections?: readonly NavItem[];
 }
 
 /**
@@ -29,7 +40,7 @@ interface HeroVideoProps {
  * - El poster es la imagen LCP: el vídeo nunca bloquea la carga.
  * - Bajo `prefers-reduced-motion` o en pantallas pequeñas se muestra solo el poster.
  */
-export function HeroVideo({ eyebrow, title, subtitle, lead, video, children, moleculeVariant, mark }: HeroVideoProps) {
+export function HeroVideo({ eyebrow, title, subtitle, lead, video, children, moleculeVariant, mark, sections }: HeroVideoProps) {
   const ref = useRef<HTMLVideoElement>(null);
   const [play, setPlay] = useState(false);
   const hasVideo = Boolean(video.webm || video.mp4);
@@ -115,6 +126,24 @@ export function HeroVideo({ eyebrow, title, subtitle, lead, video, children, mol
             </p>
           )}
           {children && <div className="mt-10">{children}</div>}
+          {/* Sin separadores entre items, solo aire: con un punto en medio, al
+              envolver a la segunda linea quedaba uno huerfano al principio, y no
+              hay forma fiable en CSS de ocultar el primero de cada linea. El
+              espacio separa igual de bien y envuelve sin residuos. */}
+          {sections && sections.length > 0 && (
+            <ul className="mt-10 flex flex-wrap gap-x-7 gap-y-3">
+              {sections.map((item) => (
+                <li key={item.href}>
+                  <a
+                    href={item.href}
+                    className="text-[13px] font-semibold uppercase tracking-[0.1em] text-white/65 transition-colors duration-200 hover:text-white"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </Container>
 

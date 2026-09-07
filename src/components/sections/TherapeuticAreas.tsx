@@ -31,10 +31,11 @@ export function TherapeuticAreas({
             <p className="mt-5 text-gray-700">{lead}</p>
           </div>
 
-          <ul className="grid border-l border-t border-gray-200 sm:grid-cols-2 lg:col-span-9 lg:grid-cols-5">
+          {/* 07/09 (22): sin caja de celda; NumberBadge ya es el ancla. */}
+          <ul className="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:col-span-9 lg:grid-cols-5">
             {areas.map((area, i) => (
-              <li key={area} className="min-h-44 border-b border-r border-gray-200">
-                <Reveal delay={(i % 5) * 0.04} className="flex h-full flex-col items-start justify-between gap-8 p-6 lg:p-7">
+              <li key={area}>
+                <Reveal delay={(i % 5) * 0.04} className="flex flex-col items-start gap-5">
                   <NumberBadge n={i + 1} />
                   <span className="text-[clamp(1rem,0.92rem+0.45vw,1.375rem)] font-medium leading-snug">{area}</span>
                 </Reveal>

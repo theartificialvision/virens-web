@@ -1833,3 +1833,54 @@ Siguen siendo material conceptual hasta que haya reportaje real de la planta.
 - Detalle que costó ver: `.glass` transiciona el fondo pero **no lo cambia
   solo** — el estado de hover lo tiene que declarar quien usa el material, como
   ya hacían los botones del hero.
+
+### 2026-09-07 (22) — Claude Code — El índice pasa al hero como preview, y fuera las rejillas de tabla
+
+Dos correcciones del cliente, con capturas.
+
+**1. El índice no era una sección.** *"Esto que te pasé no era para ponerlo como
+sección sino para hacer una preview de los titulares en el hero de cada sección,
+onda como en la web original"*. La entrada (16) lo montó como bloque de cierre a
+página completa; era una lectura equivocada del encargo.
+
+- Se elimina `DivisionIndex` —componente y su config `divisionSections`—, sin
+  referencias que queden colgando.
+- `HeroVideo` acepta ahora `sections` y pinta los titulares al pie del hero,
+  bajo el lead y el CTA, que es donde el cliente los marcó en su captura.
+- **No son pestañas.** La recomendación 2 del documento maestro ("eliminar todas
+  las pestañas") sigue vigente: esto es texto corrido con enlaces de ancla, sin
+  caja, sin fondo y sin estado de selección. Es un adelanto de lo que hay más
+  abajo, no un conmutador de contenido. Quien ya bajó lo suficiente para ver la
+  barra sticky no lo necesita; esto es para quien sigue en el hero.
+- Mismos datos que la barra (`labsAnchors` / `techAnchors`): no se duplica
+  contenido, solo el punto donde se enseña.
+- Detalle resuelto mirando la captura: con un "·" entre items, al envolver a la
+  segunda línea quedaba un punto huérfano al principio — y no hay forma fiable
+  en CSS de ocultar el primero de cada línea. Fuera el separador; el aire separa
+  igual de bien y envuelve sin residuos.
+
+**2. "Mucha cuadrícula tipo tablas y queda mal".** Y tenía razón. Siete bloques
+usaban el mismo patrón —`border-l border-t` en el contenedor y `border-b
+border-r` en cada celda— que sobre el fondo oscuro anterior era un filete casi
+invisible al 10-15 % de blanco, pero **sobre el fondo claro pasa a ser gris 200
+sobre hueso: gridlines de hoja de cálculo**. Es una regresión del pivote a claro
+de la entrada (18), no un problema de siempre.
+
+Se retira la caja de celda en los siete y el ritmo pasa a darlo el espacio, que
+es literalmente lo que pide la regla 6 del proyecto ("el ritmo lo da el espacio,
+no el borde"). En cada bloque el ancla visual ya existía y no necesitaba
+recuadro: el número (Home "Cómo trabajamos", puntos de Labs y Tech), el icono
+(capacidades, formas galénicas) o el `NumberBadge` (áreas terapéuticas). El
+único sin ancla propia era Certificaciones, que recibe un filete corto de 2 px
+—el mismo recurso que ya usa el H1 de Compañía, no un invento nuevo—.
+
+De paso se quitan los `min-h-*` que sostenían celdas de altura uniforme: sin
+caja no pintan nada y en móvil solo generaban huecos.
+
+Verificado en navegador: los 6 enlaces del preview funcionan en las dos páginas
+y llevan a su ancla con el destino a la vista; sin regresión en los siete pasos
+de escritorio ni en los dos de táctil del hero de Home; móvil real a 390 sin
+desbordes y sin puntos huérfanos.
+
+**Queda pendiente** lo señalado en (20): en el hero de Labs el isotipo blanco
+cae sobre la bata blanca de la operaria y pierde definición.

@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { AnchorNav } from '@/components/layout/AnchorNav';
-import { DivisionIndex } from '@/components/sections/DivisionIndex';
 import { HeroVideo } from '@/components/sections/HeroVideo';
 import { EditorialSplit } from '@/components/sections/EditorialSplit';
 import { GalenicForms } from '@/components/sections/GalenicForms';
@@ -37,7 +36,7 @@ export default function VirensLabsPage() {
   return (
     <>
       {/* 01 */}
-      <HeroVideo {...labsHero} moleculeVariant="labs" />
+      <HeroVideo {...labsHero} moleculeVariant="labs" sections={labsAnchors} />
 
       <AnchorNav items={labsAnchors} division="labs" />
 
@@ -45,11 +44,12 @@ export default function VirensLabsPage() {
       <Section tone="white" rhythm="base">
         <Container>
           <Eyebrow className="text-labs">{labsIntro.eyebrow}</Eyebrow>
-          <ul className="mt-10 grid border-l border-t border-gray-200 sm:grid-cols-3">
+          {/* 07/09 (22): fuera la caja de tabla; el numero ya ancla el item. */}
+          <ul className="mt-10 grid gap-x-10 gap-y-12 sm:grid-cols-3">
             {labsIntro.points.map((p) => (
-              <li key={p.index} className="flex min-h-52 flex-col justify-between border-b border-r border-gray-200 p-7 lg:p-9">
+              <li key={p.index} className="flex flex-col">
                 <span className="text-[length:var(--text-h3)] font-bold leading-none tracking-[-0.03em] text-labs">{p.index}</span>
-                <span className="mt-10 max-w-[18ch] text-[length:var(--text-lead)] font-medium leading-snug">{p.label}</span>
+                <span className="mt-6 max-w-[18ch] text-[length:var(--text-lead)] font-medium leading-snug">{p.label}</span>
               </li>
             ))}
           </ul>
@@ -102,9 +102,6 @@ export default function VirensLabsPage() {
 
       {/* 10 — único acceso cruzado: no hay botón "Virens Labs" en esta página */}
       <DivisionSwitch to="tech" label={crossLink.label} href={crossLink.href} />
-
-      {/* 11 */}
-      <DivisionIndex current="labs" />
 
       <CtaContact />
     </>

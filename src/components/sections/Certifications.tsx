@@ -38,10 +38,14 @@ export function Certifications({
             </div>
           </div>
 
-          <ul className="grid border-l border-t border-gray-200 sm:grid-cols-2 lg:col-span-7 lg:col-start-6 lg:grid-cols-3">
+          {/* 07/09 (22): sin caja de celda; un filete corto sustituye al recuadro
+              como ancla del item — el mismo lenguaje que ya usa el H1 de
+              Compañía, no un recurso nuevo. */}
+          <ul className="grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:col-span-7 lg:col-start-6 lg:grid-cols-3">
             {visible.map((c, i) => (
-              <li key={c.name} className="min-h-44 border-b border-r border-gray-200 bg-gray-50">
-                <Reveal delay={(i % 3) * 0.05} className="flex h-full flex-col justify-between gap-6 p-7">
+              <li key={c.name}>
+                <Reveal delay={(i % 3) * 0.05} className="flex flex-col gap-4">
+                  <span aria-hidden className="block h-0.5 w-8 bg-labs" />
                   <span className="text-[length:var(--text-h4)] font-semibold leading-tight text-blue">{c.name}</span>
                   <span className="text-[12px] leading-relaxed text-gray-500">
                     {[c.issuer, c.scope].filter(Boolean).join(' · ') || ' '}

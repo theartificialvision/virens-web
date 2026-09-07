@@ -31,9 +31,11 @@ export function CapacityGrid({ eyebrow, title, stats, items, operations, note }:
             </h2>
           </div>
 
-          <dl className="grid divide-y divide-gray-200 border-y border-gray-200 sm:grid-cols-3 sm:divide-x sm:divide-y-0 lg:col-span-8">
+          {/* 07/09 (22): fuera el border-y + divide-x — leia como fila de tabla.
+              Cada numero es su propio bloque, separado por aire. */}
+          <dl className="grid gap-x-10 gap-y-8 sm:grid-cols-3 lg:col-span-8">
             {stats.map((s, i) => (
-              <Reveal key={s.label} delay={i * 0.06} className="flex min-h-44 flex-col justify-center py-7 sm:px-7">
+              <Reveal key={s.label} delay={i * 0.06} className="flex flex-col">
                 <dd className="text-[length:var(--text-stat-compact)] font-bold leading-none tracking-[-0.03em]">
                   {s.value}
                   {s.unit && <span className="ml-1 text-[0.42em] align-top">{s.unit}</span>}
@@ -46,11 +48,13 @@ export function CapacityGrid({ eyebrow, title, stats, items, operations, note }:
           </dl>
         </div>
 
-        <ul className="mt-20 grid border-l border-t border-gray-200 sm:grid-cols-2 lg:grid-cols-5">
+        {/* Mismo criterio: sin caja de celda. El icono ya funciona como ancla
+            visual, así que el aire entre items basta para separarlos. */}
+        <ul className="mt-20 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-5">
           {items.map((item, i) => (
-            <li key={item.id} className="min-h-64 border-b border-r border-gray-200 bg-gray-50">
-              <Reveal delay={(i % 5) * 0.04} className="flex h-full flex-col justify-between gap-8 p-6 lg:p-8">
-                <FormIcon name={item.icon} className="size-14 shrink-0 text-gray-500 lg:size-16" />
+            <li key={item.id}>
+              <Reveal delay={(i % 5) * 0.04} className="flex flex-col gap-6">
+                <FormIcon name={item.icon} className="size-12 shrink-0 text-gray-500 lg:size-14" />
                 <div>
                   <p className="text-[length:var(--text-eyebrow)] font-bold uppercase tracking-[0.18em] text-gray-500">
                     {item.label}
