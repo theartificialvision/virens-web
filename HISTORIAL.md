@@ -1806,3 +1806,30 @@ funciona. Se puede resolver moviendo el isotipo o eligiendo otro encuadre de esa
 foto — no se toca sin decidirlo con el cliente.
 
 Siguen siendo material conceptual hasta que haya reportaje real de la planta.
+
+### 2026-09-07 (21) — Claude Code — La barra de anclas se pega bien y se desplaza sola; CTA a vidrio
+
+- **"No está muy bien fixed".** Estaba en `sticky top-16 lg:top-20`, un hueco de
+  64/80 px heredado de cuando la cabecera era una franja. Hoy el header es un
+  botón flotante, así que ese hueco solo servía para dejar ver el contenido
+  pasando por encima de la barra. Pasa a `top-0`. Verificado: `top: 0` real al
+  hacer scroll.
+- **La barra se desplaza sola** siguiendo a la sección activa: bajando por la
+  página, las categorías que vienen entran por la derecha. Se calcula el
+  `scrollLeft` a mano y **no** con `scrollIntoView`, que además del contenedor
+  horizontal mueve el scroll VERTICAL de la página — sería la propia barra
+  empujando la lectura, justo lo contrario de lo que se busca. Respeta
+  `prefers-reduced-motion` (salto seco en vez de deslizamiento).
+  Verificado a 900 px de ancho: `scrollLeft` 0 → 0 → 173 mientras el activo pasa
+  de Private Label a Formas galénicas y a Calidad.
+- La propia barra pasa al material `.glass`, con el cuerpo en `--color-ink` al
+  82 %: un solo vidrio en toda la web.
+- **Los CTA pasan a vidrio.** El color de marca no se pierde: se convierte en el
+  **cuerpo** del vidrio, a un 88 %. Esa es la diferencia con los botones del
+  hero, donde el vidrio solo identifica y basta un 24 %: un CTA tiene que pesar
+  como acción principal, así que el color manda y el vidrio le pone el filo
+  especular, el reflejo y la sombra de contacto. `secondary` sí es vidrio de
+  verdad, y sobre fondo claro tiñe de azul (`glass-ink`) para no desaparecer.
+- Detalle que costó ver: `.glass` transiciona el fondo pero **no lo cambia
+  solo** — el estado de hover lo tiene que declarar quien usa el material, como
+  ya hacían los botones del hero.
