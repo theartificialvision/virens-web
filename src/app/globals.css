@@ -1022,10 +1022,11 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
 
 /* ============================================================
    HOME V2 (2026-09-22) — reconstrucción de la maqueta del cliente.
-   Aditivo: no toca ningún token anterior. Vive en /v2 mientras V1
-   sigue en la raíz; al promoverla, este bloque se funde con el de
-   arriba. NOTA 22/09: montado sobre 3cb45e8 — la base ya volvio al
-   sistema claro el 07/09, asi que la V2 no necesita forzar el fondo.
+   Aditivo: no toca ningún token anterior. Nació en /v2 y el mismo día se
+   promovió a la raíz; el bloque se deja separado del de arriba a propósito,
+   para ver de un vistazo qué es de la home. NOTA 22/09: montado sobre
+   3cb45e8 — la base ya volvio al sistema claro el 07/09, asi que la V2 no
+   necesita forzar el fondo.
    ============================================================ */
 @theme {
   --v2-header:        5.5rem;   /* 88 — alto de la barra blanca */

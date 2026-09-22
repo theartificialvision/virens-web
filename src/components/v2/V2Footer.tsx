@@ -62,7 +62,12 @@ function Lockup({ division }: { division: 'labs' | 'tech' }) {
   return (
     <span className="flex items-end gap-2">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/img/v2/isotipo-labs.png" alt="" aria-hidden className="h-8 w-auto" />
+      <img
+        src={division === 'labs' ? '/img/v2/isotipo-labs.png' : '/img/v2/isotipo-tech.png'}
+        alt=""
+        aria-hidden
+        className="h-8 w-auto"
+      />
       <span className="flex flex-col leading-none">
         <span className="self-end text-[10px] font-semibold uppercase tracking-[0.28em] leading-none text-white/70">
           {division === 'labs' ? 'Labs' : 'Tech'}

@@ -11,10 +11,14 @@ import { cn } from '@/lib/utils';
  */
 export function Logo({ className, division = 'labs' }: { className?: string; division?: 'labs' | 'tech' }) {
   return (
-    <Link href="/v2" className={cn('inline-flex items-end gap-3', className)} aria-label="Virens Labs — inicio">
+    <Link
+      href="/"
+      className={cn('inline-flex items-end gap-3', className)}
+      aria-label={division === 'labs' ? 'Virens Labs — inicio' : 'Virens Tech — inicio'}
+    >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
-        src="/img/v2/isotipo-labs.png"
+        src={division === 'labs' ? '/img/v2/isotipo-labs.png' : '/img/v2/isotipo-tech.png'}
         alt=""
         aria-hidden
         className="h-[var(--v2-logo)] w-auto"

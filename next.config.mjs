@@ -6,6 +6,8 @@ const nextConfig = {
   // Redirecciones 301 desde la web actual (WordPress) — ver §14.5 del documento maestro.
   async redirects() {
     const map = [
+      // La home V2 vivió en /v2 unos días (22/09/2026): por si quedó enlazada.
+      ['/v2', '/'],
       ['/compania/', '/compania'],
       ['/virens-labs/', '/virens-labs'],
       ['/virens-tech/', '/virens-tech'],

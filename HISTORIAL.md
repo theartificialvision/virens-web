@@ -2003,3 +2003,39 @@ web actual usa usted: pendiente de unificar.
 **Verificado** sobre `3cb45e8`: `tsc --noEmit` limpio, `next build` correcto
 (12 rutas, `/v2` incluida, V1 sin cambios), sin errores de consola ni 404 en
 1440×900 y 390×844.
+
+### 2026-09-22 (2) — Muse Code — La home V2 pasa a `/`, deploy listo
+
+El cliente pide quedarse solo con la home V2 y publicarla en GitHub +
+Netlify. La V2 vivía en la ruta `/v2` de la rama `v2` (nunca pusheada) y el
+pie usaba el isotipo de Labs en los dos lockups.
+
+- **`src/app/page.tsx` es ahora la home V2** (los 7 bloques + `V2Header` /
+  `V2Footer`, con el mismo DOM que tenía en `/v2`) y la ruta `src/app/v2/` se
+  elimina. Metadatos de la home (título/descripción de la maqueta) movidos a
+  la página; el `robots` hereda el del layout raíz (noindex salvo
+  `NEXT_PUBLIC_INDEXABLE=true`, sin cambios).
+- **`ChromeGate` excluye `/`** en vez de `/v2`; `/` sale de `DARK_ROUTES`
+  (ya no es oscura); `Logo` enlaza a `/`; `next.config.mjs` redirige `/v2` →
+  `/` permanente por si quedó enlazada en algún sitio.
+- **Isotipo de Tech reciclado de V1**: `public/img/tech-molecule.png` →
+  `public/img/v2/isotipo-tech.png`, y el lockup Tech del pie (y `Logo` con
+  `division="tech"`) lo usan. Era el único asset de V1 que faltaba reciclar.
+- **`netlify.toml` nuevo**: `npm run build` + plugin de Next.js + Node 22.
+  El deploy pasa a ser el estándar (push a rama `v2` → Netlify reconstruye),
+  sin el token del `.bat` anterior. `.gitignore` suma `.netlify/`.
+- Las páginas V1 (`/virens-labs`, `/virens-tech`, `/compania`, `/noticias`,
+  `/contacto`) se conservan tal cual: el pie V2 las enlaza y sin ellas la
+  home quedaría con enlaces rotos. Lo que se jubila es solo la home V1
+  (`DivisionSplit` y sus piezas quedan sin uso, sin borrar).
+
+**Verificado**: `tsc --noEmit` limpio, `next build` correcto (11 rutas
+estáticas, `/` en 3,92 kB / 159 kB First Load) y el HTML prerenderizado de
+`/` contiene los 7 bloques, el vídeo, las siluetas y los dos isotipos. La
+rama `v2` sigue sin pushear (esta sesión no tiene credenciales de GitHub):
+para publicar, `PUBLICAR RAMA V2.bat` y conectar el sitio Netlify a esa rama.
+
+**OJO para la próxima sesión**: en `WEB VIRENS/web/` hay OTRO clon del
+proyecto, con otro remoto (`VIrensLab` en vez de `virens-web`) y la V2
+construida sobre la base obsoleta `4925814` (commit `657432e`). Esa copia es
+la mala — la buena es `web-v2/`, rama `v2`. No pushear desde `web/`.

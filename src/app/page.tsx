@@ -1,60 +1,51 @@
-import { StatRow } from '@/components/sections/StatRow';
-import { DivisionSplit } from '@/components/sections/DivisionSplit';
-import { CtaContact } from '@/components/sections/CtaContact';
-import { Section } from '@/components/ui/Section';
-import { Container } from '@/components/ui/Container';
-import { Eyebrow } from '@/components/ui/Eyebrow';
-import { Reveal } from '@/components/ui/Reveal';
-import { valueChain } from '@/content/company';
-import { divisionSplit, homePresentation, homeStats, processIntro } from '@/content/home';
+import type { Metadata } from 'next';
+import { V2Header } from '@/components/v2/V2Header';
+import { V2Footer } from '@/components/v2/V2Footer';
+import { Hero } from '@/components/v2/Hero';
+import { DualServices } from '@/components/v2/DualServices';
+import { GalenicBlock } from '@/components/v2/GalenicBlock';
+import { CapacityBlock } from '@/components/v2/CapacityBlock';
+import { AreasMarquee } from '@/components/v2/AreasMarquee';
+import { CertStrip } from '@/components/v2/CertStrip';
+import { CtaBand } from '@/components/v2/CtaBand';
 
-/** Home: hero de presentación (referencias del cliente, 06/09/2026).
- * Composición limpia en inglés; se conserva el contenido corporativo inferior.
+export const metadata: Metadata = {
+  title: 'Expertos en complementos alimenticios',
+  description:
+    'Fabricación por contrato y desarrollo de complementos alimenticios. Más de 2.000 m² de instalaciones propias en Sant Andreu de la Barca, Barcelona.',
+};
+
+/**
+ * HOME V2 — reconstrucción de la maqueta del cliente (22/09/2026),
+ * promovida a la raíz el 2026-09-22: la V1 queda solo en las páginas
+ * interiores (/virens-labs, /virens-tech, /compania, /noticias, /contacto),
+ * que el pie enlaza. La cabecera/pie del sistema V1 se apagan en esta ruta
+ * desde `ChromeGate`, en el layout raíz: aquí se montan los propios.
+ *
+ * Orden de bloques y ritmo de fondos, tal cual la maqueta:
+ *   01 hero (foto/vídeo a sangre, velo azul)
+ *   02 Private Label / Full service        blanco
+ *   03 Formas galénicas                    teal + foto
+ *   04 Capacidad productiva                blanco
+ *   05 Áreas terapéuticas                  azul
+ *   06 Certificaciones                     gris claro
+ *   07 CTA                                 gris
+ * Ningún bloque repite el fondo del anterior (regla 5 del proyecto).
  */
 export default function HomePage() {
   return (
-    <>
-      <DivisionSplit
-        halves={divisionSplit}
-        presentation={homePresentation}
-      />
-
-      <StatRow stats={homeStats} tone="gray" />
-
-      {/* Cómo trabajamos */}
-      <Section tone="white" rhythm="base">
-        <Container>
-          <div className="max-w-[var(--measure-max)]">
-            <Eyebrow className="text-gray-500">{processIntro.eyebrow}</Eyebrow>
-            <h2 className="mt-6 text-[length:var(--text-h2)] font-bold leading-[1.1] tracking-[-0.015em]">
-              {processIntro.title}
-            </h2>
-          </div>
-
-          {/* 07/09 (22): fuera la rejilla de tabla (border-l/border-t + celda
-              border-b/border-r). Sobre fondo claro esas líneas grises se leen
-              como cuadrícula de hoja de cálculo — regla 6, "el ritmo lo da el
-              espacio, no el borde", tomada en serio: el número ya hace de
-              ancla visual y no necesita una caja alrededor. */}
-          <ol className="mt-8 grid lg:mt-16 gap-x-10 gap-y-8 lg:gap-y-14 sm:grid-cols-2 lg:grid-cols-4">
-            {valueChain.map((step, i) => (
-              <li key={step.index}>
-                <Reveal delay={i * 0.06} className="flex flex-col">
-                  <span className="text-[length:var(--text-h3)] font-bold leading-none tracking-[-0.03em] text-labs">{step.index}</span>
-                  <h3 className="mt-6 text-[length:var(--text-h4)] font-semibold">{step.title}</h3>
-                  <ul className="mt-4 space-y-2 text-[length:var(--text-small)] text-gray-700">
-                    {step.items.map((it) => (
-                      <li key={it}>{it}</li>
-                    ))}
-                  </ul>
-                </Reveal>
-              </li>
-            ))}
-          </ol>
-        </Container>
-      </Section>
-
-      <CtaContact />
-    </>
+    <div className="v2-root">
+      <V2Header />
+      <div className="v2-page">
+        <Hero />
+        <DualServices />
+        <GalenicBlock />
+        <CapacityBlock />
+        <AreasMarquee />
+        <CertStrip />
+        <CtaBand />
+      </div>
+      <V2Footer />
+    </div>
   );
 }

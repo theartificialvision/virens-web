@@ -1,0 +1,20 @@
+# Laboratorios Virens — deploy en Netlify.
+# Sitio conectado al repo theartificialvision/virens-web, rama v2.
+# Cada push a v2 reconstruye y publica solo; sin drag-and-drop ni tokens.
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  NPM_FLAGS = "--no-audit --no-fund"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# Las 301 de next.config.mjs las respeta el plugin; aquí solo caché larga
+# para los assets versionados de Next, que son inmutables por hash.
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
