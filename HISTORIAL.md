@@ -1936,3 +1936,70 @@ cae sobre la bata blanca de la operaria y pierde definición.
   Service) y cronología de Compañía. La ventana dejó de estar disponible al
   intentar ampliar la revisión a 320 px, por lo que ese ancho no se certifica.
 - Actualizado el servidor local en http://localhost:3001; sin publicar.
+
+### 2026-09-22 — Claude (Cowork) — V2 de la home, en `/v2`, sobre maqueta del cliente
+
+El cliente entrega una **maqueta cerrada de la home** (captura) y el
+`Objetosweb.ai` con las siluetas de envase, y pide una "versión 2" empezando
+solo por la home, reciclando lo que valga.
+
+**Aviso de proceso, que costó medio día:** esta sesión arrancó sobre una copia
+local del PC de trabajo que estaba en `4925814` (04/09) — **19 commits por
+detrás** de `main`. La V2 se construyó primero sobre esa base obsoleta y hubo
+que rehacerla encima de `3cb45e8`. Lo que faltaba en local era justo lo que más
+importaba: la vuelta al sistema claro, las 12 fotografías reales y la página de
+Contacto con formulario. **Antes de tocar código: `git fetch` y comprobar que
+el local no va por detrás.**
+
+**Decisiones acordadas con el cliente antes de empezar:**
+
+1. La maqueta es el **diseño definitivo a replicar**, no una referencia.
+2. Es la **home general** del sitio, no la landing de Labs.
+3. Se monta como **ruta `/v2` en el mismo proyecto**: reutiliza tokens,
+   fuentes, `node_modules` y assets, y permite comparar V1 y V2 en dos
+   pestañas. La raíz no se toca.
+
+**Cómo convive con V1.** `ChromeGate`, un envoltorio cliente en el layout raíz,
+apaga `Header`/`Footer`/`Grain` en las rutas que traen los suyos (hoy solo
+`/v2`). Los tokens de la V2 van en un bloque `@theme` **aditivo** al final de
+`globals.css`: no se modifica ninguno anterior. Al montarla sobre `3cb45e8` ya
+no hace falta forzar el fondo — la base volvió al sistema claro el 07/09.
+
+**Bloques (orden de la maqueta):** hero a sangre con vídeo · Private Label /
+Full service · Formas galénicas (teal + foto) · Capacidad productiva · Áreas
+terapéuticas (marquee) · Certificaciones · CTA · pie de cuatro columnas.
+Ningún bloque repite el fondo del anterior.
+
+**Assets:**
+
+- Las **7 siluetas de envase** salen del `Objetosweb.ai` del cliente,
+  extraídas una a una del PDF a SVG (`/img/v2/objetos/*.svg`), sin las
+  etiquetas de texto —que ahora son HTML, indexable— y con el trazo en
+  `currentColor`.
+- **Hero:** el `home-hero.mp4` de siempre, desaturado (`saturate(.32)`) antes
+  del velo azul porque el material real tira a verde por la luz de la nave.
+  El póster ya no es el placeholder gris: es un fotograma del propio vídeo.
+- **Formas galénicas:** fotografía de la sesión de Midjourney, B/N + capa
+  `#00A099` en multiply al 62%.
+- **Isotipo:** el PNG del cliente recortado con fondo transparente.
+  PENDIENTE: sustituir por el SVG oficial de marca, y el wordmark —hoy
+  compuesto en Montserrat— con él. Las cajas no cambian al hacerlo.
+
+**Ritmo.** Con el relleno de sección heredado, la página salía a 4.107 px de
+alto a 1440; la maqueta, llevada a esa anchura, ocupa ~2.950. La V2 tiene su
+propio par de tokens (`--v2-section` / `--v2-section-tight`): 3.429 px.
+
+**Certificaciones.** En la maqueta son los sellos oficiales en imagen. Aquí van
+como marcas tipográficas en la misma caja que ocupará el sello: son marcas de
+terceros y tienen que llegar del cliente en vectorial. "FDA Approved" no se
+renderiza por defecto (`unverified`) — la FDA no aprueba complementos
+alimenticios.
+
+**Copy.** Literal de la maqueta, incluidas dos erratas que vienen en ella y
+están documentadas en `src/content/v2-home.ts`: "con la más alta estándares de
+calidad" y "Nos adaptamos a las requerimientos". Además la maqueta tutea y la
+web actual usa usted: pendiente de unificar.
+
+**Verificado** sobre `3cb45e8`: `tsc --noEmit` limpio, `next build` correcto
+(12 rutas, `/v2` incluida, V1 sin cambios), sin errores de consola ni 404 en
+1440×900 y 390×844.

@@ -3,6 +3,7 @@ import { Montserrat } from 'next/font/google';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Grain } from '@/components/ui/Grain';
+import { ChromeGate } from '@/components/layout/ChromeGate';
 import { isIndexable, site } from '@/config/site';
 import './globals.css';
 
@@ -39,10 +40,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Saltar al contenido
         </a>
-        <Header />
+        <ChromeGate>
+          <Header />
+        </ChromeGate>
         <main id="contenido">{children}</main>
-        <Footer />
-        <Grain />
+        <ChromeGate>
+          <Footer />
+          <Grain />
+        </ChromeGate>
         <OrganizationSchema />
       </body>
     </html>
