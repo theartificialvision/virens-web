@@ -75,25 +75,9 @@ export function HeroVideo({ eyebrow, title, subtitle, lead, video, children, mol
 
       {moleculeVariant && <MolecularField variant={moleculeVariant} className="opacity-30" />}
 
-      {/* El isotipo ocupa el hueco de la derecha, que el texto deja libre en
-          desktop. Oculto por debajo de lg: ahí la columna es completa y el
-          isotipo se le echaría encima. */}
-      {mark && (
-        <div aria-hidden className="pointer-events-none absolute inset-y-0 right-0 hidden w-5/12 items-center justify-center lg:flex">
-          <LogoSpin
-            logo={mark.logoKey}
-            poster={mark.molecule}
-            spin={14}
-            assemble={20}
-            hold={3.5}
-            className="w-[min(26vw,20rem)] aspect-square opacity-90"
-            sizes="(max-width: 1024px) 0px, 320px"
-          />
-        </div>
-      )}
 
       <Container className="relative pb-20 lg:pb-28">
-        <div className="max-w-[58ch] lg:w-7/12">
+        <div className="max-w-[58ch] lg:w-7/12 lg:max-w-none">
           {/* Sobre imagen, `mist`/`mist-dim` se apagan demasiado — el token
               está calibrado para superficies planas (ink/surface). Mismo
               criterio ya aplicado al hero de Home: blanco con opacidad alta. */}
@@ -103,12 +87,33 @@ export function HeroVideo({ eyebrow, title, subtitle, lead, video, children, mol
               -0,02em—, solo un escalón mayor de cuerpo: allí el titular está
               obligado a una línea entre las dos moléculas y aquí tiene una
               columna de 7/12 para respirar. */}
-          <KineticHeading
-            as="h1"
-            text={title}
-            className="mt-6 text-[length:var(--text-display)] font-semibold leading-[1.1] tracking-[-0.02em] text-white"
-          />
-          <p className="mt-5 text-[length:var(--text-lead)] font-normal leading-[1.5] text-white">{subtitle}</p>
+          {/* 23/09/2026 (cliente): el isotipo 3D va a la derecha del titular y un
+              25 % más pequeño (antes ocupaba sola la mitad derecha del hero, a
+              `min(26vw, 20rem)`). Solo desde lg: en columna única se echaría
+              encima del texto. El titular conserva su medida de 58ch. */}
+          <div className="mt-6 lg:flex lg:items-center lg:gap-[var(--hero-mark-gap)]">
+            <div className="max-w-[58ch]">
+              <KineticHeading
+                as="h1"
+                text={title}
+                className="text-[length:var(--text-display)] font-semibold leading-[1.1] tracking-[-0.02em] text-white"
+              />
+            </div>
+            {mark && (
+              <div aria-hidden className="pointer-events-none hidden shrink-0 lg:block">
+                <LogoSpin
+                  logo={mark.logoKey}
+                  poster={mark.molecule}
+                  spin={14}
+                  assemble={20}
+                  hold={3.5}
+                  className="aspect-square w-[var(--hero-mark)] opacity-90"
+                  sizes="(max-width: 1024px) 0px, 240px"
+                />
+              </div>
+            )}
+          </div>
+          <p className="mt-5 max-w-[58ch] text-[length:var(--text-lead)] font-normal leading-[1.5] text-white">{subtitle}</p>
           {lead && (
             <p className="mt-5 max-w-[var(--measure-max)] text-[length:var(--text-body)] leading-[1.65] text-white/85">
               {lead}

@@ -9,10 +9,10 @@ import { MenuGlyph3D } from './MenuGlyph3D';
 import { v2Menu } from '@/content/v2-home';
 
 /**
- * Cabecera de la home V2: barra blanca sólida, logo a la izquierda y trigger
- * de menú a la derecha. A diferencia de V1 —donde el trigger flota sobre el
- * hero— aquí la barra es opaca desde el primer píxel: la maqueta apoya el
- * logo sobre blanco, no sobre la foto.
+ * Cabecera de la home V2: barra de vidrio líquido claro (`.header-glass`,
+ * desde el 23/09/2026; antes blanca sólida), logo a la izquierda y trigger
+ * de menú a la derecha. Es sticky y ocupa su sitio en el flujo: al hacer
+ * scroll el contenido pasa por debajo y se ve a través del vidrio.
  *
  * El panel del menú es el mismo de V1 (`MenuOverlay`): la franja vertical de
  * vidrio azul no depende del sistema claro/oscuro de la página que hay debajo.
@@ -33,7 +33,7 @@ export function V2Header() {
 
   return (
     <>
-      <header className="v2-fade sticky top-0 z-[70] border-b border-gray-200 bg-white">
+      <header className="v2-fade header-glass sticky top-0 z-[70]">
         <div className="mx-auto flex h-[var(--v2-header)] w-full max-w-[var(--container-max)] items-center justify-between px-5 md:px-8 lg:px-12 2xl:px-20">
           <Logo />
 

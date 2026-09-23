@@ -2241,3 +2241,16 @@ a 1440 px (0,35 / 0,8 / 1,4 / 3,2 s).
 
 **Verificado**: `tsc --noEmit` limpio; heros de `/virens-labs` y
 `/virens-tech` revisados en navegador.
+
+### 2026-09-23 (14) — Claude (Cowork) — Isotipo junto al titular en Labs/Tech y cabecera de vidrio
+
+- `HeroVideo`: el isotipo 3D deja la mitad derecha del hero y pasa a la
+  derecha del titular, un 25 % más pequeño (`--hero-mark`, `min(19.5vw,
+  15rem)`; antes `min(26vw, 20rem)`). Solo desde `lg`. El titular y el resto
+  del texto conservan su medida de 58ch.
+- Cabecera (`V2Header`) en vidrio líquido claro: `.header-glass` (blanco al
+  70 %, `blur(20px) saturate(180%)`, filo de luz arriba, sombra de contacto
+  baja, filete azul al 8 %). Sin `backdrop-filter`, cae a blanco al 96 %.
+
+**Verificado**: `tsc --noEmit` limpio; heros de Labs y Tech a 1440 px y
+cabecera sobre el hero oscuro, sobre la barra de anclas y sobre texto claro.

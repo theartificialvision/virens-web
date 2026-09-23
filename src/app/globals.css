@@ -681,6 +681,32 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   --v2-menu-h: 1rem;      /* 16 */
 }
 
+/* Isotipo 3D de los heros de Labs/Tech, junto al titular (23/09/2026):
+   25 % menos que antes (era min(26vw, 20rem)). */
+@theme {
+  --hero-mark:     min(19.5vw, 15rem);
+  --hero-mark-gap: clamp(2rem, 1rem + 2vw, 3.5rem);
+}
+
+/* Cabecera en vidrio líquido (23/09/2026, petición del cliente). Material
+   propio y no `.glass`: aquel es oscuro-translúcido para flotar sobre foto;
+   esta barra vive sobre contenido claro y oscuro y tiene que seguir leyéndose
+   blanca. Blanco al 70 % con desenfoque y saturación (el color de lo que
+   pasa por debajo «moja» el cristal), un filo de luz arriba y una sombra de
+   contacto muy baja. Sin radio: es una barra a sangre, no un panel. */
+.header-glass {
+  background-color: rgb(255 255 255 / 0.7);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+          backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid color-mix(in srgb, var(--color-blue) 8%, transparent);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.85),
+    0 8px 24px -16px color-mix(in srgb, var(--color-blue) 35%, transparent);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .header-glass { background-color: rgb(255 255 255 / 0.96); }
+}
+
 @keyframes v2-load {
   from { opacity: 0; transform: translateY(var(--v2-load-rise)); }
   to   { opacity: 1; transform: none; }
