@@ -2039,3 +2039,21 @@ para publicar, `PUBLICAR RAMA V2.bat` y conectar el sitio Netlify a esa rama.
 proyecto, con otro remoto (`VIrensLab` en vez de `virens-web`) y la V2
 construida sobre la base obsoleta `4925814` (commit `657432e`). Esa copia es
 la mala — la buena es `web-v2/`, rama `v2`. No pushear desde `web/`.
+
+### 2026-09-23 — Claude (Cowork) — Iconos definitivos de formas galénicas
+
+- Los 10 PNG del cliente (`WEB VIRENS/PNG a VEctor`) vectorizados a SVG en
+  `public/img/galenicas/` (claves: `capsule`, `tablet`, `autocapsule`,
+  `vial`, `blister`, `dropper`, `jarfill`, `stick`, `sachet`, `syrup`).
+  Grosor de trazo igualado en todo el juego (≈2,1 % de la caja; los PNG iban
+  del 1 % al 3,3 % y a 40–56 px no casaban entre sí).
+- **`GalenicGlyph`** (`src/components/ui/`) los pinta como máscara CSS sobre
+  `bg-current`: heredan el color del texto como antes y no meten ~64 KB de
+  trazados en el HTML/RSC de cada página.
+- `FormIcon` (Virens Labs: formas galénicas + capacidad productiva) y
+  `GalenicIcon` (home, bloque 03) pasan a usarlos con las mismas claves; el
+  contenido (`labs.ts`, `v2-home.ts`) no cambia. `bottle` queda como alias de
+  `jarfill`.
+
+**Verificado**: `tsc --noEmit` limpio; `/` y `/virens-labs` revisadas en
+navegador a 1440 px.
