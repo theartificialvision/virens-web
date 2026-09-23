@@ -2222,3 +2222,12 @@ anclas de Labs revisada tras scroll.
 
 **Verificado**: `tsc --noEmit` limpio; fotogramas de la animación revisados
 a 1440 px (0,35 / 0,8 / 1,4 / 3,2 s).
+
+### 2026-09-23 (12) — Claude (Cowork) — Capacidad: fuera el filete de proporción
+
+- A petición del cliente se retira el filete de 2 px bajo cada cifra de
+  capacidad (y su barrido de luz `.capacity-sheen`). Se quedan las siluetas
+  que se llenan y las cifras que cuentan. `CapacityMeter` ya no necesita el
+  máximo de la serie.
+
+**Verificado**: `tsc --noEmit` limpio; bloque revisado en navegador.

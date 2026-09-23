@@ -22,8 +22,6 @@ interface Props {
  * (`CapacityMeter`, `CapacityStat`).
  */
 export function CapacityGrid({ eyebrow, title, stats, items, operations, note }: Props) {
-  // Referencia del filete de proporción: el formato de mayor capacidad.
-  const max = Math.max(...items.map((it) => Number.parseFloat(it.units) || 0));
   return (
     <Section id="capacidad-productiva" tone="gray" rhythm="air">
       <Container>
@@ -49,7 +47,7 @@ export function CapacityGrid({ eyebrow, title, stats, items, operations, note }:
         <ul className="mt-10 grid gap-x-8 gap-y-8 lg:mt-20 lg:gap-y-12 sm:grid-cols-2 lg:grid-cols-5">
           {items.map((item, i) => (
             <li key={item.id}>
-              <CapacityMeter item={item} max={max} index={i} />
+              <CapacityMeter item={item} index={i} />
             </li>
           ))}
         </ul>
