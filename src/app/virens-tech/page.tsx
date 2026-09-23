@@ -29,7 +29,7 @@ export default function VirensTechPage() {
   return (
     <>
       {/* 01 */}
-      <HeroVideo {...techHero} moleculeVariant="tech" sections={techAnchors}>
+      <HeroVideo {...techHero} moleculeVariant="tech">
         <div className="inline-block">
           <Button href={crossLink.href} variant="labs">
             {crossLink.label} &rarr;

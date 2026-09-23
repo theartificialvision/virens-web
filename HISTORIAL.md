@@ -2231,3 +2231,13 @@ a 1440 px (0,35 / 0,8 / 1,4 / 3,2 s).
   máximo de la serie.
 
 **Verificado**: `tsc --noEmit` limpio; bloque revisado en navegador.
+
+### 2026-09-23 (13) — Claude (Cowork) — Fuera los enlaces de sección del hero de Labs y Tech
+
+- A petición del cliente se retira la lista de enlaces de ancla bajo el CTA
+  del hero (`HeroVideo`, prop `sections`, del 07/09 (22)): justo debajo del
+  hero aparece la barra `AnchorNav` con los mismos enlaces, así que se leían
+  dos veces seguidas. Fuera la prop y su marcado; la barra no cambia.
+
+**Verificado**: `tsc --noEmit` limpio; heros de `/virens-labs` y
+`/virens-tech` revisados en navegador.

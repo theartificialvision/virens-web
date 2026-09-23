@@ -36,7 +36,7 @@ export default function VirensLabsPage() {
   return (
     <>
       {/* 01 */}
-      <HeroVideo {...labsHero} moleculeVariant="labs" sections={labsAnchors} />
+      <HeroVideo {...labsHero} moleculeVariant="labs" />
 
       <AnchorNav items={labsAnchors} division="labs" />
 
