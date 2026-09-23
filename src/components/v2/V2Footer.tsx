@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { site } from '@/config/site';
 import { v2FooterNav } from '@/content/v2-home';
+import { Isotipo3D } from './Isotipo3D';
 
 /**
  * Pie de la home V2 (§ maqueta): lockup de las dos divisiones a la izquierda y
@@ -61,13 +62,7 @@ export function V2Footer() {
 function Lockup({ division }: { division: 'labs' | 'tech' }) {
   return (
     <span className="flex items-end gap-2">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={division === 'labs' ? '/img/v2/isotipo-labs.png' : '/img/v2/isotipo-tech.png'}
-        alt=""
-        aria-hidden
-        className="h-8 w-auto"
-      />
+      <Isotipo3D division={division} className="-mx-4 -my-3 size-[var(--v2-logo-3d-sm)]" />
       <span className="flex flex-col leading-none">
         <span className="self-end text-[10px] font-semibold uppercase tracking-[0.28em] leading-none text-white/70">
           {division === 'labs' ? 'Labs' : 'Tech'}

@@ -423,7 +423,9 @@ export interface LogoSpinHandle {
    *  vertice a vertice entre las dos rampas, asi que el degradado de marca
    *  llega entero. El cambio se interpola en el bucle para acompanar a la
    *  transicion de la escena en vez de dar un salto. */
-  setBranded: (on: boolean) => void;
+  /** `instant`: aplica el color sin transición (al montar, para que el 3D
+   *  nazca ya del color de su póster y no pase por el vidrio blanco). */
+  setBranded: (on: boolean, instant?: boolean) => void;
   dispose: () => void;
 }
 
@@ -630,11 +632,11 @@ export function mountLogoSpin(host: HTMLElement, opts: LogoSpinOptions): LogoSpi
   }
 
   return {
-    setBranded(on: boolean) {
+    setBranded(on: boolean, instant = false) {
       mixTarget = on ? 1 : 0;
       // Con reducir-movimiento no hay bucle que interpole: se aplica de golpe
       // y se repinta el unico fotograma (CLAUDE.md regla 8).
-      if (reduced) {
+      if (reduced || instant) {
         mix = mixTarget;
         applyMix();
         frame(true);

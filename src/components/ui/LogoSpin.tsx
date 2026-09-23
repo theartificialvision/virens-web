@@ -34,6 +34,7 @@ export function LogoSpin({
   glow,
   branded = false,
   className,
+  posterClassName,
   sizes,
 }: {
   logo: LogoKey;
@@ -51,6 +52,10 @@ export function LogoSpin({
    *  abre (06/09 (9)), y vuelve la rampa entera, no una tinta plana (10). */
   branded?: boolean;
   className?: string;
+  /** Ajuste del póster para que coincida con la huella del 3D: el motor deja
+   *  holgura para la pose abierta y el PNG no, así que en logos pequeños el
+   *  póster se reduce para que el relevo no se note. */
+  posterClassName?: string;
   sizes: string;
 }) {
   const hostRef = useRef<HTMLDivElement>(null);
@@ -77,7 +82,8 @@ export function LogoSpin({
         if (cancelled) return;
         handle = mountLogoSpin(host, { logo, spin, assemble, hold, phase, pointer });
         handleRef.current = handle;
-        handle.setBranded(brandedRef.current);
+        // De golpe: el primer fotograma ya lleva el color vigente.
+        handle.setBranded(brandedRef.current, true);
         setLive(true);
       })
       .catch(() => {
@@ -123,6 +129,7 @@ export function LogoSpin({
         className={cn(
           'absolute inset-0 size-full object-contain transition-opacity duration-500',
           live ? 'opacity-0' : 'opacity-100',
+          posterClassName,
         )}
       />
       <span ref={hostRef} aria-hidden className="absolute inset-0 block" />

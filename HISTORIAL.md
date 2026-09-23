@@ -2101,3 +2101,21 @@ navegador a 1440 px.
 
 **Verificado**: `tsc --noEmit` limpio; revisado en navegador a 390, 1440 y
 1920 px (reposo, hover y menú abierto; fotogramas de la carga).
+
+### 2026-09-23 (5) — Claude (Cowork) — Isotipos 3D pequeños en cabecera y pie
+
+- Componente `Isotipo3D` (`src/components/v2/`): el motor `LogoSpin` de V1 a
+  tamaño de lockup, con la rampa de marca (`branded`: el vidrio blanco
+  desaparece sobre la cabecera blanca), giro y ciclo de apertura más lentos
+  que en los héroes y Labs/Tech desfasados medio ciclo. Sustituye a los PNG
+  de `Logo` (cabecera) y del `Lockup` del pie.
+- Cajas `--v2-logo-3d` (76 px) y `--v2-logo-3d-sm` (56 px): el dibujo ocupa
+  ~60 % de la caja, así que se agranda y se compensa con márgenes negativos;
+  el isotipo queda a la altura del PNG anterior (44 / 32 px).
+- Relevo póster → 3D sin salto: `LogoSpin` acepta `posterClassName` (aquí
+  `scale-[0.62]` para igualar huellas) y `setBranded(on, instant)` aplica el
+  color en el primer fotograma en vez de nacer en vidrio blanco. En V1 no
+  cambia nada (monta con `branded=false`, que ya era el estado inicial).
+
+**Verificado**: `tsc --noEmit` limpio; cabecera y pie en navegador a 390 y
+1440 px, con fotogramas del relevo (0,2 → 6,5 s).

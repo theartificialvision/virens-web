@@ -1031,6 +1031,12 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
 @theme {
   --v2-header:        5.5rem;   /* 88 — alto de la barra blanca */
   --v2-logo:          2.75rem;  /* 44 — alto del isotipo en cabecera */
+  /* Caja cuadrada del isotipo 3D: el dibujo ocupa ~57 % del alto (el motor
+     deja holgura para la pose abierta), así que para igualar los 44 / 32 px
+     del PNG anterior la caja es mayor y su margen se absorbe con márgenes
+     negativos en el lockup. */
+  --v2-logo-3d:       4.75rem;  /* 76 — cabecera */
+  --v2-logo-3d-sm:    3.5rem;   /* 56 — pie */
   --v2-wordmark:      1.625rem; /* 26 — cuerpo del "virens" */
 
   /* Ritmo propio, más apretado que el de V1: medida sobre la maqueta, la

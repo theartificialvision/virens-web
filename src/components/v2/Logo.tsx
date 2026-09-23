@@ -1,13 +1,12 @@
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
+import { Isotipo3D } from './Isotipo3D';
 
 /**
  * Lockup de cabecera: isotipo + wordmark.
  *
- * PENDIENTE: el isotipo es el PNG original del cliente (`labs-molecule.png`,
- * recortado y con fondo transparente) y el wordmark está compuesto en
- * Montserrat. Sustituir ambos por el SVG oficial de marca en cuanto llegue —
- * las medidas de esta caja no cambian al hacerlo.
+ * El isotipo es el 3D en vivo desde el 23/09/2026 (`Isotipo3D`). PENDIENTE:
+ * el wordmark sigue compuesto en Montserrat hasta que llegue el SVG oficial.
  */
 export function Logo({ className, division = 'labs' }: { className?: string; division?: 'labs' | 'tech' }) {
   return (
@@ -16,13 +15,7 @@ export function Logo({ className, division = 'labs' }: { className?: string; div
       className={cn('inline-flex items-end gap-3', className)}
       aria-label={division === 'labs' ? 'Virens Labs — inicio' : 'Virens Tech — inicio'}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={division === 'labs' ? '/img/v2/isotipo-labs.png' : '/img/v2/isotipo-tech.png'}
-        alt=""
-        aria-hidden
-        className="h-[var(--v2-logo)] w-auto"
-      />
+      <Isotipo3D division={division} className="-mx-5 -my-4 size-[var(--v2-logo-3d)]" />
       <span className="flex flex-col leading-none">
         <span
           className={cn(
