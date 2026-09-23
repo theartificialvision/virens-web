@@ -17,11 +17,12 @@ export function CapacityBlock() {
       <div className="mx-auto w-full max-w-[var(--container-max)] px-5 py-[var(--v2-section)] md:px-8 lg:px-12 2xl:px-20">
         <div className="grid gap-14 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-4">
-            <span aria-hidden className="block h-[3px] w-14 bg-labs" />
-            <SectionTitle className="mt-6">{v2Capacity.title}</SectionTitle>
-            <p className="mt-6 max-w-[var(--measure-narrow)] text-[length:var(--text-small)] leading-[1.85] text-gray-700">
-              {v2Capacity.lead}
-            </p>
+            <SectionTitle accent>{v2Capacity.title}</SectionTitle>
+            <Reveal delay={0.06}>
+              <p className="mt-6 max-w-[var(--measure-narrow)] text-[length:var(--text-small)] leading-[1.85] text-gray-700">
+                {v2Capacity.lead}
+              </p>
+            </Reveal>
           </div>
 
           {/* Scroll horizontal solo en pantallas estrechas: la fila mantiene la

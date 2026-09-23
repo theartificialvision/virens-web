@@ -1069,3 +1069,46 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   to   { transform: translateX(-100%); }
 }
 .v2-marquee { animation: v2-marquee var(--v2-marquee-time) linear infinite; }
+
+/* Movimiento de la home V2 (23/09/2026). Tres reglas, nada más:
+   1. Carga: solo el hero. El vídeo aparece en fundido sobre el azul y los
+      textos suben en cascada (`.v2-load` + `--i`). La cabecera, fundido corto.
+   2. Scroll: lo que entra en pantalla usa `Reveal` (ya existente); el filete
+      teal de los títulos crece después del título y las fotos se asientan
+      con un des-zoom lento.
+   3. Todo con la misma curva (`--motion-ease`) y sin rebotes. Con movimiento
+      reducido no se anima nada: el bloque entero va dentro de
+      `no-preference`, y la regla global de arriba lo refuerza. */
+@theme {
+  --v2-load-time:   720ms;
+  --v2-load-step:   110ms;
+  --v2-load-rise:   1rem;
+  --v2-fade-time:   1100ms;
+  --v2-accent-time: 700ms;
+  --v2-media-time:  1400ms;
+  --v2-media-zoom:  1.06;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .v2-load {
+    animation: v2-load var(--v2-load-time) var(--motion-ease) both;
+    animation-delay: calc(120ms + var(--i, 0) * var(--v2-load-step));
+  }
+  .v2-fade { animation: v2-fade var(--v2-fade-time) var(--motion-ease) both; }
+
+  .reveal .v2-accent {
+    transform-origin: left center;
+    transition: transform var(--v2-accent-time) var(--motion-ease) calc(var(--reveal-delay, 0s) + 160ms);
+  }
+  .reveal[data-visible='false'] .v2-accent { transform: scaleX(0); }
+
+  .reveal .v2-media { transition: transform var(--v2-media-time) var(--motion-ease); }
+  .reveal[data-visible='false'] .v2-media { transform: scale(var(--v2-media-zoom)); }
+}
+@keyframes v2-load {
+  from { opacity: 0; transform: translateY(var(--v2-load-rise)); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes v2-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}

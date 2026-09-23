@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { MenuOverlay } from '@/components/layout/MenuOverlay';
 import { Logo } from './Logo';
+import { v2Menu } from '@/content/v2-home';
 
 /**
  * Cabecera de la home V2: barra blanca sólida, logo a la izquierda y trigger
@@ -29,7 +30,7 @@ export function V2Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-[70] border-b border-gray-200 bg-white">
+      <header className="v2-fade sticky top-0 z-[70] border-b border-gray-200 bg-white">
         <div className="mx-auto flex h-[var(--v2-header)] w-full max-w-[var(--container-max)] items-center justify-between px-5 md:px-8 lg:px-12 2xl:px-20">
           <Logo />
 
@@ -40,9 +41,10 @@ export function V2Header() {
             onClick={() => (open ? close() : setOpen(true))}
             aria-expanded={open}
             aria-controls="menu-overlay"
-            aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
-            className="group -mr-2 flex size-11 items-center justify-center text-blue transition-colors duration-200 hover:text-labs"
+            aria-label={open ? v2Menu.closeAria : v2Menu.openAria}
+            className="group -mr-3 flex h-11 items-center gap-4 rounded-full px-3 text-blue transition-colors duration-[var(--motion-control)] hover:text-labs focus-visible:text-labs"
           >
+            <MenuLabel open={open} />
             <MenuGlyph open={open} />
           </button>
         </div>
@@ -53,17 +55,53 @@ export function V2Header() {
   );
 }
 
-/** Tres trazos iguales, como en la maqueta; al abrir se cruzan. */
-function MenuGlyph({ open }: { open: boolean }) {
-  const bar = cn(
-    'absolute left-0 block h-[2px] w-full bg-current',
-    'transition-[transform,opacity] duration-[420ms] ease-[var(--ease-out-quart)]',
+/**
+ * Rótulo del botón (23/09/2026): «Menú» / «Cerrar» apilados en la misma celda
+ * de rejilla —la caja mide lo que la palabra más larga, así el icono no salta—
+ * y al conmutar uno sale por arriba mientras el otro entra desde abajo.
+ * Oculto en móvil: ahí el icono solo se entiende de sobra.
+ */
+function MenuLabel({ open }: { open: boolean }) {
+  const word = cn(
+    '[grid-area:1/1] block transition-transform duration-[520ms] ease-[var(--motion-ease)]',
   );
   return (
-    <span className="relative block h-[14px] w-[26px]" aria-hidden>
-      <span className={cn(bar, 'top-0', open && 'translate-y-[6px] rotate-45')} />
-      <span className={cn(bar, 'top-[6px]', open && 'scale-x-0 opacity-0')} />
-      <span className={cn(bar, 'top-[12px]', open && '-translate-y-[6px] -rotate-45')} />
+    <span
+      aria-hidden
+      className="hidden overflow-hidden text-[length:var(--text-note)] font-semibold uppercase leading-[1.5] tracking-[0.2em] sm:grid sm:justify-items-end"
+    >
+      <span className={cn(word, open ? '-translate-y-full' : 'translate-y-0')}>{v2Menu.open}</span>
+      <span className={cn(word, open ? 'translate-y-0' : 'translate-y-full')}>{v2Menu.close}</span>
+    </span>
+  );
+}
+
+/**
+ * Dos trazos de distinta longitud alineados a la derecha (23/09/2026): más
+ * editorial que las tres rayas iguales. Al pasar el ratón se intercambian las
+ * longitudes; al abrir, los dos se igualan y se cruzan en una X.
+ */
+function MenuGlyph({ open }: { open: boolean }) {
+  const bar = cn(
+    'absolute right-0 block h-[2px] bg-current',
+    'transition-[transform,width] duration-[520ms] ease-[var(--motion-ease)]',
+  );
+  return (
+    <span className="relative block h-[12px] w-[30px]" aria-hidden>
+      <span
+        className={cn(
+          bar,
+          'top-0',
+          open ? 'w-full translate-y-[5px] rotate-45' : 'w-full group-hover:w-[60%]',
+        )}
+      />
+      <span
+        className={cn(
+          bar,
+          'bottom-0',
+          open ? 'w-full -translate-y-[5px] -rotate-45' : 'w-[60%] group-hover:w-full',
+        )}
+      />
     </span>
   );
 }

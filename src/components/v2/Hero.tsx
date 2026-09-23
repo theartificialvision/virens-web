@@ -1,4 +1,8 @@
+import type { CSSProperties } from 'react';
 import { v2Hero } from '@/content/v2-home';
+
+/** Orden de entrada en la carga (`.v2-load`, globals.css): 0, 1, 2… */
+const stagger = (i: number) => ({ '--i': i }) as CSSProperties;
 
 /**
  * Hero a sangre: vídeo real de la línea de llenado bajo un velo azul que baja
@@ -16,7 +20,7 @@ export function Hero() {
           un punto el contraste ANTES del velo azul. Sin esto el hero pelea con
           el teal de marca en vez de asentarlo. */}
       <video
-        className="absolute inset-0 -z-10 size-full object-cover [filter:saturate(0.32)_contrast(1.08)_brightness(0.95)]"
+        className="v2-fade absolute inset-0 -z-10 size-full object-cover [filter:saturate(0.32)_contrast(1.08)_brightness(0.95)]"
         src={v2Hero.video.src}
         poster={v2Hero.video.poster}
         autoPlay
@@ -32,11 +36,11 @@ export function Hero() {
 
       <div className="mx-auto w-full max-w-[var(--container-max)] px-5 pb-[var(--v2-hero-pad)] pt-32 md:px-8 lg:px-12 2xl:px-20">
         <div className="max-w-[var(--measure-max)] text-white">
-          <h1 className="text-[length:var(--v2-hero-title)] font-normal leading-[1.08] tracking-[-0.02em]">
+          <h1 className="v2-load text-[length:var(--v2-hero-title)] font-normal leading-[1.08] tracking-[-0.02em]">
             {v2Hero.title}
           </h1>
-          <p className="mt-5 text-[length:var(--v2-hero-sub)] font-normal leading-snug text-white/90">{v2Hero.subtitle}</p>
-          <p className="mt-8 max-w-[var(--measure-narrow)] text-[length:var(--text-body)] leading-relaxed text-white/75">
+          <p style={stagger(1)} className="v2-load mt-5 text-[length:var(--v2-hero-sub)] font-normal leading-snug text-white/90">{v2Hero.subtitle}</p>
+          <p style={stagger(2)} className="v2-load mt-8 max-w-[var(--measure-narrow)] text-[length:var(--text-body)] leading-relaxed text-white/75">
             {v2Hero.lead}
           </p>
         </div>

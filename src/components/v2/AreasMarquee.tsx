@@ -19,8 +19,7 @@ export function AreasMarquee() {
   return (
     <section id="areas-terapeuticas" className="overflow-hidden bg-blue py-[var(--v2-section-tight)] text-white">
       <div className="mx-auto w-full max-w-[var(--container-max)] px-5 md:px-8 lg:px-12 2xl:px-20">
-        <span aria-hidden className="block h-[3px] w-14 bg-labs" />
-        <SectionTitle className="mt-6">{v2Areas.label}</SectionTitle>
+        <SectionTitle accent>{v2Areas.label}</SectionTitle>
       </div>
 
       <div className="mt-10 flex w-full overflow-hidden">

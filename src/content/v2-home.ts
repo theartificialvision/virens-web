@@ -25,6 +25,14 @@ export const v2Hero = {
   alt: 'Línea de llenado y dosificado en marcha en la planta de Laboratorios Virens',
 } as const;
 
+/** Botón de menú de la cabecera: rótulo visible y nombre accesible. */
+export const v2Menu = {
+  open: 'Menú',
+  close: 'Cerrar',
+  openAria: 'Abrir menú',
+  closeAria: 'Cerrar menú',
+} as const;
+
 export const v2Services = [
   {
     id: 'private-label',

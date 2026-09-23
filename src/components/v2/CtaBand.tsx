@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/Button';
+import { Reveal } from '@/components/ui/Reveal';
 import { CircleIcon } from './GalenicIcon';
 import { v2Cta } from '@/content/v2-home';
 import { SectionTitle } from './SectionTitle';
@@ -12,13 +13,17 @@ export function CtaBand() {
           <CircleIcon name="chat" className="text-blue/70" />
           <div>
             <SectionTitle>{v2Cta.title}</SectionTitle>
-            <p className="mt-2 text-[length:var(--text-small)] text-gray-700">{v2Cta.lead}</p>
+            <Reveal delay={0.06}>
+              <p className="mt-2 text-[length:var(--text-small)] text-gray-700">{v2Cta.lead}</p>
+            </Reveal>
           </div>
         </div>
 
-        <Button href={v2Cta.href} variant="labs" className="self-start md:self-auto">
-          {v2Cta.button} <span aria-hidden>&rarr;</span>
-        </Button>
+        <Reveal delay={0.12} className="self-start md:self-auto">
+          <Button href={v2Cta.href} variant="labs">
+            {v2Cta.button} <span aria-hidden>&rarr;</span>
+          </Button>
+        </Reveal>
       </div>
     </section>
   );

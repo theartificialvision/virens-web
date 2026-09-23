@@ -2078,3 +2078,26 @@ navegador a 1440 px.
   pequeño no era encabezado) y el CTA (antes `p` a `--text-h3`).
 
 **Verificado**: `tsc --noEmit` limpio; home revisada en navegador a 1920 y 390 px.
+
+### 2026-09-23 (4) — Claude (Cowork) — Alineación, botón de menú y movimiento de la home
+
+- **Alineación**: `GalenicBlock` era una rejilla de dos columnas a sangre y,
+  desde 1440 px, su texto arrancaba 128 px más a la izquierda que el resto
+  (192 px frente a 320 px a 1920). Ahora el texto vive en el contenedor común
+  y la foto va a sangre en la mitad derecha. Medido a 1280/1440/1920: todas
+  las secciones empiezan en el mismo borde.
+- **Botón de menú**: rótulo «Menú» / «Cerrar» (desde `sm`) que se desliza en
+  vertical al conmutar, y glifo de dos trazos de distinta longitud alineados a
+  la derecha: se intercambian al pasar el ratón y se cruzan en X al abrir.
+  Textos en `v2Menu` (`v2-home.ts`).
+- **Movimiento**: en la carga solo se anima el hero (vídeo en fundido sobre el
+  azul y cascada de título → subtítulo → entradilla) y un fundido corto de la
+  cabecera. Al hacer scroll: todos los títulos entran con `Reveal` (dentro de
+  `SectionTitle`), el filete teal crece después del título (`accent`), la
+  foto de formas galénicas se asienta con un des-zoom lento, y entran también
+  la entradilla de capacidad y el CTA. Tokens `--v2-load-*`, `--v2-fade-time`,
+  `--v2-accent-time`, `--v2-media-*`; todo dentro de
+  `prefers-reduced-motion: no-preference`.
+
+**Verificado**: `tsc --noEmit` limpio; revisado en navegador a 390, 1440 y
+1920 px (reposo, hover y menú abierto; fotogramas de la carga).
