@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import { GalenicGlyph } from '@/components/ui/GalenicGlyph';
 
 /**
@@ -10,6 +11,6 @@ const ALIAS: Record<string, string> = {
   goteros: 'dropper', sticks: 'stick', sobres: 'sachet', blisters: 'blister',
 };
 
-export function FormIcon({ name, className }: { name: string; className?: string }) {
-  return <GalenicGlyph name={ALIAS[name] ?? name} className={className} />;
+export function FormIcon({ name, className, style }: { name: string; className?: string; style?: CSSProperties }) {
+  return <GalenicGlyph name={ALIAS[name] ?? name} className={className} style={style} />;
 }

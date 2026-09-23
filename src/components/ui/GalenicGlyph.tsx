@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import { cn } from '@/lib/utils';
 
 /**
@@ -37,7 +38,16 @@ export function resolveGalenicGlyph(name: string): GalenicGlyphName | null {
   return ALIAS[name] ?? null;
 }
 
-export function GalenicGlyph({ name, className }: { name: string; className?: string }) {
+export function GalenicGlyph({
+  name,
+  className,
+  style,
+}: {
+  name: string;
+  className?: string;
+  /** Se suma a la máscara (p. ej. un `clipPath` para rellenar el glifo). */
+  style?: CSSProperties;
+}) {
   const glyph = resolveGalenicGlyph(name);
   if (!glyph) return null;
 
@@ -46,7 +56,7 @@ export function GalenicGlyph({ name, className }: { name: string; className?: st
     <span
       aria-hidden
       className={cn('block bg-current', className)}
-      style={{ mask, WebkitMask: mask }}
+      style={{ ...style, mask, WebkitMask: mask }}
     />
   );
 }

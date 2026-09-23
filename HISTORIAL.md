@@ -2202,3 +2202,23 @@ navegador.
 **Verificado**: `tsc --noEmit` limpio; las seis rutas responden 200 con una
 cabecera, un pie, un `h1`, el logo 3D y sin errores de consola; barra de
 anclas de Labs revisada tras scroll.
+
+### 2026-09-23 (11) — Claude (Cowork) — Capacidad productiva que «carga»
+
+- `/virens-labs`, capacidad productiva: al entrar en pantalla, cada formato
+  se llena de teal de abajo arriba (copia del glifo con `clip-path`), su
+  cifra cuenta de 0 a su valor literal y un filete de 2 px crece hasta la
+  proporción real frente al mayor formato (cápsulas = 100 %, escala lineal:
+  es un dato). Al terminar, un barrido de luz recorre el filete
+  (`.capacity-sheen`). Las cifras de cabecera (+2.000 m², 9, 2) también
+  cuentan. Cascada de 90 ms por formato; curva ease-out quart, 2,2 s.
+- `useLoadProgress` (`src/lib/`): el HTML del servidor sale con el valor
+  final (buscadores, sin JS y lectores de pantalla ven las cifras reales),
+  `sr-only` con el literal y el conteo `aria-hidden`; con
+  `prefers-reduced-motion` no anima (comprobación en JS, regla 8).
+- `GalenicGlyph` / `FormIcon` aceptan `style` (se suma a la máscara).
+- Las cifras siguen siendo las no verificadas de la web actual (unidad y
+  periodo pendientes, `capacityUnitNote`): la animación no las cambia.
+
+**Verificado**: `tsc --noEmit` limpio; fotogramas de la animación revisados
+a 1440 px (0,35 / 0,8 / 1,4 / 3,2 s).

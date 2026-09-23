@@ -681,6 +681,23 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   --v2-menu-h: 1rem;      /* 16 */
 }
 
+/* Barrido de luz del filete de capacidad (`CapacityMeter`): una sola pasada
+   cuando el filete termina de crecer. Blanco translúcido sobre el teal, sin
+   cambiar el color de marca. */
+.capacity-sheen {
+  background: linear-gradient(90deg, transparent 0%, rgb(255 255 255 / 0.85) 50%, transparent 100%);
+  background-size: 40% 100%;
+  background-repeat: no-repeat;
+  background-position: -40% 0;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .capacity-sheen { animation: capacity-sheen 1100ms var(--motion-ease) 120ms both; }
+}
+@keyframes capacity-sheen {
+  from { background-position: -40% 0; }
+  to   { background-position: 140% 0; }
+}
+
 @keyframes v2-load {
   from { opacity: 0; transform: translateY(var(--v2-load-rise)); }
   to   { opacity: 1; transform: none; }
