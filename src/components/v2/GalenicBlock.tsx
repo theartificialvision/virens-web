@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { Reveal } from '@/components/ui/Reveal';
 import { GalenicIcon } from './GalenicIcon';
 import { v2Galenic } from '@/content/v2-home';
+import { SectionTitle } from './SectionTitle';
 
 /**
  * Mitad teal + mitad fotografía (§ maqueta, bloque 03).
@@ -15,9 +16,7 @@ export function GalenicBlock() {
       <div className="grid lg:grid-cols-2">
         <div className="relative order-1 flex items-center lg:order-none">
           <div className="mx-auto w-full max-w-[46rem] px-5 py-[var(--v2-section)] md:px-8 lg:pl-12 lg:pr-16 2xl:pl-20">
-            <h2 className="text-[length:var(--text-h2)] font-medium leading-tight tracking-[-0.015em]">
-              {v2Galenic.title}
-            </h2>
+            <SectionTitle>{v2Galenic.title}</SectionTitle>
             <p className="mt-6 max-w-[var(--measure-max)] text-[length:var(--text-small)] leading-[1.85]">
               {v2Galenic.lead}
             </p>

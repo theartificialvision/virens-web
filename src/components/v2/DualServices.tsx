@@ -1,6 +1,7 @@
 import { Reveal } from '@/components/ui/Reveal';
 import { CircleIcon } from './GalenicIcon';
 import { v2Services } from '@/content/v2-home';
+import { SectionTitle } from './SectionTitle';
 
 /**
  * Dos columnas separadas por un filete vertical (§ maqueta, bloque 02).
@@ -20,9 +21,7 @@ export function DualServices() {
               <div className="flex flex-col gap-7 sm:flex-row sm:gap-9">
                 <CircleIcon name={s.icon} variant="solid" />
                 <div className="max-w-[var(--measure-narrow)]">
-                  <h2 className="text-[length:var(--text-h3)] font-medium leading-tight tracking-[-0.01em]">
-                    {s.title}
-                  </h2>
+                  <SectionTitle>{s.title}</SectionTitle>
                   <p className="mt-5 text-[length:var(--text-small)] leading-[1.85] text-gray-700">{s.body}</p>
                 </div>
               </div>

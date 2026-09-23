@@ -1,4 +1,5 @@
 import { v2Areas } from '@/content/v2-home';
+import { SectionTitle } from './SectionTitle';
 
 /**
  * Áreas terapéuticas (§ maqueta, bloque 05): una sola línea tipográfica de
@@ -19,7 +20,7 @@ export function AreasMarquee() {
     <section id="areas-terapeuticas" className="overflow-hidden bg-blue py-[var(--v2-section-tight)] text-white">
       <div className="mx-auto w-full max-w-[var(--container-max)] px-5 md:px-8 lg:px-12 2xl:px-20">
         <span aria-hidden className="block h-[3px] w-14 bg-labs" />
-        <p className="mt-5 text-[length:var(--text-small)] font-medium">{v2Areas.label}</p>
+        <SectionTitle className="mt-6">{v2Areas.label}</SectionTitle>
       </div>
 
       <div className="mt-10 flex w-full overflow-hidden">

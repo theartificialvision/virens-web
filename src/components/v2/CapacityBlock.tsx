@@ -1,5 +1,6 @@
 import { Reveal } from '@/components/ui/Reveal';
 import { v2Capacity } from '@/content/v2-home';
+import { SectionTitle } from './SectionTitle';
 
 /**
  * Capacidad productiva (§ maqueta, bloque 04): titular y párrafo a la
@@ -17,9 +18,7 @@ export function CapacityBlock() {
         <div className="grid gap-14 lg:grid-cols-12 lg:gap-12">
           <div className="lg:col-span-4">
             <span aria-hidden className="block h-[3px] w-14 bg-labs" />
-            <h2 className="mt-6 text-[length:var(--text-h2)] font-medium leading-tight tracking-[-0.015em]">
-              {v2Capacity.title}
-            </h2>
+            <SectionTitle className="mt-6">{v2Capacity.title}</SectionTitle>
             <p className="mt-6 max-w-[var(--measure-narrow)] text-[length:var(--text-small)] leading-[1.85] text-gray-700">
               {v2Capacity.lead}
             </p>

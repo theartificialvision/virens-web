@@ -2068,3 +2068,13 @@ navegador a 1440 px.
 - Capacidad productiva no se toca.
 
 **Verificado**: `tsc --noEmit` limpio; revisado en navegador a 1920 y 390 px.
+
+### 2026-09-23 (3) — Claude (Cowork) — Un solo estilo para los títulos de sección de la home
+
+- Componente nuevo `SectionTitle` (`src/components/v2/`): `h2` a
+  `--text-h2`, peso medio. Lo usan todos los bloques de la home: Private
+  Label / Full service (antes a `--text-h3`), Formas galénicas, Capacidad
+  productiva, Áreas terapéuticas (antes un `p` a `--text-small`: además de
+  pequeño no era encabezado) y el CTA (antes `p` a `--text-h3`).
+
+**Verificado**: `tsc --noEmit` limpio; home revisada en navegador a 1920 y 390 px.

@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/Button';
 import { CircleIcon } from './GalenicIcon';
 import { v2Cta } from '@/content/v2-home';
+import { SectionTitle } from './SectionTitle';
 
 /** Cierre de página (§ maqueta, bloque 07): icono, dos líneas y un botón. */
 export function CtaBand() {
@@ -10,7 +11,7 @@ export function CtaBand() {
         <div className="flex items-center gap-7">
           <CircleIcon name="chat" className="text-blue/70" />
           <div>
-            <p className="text-[length:var(--text-h3)] font-medium leading-tight tracking-[-0.01em]">{v2Cta.title}</p>
+            <SectionTitle>{v2Cta.title}</SectionTitle>
             <p className="mt-2 text-[length:var(--text-small)] text-gray-700">{v2Cta.lead}</p>
           </div>
         </div>
