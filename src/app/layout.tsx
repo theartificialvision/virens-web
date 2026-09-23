@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
-import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
+import { V2Header } from '@/components/v2/V2Header';
+import { V2Footer } from '@/components/v2/V2Footer';
 import { Grain } from '@/components/ui/Grain';
-import { ChromeGate } from '@/components/layout/ChromeGate';
 import { isIndexable, site } from '@/config/site';
 import './globals.css';
 
@@ -40,14 +39,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Saltar al contenido
         </a>
-        <ChromeGate>
-          <Header />
-        </ChromeGate>
+        {/* 23/09/2026: una sola cabecera y un solo pie para toda la web —los de
+            la home V2, con el isotipo 3D y el menú 3D—. Antes las páginas
+            interiores seguían con los de V1 (sin logo, trigger de vidrio). */}
+        <V2Header />
         <main id="contenido">{children}</main>
-        <ChromeGate>
-          <Footer />
-          <Grain />
-        </ChromeGate>
+        <V2Footer />
+        <Grain />
         <OrganizationSchema />
       </body>
     </html>

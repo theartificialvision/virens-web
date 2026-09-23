@@ -56,27 +56,6 @@ export interface TimelineEntry {
 /** Modelo del isotipo 3D: A es azul->magenta (Tech), B azul->turquesa (Labs). */
 export type LogoKey = 'A' | 'B';
 
-/** Una mitad del hero de Home (`DivisionSplit`). */
-export interface DivisionHalfData {
-  id: Division;
-  href: string;
-  name: string;
-  claim: string;
-  image: { src: string; alt: string };
-  /** Modelo 3D del isotipo que se renderiza en vivo. */
-  logoKey: LogoKey;
-  /** PNG original del cliente: póster del 3D y alternativa sin WebGL. */
-  molecule: string;
-  cta: string;
-}
-
-/** Lo que se despliega bajo los botones al activar una división. */
-export interface DivisionInfoData {
-  lead: string;
-  servicesLabel: string;
-  services: readonly string[];
-}
-
 /** Un dato de contacto de la columna izquierda: dirección, teléfono o GPS.
  *  `href` solo lo llevan los que son accionables (el teléfono). */
 export interface ContactDetail {

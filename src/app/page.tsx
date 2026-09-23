@@ -1,6 +1,4 @@
 import type { Metadata } from 'next';
-import { V2Header } from '@/components/v2/V2Header';
-import { V2Footer } from '@/components/v2/V2Footer';
 import { Hero } from '@/components/v2/Hero';
 import { DualServices } from '@/components/v2/DualServices';
 import { GalenicBlock } from '@/components/v2/GalenicBlock';
@@ -17,10 +15,8 @@ export const metadata: Metadata = {
 
 /**
  * HOME V2 — reconstrucción de la maqueta del cliente (22/09/2026),
- * promovida a la raíz el 2026-09-22: la V1 queda solo en las páginas
- * interiores (/virens-labs, /virens-tech, /compania, /noticias, /contacto),
- * que el pie enlaza. La cabecera/pie del sistema V1 se apagan en esta ruta
- * desde `ChromeGate`, en el layout raíz: aquí se montan los propios.
+ * promovida a la raíz el 2026-09-22. Cabecera y pie viven en el layout raíz
+ * y son los mismos en todas las páginas desde el 23/09/2026.
  *
  * Orden de bloques y ritmo de fondos, tal cual la maqueta:
  *   01 hero (foto/vídeo a sangre, velo azul)
@@ -35,7 +31,6 @@ export const metadata: Metadata = {
 export default function HomePage() {
   return (
     <div className="v2-root">
-      <V2Header />
       <div className="v2-page">
         <Hero />
         <DualServices />
@@ -45,7 +40,6 @@ export default function HomePage() {
         <CertStrip />
         <CtaBand />
       </div>
-      <V2Footer />
     </div>
   );
 }

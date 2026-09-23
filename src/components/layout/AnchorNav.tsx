@@ -53,10 +53,10 @@ export function AnchorNav({ items, division }: { items: NavItem[]; division: Div
     <nav
       data-header-tone="dark"
       aria-label="Secciones de esta página"
-      // `top-0`: antes se pegaba a 64/80 px del borde, un hueco heredado de cuando
-      // la cabecera era una franja. Hoy el header es un boton flotante, asi que ese
-      // hueco solo dejaba ver el contenido pasando por encima de la barra.
-      className="glass sticky top-0 z-40 [--glass-blur:22px] [--glass-body:color-mix(in_srgb,var(--color-ink)_82%,transparent)]"
+      // 23/09/2026: vuelve a pegarse bajo la cabecera. Toda la web usa ya la
+      // barra blanca sticky de la V2 (antes aquí flotaba solo un botón y la
+      // barra podía ir a `top-0`); en `top-0` quedaría escondida debajo.
+      className="glass sticky top-[var(--v2-header)] z-40 [--glass-blur:22px] [--glass-body:color-mix(in_srgb,var(--color-ink)_82%,transparent)]"
     >
       <div className="mx-auto max-w-[var(--container-max)] px-5 md:px-6 lg:px-12 2xl:px-20">
         <ul ref={list} className="flex h-14 items-stretch gap-8 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">

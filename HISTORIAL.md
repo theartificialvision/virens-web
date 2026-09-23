@@ -2179,3 +2179,26 @@ navegador.
 
 **Verificado**: `tsc --noEmit` limpio; reposo, hover y abierto con WebGL en
 navegador.
+
+### 2026-09-23 (10) — Claude (Cowork) — Una sola cabecera y un solo pie; fuera el código de V1 sin uso
+
+- **Mismo logo en todas las páginas**: `V2Header` y `V2Footer` pasan al
+  layout raíz. Hasta hoy solo la home los tenía; `/virens-labs`,
+  `/virens-tech`, `/compania`, `/noticias` y `/contacto` seguían con la
+  cabecera V1 (sin logo, trigger de vidrio flotante y FAB en móvil) y el pie
+  V1. Fuera `ChromeGate`, que era lo que alternaba entre las dos.
+- `AnchorNav` se pega bajo la cabecera (`top-[var(--v2-header)]`) y
+  `--anchor-offset` suma la cabecera, para que los saltos de ancla no queden
+  tapados.
+- **Borrado, sin uso tras el cambio o desde antes** (sigue en el historial
+  de git): `layout/Header`, `layout/Footer`, `layout/ChromeGate`, la home V1
+  (`DivisionSplit`, `DivisionActions`, `DivisionBackdrops`, `DivisionMarks`,
+  `content/home.ts` y sus tipos), `ui/Magnetic`, `lib/useHeaderSurface`,
+  `lib/usePointer`; en globals.css las 68 reglas `.home-*` con sus 19
+  tokens y `--text-display-compact`; y 9 imágenes que ya nada carga (escenas
+  y póster de la home V1, heros `-mj`, sprites 3D y los PNG de isotipo que
+  sustituyó el 3D).
+
+**Verificado**: `tsc --noEmit` limpio; las seis rutas responden 200 con una
+cabecera, un pie, un `h1`, el logo 3D y sin errores de consola; barra de
+anclas de Labs revisada tras scroll.
