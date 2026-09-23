@@ -2119,3 +2119,12 @@ navegador a 1440 px.
 
 **Verificado**: `tsc --noEmit` limpio; cabecera y pie en navegador a 390 y
 1440 px, con fotogramas del relevo (0,2 → 6,5 s).
+
+### 2026-09-23 (6) — Claude (Cowork) — Icono de Full service
+
+- El apretón de manos de `CircleIcon` (bloque 02) no se leía a 37 px. Pasa a
+  una caja de envío en isométrica con precinto (clave `box`, antes
+  `handshake`): «producto final listo para el mercado», y hace pareja con el
+  matraz de Private Label — un objeto, mismo trazo. Private Label no cambia.
+
+**Verificado**: `tsc --noEmit` limpio; bloque revisado en navegador a 1440 px.

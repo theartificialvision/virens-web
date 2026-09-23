@@ -42,7 +42,7 @@ export const v2Services = [
   },
   {
     id: 'full-service',
-    icon: 'handshake',
+    icon: 'box',
     title: 'Full service',
     body: 'Virens ofrece un servicio integral. Desde el desarrollo del producto a su entrega como producto final para su puesta en el mercado; interviniendo en fabricaciones parciales; entregando “fabricaciones a granel”; o ofreciendo servicio de acondicionamiento parcial o completo.',
   },

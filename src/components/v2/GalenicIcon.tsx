@@ -27,7 +27,7 @@ export function CircleIcon({
   variant = 'outline',
   className,
 }: {
-  name: 'flask' | 'handshake' | 'chat';
+  name: 'flask' | 'box' | 'chat';
   variant?: 'solid' | 'outline';
   className?: string;
 }) {
@@ -39,12 +39,16 @@ export function CircleIcon({
         <path d="M17.2 27h13.6" />
       </>
     ),
-    handshake: (
+    // Full service (23/09/2026): caja de envío en isométrica con el precinto.
+    // Sustituye al apretón de manos, que a 37 px no se leía. Dice «producto
+    // final listo para el mercado», que es lo que ofrece el servicio, y hace
+    // pareja con el matraz de Private Label: un objeto, mismo trazo.
+    box: (
       <>
-        <path d="M6 18.5l7-4 8.5 4.5" />
-        <path d="M42 18.5l-7-4-8 4.5-3.5 2a2.6 2.6 0 003 4.2l3.2-2.2" />
-        <path d="M29.7 23l5.6 4.7M26 26.6l4.8 4M22.4 30.4l4 3.4" />
-        <path d="M13 14.5v13.8l7.5 5.6" />
+        <path d="M24 6.5l15 7.5v19.5L24 41 9 33.5V14z" />
+        <path d="M9 14l15 7.5L39 14" />
+        <path d="M24 21.5V41" />
+        <path d="M16.5 10.25l15 7.5v6.5" />
       </>
     ),
     chat: (
