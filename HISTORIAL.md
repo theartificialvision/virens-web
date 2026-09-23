@@ -2159,3 +2159,23 @@ navegador a 1440 px.
 
 **Verificado**: `tsc --noEmit` limpio; reposo, hover y abierto revisados en
 navegador.
+
+### 2026-09-23 (9) — Claude (Cowork) — Icono de menú 3D del cliente
+
+- Sustituye al glifo molecular en CSS de (8) por el diseño que el cliente hizo
+  en Claude Design (`WEB VIRENS/logo menu/export`): dos enlaces con nodos
+  esféricos en three.js real (material con clearcoat, degradado de marca por
+  vértice, estudio de reflejos, sombra de contacto), giro de una vuelta cada
+  16 s y las mismas tres poses (reposo, hover, abierto en X).
+- Integración: motor portado a TypeScript estricto sin cambios de
+  comportamiento (`src/lib/virensMenu3d.ts`), cargado con `import()`
+  diferido; `MenuGlyph3D` pinta un póster SVG con la pose vigente mientras
+  llega o si no hay WebGL. El botón sigue siendo el de `V2Header` (ref, ARIA,
+  panel `MenuOverlay`, rótulo «Menú/Cerrar» de `v2Menu`); el estado de hover
+  sale de puntero de ratón o foco de teclado. El rótulo ya no se pone teal en
+  hover: en el diseño cambia el enlace, no el texto.
+- Fuera `.v2-menu` / `.v2-bond` / `.v2-node` y los tokens `--v2-node` /
+  `--v2-bond`. `three` ya era dependencia: no se instala nada.
+
+**Verificado**: `tsc --noEmit` limpio; reposo, hover y abierto con WebGL en
+navegador.

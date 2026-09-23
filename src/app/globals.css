@@ -1110,64 +1110,11 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   .reveal .v2-media { transition: transform var(--v2-media-time) var(--motion-ease); }
   .reveal[data-visible='false'] .v2-media { transform: scale(var(--v2-media-zoom)); }
 }
-/* Glifo de menú molecular (`V2Header`, 23/09/2026): nodos esféricos como los
-   del isotipo 3D — degradado azul → teal de su rampa y un brillo arriba a la
-   izquierda. Son círculos, la única excepción de radio que ya admite el
-   sistema (regla 4). */
+/* Caja del icono 3D del menú (`MenuGlyph3D`): el motor dibuja con 8 px de
+   sangrado alrededor para la sombra y el giro, fuera de esta caja. */
 @theme {
-  --v2-menu-w: 1.875rem;  /* 30 — largo del enlace completo */
-  --v2-menu-h: 1rem;      /* 16 — distancia entre los dos enlaces + nodos */
-  --v2-node:   0.4375rem; /* 7  — diámetro del nodo */
-  --v2-bond:   2px;       /* grueso del enlace */
-}
-/* Caja del glifo: el margen lateral deja sitio a medio nodo por fuera. */
-.v2-menu {
-  position: relative;
-  display: block;
-  width: var(--v2-menu-w);
-  height: var(--v2-menu-h);
-  margin-inline: calc(var(--v2-node) / 2);
-}
-/* Enlace: barra alineada a la derecha, centrada en la fila de su nodo. */
-.v2-bond {
-  position: absolute;
-  right: 0;
-  height: var(--v2-bond);
-  background: currentColor;
-  transition: transform 560ms var(--motion-ease), width 560ms var(--motion-ease);
-}
-.v2-bond[data-bond='top']    { top: calc(var(--v2-node) / 2 - var(--v2-bond) / 2); width: 100%; }
-.v2-bond[data-bond='bottom'] { bottom: calc(var(--v2-node) / 2 - var(--v2-bond) / 2); width: 58%; }
-@media (hover: hover) and (pointer: fine) {
-  .group:hover .v2-menu[data-open='false'] .v2-bond[data-bond='top']    { width: 58%; }
-  .group:hover .v2-menu[data-open='false'] .v2-bond[data-bond='bottom'] { width: 100%; }
-}
-/* Abierto: los dos enlaces a lo largo completo, al centro y cruzados. */
-.v2-menu[data-open='true'] .v2-bond { width: 100%; }
-.v2-menu[data-open='true'] .v2-bond[data-bond='top'] {
-  transform: translateY(calc(var(--v2-menu-h) / 2 - var(--v2-node) / 2)) rotate(32deg);
-}
-.v2-menu[data-open='true'] .v2-bond[data-bond='bottom'] {
-  transform: translateY(calc(var(--v2-node) / 2 - var(--v2-menu-h) / 2)) rotate(-32deg);
-}
-.v2-node {
-  position: absolute;
-  top: 50%;
-  width: var(--v2-node);
-  height: var(--v2-node);
-  margin-top: calc(var(--v2-node) / -2);
-  border-radius: 999px;
-  background: radial-gradient(circle at 34% 30%,
-    rgb(255 255 255 / 0.95) 0 12%,
-    var(--color-labs-glow) 30%,
-    var(--color-labs) 56%,
-    var(--color-blue) 100%);
-  transition: transform 560ms var(--motion-ease);
-}
-.v2-node[data-end='start'] { left: calc(var(--v2-node) / -2); }
-.v2-node[data-end='end']   { right: calc(var(--v2-node) / -2); }
-@media (hover: hover) and (pointer: fine) {
-  .group:hover .v2-node { transform: scale(1.18); }
+  --v2-menu-w: 1.875rem;  /* 30 */
+  --v2-menu-h: 1rem;      /* 16 */
 }
 
 @keyframes v2-load {

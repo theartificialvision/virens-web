@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { MenuOverlay } from '@/components/layout/MenuOverlay';
 import { Logo } from './Logo';
+import { MenuGlyph3D } from './MenuGlyph3D';
 import { v2Menu } from '@/content/v2-home';
 
 /**
@@ -19,6 +20,8 @@ import { v2Menu } from '@/content/v2-home';
 export function V2Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  // Hover/foco de teclado del botón: el icono 3D tiene su propia pose de hover.
+  const [hot, setHot] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => setOpen(false), [pathname]);
@@ -42,10 +45,14 @@ export function V2Header() {
             aria-expanded={open}
             aria-controls="menu-overlay"
             aria-label={open ? v2Menu.closeAria : v2Menu.openAria}
-            className="group -mr-3 flex h-11 items-center gap-4 rounded-full px-3 text-blue transition-colors duration-[var(--motion-control)] hover:text-labs focus-visible:text-labs"
+            onPointerEnter={(e) => e.pointerType === 'mouse' && setHot(true)}
+            onPointerLeave={() => setHot(false)}
+            onFocus={(e) => e.currentTarget.matches(':focus-visible') && setHot(true)}
+            onBlur={() => setHot(false)}
+            className="-mr-3 flex h-11 items-center gap-3 rounded-full px-3 text-blue"
           >
             <MenuLabel open={open} />
-            <MenuGlyph open={open} />
+            <MenuGlyph3D open={open} hot={hot} />
           </button>
         </div>
       </header>
@@ -72,33 +79,6 @@ function MenuLabel({ open }: { open: boolean }) {
     >
       <span className={cn(word, open ? '-translate-y-full' : 'translate-y-0')}>{v2Menu.open}</span>
       <span className={cn(word, open ? 'translate-y-0' : 'translate-y-full')}>{v2Menu.close}</span>
-    </span>
-  );
-}
-
-/**
- * Glifo de menú molecular (23/09/2026), sacado del isotipo 3D: en vez de dos
- * rayas, dos enlaces con un nodo esférico en cada extremo — el mismo lenguaje
- * de bolas y barras del logo, con el degradado azul → teal de sus nodos y un
- * brillo arriba a la izquierda que les da volumen (`.v2-node`, globals.css).
- *
- * Mismo comportamiento que el glifo anterior: los enlaces son de distinta
- * longitud y alineados a la derecha; al pasar el ratón se estiran/encogen como
- * la molécula al abrirse y cerrarse, y los nodos crecen un punto; al abrir, los
- * dos enlaces se igualan y se cruzan en una X con los cuatro nodos en las
- * puntas. Los nodos van dentro de cada enlace, así que lo siguen solos.
- */
-function MenuGlyph({ open }: { open: boolean }) {
-  const nodes = (
-    <>
-      <span className="v2-node" data-end="start" />
-      <span className="v2-node" data-end="end" />
-    </>
-  );
-  return (
-    <span className="v2-menu" data-open={open} aria-hidden>
-      <span className="v2-bond" data-bond="top">{nodes}</span>
-      <span className="v2-bond" data-bond="bottom">{nodes}</span>
     </span>
   );
 }
