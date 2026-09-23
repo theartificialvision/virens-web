@@ -2144,3 +2144,18 @@ navegador a 1440 px.
 
 **Verificado**: `tsc --noEmit` limpio; franja revisada a 390, 1024, 1440 y
 1920 px.
+
+### 2026-09-23 (8) — Claude (Cowork) — Glifo de menú molecular
+
+- El icono del botón de menú toma el lenguaje del isotipo 3D: dos enlaces
+  con un nodo esférico en cada extremo (`.v2-menu`, `.v2-bond`, `.v2-node`
+  en globals.css). Los nodos llevan el degradado azul → teal de la rampa del
+  logo con brillo arriba a la izquierda.
+- Mismo comportamiento que antes: al pasar el ratón los enlaces intercambian
+  longitud y los nodos crecen un 18 %; al abrir, se cruzan en X con los
+  cuatro nodos en las puntas. Tokens `--v2-menu-w/-h`, `--v2-node`,
+  `--v2-bond`. La geometría vive en CSS (no en utilidades arbitrarias de
+  Tailwind) para que el `translate` de abierto no compita con el de reposo.
+
+**Verificado**: `tsc --noEmit` limpio; reposo, hover y abierto revisados en
+navegador.

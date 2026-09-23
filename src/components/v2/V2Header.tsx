@@ -77,31 +77,28 @@ function MenuLabel({ open }: { open: boolean }) {
 }
 
 /**
- * Dos trazos de distinta longitud alineados a la derecha (23/09/2026): más
- * editorial que las tres rayas iguales. Al pasar el ratón se intercambian las
- * longitudes; al abrir, los dos se igualan y se cruzan en una X.
+ * Glifo de menú molecular (23/09/2026), sacado del isotipo 3D: en vez de dos
+ * rayas, dos enlaces con un nodo esférico en cada extremo — el mismo lenguaje
+ * de bolas y barras del logo, con el degradado azul → teal de sus nodos y un
+ * brillo arriba a la izquierda que les da volumen (`.v2-node`, globals.css).
+ *
+ * Mismo comportamiento que el glifo anterior: los enlaces son de distinta
+ * longitud y alineados a la derecha; al pasar el ratón se estiran/encogen como
+ * la molécula al abrirse y cerrarse, y los nodos crecen un punto; al abrir, los
+ * dos enlaces se igualan y se cruzan en una X con los cuatro nodos en las
+ * puntas. Los nodos van dentro de cada enlace, así que lo siguen solos.
  */
 function MenuGlyph({ open }: { open: boolean }) {
-  const bar = cn(
-    'absolute right-0 block h-[2px] bg-current',
-    'transition-[transform,width] duration-[520ms] ease-[var(--motion-ease)]',
+  const nodes = (
+    <>
+      <span className="v2-node" data-end="start" />
+      <span className="v2-node" data-end="end" />
+    </>
   );
   return (
-    <span className="relative block h-[12px] w-[30px]" aria-hidden>
-      <span
-        className={cn(
-          bar,
-          'top-0',
-          open ? 'w-full translate-y-[5px] rotate-45' : 'w-full group-hover:w-[60%]',
-        )}
-      />
-      <span
-        className={cn(
-          bar,
-          'bottom-0',
-          open ? 'w-full -translate-y-[5px] -rotate-45' : 'w-[60%] group-hover:w-full',
-        )}
-      />
+    <span className="v2-menu" data-open={open} aria-hidden>
+      <span className="v2-bond" data-bond="top">{nodes}</span>
+      <span className="v2-bond" data-bond="bottom">{nodes}</span>
     </span>
   );
 }
