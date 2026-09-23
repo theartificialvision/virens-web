@@ -107,24 +107,27 @@ export interface V2Cert {
   name: string;
   issuer?: string;
   status: SourceStatus;
+  /** Ancho / alto del sello en `/img/v2/sellos/{id}.svg`: la franja lo usa
+   *  para dar a todos la misma superficie, no la misma altura. */
+  ratio: number;
 }
 
 /**
- * Certificaciones de la maqueta. Se renderizan como marcas tipográficas:
- * los sellos oficiales (FDA, SGS, Organic, Iraq, EAU) son marcas de terceros
- * y tienen que llegar del cliente en vectorial — no se dibujan aquí.
- * `unverified` no se muestra por defecto (regla 3 del proyecto).
+ * Certificaciones de la maqueta. Desde el 23/09/2026 se pintan con los sellos
+ * oficiales que entregó el cliente en PNG (`WEB VIRENS/png iso a svg`),
+ * vectorizados a `/img/v2/sellos/{id}.svg`. `name` queda como nombre
+ * accesible del sello. `unverified` no se muestra por defecto (regla 3).
  */
 export const v2Certifications: V2Cert[] = [
-  { id: 'iso22000', name: 'ISO 22000', issuer: 'SGS', status: 'image-only' },
-  { id: 'gmp', name: 'GMP', issuer: 'SGS', status: 'image-only' },
-  { id: 'haccp', name: 'HACCP', issuer: 'SGS', status: 'image-only' },
-  { id: 'eu', name: 'European Manufactured', status: 'image-only' },
-  { id: 'organic', name: 'Organic Certified', status: 'image-only' },
-  { id: 'vet', name: 'Veterinary Products', status: 'image-only' },
-  { id: 'iraq', name: 'Republic of Iraq', issuer: 'Manufacturing Site Registration', status: 'image-only' },
-  { id: 'uae', name: 'United Arab Emirates', issuer: 'Manufacturing Site Registration', status: 'image-only' },
-  { id: 'fda', name: 'FDA Approved', status: 'unverified' },
+  { id: 'iso22000', name: 'ISO 22000', issuer: 'SGS', status: 'image-only', ratio: 1.027 },
+  { id: 'gmp', name: 'GMP', issuer: 'SGS', status: 'image-only', ratio: 1.027 },
+  { id: 'haccp', name: 'HACCP', issuer: 'SGS', status: 'image-only', ratio: 1.025 },
+  { id: 'eu', name: 'European Manufactured', status: 'image-only', ratio: 0.955 },
+  { id: 'organic', name: 'Organic Certified', status: 'image-only', ratio: 1.295 },
+  { id: 'vet', name: 'Veterinary Products', status: 'image-only', ratio: 0.767 },
+  { id: 'iraq', name: 'Republic of Iraq', issuer: 'Manufacturing Site Registration', status: 'image-only', ratio: 1.338 },
+  { id: 'uae', name: 'United Arab Emirates', issuer: 'Manufacturing Site Registration', status: 'image-only', ratio: 2.911 },
+  { id: 'fda', name: 'FDA Approved', status: 'unverified', ratio: 1.636 },
 ];
 
 export const v2Cta = {

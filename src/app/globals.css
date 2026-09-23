@@ -1056,7 +1056,7 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   --v2-galenic-icon:  clamp(4rem, 2.8rem + 2.4vw, 5.5rem);      /* 64 -> 88, home */
   --galenic-form-icon: clamp(4rem, 2.5rem + 3vw, 6rem);         /* 64 -> 96, /virens-labs */
   --v2-block-icon:    4.5rem;   /* 72 — círculo de Private Label / Full service */
-  --v2-seal:          3.5rem;   /* 56 — hueco del sello de certificación */
+  --v2-seal:          clamp(4.5rem, 3rem + 2.6vw, 6.5rem);   /* 72 -> 104 — lado del cuadrado de superficie de cada sello */
 
   /* Altura de la banda de siluetas: todas comparten caja y se alinean por la
      base, así que la escala relativa entre envases es la del original. */

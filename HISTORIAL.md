@@ -2128,3 +2128,19 @@ navegador a 1440 px.
   matraz de Private Label — un objeto, mismo trazo. Private Label no cambia.
 
 **Verificado**: `tsc --noEmit` limpio; bloque revisado en navegador a 1440 px.
+
+### 2026-09-23 (7) — Claude (Cowork) — Sellos de certificación oficiales
+
+- Los 9 PNG del cliente (`WEB VIRENS/png iso a svg`) vectorizados a
+  `public/img/v2/sellos/{id}.svg` (trazado a 4× sobre el recorte, mismo
+  dibujo que el original, incluido el árabe del sello de Emiratos).
+- `CertStrip` deja las marcas tipográficas y pinta los sellos como máscara
+  sobre `bg-current` (azul de marca). El nombre pasa a `aria-label` porque el
+  sello ya lo lleva dibujado.
+- Tamaño por superficie: cada sello ocupa el área de un cuadrado de
+  `--v2-seal` (ahora `clamp` 72 → 104 px) según su `ratio` (nuevo campo en
+  `V2Cert`), para que el de Emiratos (≈3:1) no se coma la fila.
+- FDA: vectorizado pero sigue oculto (`unverified`, regla 3).
+
+**Verificado**: `tsc --noEmit` limpio; franja revisada a 390, 1024, 1440 y
+1920 px.
