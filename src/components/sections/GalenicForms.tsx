@@ -46,7 +46,7 @@ export function GalenicForms({
               {forms.map((f, i) => (
                 <li key={f.id}>
                   <Reveal delay={(i % 5) * 0.04} className="flex flex-col items-start gap-4">
-                    <FormIcon name={f.id} className="size-10 md:size-12" />
+                    <FormIcon name={f.id} className="size-[var(--galenic-form-icon)]" />
                     <span className="text-[length:var(--text-small)] font-semibold leading-snug">{f.label}</span>
                   </Reveal>
                 </li>

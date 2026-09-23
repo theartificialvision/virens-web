@@ -1046,7 +1046,9 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   --v2-hero-sub:      clamp(1.125rem, 0.95rem + 0.7vw, 1.5rem);   /* 18 -> 24 */
   --v2-hero-pad:      clamp(3rem, 1.5rem + 4vw, 5.5rem);          /* aire inferior del hero */
 
-  --v2-galenic-icon:  3.5rem;   /* 56 — círculo de la rejilla de formas */
+  /* Iconos de formas galénicas, sin círculo (23/09/2026): el glifo manda. */
+  --v2-galenic-icon:  clamp(4rem, 2.8rem + 2.4vw, 5.5rem);      /* 64 -> 88, home */
+  --galenic-form-icon: clamp(4rem, 2.5rem + 3vw, 6rem);         /* 64 -> 96, /virens-labs */
   --v2-block-icon:    4.5rem;   /* 72 — círculo de Private Label / Full service */
   --v2-seal:          3.5rem;   /* 56 — hueco del sello de certificación */
 

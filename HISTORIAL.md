@@ -2057,3 +2057,14 @@ la mala — la buena es `web-v2/`, rama `v2`. No pushear desde `web/`.
 
 **Verificado**: `tsc --noEmit` limpio; `/` y `/virens-labs` revisadas en
 navegador a 1440 px.
+
+### 2026-09-23 (2) — Claude (Cowork) — Iconos de formas galénicas más grandes, sin círculo
+
+- Home, bloque 03: fuera el círculo que envolvía cada icono (decisión del
+  cliente). `--v2-galenic-icon` pasa de 56 px fijos a `clamp` 64 → 88 px y
+  ahora mide el glifo, no el círculo.
+- `/virens-labs`, formas galénicas: token nuevo `--galenic-form-icon`
+  (`clamp` 64 → 96 px) en lugar de `size-10 md:size-12` (40–48 px).
+- Capacidad productiva no se toca.
+
+**Verificado**: `tsc --noEmit` limpio; revisado en navegador a 1920 y 390 px.

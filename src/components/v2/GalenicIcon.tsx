@@ -2,23 +2,18 @@ import { cn } from '@/lib/utils';
 import { GalenicGlyph } from '@/components/ui/GalenicGlyph';
 
 /**
- * Iconografía del bloque "Formas galénicas": glifo dentro de un círculo, como
- * en la maqueta. Desde el 23/09/2026 el glifo es el definitivo del cliente
- * (`GalenicGlyph`, mismo juego que la página de Virens Labs) — incluidos los
+ * Iconografía del bloque "Formas galénicas": glifo definitivo del cliente
+ * (`GalenicGlyph`, mismo juego que la página de Virens Labs), incluidos los
  * dos de acondicionamiento que V1 no tenía: encapsulado automático y envasado
- * en frasco. El SVG ya trae su propio margen, por eso ocupa más del círculo
- * que el trazo provisional (58 %).
+ * en frasco. Sin círculo desde el 23/09/2026 (decisión del cliente): el
+ * contorno restaba tamaño al dibujo, que es lo que tiene que leerse.
  */
 export function GalenicIcon({ name, className }: { name: string; className?: string }) {
   return (
-    <span
-      className={cn(
-        'flex size-[var(--v2-galenic-icon)] shrink-0 items-center justify-center rounded-full border border-current',
-        className,
-      )}
-    >
-      <GalenicGlyph name={name} className="size-[68%]" />
-    </span>
+    <GalenicGlyph
+      name={name}
+      className={cn('size-[var(--v2-galenic-icon)] shrink-0', className)}
+    />
   );
 }
 
