@@ -676,6 +676,48 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   .reveal .v2-media { transition: transform var(--v2-media-time) var(--motion-ease); }
   .reveal[data-visible='false'] .v2-media { transform: scale(var(--v2-media-zoom)); }
 }
+/* Capacidad productiva (home, 24/09/2026): entrada de las siluetas de envase.
+   Cada envase «se llena» de abajo arriba (recorte que baja) mientras sube un
+   poco; después crece el filete hacia abajo y aparecen nombre y rango. En
+   cascada de izquierda a derecha (`--i` en cada <li>). La fila no se desplaza
+   como bloque: anima cada pieza. Sin JS o con movimiento reducido, todo queda
+   quieto y visible. */
+@theme {
+  --v2-cap-time: 1200ms;
+  --v2-cap-step: 110ms;
+  --v2-cap-rise: 1.25rem;
+  --v2-cap-stem: 600ms;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .reveal.v2-cap[data-visible='false'] { opacity: 1; transform: none; }
+
+  .v2-cap .v2-cap-vessel {
+    clip-path: inset(0 0 0 0);
+    transition:
+      clip-path var(--v2-cap-time) var(--motion-ease) calc(var(--i, 0) * var(--v2-cap-step)),
+      transform var(--v2-cap-time) var(--motion-ease) calc(var(--i, 0) * var(--v2-cap-step));
+  }
+  .v2-cap[data-visible='false'] .v2-cap-vessel {
+    clip-path: inset(100% 0 0 0);
+    transform: translateY(var(--v2-cap-rise));
+  }
+
+  .v2-cap .v2-cap-stem {
+    transform-origin: top center;
+    transition: transform var(--v2-cap-stem) var(--motion-ease) calc(var(--i, 0) * var(--v2-cap-step) + 450ms);
+  }
+  .v2-cap[data-visible='false'] .v2-cap-stem { transform: scaleY(0); }
+
+  .v2-cap .v2-cap-text {
+    transition:
+      opacity var(--v2-cap-stem) var(--motion-ease) calc(var(--i, 0) * var(--v2-cap-step) + 650ms),
+      transform var(--v2-cap-stem) var(--motion-ease) calc(var(--i, 0) * var(--v2-cap-step) + 650ms);
+  }
+  .v2-cap[data-visible='false'] .v2-cap-text {
+    opacity: 0;
+    transform: translateY(var(--v2-load-rise));
+  }
+}
 /* Caja del icono 3D del menú (`MenuGlyph3D`): el motor dibuja con 8 px de
    sangrado alrededor para la sombra y el giro, fuera de esta caja. */
 @theme {

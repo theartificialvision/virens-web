@@ -2305,3 +2305,13 @@ cabecera sobre el hero oscuro, sobre la barra de anclas y sobre texto claro.
   (petición del cliente). Sin clearcoat ni metal, rugosidad 0,78–0,8 y
   reflejo del estudio atenuado. Geometría, degradado, luces y animación sin
   cambios.
+
+### 2026-09-24 (3) — Claude (Cowork) — Capacidad productiva: iconos en azul y entrada
+
+- Siluetas de envase de la home en azul corporativo: el trazo va fijado en
+  cada `/img/v2/objetos/*.svg`, porque `currentColor` no hereda dentro de un
+  `<img>` y salían en negro.
+- Entrada nueva (`.v2-cap` en globals.css), en cascada de izquierda a derecha:
+  - cada envase se llena de abajo arriba (recorte) mientras sube un poco;
+  - después baja el filete y aparecen nombre y rango.
+  - Sin JS o con movimiento reducido, todo queda quieto y visible.

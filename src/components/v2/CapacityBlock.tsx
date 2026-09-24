@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import { Reveal } from '@/components/ui/Reveal';
 import { v2Capacity } from '@/content/v2-home';
 import { SectionTitle } from './SectionTitle';
@@ -9,7 +10,12 @@ import { SectionTitle } from './SectionTitle';
  * porque lo es, no porque quepa mejor.
  *
  * Las siluetas son los vectores del propio cliente (`Objetosweb.ai`,
- * 22/09/2026), extraídos uno a uno a `/img/v2/objetos/*.svg`.
+ * 22/09/2026), extraídos uno a uno a `/img/v2/objetos/*.svg`. Van en azul
+ * corporativo desde el 24/09/2026: el trazo está fijado en el propio SVG
+ * porque dentro de un <img> `currentColor` no hereda y salían en negro.
+ *
+ * Entrada (`.v2-cap`, globals.css): cada envase se llena de abajo arriba en
+ * cascada, luego baja el filete y aparecen nombre y rango.
  */
 export function CapacityBlock() {
   return (
@@ -28,30 +34,31 @@ export function CapacityBlock() {
           {/* Scroll horizontal solo en pantallas estrechas: la fila mantiene la
               escala relativa entre envases en lugar de reflowear a rejilla. */}
           <div className="-mx-5 overflow-x-auto px-5 md:mx-0 md:px-0 lg:col-span-8">
-            <ul className="flex min-w-[40rem] items-end justify-between gap-6 lg:min-w-0">
-              {v2Capacity.items.map((item, i) => (
-                <li key={item.id} className="flex flex-1 flex-col items-center">
-                  <Reveal delay={i * 0.05} className="flex w-full flex-col items-center">
-                    <span className="flex h-[var(--v2-vessel-h)] items-end">
+            <Reveal className="v2-cap">
+              <ul className="flex min-w-[40rem] items-end justify-between gap-6 lg:min-w-0">
+                {v2Capacity.items.map((item, i) => (
+                  <li
+                    key={item.id}
+                    className="flex flex-1 flex-col items-center"
+                    style={{ '--i': i } as CSSProperties}
+                  >
+                    <span className="v2-cap-vessel flex h-[var(--v2-vessel-h)] items-end">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={`/img/v2/objetos/${item.file}.svg`}
-                        alt=""
-                        aria-hidden
-                        className="max-h-full w-auto text-blue"
-                      />
+                      <img src={`/img/v2/objetos/${item.file}.svg`} alt="" aria-hidden className="max-h-full w-auto" />
                     </span>
-                    <span aria-hidden className="mt-4 block h-6 w-px bg-blue/35" />
-                    <span className="mt-3 block text-center text-[length:var(--text-note)] leading-tight">
-                      {item.label}
+                    <span aria-hidden className="v2-cap-stem mt-4 block h-6 w-px bg-blue/35" />
+                    <span className="v2-cap-text flex flex-col items-center">
+                      <span className="mt-3 block text-center text-[length:var(--text-note)] leading-tight">
+                        {item.label}
+                      </span>
+                      <span className="mt-1 block text-center text-[length:var(--text-note)] font-semibold leading-tight text-labs">
+                        {item.range}
+                      </span>
                     </span>
-                    <span className="mt-1 block text-center text-[length:var(--text-note)] font-semibold leading-tight text-labs">
-                      {item.range}
-                    </span>
-                  </Reveal>
-                </li>
-              ))}
-            </ul>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
           </div>
         </div>
       </div>
