@@ -46,10 +46,11 @@ export function CertStrip({ showPending = false }: { showPending?: boolean }) {
 
 function Seal({ cert }: { cert: V2Cert }) {
   const k = Math.sqrt(cert.ratio);
+  const z = cert.scale ?? 1;
   const mask = `url(/img/v2/sellos/${cert.id}.svg) center / contain no-repeat`;
   const style: CSSProperties = {
-    width: `calc(var(--v2-seal) * ${k.toFixed(3)})`,
-    height: `calc(var(--v2-seal) / ${k.toFixed(3)})`,
+    width: `calc(var(--v2-seal) * ${(k * z).toFixed(3)})`,
+    height: `calc(var(--v2-seal) * ${(z / k).toFixed(3)})`,
     mask,
     WebkitMask: mask,
   };

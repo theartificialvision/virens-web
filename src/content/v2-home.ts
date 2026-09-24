@@ -21,12 +21,14 @@ export const v2Hero = {
   title: 'Expertos en complementos alimenticios',
   subtitle: 'Fabricación por contrato y desarrollo',
   lead: 'Soluciones integrales de fabricación y desarrollo de complementos alimenticios con la más alta estándares de calidad.',
-  /** Vídeo corporativo del cliente (23/09/2026), recortado para fondo: sin
-   *  intro/cierre, sin la franja de subtítulos incrustados ni la marca de
-   *  agua, sin audio. AV1 primero; H.264 para Safari antiguo y el resto. */
+  /** Vídeo corporativo del cliente, versión sin textos (24/09/2026), 1920×1080:
+   *  empieza después de los logos y la transición de anillos y acaba antes
+   *  del cierre (3,6 s → 109 s), sin audio. AV1 primero; H.264 para Safari
+   *  antiguo y el resto. Nombre nuevo para no servir la versión anterior
+   *  desde caché. */
   video: {
-    av1: '/video/hero-corporativo.webm',
-    mp4: '/video/hero-corporativo.mp4',
+    av1: '/video/hero-corporativo-sin-texto.webm',
+    mp4: '/video/hero-corporativo-sin-texto.mp4',
     poster: '/img/v2/hero-poster.jpg',
   },
   alt: 'Vídeo corporativo de Laboratorios Virens: producción, laboratorio de control y almacén',
@@ -40,18 +42,32 @@ export const v2Menu = {
   closeAria: 'Cerrar menú',
 } as const;
 
+/**
+ * Private Label / Full service (24/09/2026): texto e imágenes de la maqueta que
+ * envió el cliente, que sustituye al copy literal de lvirens.com en este
+ * bloque. El filete bajo el título va en azul corporativo en Private Label y
+ * en el color de Tech en Full service, como en la maqueta.
+ */
 export const v2Services = [
   {
     id: 'private-label',
-    icon: 'flask',
     title: 'Private Label',
-    body: 'En Virens contamos con una amplia experiencia en el desarrollo de fórmulas personalizadas y únicas. Nos adaptamos a las requerimientos técnicos y comerciales de nuestros clientes. Basándonos en la idea inicial y junto con nuestro equipo de I+D desarrollaremos tu fórmula garantizando la máxima seguridad y trazabilidad.',
+    accent: 'blue',
+    body: 'Desarrollamos y fabricamos complementos alimenticios para tu marca, con fórmulas a medida, calidad certificada y total confidencialidad. Convertimos tus ideas en productos listos para el mercado, cuidando cada detalle.',
+    image: {
+      src: '/img/v2/private-label.jpg',
+      alt: 'Técnica de laboratorio con un agitador de varilla en un vaso de precipitados con una mezcla blanca',
+    },
   },
   {
     id: 'full-service',
-    icon: 'box',
     title: 'Full service',
-    body: 'Virens ofrece un servicio integral. Desde el desarrollo del producto a su entrega como producto final para su puesta en el mercado; interviniendo en fabricaciones parciales; entregando “fabricaciones a granel”; o ofreciendo servicio de acondicionamiento parcial o completo.',
+    accent: 'tech',
+    body: 'Te acompañamos en todo el proceso: desde el desarrollo y la formulación, hasta la fabricación, el control de calidad, el envasado y la logística. Una solución integral y flexible para llevar tu producto del concepto al consumidor final.',
+    image: {
+      src: '/img/v2/full-service.jpg',
+      alt: 'Taponadora automática cerrando frascos de vidrio ámbar en una línea de envasado',
+    },
   },
 ] as const;
 
@@ -60,7 +76,7 @@ export const v2Galenic = {
   lead: 'En Laboratorios Virens fabricamos complementos alimenticios en diferentes formas galénicas: sólidas (comprimidos, cápsulas) y líquidas (pequeños en distintos formatos: blister, bote, stick, viales, dropper).',
   image: {
     src: '/img/v2/galenicas.jpg',
-    alt: 'Línea de producción de Laboratorios Virens',
+    alt: 'Cápsulas blancas cayendo desde la tolva de una encapsuladora',
   },
   /** Orden exacto de la maqueta: dos filas de cinco. */
   items: [
@@ -117,6 +133,9 @@ export interface V2Cert {
   /** Ancho / alto del sello en `/img/v2/sellos/{id}.svg`: la franja lo usa
    *  para dar a todos la misma superficie, no la misma altura. */
   ratio: number;
+  /** Aumento lineal sobre la superficie común. Iraq y Emiratos llevan texto
+   *  dentro del sello y a tamaño normal no se leía (24/09/2026, cliente). */
+  scale?: number;
 }
 
 /**
@@ -132,8 +151,8 @@ export const v2Certifications: V2Cert[] = [
   { id: 'eu', name: 'European Manufactured', status: 'image-only', ratio: 0.955 },
   { id: 'organic', name: 'Organic Certified', status: 'image-only', ratio: 1.295 },
   { id: 'vet', name: 'Veterinary Products', status: 'image-only', ratio: 0.767 },
-  { id: 'iraq', name: 'Republic of Iraq', issuer: 'Manufacturing Site Registration', status: 'image-only', ratio: 1.338 },
-  { id: 'uae', name: 'United Arab Emirates', issuer: 'Manufacturing Site Registration', status: 'image-only', ratio: 2.911 },
+  { id: 'iraq', name: 'Republic of Iraq', issuer: 'Manufacturing Site Registration', status: 'image-only', ratio: 1.338, scale: 1.3 },
+  { id: 'uae', name: 'United Arab Emirates', issuer: 'Manufacturing Site Registration', status: 'image-only', ratio: 2.911, scale: 1.3 },
   { id: 'fda', name: 'FDA Approved', status: 'unverified', ratio: 1.636 },
 ];
 

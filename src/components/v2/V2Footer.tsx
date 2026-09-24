@@ -59,6 +59,8 @@ export function V2Footer() {
   );
 }
 
+const WORDMARK_MASK = 'url(/img/v2/logo/virens-wordmark.svg) center / contain no-repeat';
+
 function Lockup({ division }: { division: 'labs' | 'tech' }) {
   return (
     <span className="flex items-end gap-2">
@@ -67,9 +69,13 @@ function Lockup({ division }: { division: 'labs' | 'tech' }) {
         <span className="self-end text-[10px] font-semibold uppercase tracking-[0.28em] leading-none text-white/70">
           {division === 'labs' ? 'Labs' : 'Tech'}
         </span>
-        <span className="mt-1 text-[length:var(--text-body)] font-bold lowercase leading-none tracking-[-0.02em]">
-          virens
-        </span>
+        {/* «virens» oficial (vector del logo del cliente) pintado como máscara para que herede el blanco. */}
+        <span
+          role="img"
+          aria-label="virens"
+          className="mt-1 block aspect-[381.97/104.25] h-[var(--v2-wordmark-sm-h)] bg-current"
+          style={{ mask: WORDMARK_MASK, WebkitMask: WORDMARK_MASK }}
+        />
       </span>
     </span>
   );

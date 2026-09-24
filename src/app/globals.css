@@ -602,6 +602,8 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   --v2-logo-3d:       4.75rem;  /* 76 — cabecera */
   --v2-logo-3d-sm:    3.5rem;   /* 56 — pie */
   --v2-wordmark:      1.625rem; /* 26 — cuerpo del "virens" */
+  --v2-wordmark-h:    2.5rem;   /* 40 — alto del wordmark oficial (SVG) en cabecera */
+  --v2-wordmark-sm-h: 1.125rem; /* 18 — alto del "virens" vectorial en el pie */
 
   /* Ritmo propio, más apretado que el de V1: medida sobre la maqueta, la
      página entera ocupa ~2.950 px a 1440 y con --section-base (160 px por

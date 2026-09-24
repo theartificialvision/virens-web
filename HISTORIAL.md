@@ -2271,3 +2271,30 @@ cabecera sobre el hero oscuro, sobre la barra de anclas y sobre texto claro.
   a mano en SVG (rectas y radios exactos, sin trazado automático) en
   `ChatIcon` (`GalenicIcon.tsx`). Superpuesto al PNG coincide salvo el antialias.
   La versión suelta está en `WEB VIRENS/icono cta.svg`.
+
+### 2026-09-24 — Claude (Cowork) — Vídeo sin textos, Private Label / Full service según maqueta, logo oficial y sellos
+
+- **Hero:** entra la versión sin textos del vídeo corporativo (1080p). Arranca
+  en 3,6 s, pasados los logos y la transición de anillos, y acaba en el 109 s,
+  antes del cierre. Va en AV1 + H.264 a dos pasadas con nombres nuevos
+  (`hero-corporativo-sin-texto.*`) para no servir la anterior desde caché.
+  Póster nuevo tomado del arranque del bucle. Se borran los `hero-corporativo.*`.
+- **Private Label / Full service:** rehecho según la maqueta del cliente.
+  - Dos fotos 16:10 arriba y, debajo, un panel gris continuo con los dos
+    textos y un filete vertical entre ellos.
+  - Bajo cada título, un filete corto: azul en Private Label, color Tech en
+    Full service.
+  - Textos de la maqueta; sustituyen al copy literal de lvirens.com en este
+    bloque.
+  - Fuera los iconos en círculo. `CircleIcon` sigue en uso en el CTA.
+- **Formas galénicas:** nueva foto de cápsulas en blanco y negro del cliente,
+  con el mismo virado teal del bloque.
+- **Logo oficial:** vectores del PDF de Illustrator del cliente
+  (`logoVirens.pdf`), limpiados. Comparado con el PDF queda idéntico.
+  - Archivos en `public/img/v2/logo/`: lockup completo, wordmark, isotipo y
+    «virens» solo.
+  - La cabecera usa el wordmark oficial junto al isotipo 3D.
+  - El pie usa el «virens» vectorial en blanco (máscara).
+  - Tech no tiene wordmark oficial y sigue compuesto en Montserrat.
+- **Sellos:** Iraq y Emiratos un 30 % más grandes (`scale` en
+  `v2Certifications`) porque su texto no se leía.
