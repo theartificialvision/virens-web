@@ -103,7 +103,6 @@ export function HeroVideo({ eyebrow, title, subtitle, lead, video, children, mol
               <div aria-hidden className="pointer-events-none hidden shrink-0 lg:block">
                 <LogoSpin
                   logo={mark.logoKey}
-                  poster={mark.molecule}
                   spin={14}
                   assemble={20}
                   hold={3.5}

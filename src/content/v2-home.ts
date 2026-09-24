@@ -55,7 +55,7 @@ export const v2Services = [
     accent: 'blue',
     body: 'Desarrollamos y fabricamos complementos alimenticios para tu marca, con fórmulas a medida, calidad certificada y total confidencialidad. Convertimos tus ideas en productos listos para el mercado, cuidando cada detalle.',
     image: {
-      src: '/img/v2/private-label.jpg',
+      src: '/img/v2/private-label-16x9.jpg',
       alt: 'Técnica de laboratorio con un agitador de varilla en un vaso de precipitados con una mezcla blanca',
     },
   },
@@ -65,7 +65,7 @@ export const v2Services = [
     accent: 'tech',
     body: 'Te acompañamos en todo el proceso: desde el desarrollo y la formulación, hasta la fabricación, el control de calidad, el envasado y la logística. Una solución integral y flexible para llevar tu producto del concepto al consumidor final.',
     image: {
-      src: '/img/v2/full-service.jpg',
+      src: '/img/v2/full-service-16x9.jpg',
       alt: 'Taponadora automática cerrando frascos de vidrio ámbar en una línea de envasado',
     },
   },

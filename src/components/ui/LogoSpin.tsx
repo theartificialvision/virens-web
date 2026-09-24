@@ -38,8 +38,11 @@ export function LogoSpin({
   sizes,
 }: {
   logo: LogoKey;
-  /** PNG original del cliente: póster y alternativa sin WebGL. */
-  poster: string;
+  /** PNG original del cliente: póster y alternativa sin WebGL. Sin póster
+   *  (hero de Labs/Tech, 24/09/2026), el hueco queda vacío y el 3D entra con
+   *  un fundido: el PNG es el isotipo antiguo en color y se veía un instante
+   *  antes del vidrio blanco. */
+  poster?: string;
   spin: number;
   assemble: number;
   hold: number;
@@ -120,19 +123,29 @@ export function LogoSpin({
           style={{ background: `radial-gradient(circle at 50% 55%, ${glow} 0%, transparent 58%)` }}
         />
       )}
-      <Image
-        src={poster}
-        alt=""
-        width={512}
-        height={512}
-        sizes={sizes}
+      {poster ? (
+        <Image
+          src={poster}
+          alt=""
+          width={512}
+          height={512}
+          sizes={sizes}
+          className={cn(
+            'absolute inset-0 size-full object-contain transition-opacity duration-500',
+            live ? 'opacity-0' : 'opacity-100',
+            posterClassName,
+          )}
+        />
+      ) : null}
+      <span
+        ref={hostRef}
+        aria-hidden
         className={cn(
-          'absolute inset-0 size-full object-contain transition-opacity duration-500',
-          live ? 'opacity-0' : 'opacity-100',
-          posterClassName,
+          'absolute inset-0 block',
+          !poster && 'transition-opacity duration-700',
+          !poster && !live && 'opacity-0',
         )}
       />
-      <span ref={hostRef} aria-hidden className="absolute inset-0 block" />
     </span>
   );
 }

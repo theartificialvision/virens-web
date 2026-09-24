@@ -6,7 +6,8 @@ import { SectionTitle } from './SectionTitle';
 
 /**
  * Private Label / Full service según la maqueta del cliente (24/09/2026):
- * dos fotografías separadas por un calle estrecho y, debajo, un panel gris
+ * dos fotografías enteras en 16:9 (sin recorte, 24/09/2026), separadas por
+ * una calle estrecha y, debajo, un panel gris
  * continuo con los dos textos y un filete vertical entre ellos. Bajo cada
  * título, un filete corto en el color de su servicio. Sustituye a la versión
  * con icono en círculo.
@@ -24,7 +25,7 @@ export function DualServices() {
           {v2Services.map((s, i) => (
             <article key={s.id} className="flex flex-col">
               <Reveal delay={i * 0.08} className={cn(i === 0 ? 'md:pr-4' : 'md:pl-4')}>
-                <div className="relative aspect-[16/10] overflow-hidden">
+                <div className="relative aspect-video overflow-hidden">
                   <div className="v2-media absolute inset-0">
                     <Image
                       src={s.image.src}

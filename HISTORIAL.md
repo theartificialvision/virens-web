@@ -2315,3 +2315,33 @@ cabecera sobre el hero oscuro, sobre la barra de anclas y sobre texto claro.
   - cada envase se llena de abajo arriba (recorte) mientras sube un poco;
   - después baja el filete y aparecen nombre y rango.
   - Sin JS o con movimiento reducido, todo queda quieto y visible.
+
+### 2026-09-24 (4) — Claude (Cowork) — Fotos de servicios sin recorte; hero de Labs/Tech sin logo antiguo
+
+- Private Label / Full service: las fotos van enteras, en 16:9 y sin
+  reencuadre (`*-16x9.jpg`, nombre nuevo para no servir las recortadas desde
+  caché). El marco pasa de 16:10 a 16:9.
+- Hero de Labs y Tech: `LogoSpin` ya no usa el PNG antiguo en color como
+  póster (se veía un instante antes del isotipo 3D blanco). El hueco queda
+  vacío y el 3D entra con un fundido de 700 ms. `poster` pasa a ser opcional:
+  cabecera y pie lo siguen usando.
+
+### 2026-09-24 (5) — Claude (Cowork) — Capacidad productiva en 3D
+
+- Sustituye a las siluetas de la home el escaparate 3D del cliente (Claude
+  Design, `Virens_sección_capacidad_productiva_3D.zip`):
+  - siete envases en porcelana mate sobre una bandeja gris redondeada;
+  - balanceo lento en reposo y un gesto propio al pasar el ratón (tapones
+    que se desenroscan, vial que se inclina y abre, blíster/stick/sobre que
+    giran);
+  - el filete bajo cada envase crece y pasa a teal.
+- Motor en `src/lib/capacity3d.ts`, componente en `CapacityStage.tsx`.
+  - Cambio frente al original: un único renderer, escena, luz con sombra y
+    entorno para los siete envases (el diseño abría siete contextos WebGL).
+  - `three` se carga con `import()` a ~600 px de la sección y el bucle se
+    para fuera de pantalla.
+  - Con movimiento reducido, un fotograma quieto y sin gestos. Sin WebGL, las
+    siluetas SVG de antes.
+  - Solo se conserva el acabado «Porcelana».
+- La bandeja lleva radio de 28 px por diseño del cliente (`--radius-stage`),
+  excepción puntual de la regla 4 como elemento único.
