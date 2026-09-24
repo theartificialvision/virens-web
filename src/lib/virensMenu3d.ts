@@ -1,9 +1,12 @@
 /**
  * Motor 3D del botón de menú molecular de la cabecera V2 (entregado por el
  * cliente el 23/09/2026 desde Claude Design, `WEB VIRENS/logo menu`). Port a
- * TypeScript estricto sin cambios de comportamiento: misma geometría, mismo
- * material de los nodos (degradado de marca por vértice, clearcoat), misma
- * iluminación de estudio y mismas poses/tiempos.
+ * TypeScript estricto: misma geometría, mismo degradado de marca por vértice
+ * en los nodos, misma iluminación de estudio y mismas poses/tiempos.
+ *
+ * 24/09/2026 — acabado mate (petición del cliente: «mate como el logo»). Fuera
+ * el clearcoat y el metal, rugosidad alta y reflejo del estudio atenuado: el
+ * volumen lo dan las luces, sin brillos especulares.
  *
  * Un único contexto WebGL compartido: cada instancia pinta su fotograma en un
  * canvas 2D propio. Se carga con `import()` diferido desde `MenuGlyph3D`, así
@@ -189,11 +192,9 @@ function shared(): Shared {
   sphereGeo.setAttribute('color', new THREE.BufferAttribute(cols, 3));
   const sphereMat = new THREE.MeshPhysicalMaterial({
     vertexColors: true,
-    metalness: 0.35,
-    roughness: 0.15,
-    clearcoat: 1,
-    clearcoatRoughness: 0.06,
-    envMapIntensity: 1,
+    metalness: 0,
+    roughness: 0.78,
+    envMapIntensity: 0.55,
   });
   const bondGeo = new THREE.CylinderGeometry(1, 1, 1, 28, 1, true);
 
@@ -255,11 +256,9 @@ export function mount(container: HTMLElement, opts: MountOptions = {}): MenuHand
   scene.add(group);
   const bondMat = new THREE.MeshPhysicalMaterial({
     color: BOND[theme][0],
-    metalness: 0.3,
-    roughness: 0.3,
-    clearcoat: 0.7,
-    clearcoatRoughness: 0.2,
-    envMapIntensity: 0.8,
+    metalness: 0,
+    roughness: 0.8,
+    envMapIntensity: 0.5,
   });
   const nodes = [0, 1, 2, 3].map(() => {
     const m = new THREE.Mesh(sh.sphereGeo, sh.sphereMat);

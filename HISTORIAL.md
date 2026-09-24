@@ -2298,3 +2298,10 @@ cabecera sobre el hero oscuro, sobre la barra de anclas y sobre texto claro.
   - Tech no tiene wordmark oficial y sigue compuesto en Montserrat.
 - **Sellos:** Iraq y Emiratos un 30 % más grandes (`scale` en
   `v2Certifications`) porque su texto no se leía.
+
+### 2026-09-24 (2) — Claude (Cowork) — Botón de menú 3D en mate
+
+- `virensMenu3d.ts`: nodos y enlaces pasan a acabado mate, como el logo
+  (petición del cliente). Sin clearcoat ni metal, rugosidad 0,78–0,8 y
+  reflejo del estudio atenuado. Geometría, degradado, luces y animación sin
+  cambios.
