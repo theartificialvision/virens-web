@@ -5,13 +5,14 @@ import { v2Hero } from '@/content/v2-home';
 const stagger = (i: number) => ({ '--i': i }) as CSSProperties;
 
 /**
- * Hero a sangre: vídeo real de la línea de llenado bajo un velo azul que baja
+ * Hero a sangre: vídeo real de la planta bajo un velo azul que baja
  * de intensidad hacia la derecha — el texto vive en el tercio izquierdo, como
  * en la maqueta, y la máquina queda legible al otro lado.
  *
- * El vídeo es el mismo activo de V1 (`/video/home-hero.mp4`), mudo, en bucle y
- * con póster: sin JS, y con `prefers-reduced-motion` el navegador se queda en
- * el póster porque `autoPlay` solo arranca la reproducción, no la exige.
+ * El vídeo es el corporativo del cliente (23/09/2026) preparado para fondo
+ * —ver `v2Hero.video`—, mudo, en bucle y con póster: sin JS, y con
+ * `prefers-reduced-motion` el navegador se queda en el póster porque
+ * `autoPlay` solo arranca la reproducción, no la exige.
  */
 export function Hero() {
   return (
@@ -21,14 +22,19 @@ export function Hero() {
           el teal de marca en vez de asentarlo. */}
       <video
         className="v2-fade absolute inset-0 -z-10 size-full object-cover [filter:saturate(0.32)_contrast(1.08)_brightness(0.95)]"
-        src={v2Hero.video.src}
         poster={v2Hero.video.poster}
         autoPlay
         muted
         loop
         playsInline
         aria-label={v2Hero.alt}
-      />
+      >
+        {/* Solo desde 768 px: en móvil se queda el póster y no se descarga
+            el vídeo (regla 9). El navegador toma la primera fuente que sabe
+            reproducir: AV1 (≈ mitad de peso) y, si no, H.264. */}
+        <source src={v2Hero.video.av1} type='video/webm; codecs="av01.0.08M.10"' media="(min-width: 768px)" />
+        <source src={v2Hero.video.mp4} type="video/mp4" media="(min-width: 768px)" />
+      </video>
       {/* Velo: opaco a la izquierda para que el texto asiente, transparente a
           la derecha para no matar la fotografía. */}
       <span aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-r from-blue/92 via-blue/55 to-blue/10" />

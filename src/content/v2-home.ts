@@ -21,8 +21,15 @@ export const v2Hero = {
   title: 'Expertos en complementos alimenticios',
   subtitle: 'Fabricación por contrato y desarrollo',
   lead: 'Soluciones integrales de fabricación y desarrollo de complementos alimenticios con la más alta estándares de calidad.',
-  video: { src: '/video/home-hero.mp4', poster: '/img/v2/hero-poster.jpg' },
-  alt: 'Línea de llenado y dosificado en marcha en la planta de Laboratorios Virens',
+  /** Vídeo corporativo del cliente (23/09/2026), recortado para fondo: sin
+   *  intro/cierre, sin la franja de subtítulos incrustados ni la marca de
+   *  agua, sin audio. AV1 primero; H.264 para Safari antiguo y el resto. */
+  video: {
+    av1: '/video/hero-corporativo.webm',
+    mp4: '/video/hero-corporativo.mp4',
+    poster: '/img/v2/hero-poster.jpg',
+  },
+  alt: 'Vídeo corporativo de Laboratorios Virens: producción, laboratorio de control y almacén',
 } as const;
 
 /** Botón de menú de la cabecera: rótulo visible y nombre accesible. */

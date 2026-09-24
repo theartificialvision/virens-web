@@ -2254,3 +2254,20 @@ a 1440 px (0,35 / 0,8 / 1,4 / 3,2 s).
 
 **Verificado**: `tsc --noEmit` limpio; heros de Labs y Tech a 1440 px y
 cabecera sobre el hero oscuro, sobre la barra de anclas y sobre texto claro.
+
+### 2026-09-23 (15) — Claude (Cowork) — Vídeo corporativo en el hero de la home e icono del CTA
+
+- **Hero de la home:** fuera `public/video/home-hero.mp4`; entra el vídeo corporativo
+  del cliente (4K, 122 s). El original lleva subtítulos quemados, marca de agua y
+  cortinillas blancas de entrada y salida, así que se recorta: se quitan los
+  primeros 4 s y todo desde el 108,8 s, y se reencuadra a 3840×1560 (fuera la
+  franja de subtítulos y la marca de agua). Sale sin audio, a 1920×780, con
+  fundidos de 0,6 s para que el bucle no salte.
+  - Dos codificaciones: AV1 10 bits `hero-corporativo.webm` (~13 MB) primero y
+    H.264 a dos pasadas `hero-corporativo.mp4` como respaldo.
+  - Los `<source>` llevan `media="(min-width: 768px)"`, así que el móvil solo
+    descarga el poster (nuevo, fotograma del 9 s) y el LCP no cambia (regla 9).
+- **Icono del CTA «¿Hablamos de tu proyecto?»:** el PNG del cliente se redibujó
+  a mano en SVG (rectas y radios exactos, sin trazado automático) en
+  `ChatIcon` (`GalenicIcon.tsx`). Superpuesto al PNG coincide salvo el antialias.
+  La versión suelta está en `WEB VIRENS/icono cta.svg`.

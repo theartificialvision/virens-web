@@ -51,13 +51,9 @@ export function CircleIcon({
         <path d="M16.5 10.25l15 7.5v6.5" />
       </>
     ),
-    chat: (
-      <>
-        <path d="M11 12h26a3 3 0 013 3v15a3 3 0 01-3 3H24l-8 7v-7h-5a3 3 0 01-3-3V15a3 3 0 013-3z" />
-        <path d="M18 20h12M18 26h8" />
-      </>
-    ),
   };
+
+  if (name === 'chat') return <ChatIcon variant={variant} className={className} />;
 
   return (
     <span
@@ -69,6 +65,41 @@ export function CircleIcon({
     >
       <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round" aria-hidden className="size-[52%]">
         {GLYPH[name]}
+      </svg>
+    </span>
+  );
+}
+
+/**
+ * Icono del CTA «¿Hablamos de tu proyecto?» (23/09/2026): diseño definitivo
+ * del cliente (`WEB VIRENS/icono cta diseño correcto pasar a svg.png`),
+ * redibujado a mano como geometría limpia —rectas, radios exactos y remates
+ * redondos— en las coordenadas del PNG original (1050 × 1034), no trazado
+ * automático. Superpuesto al PNG coincide salvo el antialias del borde.
+ * Dos bocadillos: el grande con tres líneas de texto y el segundo detrás.
+ */
+function ChatIcon({ variant, className }: { variant: 'solid' | 'outline'; className?: string }) {
+  return (
+    <span
+      className={cn(
+        'flex size-[var(--v2-block-icon)] shrink-0 items-center justify-center rounded-full',
+        variant === 'solid' ? 'bg-blue text-white' : 'border border-current',
+        className,
+      )}
+    >
+      <svg
+        viewBox="196 182 700 700"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={17}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        aria-hidden
+        className="size-[64%]"
+      >
+        <path d="M280 599L378 736L379 599H697A50 50 0 0 0 747 549V248A50 50 0 0 0 697 198H262A50 50 0 0 0 212 248V554A45 45 0 0 0 257 599Z" />
+        <path d="M346 331H613M346 398H613M346 465H513" />
+        <path d="M813 398H835A45 45 0 0 1 880 443V688A45 45 0 0 1 835 733H818L716 867L715 733H495A48 48 0 0 1 447 685V665" />
       </svg>
     </span>
   );
