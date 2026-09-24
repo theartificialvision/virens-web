@@ -42,16 +42,19 @@ export function CapacityStage() {
         .then(({ mount }) => {
           const hosts = hostRefs.current.filter((h): h is HTMLDivElement => h !== null);
           if (!alive || hosts.length !== v2Capacity.items.length) return;
-          try {
-            handleRef.current = mount(
-              hosts,
-              v2Capacity.items.map((it) => it.file),
-              { reduced },
-            );
+          return mount(
+            hosts,
+            v2Capacity.items.map((it) => it.file),
+            { reduced, isAlive: () => alive },
+          ).then((handle) => {
+            if (!handle) return;
+            if (!alive) {
+              handle.dispose();
+              return;
+            }
+            handleRef.current = handle;
             setState('ready');
-          } catch {
-            setState('failed');
-          }
+          });
         })
         .catch(() => alive && setState('failed'));
     };
@@ -98,7 +101,7 @@ export function CapacityStage() {
 
   return (
     <div ref={rootRef} className="v2-cap-stage -mx-5 overflow-x-auto md:mx-0">
-      <ul className="grid min-w-[46rem] auto-cols-[minmax(6.5rem,1fr)] grid-flow-col px-3 lg:min-w-0">
+      <ul className="grid min-w-[46rem] auto-cols-[minmax(6.5rem,1fr)] grid-flow-col overflow-hidden px-3 lg:min-w-0">
         {v2Capacity.items.map((item, i) => (
           <li
             key={item.id}
@@ -108,14 +111,15 @@ export function CapacityStage() {
             onMouseLeave={() => leave(i)}
             onMouseMove={(e) => move(i, e)}
           >
-            <div className="v2-cap-vessel relative h-[var(--v2-cap3d-h)] w-full">
+            <div className="relative h-[var(--v2-cap3d-h)] w-full">
+              {/* El lienzo baja un 25 % por debajo del escenario y se abre un 25 % a cada lado: suelo y sombras no se cortan en el borde de la columna. */}
               <div
                 ref={(el) => {
                   hostRefs.current[i] = el;
                 }}
                 aria-hidden
                 className={cn(
-                  'absolute inset-0 transition-opacity duration-700',
+                  'v2-cap-vessel pointer-events-none absolute -inset-x-1/4 top-0 h-[125%] transition-opacity duration-700',
                   state === 'ready' ? 'opacity-100' : 'opacity-0',
                 )}
               />
@@ -127,7 +131,7 @@ export function CapacityStage() {
               ) : null}
             </div>
 
-            <div className="v2-cap-stem flex h-16 items-start justify-center">
+            <div className="v2-cap-stem relative flex h-16 items-start justify-center">
               <span
                 aria-hidden
                 className={cn(
@@ -137,7 +141,7 @@ export function CapacityStage() {
               />
             </div>
 
-            <div className="v2-cap-text flex flex-col items-center gap-1.5 px-1 text-center">
+            <div className="v2-cap-text relative flex flex-col items-center gap-1.5 px-1 text-center">
               <span className="text-[length:var(--text-note)] leading-tight text-blue">{item.label}</span>
               <span className="text-balance text-[length:var(--text-note)] font-semibold leading-tight text-labs">
                 {item.range}

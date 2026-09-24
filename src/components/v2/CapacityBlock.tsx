@@ -4,9 +4,9 @@ import { SectionTitle } from './SectionTitle';
 import { CapacityStage } from './CapacityStage';
 
 /**
- * Capacidad productiva (§ maqueta, bloque 04): titular y párrafo a la
- * izquierda; a la derecha, desde el 24/09/2026, el escaparate 3D del cliente
- * (`CapacityStage`). Las siluetas vectoriales siguen como alternativa sin WebGL.
+ * Capacidad productiva (§ maqueta, bloque 04): titular y párrafo arriba y,
+ * debajo, a todo el ancho del contenedor, el escaparate 3D del cliente
+ * (`CapacityStage`, 24/09/2026). Las siluetas vectoriales siguen como alternativa sin WebGL.
  *
  * Las siluetas son los vectores del propio cliente (`Objetosweb.ai`,
  * 22/09/2026), extraídos uno a uno a `/img/v2/objetos/*.svg`. Van en azul
@@ -20,22 +20,17 @@ export function CapacityBlock() {
   return (
     <section id="capacidad-productiva" className="bg-white text-blue">
       <div className="mx-auto w-full max-w-[var(--container-max)] px-5 py-[var(--v2-section)] md:px-8 lg:px-12 2xl:px-20">
-        <div className="grid gap-14 lg:grid-cols-12 lg:gap-12">
-          <div className="lg:col-span-4">
-            <SectionTitle accent>{v2Capacity.title}</SectionTitle>
-            <Reveal delay={0.06}>
-              <p className="mt-6 max-w-[var(--measure-narrow)] text-[length:var(--text-small)] leading-[1.85] text-gray-700">
-                {v2Capacity.lead}
-              </p>
-            </Reveal>
-          </div>
+        <SectionTitle accent>{v2Capacity.title}</SectionTitle>
+        <Reveal delay={0.06}>
+          <p className="mt-6 max-w-[var(--measure-max)] text-[length:var(--text-small)] leading-[1.85] text-gray-700">
+            {v2Capacity.lead}
+          </p>
+        </Reveal>
 
-          <div className="lg:col-span-8">
-            <Reveal className="v2-cap">
-              <CapacityStage />
-            </Reveal>
-          </div>
-        </div>
+        {/* 24/09/2026 (cliente): la bandeja ocupa todo el contenedor, sin esquinas redondeadas. */}
+        <Reveal className="v2-cap mt-14">
+          <CapacityStage />
+        </Reveal>
       </div>
     </section>
   );

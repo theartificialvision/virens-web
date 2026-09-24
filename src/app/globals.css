@@ -719,12 +719,9 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   }
 }
 /* Bandeja del escaparate 3D de capacidad (diseño del cliente, 24/09/2026):
-   degradado gris vertical y esquinas de 28 px. Es un único elemento flotante
-   de la página, no una rejilla de tarjetas (excepción puntual de la regla 4,
-   decisión del cliente). */
+   degradado gris vertical a todo el ancho del contenedor, sin radio. */
 @theme {
   --v2-cap3d-h:        20rem;   /* 320 — alto del escenario de cada envase */
-  --radius-stage:      1.75rem; /* 28 */
   --color-stage-1:     #DADFE0;
   --color-stage-2:     #E3E7E7;
   --color-stage-3:     #ECEEED;
@@ -733,11 +730,9 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
 }
 .v2-cap-stage {
   scrollbar-width: none;
-  border-radius: var(--radius-stage);
   background: linear-gradient(180deg, var(--color-stage-1) 0%, var(--color-stage-2) 48%,
     var(--color-stage-3) 67%, var(--color-stage-4) 74%, var(--color-stage-5) 100%);
 }
-@media (max-width: 767px) { .v2-cap-stage { border-radius: 0; } }
 /* Caja del icono 3D del menú (`MenuGlyph3D`): el motor dibuja con 8 px de
    sangrado alrededor para la sombra y el giro, fuera de esta caja. */
 @theme {

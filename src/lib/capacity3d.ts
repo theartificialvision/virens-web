@@ -6,7 +6,7 @@
  * pasar el ratón (el tapón se desenrosca, el vial se inclina y se abre el
  * flip-off, el blíster y los sobres dan una vuelta).
  *
- * Port a TypeScript estricto con dos cambios de rendimiento (regla 9):
+ * Port a TypeScript estricto con estos cambios de rendimiento (regla 9):
  *
  * - El original abría un WebGLRenderer por envase (siete contextos, siete
  *   mapas de sombra de 2048 px). Aquí hay UN renderer, UNA escena, UNA luz con
@@ -14,6 +14,12 @@
  *   se pinta por turno —solo él visible— en su propio canvas 2D.
  * - `three` llega con `import()` diferido desde el componente, cuando la
  *   sección se acerca al viewport; no entra en el bundle inicial.
+ * - Densidad de píxel ×1,5 como tope, mapa de sombra de 512 px, suelo de
+ *   sombras recortado y vidrio por transparencia en vez de `transmission`
+ *   (que repintaba la escena entera en cada fotograma).
+ * - En reposo (solo balanceo) pinta a 30 fps; con el ratón encima, al ritmo
+ *   de la pantalla. No pinta los envases fuera de pantalla (fila deslizable
+ *   en móvil) y se para del todo si la sección no se ve.
  *
  * Solo se conserva el acabado «Porcelana» (el elegido); sin líquidos, que ese
  * acabado ya ocultaba. El bucle se detiene fuera de pantalla y, con
@@ -35,7 +41,9 @@ export interface CapacityHandle {
 
 // Acabado «Porcelana» del diseño.
 const FIN = {
-  body: { color: '#f3f1ed', roughness: 0.7, sheen: 0.12, sheenRoughness: 1, sheenColor: '#ffffff', clearcoat: 0.06, clearcoatRoughness: 0.6 },
+  // Sin clearcoat (0,06 en el diseño, invisible) ni sheen: cada capa extra es
+  // coste de sombreado por píxel en los siete envases.
+  body: { color: '#f3f1ed', roughness: 0.7 },
   label: '#eef3f1',
   cap: '#6f9486',
   cap2: '#4b6180',
@@ -44,8 +52,14 @@ const FIN = {
   pouchSeal: '#7a9a8d',
 } as const;
 
-/** Franja superior libre (para el gesto de subida) sobre la del objeto: 64/320 del original. */
-const TOP_RATIO = 0.2;
+/**
+ * Encuadre, como en el original: el lienzo de cada envase es más alto que su
+ * escenario visible y baja por debajo de la base para que suelo y sombra no se
+ * corten. Sobre el alto del lienzo: 16 % libre arriba (el gesto de subida) y
+ * 64 % de franja del objeto (64 px + 256 px sobre 400 px).
+ */
+const TOP_RATIO = 0.16;
+const OBJ_RATIO = 0.64;
 
 type Key = [number, number, number, number?];
 interface Parts {
@@ -187,9 +201,26 @@ const PULSE: Partial<Record<CapacityKind, number[]>> = {
   stick: [1.22, 1.44],
 };
 
-export function mount(hosts: HTMLElement[], kinds: CapacityKind[], opts: { reduced: boolean }): CapacityHandle {
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
-  const pr = Math.min(2, window.devicePixelRatio || 1);
+/** Cede el hilo principal al navegador entre pasos del arranque. */
+const yieldToBrowser = () => new Promise<void>((r) => setTimeout(r, 0));
+
+/**
+ * Arranque escalonado: entorno → un envase por paso → compilación de shaders
+ * en paralelo (`compileAsync`) → primer fotograma. Así no hay una tarea larga
+ * que congele el scroll justo al llegar a la sección (INP, regla 9).
+ * `isAlive` permite abandonar si el componente se desmonta a mitad.
+ */
+export async function mount(
+  hosts: HTMLElement[],
+  kinds: CapacityKind[],
+  opts: { reduced: boolean; isAlive: () => boolean },
+): Promise<CapacityHandle | null> {
+  // `low-power`: en portátiles con dos gráficas no despierta la dedicada (ni
+  // gasta batería) por una sección decorativa.
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'low-power' });
+  // ×1,5 como tope: a ×2/×3 el coste de pintar crece con el cuadrado y, en
+  // objetos mate de 150 px, la diferencia no se ve.
+  const pr = Math.min(1.5, window.devicePixelRatio || 1);
   renderer.setPixelRatio(pr);
   renderer.toneMapping = THREE.NeutralToneMapping;
   renderer.toneMappingExposure = 1.15;
@@ -200,15 +231,18 @@ export function mount(hosts: HTMLElement[], kinds: CapacityKind[], opts: { reduc
 
   const scene = new THREE.Scene();
   const pm = new THREE.PMREMGenerator(renderer);
-  const envTex = pm.fromScene(new RoomEnvironment(), 0.04).texture;
+  // Entorno a 64 px (256 por defecto): en porcelana mate no se aprecian los
+  // reflejos finos y prepararlo cuesta 16 veces menos.
+  const envTex = pm.fromScene(new RoomEnvironment(), 0.04, 0.1, 100, { size: 64 }).texture;
   pm.dispose();
   scene.environment = envTex;
   scene.add(new THREE.HemisphereLight(0xfbfaf6, 0xd9dedc, 0.35));
   const key = new THREE.DirectionalLight(0xfffaf2, 2.1);
   key.position.set(-2.2, 4.6, 1.5);
   key.castShadow = true;
-  key.shadow.mapSize.set(1024, 1024);
-  key.shadow.radius = 8;
+  // Sombra suave y pequeña en pantalla: 512 px de mapa bastan.
+  key.shadow.mapSize.set(512, 512);
+  key.shadow.radius = 5;
   key.shadow.bias = -0.0004;
   key.shadow.normalBias = 0.015;
   Object.assign(key.shadow.camera, { left: -2.5, right: 2.5, top: 2.5, bottom: -1.5, near: 0.5, far: 12 });
@@ -217,17 +251,29 @@ export function mount(hosts: HTMLElement[], kinds: CapacityKind[], opts: { reduc
   const rim = new THREE.DirectionalLight(0xf2f6f4, 0.9);
   rim.position.set(2.6, 1.8, -1.8);
   scene.add(rim);
-  const floor = new THREE.Mesh(new THREE.PlaneGeometry(6, 6), new THREE.ShadowMaterial({ color: 0x1d2e3a, opacity: 0.09 }));
+  // Suelo solo donde caen sombras (la luz viene de arriba a la izquierda): el
+  // plano de 6 × 6 del diseño calculaba sombra en media pantalla vacía.
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(2.4, 2), new THREE.ShadowMaterial({ color: 0x1d2e3a, opacity: 0.09 }));
   floor.rotation.x = -PI / 2;
   floor.receiveShadow = true;
   scene.add(floor);
+
+  await yieldToBrowser();
+  const abort = () => {
+    renderer.dispose();
+    renderer.forceContextLoss();
+    return null;
+  };
+  if (!opts.isAlive()) return abort();
 
   // Materiales (porcelana).
   const grain = noiseTex(512, [6, 3], 90, 165, 0.6);
   const grainR = noiseTex(256, [4, 2], 200, 255, 1);
   const paper = noiseTex(256, [8, 2], 110, 150, 0.4);
   const fine = noiseTex(256, [10, 10], 110, 150, 0.5);
-  const P = (o: THREE.MeshPhysicalMaterialParameters) => new THREE.MeshPhysicalMaterial(o);
+  // MeshStandardMaterial: sin clearcoat ni sheen no hace falta el físico, y el
+  // estándar compila y sombrea bastante más rápido.
+  const P = (o: THREE.MeshStandardMaterialParameters) => new THREE.MeshStandardMaterial(o);
   const mats = {
     body: P({ ...FIN.body, metalness: 0, bumpMap: grain, bumpScale: 0.12, roughnessMap: grainR }),
     label: P({ color: FIN.label, roughness: 0.9, side: THREE.DoubleSide, bumpMap: paper, bumpScale: 0.2 }),
@@ -235,11 +281,14 @@ export function mount(hosts: HTMLElement[], kinds: CapacityKind[], opts: { reduc
     cap2: P({ color: FIN.cap2, roughness: 0.74, bumpMap: fine, bumpScale: 0.08 }),
     metal: P({ color: '#d7dbdd', metalness: 0.85, roughness: 0.48 }),
     foil: P({ color: '#e9ecec', metalness: 0.5, roughness: 0.55, bumpMap: fine, bumpScale: 0.1 }),
-    dome: P({ color: '#ffffff', transmission: 1, roughness: 0.03, thickness: 0.04, ior: 1.4, clearcoat: 1 }),
+    // Burbujas del blíster y pipeta: vidrio por transparencia simple. La
+    // `transmission` del diseño obliga a three a pintar la escena una segunda
+    // vez en cada fotograma solo para refractar dos piezas diminutas.
+    dome: P({ color: '#ffffff', transparent: true, opacity: 0.35, roughness: 0.08, depthWrite: false }),
     pill: P({ color: FIN.pill, roughness: 0.7 }),
     rubber: P({ color: '#a3aaad', roughness: 0.92 }),
-    pipette: P({ color: '#ffffff', transmission: 1, roughness: 0.04, thickness: 0.03, ior: 1.45, clearcoat: 1 }),
-    pouch: P({ vertexColors: true, roughness: 0.72, clearcoat: 0.05, clearcoatRoughness: 0.7, bumpMap: fine, bumpScale: 0.1 }),
+    pipette: P({ color: '#ffffff', transparent: true, opacity: 0.3, roughness: 0.08, depthWrite: false }),
+    pouch: P({ vertexColors: true, roughness: 0.72, bumpMap: fine, bumpScale: 0.1 }),
   };
   type Role = keyof typeof mats;
   const mesh = (geo: THREE.BufferGeometry, role: Role, y = 0) => {
@@ -394,7 +443,14 @@ export function mount(hosts: HTMLElement[], kinds: CapacityKind[], opts: { reduc
   };
 
   const shTex = shadowTex();
-  const views: View[] = kinds.map((kind, i) => {
+  const views: View[] = [];
+  for (let i = 0; i < kinds.length; i += 1) {
+    await yieldToBrowser();
+    if (!opts.isAlive()) {
+      hosts.forEach((h) => h.querySelectorAll('canvas').forEach((c) => c.remove()));
+      return abort();
+    }
+    const kind = kinds[i] as CapacityKind;
     const host = hosts[i] as HTMLElement;
     const cvs = document.createElement('canvas');
     Object.assign(cvs.style, { position: 'absolute', inset: '0', width: '100%', height: '100%', display: 'block' });
@@ -432,12 +488,12 @@ export function mount(hosts: HTMLElement[], kinds: CapacityKind[], opts: { reduc
     sh.position.y = 0.001;
     sh.visible = false;
     scene.add(sh);
-    return {
+    views.push({
       kind, cvs, ctx, host, pivot, tn, sh, shBase: shadow, parts, ks: PULSE[kind] ?? null,
       camera: new THREE.PerspectiveCamera(26, 1, 0.1, 50),
       w: 0, h: 0, st: -1, size: 1, sv: 0, at: -1, h2: 0, spin: 0, spinT: 0, hov: 0, tx: 0, ty: 0, ptx: 0, pty: 0, phase: i * 0.85,
-    };
-  });
+    });
+  }
 
   const resize = () => {
     for (const v of views) {
@@ -448,7 +504,7 @@ export function mount(hosts: HTMLElement[], kinds: CapacityKind[], opts: { reduc
       v.cvs.width = Math.round(w * pr);
       v.cvs.height = Math.round(h * pr);
       const top = h * TOP_RATIO;
-      const obj = h - top;
+      const obj = h * OBJ_RATIO;
       const a = w / obj;
       const k = 2 * Math.tan((13 * PI) / 180);
       const d = Math.max(1.26 / k, 0.9 / (k * a));
@@ -479,8 +535,26 @@ export function mount(hosts: HTMLElement[], kinds: CapacityKind[], opts: { reduc
     v.ctx.drawImage(renderer.domElement, 0, 0, v.cvs.width, v.cvs.height);
   };
 
+  /** Algún envase en movimiento propio (hover, gesto o muelle sin asentar). */
+  const busy = () =>
+    warm < views.length ||
+    hovIdx >= 0 ||
+    views.some((v) => v.hov > 0.002 || v.at >= 0 || v.st >= 0 || Math.abs(v.spinT - v.spin) > 0.002 || Math.abs(v.sv) > 0.002 || v.h2 > 0.002);
+
+  /** ¿Está el lienzo en pantalla? En móvil la fila se desliza y la mayoría queda fuera. */
+  const onScreen = (v: View) => {
+    const r = v.host.getBoundingClientRect();
+    return r.right > 0 && r.left < window.innerWidth && r.bottom > 0 && r.top < window.innerHeight;
+  };
+
+  /** Envases ya pintados al menos una vez: al arrancar se suma uno por fotograma. */
+  let warm = 0;
+
   const tick = (t: number, dt: number) => {
     const idle = !opts.reduced;
+    // Al arrancar, un envase más por fotograma (de izquierda a derecha, como la
+    // entrada en cascada): el primer pintado no es una tarea larga única.
+    if (warm < views.length) warm += 1;
     const e = (k: number) => 1 - Math.exp(-dt * k);
     for (let i = 0; i < views.length; i += 1) {
       const v = views[i] as View;
@@ -546,16 +620,21 @@ export function mount(hosts: HTMLElement[], kinds: CapacityKind[], opts: { reduc
       const sc = (1 - 0.14 * h) * v.size;
       v.sh.scale.set(v.shBase[0] * sc, v.shBase[1] * sc, 1);
       v.sh.material.opacity = 0.45 - 0.22 * h;
-      draw(v);
+      if (i < warm && (opts.reduced || onScreen(v))) draw(v);
     }
   };
 
+  // En reposo solo hay el balanceo lento: basta a 30 fps. Con el ratón encima
+  // (o mientras un gesto termina) va al ritmo de la pantalla.
+  const IDLE_FRAME = 1000 / 30;
   const loop = (now: number) => {
     raf = 0;
     if (dead || !visible) return;
-    const dt = Math.min(0.05, (now - last) / 1000);
-    last = now;
-    tick(now / 1000, dt);
+    if (busy() || now - last >= IDLE_FRAME - 1) {
+      const dt = Math.min(0.05, (now - last) / 1000);
+      last = now;
+      tick(now / 1000, dt);
+    }
     raf = requestAnimationFrame(loop);
   };
   const start = () => {
@@ -565,8 +644,34 @@ export function mount(hosts: HTMLElement[], kinds: CapacityKind[], opts: { reduc
   };
 
   resize();
-  // Primer fotograma síncrono: el componente puede hacer el fundido en cuanto vuelve `mount`.
+  // Shaders compilados fuera del hilo principal donde el navegador lo permite
+  // (KHR_parallel_shader_compile); con todo visible para que no falte ninguna
+  // variante al pintar.
+  views.forEach((v) => {
+    v.pivot.visible = true;
+    v.sh.visible = true;
+  });
+  const first = views[0];
+  if (first) await renderer.compileAsync(scene, first.camera);
+  views.forEach((v) => {
+    v.pivot.visible = false;
+    v.sh.visible = false;
+  });
+  if (!opts.isAlive()) {
+    views.forEach((v) => v.cvs.remove());
+    return abort();
+  }
+  // Primer fotograma (solo el primer envase; el resto entra uno por fotograma).
   tick(0, 0);
+  if (opts.reduced) {
+    // Sin bucle: termina el calentamiento en fotogramas sucesivos y se queda quieto.
+    const warmUp = () => {
+      if (dead || warm >= views.length) return;
+      tick(0, 0);
+      requestAnimationFrame(warmUp);
+    };
+    requestAnimationFrame(warmUp);
+  }
   const ro = new ResizeObserver(() => {
     resize();
     if (opts.reduced) tick(0, 0);

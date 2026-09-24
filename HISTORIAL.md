@@ -2343,5 +2343,18 @@ cabecera sobre el hero oscuro, sobre la barra de anclas y sobre texto claro.
   - Con movimiento reducido, un fotograma quieto y sin gestos. Sin WebGL, las
     siluetas SVG de antes.
   - Solo se conserva el acabado «Porcelana».
-- La bandeja lleva radio de 28 px por diseño del cliente (`--radius-stage`),
-  excepción puntual de la regla 4 como elemento único.
+- La bandeja va sin radio y a todo el ancho del contenedor, con título y
+  párrafo encima (corrección del cliente del mismo día).
+- Revisión de rendimiento antes de publicar (medida en build de producción):
+  - La home sigue en 120 kB de JS inicial. El motor es un chunk aparte de
+    6 kB gzip que se pide cerca de la sección; `three` ya lo cargan el isotipo
+    y el menú, así que llega de caché.
+  - Por fotograma: densidad ×1,5 como tope, sombra de 512 px, suelo recortado,
+    sin `transmission` (repintaba la escena), `MeshStandardMaterial` en vez del
+    físico y entorno PMREM a 64 px.
+  - Frecuencia: 30 fps en reposo y ritmo de pantalla solo con hover. No se
+    pintan los envases fuera de pantalla y fuera de la sección el bucle está
+    parado (≈2 % de CPU).
+  - Arranque escalonado (un envase por paso, `compileAsync`, primer pintado
+    en cascada) para no congelar el scroll al llegar.
+  - GPU `low-power` para no despertar la gráfica dedicada en portátiles.
