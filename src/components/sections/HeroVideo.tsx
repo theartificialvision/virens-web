@@ -76,22 +76,20 @@ export function HeroVideo({ eyebrow, title, subtitle, lead, video, children, mol
               está calibrado para superficies planas (ink/surface). Mismo
               criterio ya aplicado al hero de Home: blanco con opacidad alta. */}
           <Eyebrow className="text-white/70">{eyebrow}</Eyebrow>
-          {/* 2026-09-04: fuera la serif también aquí. Mismas medidas que el H1
-              de Home —Montserrat semibold, interlineado 1,1, tracking
-              -0,02em—, solo un escalón mayor de cuerpo: allí el titular está
-              obligado a una línea entre las dos moléculas y aquí tiene una
-              columna de 7/12 para respirar. */}
+          {/* 27/09/2026 (cliente: «toma de norma la home»): titular, subtítulo
+              y entradilla con exactamente la escala del hero de la home
+              (`v2/Hero`): 36→64 px peso normal, 18→24 px y cuerpo al 75 %. */}
           {/* 27/09/2026 (cliente): sin isotipo 3D al lado del titular. */}
           <div className="mt-6 max-w-[58ch]">
             <KineticHeading
               as="h1"
               text={title}
-              className="text-[length:var(--text-display)] font-semibold leading-[1.1] tracking-[-0.02em] text-white"
+              className="text-[length:var(--v2-hero-title)] font-normal leading-[1.08] tracking-[-0.02em] text-white"
             />
           </div>
-          <p className="mt-5 max-w-[58ch] text-[length:var(--text-lead)] font-normal leading-[1.5] text-white">{subtitle}</p>
+          <p className="mt-5 max-w-[58ch] text-[length:var(--v2-hero-sub)] font-normal leading-snug text-white/90">{subtitle}</p>
           {lead && (
-            <p className="mt-5 max-w-[var(--measure-max)] text-[length:var(--text-body)] leading-[1.65] text-white/85">
+            <p className="mt-8 max-w-[var(--measure-narrow)] text-[length:var(--text-body)] leading-relaxed text-white/75">
               {lead}
             </p>
           )}

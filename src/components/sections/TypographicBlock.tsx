@@ -29,18 +29,18 @@ export function TypographicBlock({
             {eyebrow}
           </p>
           <Reveal>
-            <h2 className="mt-8 text-[length:var(--text-stat)] font-bold leading-[1.05] tracking-[-0.02em]">
+            <h2 className="mt-8 text-[length:var(--v2-hero-title)] font-normal leading-[1.08] tracking-[-0.02em]">
               {title}
             </h2>
           </Reveal>
           {/* Doc maestro §10.1: texto siempre blanco puro sobre #A2195B. */}
-          <p className="mx-auto mt-8 max-w-[var(--measure-max)] text-[length:var(--text-lead)] text-white">{body}</p>
+          <p className="mx-auto mt-8 max-w-[var(--measure-max)] text-[length:var(--text-small)] leading-[1.85] text-white">{body}</p>
         </div>
 
         <ul className="mt-8 grid lg:mt-16 grid-cols-2 gap-x-8 gap-y-8 lg:gap-y-12 lg:grid-cols-4">
           {pillars.map((p, i) => (
-            <li key={p} className="flex flex-col items-center gap-4 text-[length:var(--text-body)] font-semibold">
-              <span className="text-[length:var(--text-eyebrow)] tracking-eyebrow text-blue">{String(i + 1).padStart(2, '0')}</span>
+            <li key={p} className="flex flex-col items-center gap-4 text-[length:var(--text-small)] font-medium">
+              <span className="text-[length:var(--text-note)] font-semibold tracking-label text-blue">{String(i + 1).padStart(2, '0')}</span>
               {p}
             </li>
           ))}

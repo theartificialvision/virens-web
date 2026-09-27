@@ -22,7 +22,7 @@ export const metadata: Metadata = {
  */
 export default function ContactoPage() {
   return (
-    <Section tone="white" rhythm="air" className="contact-stage pt-20 md:pt-28 lg:pt-52">
+    <Section tone="white" rhythm="air" className="contact-stage">
       {/* 06/09 (8): fuera la de la sesión Midjourney. Era una nave genérica de
           IA y el cliente la rechazó por anticuada. Pasa a la línea de envasado
           en blanco y negro que aportó él mismo —la misma tanda que aprobó para
@@ -39,7 +39,7 @@ export default function ContactoPage() {
           <div>
             <Eyebrow className="text-labs">{contactIntro.eyebrow}</Eyebrow>
 
-            <h1 className="mt-6 max-w-[14ch] text-[length:var(--text-h1)] font-bold leading-[1.05] tracking-[-0.02em] text-blue">
+            <h1 className="mt-6 max-w-[14ch] text-[length:var(--v2-hero-title)] font-normal leading-[1.08] tracking-[-0.02em] text-blue">
               {contactIntro.title}
             </h1>
 
@@ -67,7 +67,7 @@ export default function ContactoPage() {
               </ul>
             </address>
 
-            <p className="mt-8 max-w-[var(--measure-narrow)] text-[length:var(--text-body)] leading-relaxed text-gray-700">
+            <p className="mt-8 max-w-[var(--measure-narrow)] text-[length:var(--text-small)] leading-[1.85] text-gray-700">
               {contactIntro.note}
             </p>
           </div>

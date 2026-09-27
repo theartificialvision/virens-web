@@ -57,7 +57,10 @@ archivo si cambió algo de lo de abajo.
   alterno azul #00285C / verde #164E3B.
 - **Virens Labs es la Home:** la página `/virens-labs` se retiró y redirige
   permanentemente a `/`; menú, pie y enlaces cruzados apuntan ya a la Home.
-- **CTA «¿Hablamos de tu proyecto?»:** el mismo icono en Home, Tech y Compañía.
+- **CTA «¿Hablamos de tu proyecto?»:** el mismo componente (`CtaBand`) en Home, Tech y Compañía.
+- **Tipografía (27/09):** la home es la norma. Las páginas interiores usan su
+  escala (H1 `--v2-hero-title` peso normal, H2 `--text-h2` peso medio, cuerpo
+  `--text-small`/1,85) y su ritmo (`--v2-section`). Ver `HISTORIAL.md` (11).
 - El isotipo 3D **blanco** no va en ninguna parte (cliente). Los isotipos de
   color de cabecera y pie sí se quedan.
 

@@ -21,7 +21,7 @@ export function StatRow({
         <dl className="grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((s, i) => (
             <Reveal key={s.label} delay={i * 0.06} className="min-w-0">
-              <dd className="text-[length:var(--text-stat-compact)] font-bold leading-[1.05] tracking-[-0.02em]">
+              <dd className="text-[length:var(--text-stat-compact)] font-bold leading-none tracking-[-0.03em] tabular-nums">
                 {s.value}
                 {s.unit && <span className="ml-1 text-[0.45em] align-top">{s.unit}</span>}
               </dd>
