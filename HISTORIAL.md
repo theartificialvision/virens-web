@@ -2760,3 +2760,20 @@ vaivén medido ≈50 px, foco al deslizar, final), tablet 820 px y hover a 1440 
 - La cronología de Compañía se pinta del hito más reciente al más antiguo
   (2026 → 2000) en escritorio y móvil, en los dos idiomas. El contenido sigue
   en orden cronológico; `CompanyTimeline` lo invierte al pintar.
+
+### 2026-09-27 (25) — Claude — Compañía: iconos de línea redibujados
+
+- Los diez iconos de «Quiénes somos» y «Qué hacemos» (`CompanyIcon`) se
+  redibujan con un sistema común (rejilla 48, trazo 1,5, remates redondos,
+  caja óptica 7–41) y un detalle que cuenta cada idea: nave con diente de
+  sierra y chimenea (instalaciones propias), tres personas (equipo), escudo con
+  check (calidad, seguridad y control), hoja con nervios terminados en nodos
+  (nutrición y fitoterapia con ciencia), globo con órbita (internacional);
+  matraz (formulación), tres tubos en gradilla con niveles distintos
+  (muestras), cinta con frascos y boquilla de llenado (fabricación y envasado),
+  envase dentro de estuche abierto (acondicionado primario y secundario) y
+  lista verificada bajo lupa (control de calidad).
+- Se conserva `pathLength="1"` en cada trazo: la entrada sigue dibujándolos.
+
+**Verificado**: `npm run typecheck` limpio; hoja de revisión a 200 px y
+página en Chromium a 1440 y 390 px.
