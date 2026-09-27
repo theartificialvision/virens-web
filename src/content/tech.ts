@@ -52,8 +52,10 @@ export const integratedSolutions = {
 } as const;
 
 /**
- * Seis bloques independientes, alternando imagen/texto.
- * No son tarjetas: cada uno ocupa una sección completa con su propio aire.
+ * Los seis servicios. Desde el 27/09/2026 (cliente) se presentan en un slide
+ * que avanza con el scroll (`ServicesSlider`), uno por diapositiva, en lugar
+ * de seis bloques alternos. Los campos `imageSide`/`imageRatio`/`tone` solo
+ * los usa la versión anterior (`EditorialSplit`).
  */
 export const techServices: ServiceBlock[] = [
   {
@@ -143,6 +145,11 @@ export const techServices: ServiceBlock[] = [
     image: { src: '/img/tech-regulatory.jpg', alt: 'Documentación técnica y dosier de producto sobre una mesa de trabajo' },
   },
 ];
+
+/** Slide de servicios (27/09/2026). */
+export const techServicesSlider = {
+  label: 'Servicios de Virens Tech',
+} as const;
 
 export const techStats = [
   { value: '2023', label: 'Creación de Virens Tech y nuevo laboratorio de calidad' },

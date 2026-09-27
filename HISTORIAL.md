@@ -2394,3 +2394,33 @@ que los demás títulos de sección).
 
 **Verificado**: `npm run typecheck` limpio; /virens-tech y /virens-labs
 revisadas en Playwright a 1440 y 390 px, sin el lienzo del isotipo.
+
+### 2026-09-27 (3) — Claude (Cowork) — Virens Tech: fuera la barra de anclas y servicios en slide guiado por scroll
+
+- **Fuera la barra horizontal de anclas** de /virens-tech (cliente). Se borra
+  también `techAnchors` de `config/navigation.ts`, que ya no usaba nadie.
+- **Los seis servicios pasan a un slide** (`ServicesSlider` +
+  `ServiceSlide`) que sustituye a los seis bloques alternos `EditorialSplit`.
+  Referencias del cliente: su diseño de diapositiva («1. Formulación»: texto
+  a la izquierda sobre fondo claro con foto de laboratorio desenfocada, panel
+  de color a la derecha y la foto nítida montada entre los dos, filete
+  magenta debajo) y un GIF de transiciones (colores del GIF descartados).
+  - Decisiones del cliente (preguntadas): avanza **con el scroll** —la escena
+    se queda fija y cada tramo `--svc-step` (85svh) cambia de servicio—;
+    fondo = la foto de cada servicio en gris, desenfocada y aclarada; panel
+    en **verde oscuro #164E3B** (token nuevo `--color-green-deep`).
+  - Transiciones, todas CSS y disparadas por `data-active`: fundido del
+    fondo, cortina verde que sube por el panel, la foto se abre desde una
+    tira vertical (`clip-path`), titular palabra a palabra y filete que se
+    dibuja. Contador «01 — 06» y anillo de progreso en el panel (del GIF).
+  - Enlaces del pie a `#formulacion` / `#rd-galenicos`: en escritorio el id
+    cae dentro de la escena fija, así que el componente lleva el scroll al
+    tramo de ese servicio.
+  - Móvil: sin escena fija; los servicios se apilan (foto arriba, texto
+    debajo, fondo alterno hueso/gris). En escritorio las diapositivas
+    inactivas van `inert` + `aria-hidden`.
+  - `highlight` de cada servicio no se muestra (el diseño del cliente no lo
+    lleva); el enlace «Ver formas galénicas disponibles» sí.
+
+**Verificado**: `npm run typecheck` limpio; Playwright a 1440×900 (los seis
+tramos, mitad de transición, enlace con hash) y 390 px. Sin errores de consola.

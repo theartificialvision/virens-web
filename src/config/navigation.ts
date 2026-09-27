@@ -32,15 +32,6 @@ export const labsAnchors: NavItem[] = [
 ];
 
 /** Barra de anclas sticky de /virens-tech. */
-export const techAnchors: NavItem[] = [
-  { href: '#formulacion', label: 'Formulación' },
-  { href: '#rd-galenicos', label: 'R+D galénicos' },
-  { href: '#centro-de-sabores', label: 'Centro de sabores' },
-  { href: '#estabilidad', label: 'Estabilidad' },
-  { href: '#garantia-de-calidad', label: 'Garantía de calidad' },
-  { href: '#regulatory-consulting', label: 'Regulatory consulting' },
-];
-
 
 /** Pie de página, legales agrupados bajo /legal (§5.2, redirecciones §14). */
 export const legalNav: NavItem[] = [

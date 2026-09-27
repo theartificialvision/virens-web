@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
-import { AnchorNav } from '@/components/layout/AnchorNav';
 import { HeroVideo } from '@/components/sections/HeroVideo';
-import { EditorialSplit } from '@/components/sections/EditorialSplit';
+import { ServicesSlider } from '@/components/sections/ServicesSlider';
 import { TypographicBlock } from '@/components/sections/TypographicBlock';
 import { StatRow } from '@/components/sections/StatRow';
 import { DivisionSwitch } from '@/components/sections/DivisionSwitch';
@@ -9,8 +8,7 @@ import { CtaContact } from '@/components/sections/CtaContact';
 import { Section } from '@/components/ui/Section';
 import { Container } from '@/components/ui/Container';
 import { Eyebrow } from '@/components/ui/Eyebrow';
-import { techAnchors } from '@/config/navigation';
-import { crossLink, integratedSolutions, techHero, techIntro, techServices, techStats } from '@/content/tech';
+import { crossLink, integratedSolutions, techHero, techIntro, techServices, techServicesSlider, techStats } from '@/content/tech';
 
 export const metadata: Metadata = {
   title: 'Virens Tech · I+D y formulación de complementos',
@@ -21,8 +19,8 @@ export const metadata: Metadata = {
 
 /**
  * ONE PAGE de Virens Tech.
- * Los seis servicios son bloques independientes alternados imagen/texto,
- * nunca tarjetas en dos columnas.
+ * Los seis servicios van en un slide a pantalla completa guiado por el
+ * scroll (27/09/2026, cliente), nunca tarjetas en dos columnas.
  */
 export default function VirensTechPage() {
   return (
@@ -31,7 +29,7 @@ export default function VirensTechPage() {
       {/* 27/09/2026 (cliente): sin botón «Visitar Labs» en el hero. */}
       <HeroVideo {...techHero} moleculeVariant="tech" />
 
-      <AnchorNav items={techAnchors} division="tech" />
+      {/* 27/09/2026 (cliente): fuera la barra horizontal de anclas. */}
 
       {/* 02 */}
       <Section tone="white" rhythm="base">
@@ -65,10 +63,9 @@ export default function VirensTechPage() {
       {/* 03 — pausa tipográfica antes de la serie de servicios */}
       <TypographicBlock {...integratedSolutions} />
 
-      {/* 04–09 */}
-      {techServices.map((block) => (
-        <EditorialSplit key={block.id} block={block} accent="var(--color-tech)" />
-      ))}
+      {/* 04 — los seis servicios en un slide que avanza con el scroll
+          (27/09/2026, cliente; antes seis bloques alternos imagen/texto) */}
+      <ServicesSlider services={techServices} label={techServicesSlider.label} />
 
       {/* 10 */}
       <StatRow stats={techStats} tone="soft" accent="var(--color-labs)" />
