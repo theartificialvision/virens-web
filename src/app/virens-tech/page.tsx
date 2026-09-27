@@ -9,7 +9,6 @@ import { CtaContact } from '@/components/sections/CtaContact';
 import { Section } from '@/components/ui/Section';
 import { Container } from '@/components/ui/Container';
 import { Eyebrow } from '@/components/ui/Eyebrow';
-import { Button } from '@/components/ui/Button';
 import { techAnchors } from '@/config/navigation';
 import { crossLink, integratedSolutions, techHero, techIntro, techServices, techStats } from '@/content/tech';
 
@@ -29,13 +28,8 @@ export default function VirensTechPage() {
   return (
     <>
       {/* 01 */}
-      <HeroVideo {...techHero} moleculeVariant="tech">
-        <div className="inline-block">
-          <Button href={crossLink.href} variant="labs">
-            {crossLink.label} &rarr;
-          </Button>
-        </div>
-      </HeroVideo>
+      {/* 27/09/2026 (cliente): sin botón «Visitar Labs» en el hero. */}
+      <HeroVideo {...techHero} moleculeVariant="tech" />
 
       <AnchorNav items={techAnchors} division="tech" />
 

@@ -5,8 +5,6 @@ import { Container } from '@/components/ui/Container';
 import { Eyebrow } from '@/components/ui/Eyebrow';
 import { KineticHeading } from '@/components/ui/KineticHeading';
 import { MolecularField } from '@/components/ui/MolecularField';
-import { LogoSpin } from '@/components/ui/LogoSpin';
-import type { LogoKey } from '@/lib/types';
 
 interface HeroVideoProps {
   eyebrow: string;
@@ -17,10 +15,6 @@ interface HeroVideoProps {
   children?: React.ReactNode; // CTA opcional (p. ej. el enlace a la otra división)
   /** Campo molecular ambiental detrás del texto (pivote 2026-09-01). */
   moleculeVariant?: 'labs' | 'tech' | 'neutral';
-  /** Isotipo 3D de la división (07/09 (15)). Va en vidrio BLANCO, sin la rampa
-   *  de marca: aquí ya no hace falta identificar cuál es —lo dice el titular y
-   *  la URL—, así que el color sobraría y competiría con la fotografía. */
-  mark?: { logoKey: LogoKey; molecule: string };
 }
 
 /**
@@ -29,7 +23,7 @@ interface HeroVideoProps {
  * - El poster es la imagen LCP: el vídeo nunca bloquea la carga.
  * - Bajo `prefers-reduced-motion` o en pantallas pequeñas se muestra solo el poster.
  */
-export function HeroVideo({ eyebrow, title, subtitle, lead, video, children, moleculeVariant, mark }: HeroVideoProps) {
+export function HeroVideo({ eyebrow, title, subtitle, lead, video, children, moleculeVariant }: HeroVideoProps) {
   const ref = useRef<HTMLVideoElement>(null);
   const [play, setPlay] = useState(false);
   const hasVideo = Boolean(video.webm || video.mp4);
@@ -87,30 +81,13 @@ export function HeroVideo({ eyebrow, title, subtitle, lead, video, children, mol
               -0,02em—, solo un escalón mayor de cuerpo: allí el titular está
               obligado a una línea entre las dos moléculas y aquí tiene una
               columna de 7/12 para respirar. */}
-          {/* 23/09/2026 (cliente): el isotipo 3D va a la derecha del titular y un
-              25 % más pequeño (antes ocupaba sola la mitad derecha del hero, a
-              `min(26vw, 20rem)`). Solo desde lg: en columna única se echaría
-              encima del texto. El titular conserva su medida de 58ch. */}
-          <div className="mt-6 lg:flex lg:items-center lg:gap-[var(--hero-mark-gap)]">
-            <div className="max-w-[58ch]">
-              <KineticHeading
-                as="h1"
-                text={title}
-                className="text-[length:var(--text-display)] font-semibold leading-[1.1] tracking-[-0.02em] text-white"
-              />
-            </div>
-            {mark && (
-              <div aria-hidden className="pointer-events-none hidden shrink-0 lg:block">
-                <LogoSpin
-                  logo={mark.logoKey}
-                  spin={14}
-                  assemble={20}
-                  hold={3.5}
-                  className="aspect-square w-[var(--hero-mark)] opacity-90"
-                  sizes="(max-width: 1024px) 0px, 240px"
-                />
-              </div>
-            )}
+          {/* 27/09/2026 (cliente): sin isotipo 3D al lado del titular. */}
+          <div className="mt-6 max-w-[58ch]">
+            <KineticHeading
+              as="h1"
+              text={title}
+              className="text-[length:var(--text-display)] font-semibold leading-[1.1] tracking-[-0.02em] text-white"
+            />
           </div>
           <p className="mt-5 max-w-[58ch] text-[length:var(--text-lead)] font-normal leading-[1.5] text-white">{subtitle}</p>
           {lead && (

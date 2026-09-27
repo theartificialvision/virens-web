@@ -2377,3 +2377,20 @@ cabecera sobre el hero oscuro, sobre la barra de anclas y sobre texto claro.
 
 **Verificado**: `tsc --noEmit` limpio; revisado en el navegador (28 px, igual
 que los demás títulos de sección).
+
+### 2026-09-27 (2) — Claude (Cowork) — Virens Tech: portada nueva, fuera el isotipo 3D blanco y el botón «Visitar Labs»
+
+- **Portada de Virens Tech:** foto nueva del cliente (`portada virens tech.png`,
+  1679×937), tintada en duotono de marca —sombras #00285C, luces azul muy
+  claro, un 12 % del color original para que no quede plana— y servida en
+  WebP (`public/img/tech-hero-portada.webp`, 83 KB). El PNG tintado queda en
+  `material/fotos-ia/` del proyecto.
+- **Isotipo 3D blanco retirado** de los heros de Labs y Tech (cliente: «no va
+  ni ahí ni en ningún lado»). Era el único sitio donde aparecía en blanco; los
+  isotipos de cabecera y pie van en color (`Isotipo3D`, `branded`) y se
+  quedan. `HeroVideo` pierde la prop `mark` y los tokens `--hero-mark*`.
+- **Hero de Tech sin el botón «Visitar Labs».** El banner cruzado del final de
+  la página (`DivisionSwitch`) se mantiene.
+
+**Verificado**: `npm run typecheck` limpio; /virens-tech y /virens-labs
+revisadas en Playwright a 1440 y 390 px, sin el lienzo del isotipo.

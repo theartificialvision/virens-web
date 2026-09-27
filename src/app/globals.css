@@ -740,13 +740,6 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   --v2-menu-h: 1rem;      /* 16 */
 }
 
-/* Isotipo 3D de los heros de Labs/Tech, junto al titular (23/09/2026):
-   25 % menos que antes (era min(26vw, 20rem)). */
-@theme {
-  --hero-mark:     min(19.5vw, 15rem);
-  --hero-mark-gap: clamp(2rem, 1rem + 2vw, 3.5rem);
-}
-
 /* Cabecera en vidrio líquido (23/09/2026, petición del cliente). Material
    propio y no `.glass`: aquel es oscuro-translúcido para flotar sobre foto;
    esta barra vive sobre contenido claro y oscuro y tiene que seguir leyéndose
