@@ -2641,3 +2641,8 @@ servicios y las certificaciones de Tech y Home).
 - Se quita de la home la línea «Pasa el cursor / Toca un formato para ver su
   tamaño» bajo el texto de Capacidad productiva (cliente: «solo eso»). La
   interacción sigue igual; el texto queda en `v2Capacity.hint` sin usarse.
+
+### 2026-09-27 (16) — Claude — CTA: botón centrado en móvil
+
+- `CtaBand` («¿Hablamos de tu proyecto?», en Home, Tech y Compañía): en móvil
+  el botón «Contactar ahora» va centrado; en escritorio sigue a la derecha.

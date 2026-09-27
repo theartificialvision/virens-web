@@ -4,7 +4,8 @@ import { CircleIcon } from './GalenicIcon';
 import { v2Cta } from '@/content/v2-home';
 import { SectionTitle } from './SectionTitle';
 
-/** Cierre de página (§ maqueta, bloque 07): icono, dos líneas y un botón. */
+/** Cierre de página (§ maqueta, bloque 07): icono, dos líneas y un botón.
+ *  En móvil el botón va centrado (27/09/2026, cliente). */
 export function CtaBand() {
   return (
     <section className="bg-gray-100 text-blue">
@@ -19,7 +20,7 @@ export function CtaBand() {
           </div>
         </div>
 
-        <Reveal delay={0.12} className="self-start md:self-auto">
+        <Reveal delay={0.12} className="self-center md:self-auto">
           <Button href={v2Cta.href} variant="labs">
             {v2Cta.button} <span aria-hidden>&rarr;</span>
           </Button>
