@@ -1,4 +1,3 @@
-import type { Metadata } from 'next';
 import { HeroVideo } from '@/components/sections/HeroVideo';
 import { ServicesSlider } from '@/components/sections/ServicesSlider';
 import { TypographicBlock } from '@/components/sections/TypographicBlock';
@@ -7,14 +6,8 @@ import { CertStrip } from '@/components/v2/CertStrip';
 import { Section } from '@/components/ui/Section';
 import { Container } from '@/components/ui/Container';
 import { Reveal } from '@/components/ui/Reveal';
-import { integratedSolutions, techHero, techIntro, techServices, techServicesSlider } from '@/content/tech';
-
-export const metadata: Metadata = {
-  title: 'Virens Tech · Desarrollo y formulación',
-  description:
-    'Formulación, R+D galénicos, centro de sabores, estabilidad, control de calidad y consultoría regulatoria.',
-  alternates: { canonical: '/virens-tech' },
-};
+import { techContent } from '@/content';
+import type { Locale } from '@/lib/i18n';
 
 /**
  * ONE PAGE de Virens Tech. 27/09/2026 (cliente: «siento que se repiten
@@ -25,7 +18,8 @@ export const metadata: Metadata = {
  * magenta, la franja de cifras (repetía datos de Home y Compañía) y el
  * puente «Visitar Labs» (Labs es la Home, a un toque desde el menú).
  */
-export default function VirensTechPage() {
+export function TechView({ locale }: { locale: Locale }) {
+  const { integratedSolutions, techHero, techIntro, techServices, techServicesSlider } = techContent(locale);
   return (
     <>
       <HeroVideo {...techHero} moleculeVariant="tech" />
@@ -47,9 +41,9 @@ export default function VirensTechPage() {
       {/* Los seis servicios en un slide guiado por el scroll (27/09/2026). */}
       <ServicesSlider services={techServices} label={techServicesSlider.label} />
 
-      <CertStrip />
+      <CertStrip locale={locale} />
 
-      <CtaBand />
+      <CtaBand locale={locale} />
     </>
   );
 }

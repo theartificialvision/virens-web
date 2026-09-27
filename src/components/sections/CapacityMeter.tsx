@@ -43,7 +43,7 @@ export function CapacityMeter({ item, index }: { item: CapacityItem; index: numb
         <p className="mt-3 text-[length:var(--text-stat-compact)] font-bold leading-none tracking-[-0.02em] text-labs tabular-nums">
           <span aria-hidden>
             {fig.prefix}
-            {formatFigure(fig.value * t, fig.grouped)}
+            {formatFigure(fig.value * t, fig.grouped, fig.sep)}
             {fig.suffix}
           </span>
           <span className="sr-only">{item.units}</span>
@@ -71,7 +71,7 @@ export function CapacityStat({
       <dd className="text-[length:var(--text-stat-compact)] font-bold leading-none tracking-[-0.03em] tabular-nums">
         <span aria-hidden>
           {fig.prefix}
-          {formatFigure(fig.value * t, fig.grouped)}
+          {formatFigure(fig.value * t, fig.grouped, fig.sep)}
           {fig.suffix}
         </span>
         <span className="sr-only">{stat.value}</span>

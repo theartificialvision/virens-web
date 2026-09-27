@@ -1,4 +1,5 @@
-import { v2Areas } from '@/content/v2-home';
+import { homeContent } from '@/content';
+import type { Locale } from '@/lib/i18n';
 import { SectionTitle } from './SectionTitle';
 
 /**
@@ -13,7 +14,8 @@ import { SectionTitle } from './SectionTitle';
  */
 const ACCENT = ['text-white', 'text-labs-glow', 'text-white', 'text-tech-glow'] as const;
 
-export function AreasMarquee() {
+export function AreasMarquee({ locale }: { locale: Locale }) {
+  const { v2Areas } = homeContent(locale);
   const items = v2Areas.items;
 
   return (

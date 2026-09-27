@@ -1,12 +1,14 @@
 import { Button } from '@/components/ui/Button';
 import { Reveal } from '@/components/ui/Reveal';
 import { CircleIcon } from './GalenicIcon';
-import { v2Cta } from '@/content/v2-home';
+import { homeContent } from '@/content';
+import type { Locale } from '@/lib/i18n';
 import { SectionTitle } from './SectionTitle';
 
 /** Cierre de página (§ maqueta, bloque 07): icono, dos líneas y un botón.
  *  En móvil el botón va centrado (27/09/2026, cliente). */
-export function CtaBand() {
+export function CtaBand({ locale }: { locale: Locale }) {
+  const { v2Cta } = homeContent(locale);
   return (
     <section className="bg-gray-100 text-blue">
       <div className="mx-auto flex w-full max-w-[var(--container-max)] flex-col gap-8 px-5 py-[var(--v2-section-tight)] md:flex-row md:items-center md:justify-between md:px-8 lg:px-12 2xl:px-20">

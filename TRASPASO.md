@@ -73,7 +73,42 @@ archivo si cambió algo de lo de abajo.
 - El isotipo 3D **blanco** no va en ninguna parte (cliente). Los isotipos de
   color de cabecera y pie sí se quedan.
 
+## Idiomas (desde el 27/09/2026)
+
+- **ES + EN.** Español en la raíz (`/`, `/compania`, `/virens-tech`,
+  `/noticias`, `/contacto`); inglés con rutas traducidas, las mismas que ya
+  publica lvirens.com (`/en`, `/en/company`, `/en/virens-tech`, `/en/news`,
+  `/en/contact`). Mapa de rutas y utilidades en `src/lib/i18n.ts`.
+- **Estructura:** cada idioma tiene su layout raíz (`src/app/(es)/layout.tsx`,
+  `src/app/en/layout.tsx`, con `<html lang>` correcto). Las páginas son
+  «vistas» en `src/views/*View.tsx` que reciben `locale`; las rutas solo las
+  montan. Los componentes reciben `locale` y piden el texto a
+  `src/content/index.ts` (`homeContent(locale)`, etc.). Textos de interfaz
+  (menú, pie, metadatos) en `src/content/ui.ts`.
+- **Contenido inglés:** `src/content/en/*.ts`, obligado por tipo a tener las
+  mismas claves que el español (si falta un texto, no compila). Origen de cada
+  texto (`[EN]` literal web actual, `[IMG]` literal de imagen, `[TR]` traducción
+  de Claude **pendiente de revisión**) y lista de pendientes en
+  `docs/i18n-ingles.md`.
+- **Añadir un idioma:** columna en `routes` (`src/lib/i18n.ts`) + `src/content/<xx>/`
+  + entrada en `ui.ts` + carpeta `src/app/<xx>/`.
+- Selector ES / EN dentro del menú: lleva a la misma página en el otro idioma.
+- Redirecciones: `/en/virens-labs` → `/en`; `/ca/*` → `/`; `/fr/*`, `/it/*`,
+  `/zh-hans/*` → `/en` (`next.config.mjs`).
+- `next build` local: sin red a Google Fonts falla; se puede compilar con
+  `NEXT_FONT_GOOGLE_MOCKED_RESPONSES=<archivo>` (ver HISTORIAL 19).
+
 ## Pendiente / preguntas abiertas
+
+- **Copia del Mac desactualizada desde el 27/09 (i18n):** GitHub `v2` está al
+  día; la carpeta `web/` del Mac no, porque la fase i18n movió archivos
+  (`src/app/page.tsx` → `src/app/(es)/page.tsx`, etc.) y sin terminal no se
+  pudieron borrar los viejos. Antes de trabajar en local: en `web/`,
+  `git fetch origin v2 && git reset --hard origin/v2` (necesita permiso de
+  borrado en la carpeta). No publicar desde el Mac hasta hacerlo.
+- **Páginas legales**: no existen aún en ningún idioma (`/legal/*`,
+  `/en/legal/*`); pie, formulario y redirecciones ya apuntan ahí.
+- **Revisión del inglés `[TR]`** por el cliente: `docs/i18n-ingles.md`.
 
 - Compañía: el hito 2026 de la historia repite literalmente el texto de 2023
   (viene así de la maqueta). Pedir el texto real o quitar el hito.

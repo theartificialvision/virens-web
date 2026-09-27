@@ -97,6 +97,12 @@ export const companyResearch = {
   ],
 } as const;
 
+/** Textos alternativos de las fotos de fondo de «Qué hacemos» y de la historia. */
+export const companyImages = {
+  process: 'Línea de producción de Laboratorios Virens',
+  history: 'Trabajo de formulación en el laboratorio de Laboratorios Virens',
+} as const;
+
 /**
  * Línea de tiempo. En la web actual este contenido SOLO existe dentro del PNG
  * `historia-desktop-1.png`: invisible para buscadores y lectores de pantalla.

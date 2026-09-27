@@ -1,4 +1,3 @@
-import type { Metadata } from 'next';
 import { Hero } from '@/components/v2/Hero';
 import { DualServices } from '@/components/v2/DualServices';
 import { GalenicBlock } from '@/components/v2/GalenicBlock';
@@ -6,12 +5,7 @@ import { CapacityBlock } from '@/components/v2/CapacityBlock';
 import { AreasMarquee } from '@/components/v2/AreasMarquee';
 import { CertStrip } from '@/components/v2/CertStrip';
 import { CtaBand } from '@/components/v2/CtaBand';
-
-export const metadata: Metadata = {
-  title: 'Expertos en complementos alimenticios',
-  description:
-    'Fabricación por contrato y desarrollo de complementos alimenticios. Más de 2.000 m² de instalaciones propias en Sant Andreu de la Barca, Barcelona.',
-};
+import type { Locale } from '@/lib/i18n';
 
 /**
  * HOME V2 — reconstrucción de la maqueta del cliente (22/09/2026),
@@ -28,17 +22,17 @@ export const metadata: Metadata = {
  *   07 CTA                                 gris
  * Ningún bloque repite el fondo del anterior (regla 5 del proyecto).
  */
-export default function HomePage() {
+export function HomeView({ locale }: { locale: Locale }) {
   return (
     <div className="v2-root">
       <div className="v2-page">
-        <Hero />
-        <DualServices />
-        <GalenicBlock />
-        <CapacityBlock />
-        <AreasMarquee />
-        <CertStrip />
-        <CtaBand />
+        <Hero locale={locale} />
+        <DualServices locale={locale} />
+        <GalenicBlock locale={locale} />
+        <CapacityBlock locale={locale} />
+        <AreasMarquee locale={locale} />
+        <CertStrip locale={locale} />
+        <CtaBand locale={locale} />
       </div>
     </div>
   );

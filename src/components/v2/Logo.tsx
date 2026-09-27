@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { Isotipo3D } from './Isotipo3D';
+import { ui } from '@/content';
+import { pathFor, type Locale } from '@/lib/i18n';
 
 /**
  * Lockup de cabecera: isotipo + wordmark.
@@ -11,12 +13,12 @@ import { Isotipo3D } from './Isotipo3D';
  * marca (azul #014166 y «LABS» en #00A099). Tech no tiene aún wordmark
  * oficial y sigue compuesto en Montserrat.
  */
-export function Logo({ className, division = 'labs' }: { className?: string; division?: 'labs' | 'tech' }) {
+export function Logo({ className, division = 'labs', locale }: { className?: string; division?: 'labs' | 'tech'; locale: Locale }) {
   return (
     <Link
-      href="/"
+      href={pathFor('home', locale)}
       className={cn('inline-flex items-end gap-3', className)}
-      aria-label={division === 'labs' ? 'Virens Labs — inicio' : 'Virens Tech — inicio'}
+      aria-label={ui[locale].logoAria[division]}
     >
       <Isotipo3D division={division} className="-mx-5 -my-4 size-[var(--v2-logo-3d)]" />
       {division === 'labs' ? (

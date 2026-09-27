@@ -3,7 +3,8 @@ import type { CSSProperties } from 'react';
 import { Reveal } from '@/components/ui/Reveal';
 import { GalenicIcon } from './GalenicIcon';
 import { SectionTitle } from './SectionTitle';
-import { v2Galenic } from '@/content/v2-home';
+import { homeContent } from '@/content';
+import type { Locale } from '@/lib/i18n';
 
 /**
  * Formas galénicas (§ maqueta, bloque 03), en dos pisos desde el 27/09/2026:
@@ -19,7 +20,8 @@ import { v2Galenic } from '@/content/v2-home';
  * abajo arriba al entrar la franja y, con cursor, el formato señalado se
  * adelanta —zoom— mientras los demás retroceden. CSS: `.v2-gal` en globals.
  */
-export function GalenicBlock() {
+export function GalenicBlock({ locale }: { locale: Locale }) {
+  const { v2Galenic } = homeContent(locale);
   return (
     <section id="formas-galenicas" className="bg-labs text-white">
       <div className="relative">

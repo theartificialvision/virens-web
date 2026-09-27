@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
-import { v2Hero } from '@/content/v2-home';
+import { homeContent } from '@/content';
+import type { Locale } from '@/lib/i18n';
 
 /** Orden de entrada en la carga (`.v2-load`, globals.css): 0, 1, 2… */
 const stagger = (i: number) => ({ '--i': i }) as CSSProperties;
@@ -14,7 +15,8 @@ const stagger = (i: number) => ({ '--i': i }) as CSSProperties;
  * `prefers-reduced-motion` el navegador se queda en el póster porque
  * `autoPlay` solo arranca la reproducción, no la exige.
  */
-export function Hero() {
+export function Hero({ locale }: { locale: Locale }) {
+  const { v2Hero } = homeContent(locale);
   return (
     <section className="relative isolate flex min-h-[clamp(30rem,72vh,44rem)] items-end overflow-hidden bg-blue">
       {/* El material real tira a verde (luz de la nave): se desatura y se sube

@@ -2,7 +2,8 @@
 
 import { useRef, useState } from 'react';
 import { ContactIcon } from '@/components/ui/ContactIcon';
-import { contactForm } from '@/content/contacto';
+import { contactContent } from '@/content';
+import type { Locale } from '@/lib/i18n';
 
 /**
  * Zona de adjunto del formulario de contacto. Vive aparte de `ContactForm`
@@ -13,7 +14,8 @@ import { contactForm } from '@/content/contacto';
  * puede tener la composición del mockup (icono, rótulo, pista y límite) sin
  * renunciar a un control nativo, que es lo que entiende el teclado.
  */
-export function ContactAttach() {
+export function ContactAttach({ locale }: { locale: Locale }) {
+  const { contactForm } = contactContent(locale);
   const input = useRef<HTMLInputElement>(null);
   const [fileName, setFileName] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);

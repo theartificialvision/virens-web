@@ -1,17 +1,11 @@
-import type { Metadata } from 'next';
 import Image from 'next/image';
 import { ContactForm } from '@/components/sections/ContactForm';
 import { Section } from '@/components/ui/Section';
 import { Container } from '@/components/ui/Container';
 import { ContactIcon } from '@/components/ui/ContactIcon';
 import { Eyebrow } from '@/components/ui/Eyebrow';
-import { contactDepartments, contactDetails, contactFields, contactIntro } from '@/content/contacto';
-
-export const metadata: Metadata = {
-  title: 'Contacto',
-  description: 'Sant Andreu de la Barca, Barcelona. (+34) 936 828 972. Cuéntenos su proyecto de fabricación o desarrollo.',
-  alternates: { canonical: '/contacto' },
-};
+import { contactContent } from '@/content';
+import type { Locale } from '@/lib/i18n';
 
 /**
  * CONTACTO — composición del mockup del cliente (`contactos.png`, 06/09/2026):
@@ -20,7 +14,8 @@ export const metadata: Metadata = {
  *
  * El envío del formulario NO está configurado: ver `ContactForm`.
  */
-export default function ContactoPage() {
+export function ContactView({ locale }: { locale: Locale }) {
+  const { contactDepartments, contactDetails, contactFields, contactIntro } = contactContent(locale);
   return (
     <Section tone="white" rhythm="air" className="contact-stage">
       {/* 06/09 (8): fuera la de la sesión Midjourney. Era una nave genérica de
@@ -72,7 +67,7 @@ export default function ContactoPage() {
             </p>
           </div>
 
-          <ContactForm departments={contactDepartments} fields={contactFields} />
+          <ContactForm departments={contactDepartments} fields={contactFields} locale={locale} />
         </div>
       </Container>
     </Section>

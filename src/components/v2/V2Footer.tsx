@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { site } from '@/config/site';
-import { v2FooterNav } from '@/content/v2-home';
+import { homeContent, ui } from '@/content';
+import type { Locale } from '@/lib/i18n';
 import { Isotipo3D } from './Isotipo3D';
 
 /**
@@ -9,7 +10,9 @@ import { Isotipo3D } from './Isotipo3D';
  * "© 2024" fijo de la maqueta — ese venía heredado de la web actual, que lleva
  * dos años sin actualizarlo.
  */
-export function V2Footer() {
+export function V2Footer({ locale }: { locale: Locale }) {
+  const { v2FooterNav } = homeContent(locale);
+  const t = ui[locale];
   return (
     <footer className="bg-blue text-white">
       <div className="mx-auto w-full max-w-[var(--container-max)] px-5 py-16 md:px-8 lg:px-12 lg:py-20 2xl:px-20">
@@ -44,14 +47,13 @@ export function V2Footer() {
         </div>
 
         <div className="mt-14 flex flex-col gap-4 border-t border-white/15 pt-7 text-[length:var(--text-note)] text-white/55 md:flex-row md:items-center md:justify-between">
-          <p>&copy; {new Date().getFullYear()} Virens Labs &amp; Tech. Todos los derechos reservados.</p>
+          <p>&copy; {new Date().getFullYear()} Virens Labs &amp; Tech. {t.footer.rights}</p>
           <ul className="flex flex-wrap gap-x-7 gap-y-2">
-            <li>
-              <Link href="/legal/aviso-legal" className="hover:text-white">Aviso legal</Link>
-            </li>
-            <li>
-              <Link href="/legal/politica-de-privacidad" className="hover:text-white">Política de privacidad</Link>
-            </li>
+            {t.footer.legal.map((l) => (
+              <li key={l.href}>
+                <Link href={l.href} className="hover:text-white">{l.label}</Link>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

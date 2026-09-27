@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef } from 'react';
-import { mainNav } from '@/config/navigation';
+import { ui } from '@/content';
+import { locales, switchLocale, type Locale } from '@/lib/i18n';
 import { site } from '@/config/site';
 import { cn, EASE_OUT_QUART } from '@/lib/utils';
 import { usePrefersReducedMotion } from '@/lib/useReducedMotion';
@@ -33,7 +34,8 @@ function getFocusable(container: HTMLElement): HTMLElement[] {
  * `prefers-reduced-motion` (regla 8): sin deslizamiento ni escalonado, un
  * fundido.
  */
-export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => void }) {
+export function MenuOverlay({ open, onClose, locale }: { open: boolean; onClose: () => void; locale: Locale }) {
+  const t = ui[locale];
   const panelRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
   const reduced = usePrefersReducedMotion();
@@ -97,7 +99,7 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
           tabIndex={-1}
           role="dialog"
           aria-modal="true"
-          aria-label="Menú principal"
+          aria-label={t.menuAria}
           // `glass menu-glass`: el material del sistema (globals.css) con el
           // cuerpo en azul profundo. Desenfoque, saturación, filo especular y
           // sombra salen de ahí — antes estaban escritos a mano aquí y eran un
@@ -121,15 +123,16 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
             }}
           />
 
-          {/* El aspa de cerrar es el trigger, que flota encima: esta franja
-              solo le reserva el hueco (pr) para no pasarle por debajo. */}
-          <div className="flex shrink-0 items-center px-7 pb-6 pr-24 pt-6 lg:pt-[1.625rem]">
-            <LocaleSwitch />
+          {/* 27/09/2026: la cabecera sticky (z-70) queda por encima de la
+              franja y tapaba esta fila; el selector de idioma arranca ahora
+              justo debajo de ella. */}
+          <div className="flex shrink-0 items-center px-7 pb-2 pt-[calc(var(--v2-header)+1.5rem)]">
+            <LocaleSwitch locale={locale} pathname={pathname} onNavigate={onClose} />
           </div>
 
           <nav className="flex min-h-0 flex-1 flex-col justify-center overflow-y-auto px-7 py-4">
             <ul>
-              {mainNav.map((item, i) => {
+              {t.mainNav.map((item, i) => {
                 const active = pathname === item.href;
                 const accent =
                   item.division === 'labs'
@@ -211,15 +214,32 @@ export function MenuOverlay({ open, onClose }: { open: boolean; onClose: () => v
 }
 
 /**
- * Trasladado aquí desde `Header` el 2026-09-02 (petición del cliente: fuera
- * de la cabecera fija, junto al trigger). Vive siempre sobre la franja azul
- * del menú, por eso ya no necesita la variante clara/oscura del header.
+ * Selector de idioma, dentro del panel del menú (2026-09-02). Desde el
+ * 27/09/2026 enlaza a la misma página en el otro idioma (`switchLocale`):
+ * /compania ⇄ /en/company, etc. El idioma actual va marcado, no enlazado.
  */
-function LocaleSwitch() {
+function LocaleSwitch({ locale, pathname, onNavigate }: { locale: Locale; pathname: string; onNavigate: () => void }) {
   return (
-    <div className="flex items-center gap-3 text-[length:var(--text-note)] font-semibold tracking-label text-white">
-      {/* EN se oculta hasta que existan sus rutas en la fase de i18n. */}
-      <span aria-current="true">ES</span>
-    </div>
+    <ul className="flex items-center gap-3 text-[length:var(--text-note)] font-semibold tracking-label text-white">
+      {locales.map((l, i) => (
+        <li key={l} className="flex items-center gap-3">
+          {i > 0 && <span aria-hidden className="text-white/30">/</span>}
+          {l === locale ? (
+            <span aria-current="true" lang={ui[l].htmlLang}>{l.toUpperCase()}</span>
+          ) : (
+            <Link
+              href={switchLocale(pathname, l)}
+              hrefLang={ui[l].htmlLang}
+              lang={ui[l].htmlLang}
+              aria-label={ui[l].localeName}
+              onClick={onNavigate}
+              className="text-white/55 transition-colors hover:text-white"
+            >
+              {l.toUpperCase()}
+            </Link>
+          )}
+        </li>
+      ))}
+    </ul>
   );
 }

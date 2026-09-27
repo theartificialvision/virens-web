@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { Reveal } from '@/components/ui/Reveal';
-import { v2Services } from '@/content/v2-home';
+import { homeContent } from '@/content';
+import type { Locale } from '@/lib/i18n';
 import { SectionTitle } from './SectionTitle';
 
 /**
@@ -17,7 +18,8 @@ import { SectionTitle } from './SectionTitle';
  * La calle entre fotos es relleno interior de cada columna, no `gap`, para que
  * el panel gris de abajo no se corte.
  */
-export function DualServices() {
+export function DualServices({ locale }: { locale: Locale }) {
+  const { v2Services } = homeContent(locale);
   return (
     <section className="bg-white text-blue">
       <div className="mx-auto w-full max-w-[var(--container-max)] px-5 py-[var(--v2-section)] md:px-8 lg:px-12 2xl:px-20">

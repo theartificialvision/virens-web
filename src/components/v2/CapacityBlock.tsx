@@ -1,6 +1,7 @@
 import { Reveal } from '@/components/ui/Reveal';
 import { CapacityMeter, CapacityStat } from '@/components/sections/CapacityMeter';
-import { v2Capacity } from '@/content/v2-home';
+import { homeContent } from '@/content';
+import type { Locale } from '@/lib/i18n';
 import { SectionTitle } from './SectionTitle';
 import { CapacityFormats } from './CapacityFormats';
 
@@ -9,7 +10,8 @@ import { CapacityFormats } from './CapacityFormats';
  * que crecen por tamaños; después, la escala industrial de Labs con sus tres
  * magnitudes generales y las capacidades numéricas por formato.
  */
-export function CapacityBlock() {
+export function CapacityBlock({ locale }: { locale: Locale }) {
+  const { v2Capacity } = homeContent(locale);
   return (
     <section id="capacidad-productiva" className="text-blue">
       <div className="bg-white">
@@ -26,7 +28,7 @@ export function CapacityBlock() {
           </div>
 
           <Reveal delay={0.12} className="min-w-0 flex-1">
-            <CapacityFormats />
+            <CapacityFormats locale={locale} />
           </Reveal>
         </div>
       </div>

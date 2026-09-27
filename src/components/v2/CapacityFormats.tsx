@@ -1,7 +1,8 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { v2Capacity } from '@/content/v2-home';
+import { homeContent } from '@/content';
+import type { Locale } from '@/lib/i18n';
 import { CAPACITY_SHAPES } from '@/lib/capacityShapes';
 import { usePrefersReducedMotion } from '@/lib/useReducedMotion';
 import { FormatIcon } from './FormatIcon';
@@ -14,8 +15,8 @@ const TOUCH_PAUSE = 6000;
  * Formatos que crecen por sus tamaños. Con cursor se activan por hover/foco;
  * en táctil recorren la lista automáticamente y también responden al toque.
  */
-export function CapacityFormats() {
-  const items = v2Capacity.formats;
+export function CapacityFormats({ locale }: { locale: Locale }) {
+  const items = homeContent(locale).v2Capacity.formats;
   const reduced = usePrefersReducedMotion();
   const listRef = useRef<HTMLUListElement>(null);
   const timers = useRef<number[]>([]);

@@ -8,15 +8,17 @@ import { CompanyHistoryList } from './CompanyHistoryList';
 export function CompanyTimeline({
   heading,
   entries,
+  imageAlt,
 }: {
   heading: { index: string; title: string };
   entries: TimelineEntry[];
+  imageAlt: string;
 }) {
   return (
     <section id="historia" className="relative isolate overflow-hidden text-white" data-header-tone="dark">
       <Image
         src="/img/tech-formulacion.jpg"
-        alt="Trabajo de formulación en el laboratorio de Laboratorios Virens"
+        alt={imageAlt}
         fill
         sizes="100vw"
         className="-z-20 object-cover grayscale"

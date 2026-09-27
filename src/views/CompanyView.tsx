@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import type { CSSProperties } from 'react';
-import type { Metadata } from 'next';
 import { CompanyHero } from '@/components/sections/CompanyHero';
 import { CompanyIcon, type CompanyIconName } from '@/components/sections/CompanyIcon';
 import { CompanySectionHeading } from '@/components/sections/CompanySectionHeading';
@@ -9,25 +8,14 @@ import { CtaBand } from '@/components/v2/CtaBand';
 import { Section } from '@/components/ui/Section';
 import { Container } from '@/components/ui/Container';
 import { Reveal } from '@/components/ui/Reveal';
-import {
-  companyIntro,
-  companyResearch,
-  companySections,
-  pillars,
-  timeline,
-  valueChain,
-} from '@/content/company';
+import { companyContent } from '@/content';
+import type { Locale } from '@/lib/i18n';
 
-export const metadata: Metadata = {
-  title: 'Compañía',
-  description: 'Más de 20 años desarrollando y fabricando complementos alimenticios con instalaciones propias, I+D y control de calidad.',
-  alternates: { canonical: '/compania' },
-};
-
-export default function CompaniaPage() {
+export function CompanyView({ locale }: { locale: Locale }) {
+  const { companyIntro, companyResearch, companySections, companyImages, pillars, timeline, valueChain } = companyContent(locale);
   return (
     <>
-      <CompanyHero />
+      <CompanyHero locale={locale} />
 
       <Section id="quienes-somos" tone="white" rhythm="air">
         <Container>
@@ -69,7 +57,7 @@ export default function CompaniaPage() {
       </Section>
 
       <section id="que-hacemos" className="company-process relative isolate overflow-hidden bg-blue text-white" data-header-tone="dark">
-        <Image src="/img/labs-planta.jpg" alt="Línea de producción de Laboratorios Virens" fill sizes="100vw" className="-z-30 object-cover grayscale" />
+        <Image src="/img/labs-planta.jpg" alt={companyImages.process} fill sizes="100vw" className="-z-30 object-cover grayscale" />
         <span aria-hidden className="absolute inset-0 -z-20 bg-blue/[0.92] mix-blend-multiply" />
         <span aria-hidden className="absolute inset-0 -z-10 bg-blue/[0.35]" />
         <Container className="py-[var(--v2-section)]">
@@ -125,9 +113,9 @@ export default function CompaniaPage() {
         </Container>
       </Section>
 
-      <CompanyTimeline heading={companySections.history} entries={timeline} />
+      <CompanyTimeline heading={companySections.history} entries={timeline} imageAlt={companyImages.history} />
 
-      <CtaBand />
+      <CtaBand locale={locale} />
     </>
   );
 }

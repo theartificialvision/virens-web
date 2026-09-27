@@ -70,22 +70,25 @@ export function useLoadProgress<T extends Element>(
   return t;
 }
 
-/** Separa «200M» / «+2.000» en prefijo, número y sufijo para contarlo. */
-export function parseFigure(raw: string): { prefix: string; value: number; suffix: string; grouped: boolean } {
+/** Separa «200M» / «+2.000» / «+2,000» en prefijo, número y sufijo para contarlo.
+ *  El separador de miles se respeta: punto en español, coma en inglés. */
+export function parseFigure(raw: string): { prefix: string; value: number; suffix: string; grouped: boolean; sep: string } {
   const m = raw.match(/^([^\d]*)([\d.,]+)(.*)$/);
-  if (!m) return { prefix: '', value: 0, suffix: raw, grouped: false };
+  if (!m) return { prefix: '', value: 0, suffix: raw, grouped: false, sep: '.' };
   const digits = m[2] ?? '';
-  const grouped = /\d\.\d{3}/.test(digits);
+  const group = digits.match(/\d([.,])\d{3}(?!\d)/);
+  const sep = group?.[1] ?? '.';
   return {
     prefix: m[1] ?? '',
-    value: Number(digits.replace(/\./g, '').replace(',', '.')),
+    value: Number(group ? digits.split(sep).join('') : digits.replace(',', '.')),
     suffix: m[3] ?? '',
-    grouped,
+    grouped: Boolean(group),
+    sep,
   };
 }
 
-/** Formatea el valor intermedio igual que el literal (miles con punto si lo llevaba). */
-export function formatFigure(value: number, grouped: boolean): string {
-  const n = Math.round(value);
-  return grouped ? n.toLocaleString('es-ES', { useGrouping: 'always' }) : String(n);
+/** Formatea el valor intermedio igual que el literal (miles con su separador si lo llevaba). */
+export function formatFigure(value: number, grouped: boolean, sep = '.'): string {
+  const n = String(Math.round(value));
+  return grouped ? n.replace(/\B(?=(\d{3})+(?!\d))/g, sep) : n;
 }

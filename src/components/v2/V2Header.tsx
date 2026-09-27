@@ -6,7 +6,8 @@ import { cn } from '@/lib/utils';
 import { MenuOverlay } from '@/components/layout/MenuOverlay';
 import { Logo } from './Logo';
 import { MenuGlyph3D } from './MenuGlyph3D';
-import { v2Menu } from '@/content/v2-home';
+import { homeContent } from '@/content';
+import type { Locale } from '@/lib/i18n';
 
 /**
  * Cabecera de la home V2: barra de vidrio líquido claro (`.header-glass`,
@@ -17,7 +18,8 @@ import { v2Menu } from '@/content/v2-home';
  * El panel del menú es el mismo de V1 (`MenuOverlay`): la franja vertical de
  * vidrio azul no depende del sistema claro/oscuro de la página que hay debajo.
  */
-export function V2Header() {
+export function V2Header({ locale }: { locale: Locale }) {
+  const { v2Menu } = homeContent(locale);
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   // Hover/foco de teclado del botón: el icono 3D tiene su propia pose de hover.
@@ -35,7 +37,7 @@ export function V2Header() {
     <>
       <header className="v2-fade header-glass sticky top-0 z-[70]">
         <div className="mx-auto flex h-[var(--v2-header)] w-full max-w-[var(--container-max)] items-center justify-between px-5 md:px-8 lg:px-12 2xl:px-20">
-          <Logo />
+          <Logo locale={locale} />
 
           <button
             ref={triggerRef}
@@ -51,13 +53,13 @@ export function V2Header() {
             onBlur={() => setHot(false)}
             className="-mr-3 flex h-11 items-center gap-3 rounded-full px-3 text-blue"
           >
-            <MenuLabel open={open} />
+            <MenuLabel open={open} labels={v2Menu} />
             <MenuGlyph3D open={open} hot={hot} />
           </button>
         </div>
       </header>
 
-      <MenuOverlay open={open} onClose={close} />
+      <MenuOverlay open={open} onClose={close} locale={locale} />
     </>
   );
 }
@@ -68,7 +70,7 @@ export function V2Header() {
  * y al conmutar uno sale por arriba mientras el otro entra desde abajo.
  * Oculto en móvil: ahí el icono solo se entiende de sobra.
  */
-function MenuLabel({ open }: { open: boolean }) {
+function MenuLabel({ open, labels }: { open: boolean; labels: { open: string; close: string } }) {
   const word = cn(
     '[grid-area:1/1] block transition-transform duration-[520ms] ease-[var(--motion-ease)]',
   );
@@ -77,8 +79,8 @@ function MenuLabel({ open }: { open: boolean }) {
       aria-hidden
       className="hidden overflow-hidden text-[length:var(--text-note)] font-semibold uppercase leading-[1.5] tracking-[0.2em] sm:grid sm:justify-items-end"
     >
-      <span className={cn(word, open ? '-translate-y-full' : 'translate-y-0')}>{v2Menu.open}</span>
-      <span className={cn(word, open ? 'translate-y-0' : 'translate-y-full')}>{v2Menu.close}</span>
+      <span className={cn(word, open ? '-translate-y-full' : 'translate-y-0')}>{labels.open}</span>
+      <span className={cn(word, open ? 'translate-y-0' : 'translate-y-full')}>{labels.close}</span>
     </span>
   );
 }

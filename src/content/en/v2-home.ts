@@ -1,0 +1,194 @@
+import type * as es from '../v2-home';
+import type { V2Cert } from '../v2-home';
+import type { Loosen } from '@/lib/i18n';
+
+/**
+ * HOME — inglés (27/09/2026). Mismas claves que `../v2-home.ts`.
+ *
+ * Origen de cada texto (decisión del cliente: usar la web actual):
+ *   [EN]  literal de lvirens.com/en (extracción 27/09/2026, docs/fuente-en-lvirens.md)
+ *   [IMG] literal de la imagen en inglés de lvirens.com (img-eng.png)
+ *   [TR]  traducción de Claude de un texto nuevo del rediseño, sin equivalente
+ *         en la web actual — PENDIENTE DE REVISIÓN del cliente.
+ */
+
+export const v2Hero = {
+  title: 'Experts in food supplements', // [EN]
+  subtitle: 'Contract Manufacturing & Development', // [EN]
+  lead: 'Comprehensive manufacturing and development solutions for food supplements, to the highest quality standards.', // [TR]
+  video: {
+    av1: '/video/hero-corporativo-sin-texto.webm',
+    mp4: '/video/hero-corporativo-sin-texto.mp4',
+    poster: '/img/v2/hero-poster.jpg',
+  },
+  alt: 'Laboratorios Virens corporate video: production, quality control laboratory and warehouse', // [TR]
+} as const satisfies Loosen<typeof es.v2Hero>;
+
+export const v2Menu = {
+  open: 'Menu',
+  close: 'Close',
+  openAria: 'Open menu',
+  closeAria: 'Close menu',
+} as const satisfies Loosen<typeof es.v2Menu>;
+
+export const v2Services = [
+  {
+    id: 'private-label',
+    title: 'Private Label',
+    accent: 'blue',
+    // [TR] del texto de la maqueta (la web actual tiene otro texto en este bloque).
+    body: 'We develop and manufacture food supplements for your brand, with tailor-made formulas, certified quality and complete confidentiality. We turn your ideas into market-ready products, taking care of every detail.',
+    image: {
+      src: '/img/v2/private-label-16x9.jpg',
+      alt: 'Laboratory technician stirring a white mixture in a beaker', // [TR]
+    },
+  },
+  {
+    id: 'full-service',
+    title: 'Full service',
+    accent: 'tech',
+    // [TR] del texto de la maqueta.
+    body: 'We support you throughout the whole process: from development and formulation to manufacturing, quality control, packaging and logistics. A comprehensive, flexible solution to take your product from concept to the end consumer.',
+    image: {
+      src: '/img/v2/full-service-16x9.jpg',
+      alt: 'Automatic capping machine sealing amber glass bottles on a packaging line', // [TR]
+    },
+  },
+] as const satisfies Loosen<typeof es.v2Services>;
+
+export const v2Galenic = {
+  title: 'Galenic forms', // [EN]
+  // [EN] literal de /en/virens-labs.
+  lead: 'At Virens Labs we manufacture food supplements in different galenic forms: solids (tablets, capsules) and liquids (syrups) in different formats: blister, bottles, sticks, vials, drops, etc.',
+  image: {
+    src: '/img/v2/galenicas-4k.jpg',
+    alt: 'White capsules moving along a stainless steel pharmaceutical line', // [TR]
+  },
+  items: [
+    { id: 'capsulas', icon: 'capsule', label: 'Capsules' }, // [EN]
+    { id: 'comprimidos', icon: 'tablet', label: 'Tablets' }, // [EN]
+    { id: 'encapsulado', icon: 'autocapsule', label: 'Automatic encapsulation' }, // [TR] (ES: «Encapsulado automático»)
+    { id: 'viales', icon: 'vial', label: 'Vials' }, // [EN]
+    { id: 'blisters', icon: 'blister', label: 'Blisters' }, // [EN]
+    { id: 'jarabes', icon: 'syrup', label: 'Syrups' }, // [EN]
+    { id: 'goteros', icon: 'dropper', label: 'Droppers' }, // [EN]
+    { id: 'frasco', icon: 'jarfill', label: 'Bottled' }, // [EN]
+    { id: 'sticks', icon: 'stick', label: 'Sticks' }, // [EN]
+    { id: 'sobres', icon: 'sachet', label: 'Sachets' }, // [IMG]
+  ],
+} as const satisfies Loosen<typeof es.v2Galenic>;
+
+export const v2Capacity = {
+  title: 'Productive capacity', // [EN]
+  // [EN] literal de /en/virens-labs.
+  lead: 'We have more than 2,000 m² of facilities where we carry out manufacturing, both primary and secondary conditioning.',
+  hint: {
+    pointer: 'Hover to see each format', // [TR] (no se muestra)
+    touch: 'Tap a format to see its sizes', // [TR] (no se muestra)
+  },
+  formats: [
+    { id: 'dropper', label: 'Droppers', range: '30ml to 60ml' }, // [IMG]
+    { id: 'vials', label: 'Vials', range: '10ml to 25ml' }, // [IMG]
+    { id: 'jar', label: 'Bottled', range: '50ml to 500ml' }, // [IMG]
+    { id: 'syrups', label: 'Syrups', range: '100ml to 1000ml' }, // [IMG]
+    { id: 'blisters', label: 'Blisters', range: 'PVDC-Pvc/Alu + Alu/Alu' }, // [IMG]
+    { id: 'sticks', label: 'Sticks', range: '5grs to 20grs' }, // [IMG]
+    { id: 'sachets', label: 'Sachets', range: '5grs to 10grs' }, // [IMG]
+  ],
+  scaleTitle: 'In-house industrial scale', // [TR]
+  stats: [
+    { value: '+2,000', unit: 'm²', label: 'In-house facilities' }, // [TR]
+    { value: '9', unit: '', label: 'Production formats' }, // [TR]
+    { value: '2', unit: '', label: 'Packaging levels' }, // [TR]
+  ],
+  items: [
+    { id: 'capsulas', label: 'Capsules', units: '200M', icon: 'capsule' }, // [IMG]
+    { id: 'comprimidos', label: 'Tablets', units: '150M', icon: 'tablet' }, // [IMG]
+    { id: 'viales', label: 'Vials', units: '20M', range: '10 ml to 25 ml', icon: 'vial' }, // [IMG]
+    { id: 'blisters', label: 'Blisters', units: '15M', range: 'PVDC-PVC/Alu + Alu/Alu', icon: 'blister' }, // [IMG]
+    { id: 'sticks', label: 'Sticks', units: '10M', range: '5 g to 20 g', icon: 'stick' }, // [IMG]
+    { id: 'sobres', label: 'Sachets', units: '10M', range: '5 g to 10 g', icon: 'sachet' }, // [IMG]
+    { id: 'frascos', label: 'Bottle filling', units: '10M', range: '50 ml to 500 ml', icon: 'jarfill' }, // [IMG] («Bottled»)
+    { id: 'goteros', label: 'Droppers', units: '5M', range: '30 ml to 60 ml', icon: 'dropper' }, // [IMG]
+    { id: 'jarabes', label: 'Syrups', units: '5M', range: '100 ml to 1000 ml', icon: 'syrup' }, // [IMG]
+  ],
+  operations: [
+    'Automatic cartoning', // [EN]
+    'Bottling', // [TR]
+    'Primary & secondary packaging', // [EN]
+  ],
+  note: 'Indicative capacities. Unit and period pending confirmation.', // [TR]
+} as const satisfies Loosen<typeof es.v2Capacity>;
+
+export const v2Areas = {
+  label: 'Therapeutic areas', // [EN] («Therapeutical areas» en la web actual, corregido)
+  items: [
+    'Weight management', // [EN]
+    'Nervous system', // [EN]
+    'Joints', // [EN]
+    'Digestive', // [EN]
+    'Kids', // [EN]
+    'Cardiovascular', // [EN]
+    'Immune system', // [EN]
+    "Women's health", // [EN]
+    'Pets', // [EN]
+    'Sports nutrition', // [EN]
+  ],
+} as const satisfies Loosen<typeof es.v2Areas>;
+
+export const v2CertificationsTitle = 'Our certifications'; // [TR] (web actual: «Our quality»)
+
+/** Los sellos son los mismos; solo cambian los nombres accesibles que lo necesitan (ninguno). */
+export const v2Certifications: V2Cert[] = [
+  { id: 'iso22000', name: 'ISO 22000', issuer: 'SGS', status: 'image-only', ratio: 1.027 },
+  { id: 'gmp', name: 'GMP', issuer: 'SGS', status: 'image-only', ratio: 1.027 },
+  { id: 'haccp', name: 'HACCP', issuer: 'SGS', status: 'image-only', ratio: 1.025 },
+  { id: 'eu', name: 'European Manufactured', status: 'image-only', ratio: 0.955 },
+  { id: 'organic', name: 'Organic Certified', status: 'image-only', ratio: 1.295 },
+  { id: 'vet', name: 'Veterinary Products', status: 'image-only', ratio: 0.767 },
+  { id: 'iraq', name: 'Republic of Iraq', issuer: 'Manufacturing Site Registration', status: 'image-only', ratio: 1.338, scale: 1.3 },
+  { id: 'uae', name: 'United Arab Emirates', issuer: 'Manufacturing Site Registration', status: 'image-only', ratio: 2.911, scale: 1.3 },
+  { id: 'fda', name: 'FDA Approved', status: 'unverified', ratio: 1.636 },
+];
+
+export const v2Cta = {
+  title: "Let's talk about your project", // [TR]
+  lead: 'Our team is ready to help you.', // [TR]
+  button: 'Contact us now', // [TR]
+  href: '/en/contact',
+} as const satisfies Loosen<typeof es.v2Cta>;
+
+export const v2FooterNav = [
+  {
+    title: 'Virens Labs',
+    items: [
+      { label: 'Solid formulas', href: '/en#formas-galenicas' }, // [TR]
+      { label: 'Liquid formulas', href: '/en#formas-galenicas' }, // [TR]
+      { label: 'Contract manufacturing', href: '/en#private-label' }, // [EN]
+    ],
+  },
+  {
+    title: 'Virens Tech',
+    items: [
+      { label: 'Product development', href: '/en/virens-tech#formulacion' }, // [TR]
+      { label: 'R&D&I', href: '/en/virens-tech#rd-galenicos' }, // [TR]
+      { label: 'Innovation', href: '/en/virens-tech' }, // [TR]
+    ],
+  },
+  {
+    title: 'Company',
+    items: [
+      { label: 'About us', href: '/en/company' }, // [TR] («Who are we?»)
+      { label: 'Quality', href: '/en#calidad' }, // [EN]
+      { label: 'Facilities', href: '/en/company' }, // [TR]
+    ],
+  },
+  {
+    title: 'Resources',
+    items: [
+      { label: 'News', href: '/en/news' }, // [EN]
+      { label: 'Documentation', href: '/en/contact' }, // [TR]
+      { label: 'Contact', href: '/en/contact' }, // [EN]
+    ],
+  },
+] as const satisfies Loosen<typeof es.v2FooterNav>;

@@ -7,7 +7,8 @@ import { useId, useState } from 'react';
 import type { ContactDepartment, ContactField } from '@/lib/types';
 import { ContactIcon } from '@/components/ui/ContactIcon';
 import { ContactAttach } from './ContactAttach';
-import { contactForm } from '@/content/contacto';
+import { contactContent } from '@/content';
+import type { Locale } from '@/lib/i18n';
 
 /**
  * Panel del formulario (mockup `contactos.png`, mitad derecha).
@@ -25,10 +26,13 @@ import { contactForm } from '@/content/contacto';
 export function ContactForm({
   departments,
   fields,
+  locale,
 }: {
   departments: readonly ContactDepartment[];
   fields: readonly ContactField[];
+  locale: Locale;
 }) {
+  const { contactForm } = contactContent(locale);
   const uid = useId();
   const [department, setDepartment] = useState(departments[0]?.id ?? '');
 
@@ -95,7 +99,7 @@ export function ContactForm({
         ))}
       </div>
 
-      <ContactAttach />
+      <ContactAttach locale={locale} />
 
       <div className="mt-6 flex items-start gap-3">
         <input id={`${uid}-consent`} type="checkbox" name="consentimiento" required className="contact-consent" />

@@ -2675,3 +2675,42 @@ Claude (única excepción de copy autorizada).
   garantizada · Cumplimiento normativo · Innovación constante», pero la franja
   se mantiene baja: ritmo compacto siempre, pilares pegados al texto (≈360 px
   de alto a 1440). Sigue sin el rótulo «Soluciones integradas».
+
+### 2026-09-27 (19) — Claude — Web bilingüe ES / EN
+
+Decisiones del cliente: ES + EN ahora (estructura lista para CA/FR/IT/ZH),
+textos en inglés sacados de la web actual y rutas traducidas.
+
+- **Rutas**: español en la raíz; inglés en `/en`, `/en/company`,
+  `/en/virens-tech`, `/en/news`, `/en/contact` (las mismas URLs que ya
+  publica lvirens.com). Un layout raíz por idioma (`app/(es)`, `app/en`) para
+  que `<html lang>` sea correcto; páginas movidas a `src/views/*View.tsx` con
+  `locale`. Canónica + hreflang recíproco (es-ES / en / x-default) en cada
+  página y en el sitemap.
+- **Contenido**: `src/content/en/*` (home, compañía, tech, contacto) y
+  `src/content/ui.ts` (menú, pie, metadatos, noticias). Tipado con
+  `satisfies Loosen<…>`: el inglés no compila si le falta una clave del
+  español. Textos extraídos con el navegador de lvirens.com/en (incluidas
+  pestañas ocultas) y de sus imágenes en inglés (historia y capacidades).
+  114 textos literales `[EN]/[IMG]`, ~70 traducciones `[TR]` pendientes de
+  revisión: lista en `docs/i18n-ingles.md`.
+- **Menú**: selector ES / EN que lleva a la misma página en el otro idioma.
+  La fila del selector quedaba tapada por la cabecera sticky; ahora arranca
+  bajo ella.
+- **Redirecciones**: `/en/virens-labs` → `/en`; legales EN → `/en/legal/*`;
+  `/ca/*` → `/`; `/fr/*`, `/it/*`, `/zh-hans/*` → `/en`. Cada origen con barra
+  final se registra también sin ella (Next la quita antes), filtrando las
+  reglas que apuntarían a sí mismas (la primera versión creaba un bucle en
+  `/compania`, `/virens-tech`… — detectado y corregido antes de publicar).
+- **Contadores de cifras**: `parseFigure` entiende la coma de miles del inglés
+  («+2,000» contaba hasta 2).
+- Alt de fotos de Compañía que estaban fijos en español en el JSX, movidos a
+  contenido (`companyImages`).
+
+**Verificado**: `npm run typecheck` limpio; `next build` completo con la
+respuesta de Google Fonts simulada (`NEXT_FONT_GOOGLE_MOCKED_RESPONSES`): 15
+rutas estáticas; las 10 páginas responden 200, `lang` correcto y hreflang en
+el HTML; redirecciones seguidas hasta destino; Chromium a 1440 y 390 px en las
+cinco páginas inglesas, menú y cambio de idioma EN → ES.
+
+**Pendiente**: sincronizar la copia del Mac (ver TRASPASO); páginas legales.

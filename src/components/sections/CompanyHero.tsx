@@ -1,9 +1,11 @@
 import Image from 'next/image';
 import type { CSSProperties } from 'react';
 import { Container } from '@/components/ui/Container';
-import { companyHero } from '@/content/company';
+import { companyContent } from '@/content';
+import type { Locale } from '@/lib/i18n';
 
-export function CompanyHero() {
+export function CompanyHero({ locale }: { locale: Locale }) {
+  const { companyHero } = companyContent(locale);
   return (
     <section className="company-hero relative isolate overflow-hidden bg-blue-deep text-white" data-header-tone="dark">
       <Container className="relative z-10 flex min-h-[var(--company-hero-min)] items-center">

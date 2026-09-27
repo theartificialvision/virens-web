@@ -1,6 +1,8 @@
 import type { CSSProperties } from 'react';
 import { Reveal } from '@/components/ui/Reveal';
-import { v2Certifications, v2CertificationsTitle, type V2Cert } from '@/content/v2-home';
+import { homeContent } from '@/content';
+import type { V2Cert } from '@/content/v2-home';
+import type { Locale } from '@/lib/i18n';
 import { SectionTitle } from './SectionTitle';
 
 /**
@@ -26,7 +28,8 @@ import { SectionTitle } from './SectionTitle';
  * claim de riesgo — la FDA no aprueba complementos alimenticios). Su sello
  * está vectorizado y listo, pero no se muestra hasta que el cliente confirme.
  */
-export function CertStrip({ showPending = false }: { showPending?: boolean }) {
+export function CertStrip({ locale, showPending = false }: { locale: Locale; showPending?: boolean }) {
+  const { v2Certifications, v2CertificationsTitle } = homeContent(locale);
   const visible = showPending
     ? v2Certifications
     : v2Certifications.filter((c) => c.status !== 'unverified');
