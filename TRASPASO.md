@@ -45,9 +45,11 @@ archivo si cambió algo de lo de abajo.
   Hero (vídeo corporativo) → Private Label / Full service → **Formas
   galénicas** (dos pisos: texto + foto; debajo franja a todo el ancho con 10
   formatos, entrada «dibujada» y foco con zoom al pasar el cursor) →
-  **Capacidad productiva** (escala numérica integrada desde Labs: +2.000 m²,
-  9 formatos, 2 niveles y capacidad por formato) → Áreas terapéuticas →
-  Certificaciones («Nuestras certificaciones») → CTA.
+  **Capacidad productiva integrada en dos tiempos**: primero las siete
+  siluetas que crecen por tamaños (hover/foco; recorrido automático en táctil)
+  y, debajo, «Escala industrial propia» con +2.000 m², 9 formatos, 2 niveles y
+  capacidad numérica por formato → Áreas terapéuticas → Certificaciones
+  («Nuestras certificaciones») → CTA.
 - **Virens Tech** (`src/app/virens-tech/page.tsx`): portada nueva tintada en
   azul (WebP), sin isotipo 3D blanco, sin botón «Visitar Labs» en el hero,
   **sin barra horizontal de anclas**, y los seis servicios en un **slide

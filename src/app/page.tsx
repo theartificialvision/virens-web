@@ -22,7 +22,7 @@ export const metadata: Metadata = {
  *   01 hero (foto/vídeo a sangre, velo azul)
  *   02 Private Label / Full service        blanco
  *   03 Formas galénicas                    teal + foto
- *   04 Escala productiva con cifras        blanco
+ *   04 Capacidad por tamaños + cifras      blanco → gris claro
  *   05 Áreas terapéuticas                  azul
  *   06 Certificaciones                     gris claro
  *   07 CTA                                 gris

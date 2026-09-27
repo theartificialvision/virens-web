@@ -96,6 +96,21 @@ export const v2Galenic = {
 export const v2Capacity = {
   title: 'Capacidad productiva',
   lead: 'Contamos con más de 2000 m² de instalaciones donde llevamos a cabo la fabricación, acondicionamiento primario y secundario.',
+  hint: {
+    pointer: 'Pasa el cursor para ver cada formato',
+    touch: 'Toca un formato para ver sus tamaños',
+  },
+  /** Siete formatos del diseño interactivo del cliente (27/09/2026). */
+  formats: [
+    { id: 'dropper', label: 'Dropper bottles', range: '30ml a 60ml' },
+    { id: 'vials', label: 'Vials', range: '10ml a 25ml' },
+    { id: 'jar', label: 'Jar filling', range: '50ml a 500ml' },
+    { id: 'syrups', label: 'Syrups', range: '100ml a 1000ml' },
+    { id: 'blisters', label: 'Blisters', range: 'PVDC-Pvc/Alu + Alu/Alu' },
+    { id: 'sticks', label: 'Sticks', range: '5grs a 20grs' },
+    { id: 'sachets', label: 'Sachets', range: '5grs' },
+  ],
+  scaleTitle: 'Escala industrial propia',
   /** Cifras literales del material de Labs, ahora integrado en la home. */
   stats: [
     { value: '+2.000', unit: 'm²', label: 'Instalaciones propias' },

@@ -2537,3 +2537,18 @@ foco), 820 y 390 (carril táctil).
 generación estática de Next correctas; Chrome headless a 1440 y 390 px con la
 Home completa, orden y contenido del HTML comprobados; `/virens-labs` responde
 con redirección permanente 308 a `/`.
+
+### 2026-09-27 (10) — Codex — Corrección: capacidad por tamaños y escala numérica se integran
+
+- Corrección del cliente: «integrar» no significaba sustituir. Se recupera
+  íntegra la pieza interactiva de siete formatos que crecen por tamaños, con
+  hover/foco en escritorio y recorrido automático + toque en táctil.
+- Capacidad productiva queda como un solo capítulo en dos tiempos: primero la
+  interacción original sobre blanco; a continuación, en gris claro y bajo el
+  título «Escala industrial propia», las tres magnitudes generales y las nueve
+  capacidades numéricas. El cambio de fondo separa lectura cualitativa y datos
+  sin convertirlas en dos secciones inconexas ni repetir el titular.
+
+**Verificado**: `npm run typecheck` limpio; Home completa en Chrome headless a
+1440 y 390 px con movimiento reducido para comprobar cifras finales, orden,
+transición de fondos y ausencia de solapamientos.
