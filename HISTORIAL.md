@@ -2464,3 +2464,19 @@ panel en las diapositivas 1-3, en mitad de la cortina, y el CTA de /virens-tech)
 
 **Verificado**: `npm run typecheck` limpio; Playwright a 1440 (hover) y 390
 con táctil emulado (recorrido automático, toque, indicación correcta).
+
+### 2026-09-27 (6) — Claude (Cowork) — Home, Formas galénicas: movimiento en los glifos
+
+- Cliente: el bloque «está muy estático», pero no debe competir con
+  Capacidad productiva, que va justo después y donde los envases crecen. Así
+  que aquí **nada escala**:
+  - **Entrada:** al llegar la lista, cada glifo se dibuja de abajo arriba
+    (`clip-path`), en cascada de 70 ms, y su nombre aparece detrás.
+  - **Hover:** el glifo se levanta 6 px con un giro de 6° (alterno por
+    columna) y rebote corto; al salir vuelve a su sitio.
+  - Una sola `Reveal` para toda la lista (antes una por icono). CSS en
+    `.v2-gal` (globals). Con movimiento reducido todo queda quieto y visible;
+    en táctil queda la entrada.
+
+**Verificado**: `npm run typecheck` limpio; Playwright a 1440 px (cascada de
+entrada y hover).

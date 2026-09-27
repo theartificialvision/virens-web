@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import type { CSSProperties } from 'react';
 import { Reveal } from '@/components/ui/Reveal';
 import { GalenicIcon } from './GalenicIcon';
 import { SectionTitle } from './SectionTitle';
@@ -27,16 +28,24 @@ export function GalenicBlock() {
             </p>
           </Reveal>
 
-          <ul className="mt-14 grid grid-cols-3 gap-x-4 gap-y-10 sm:grid-cols-5">
-            {v2Galenic.items.map((f, i) => (
-              <li key={f.id}>
-                <Reveal delay={(i % 5) * 0.03} className="flex flex-col items-center gap-4 text-center">
-                  <GalenicIcon name={f.icon} />
-                  <span className="text-[length:var(--text-note)] leading-snug">{f.label}</span>
-                </Reveal>
-              </li>
-            ))}
-          </ul>
+          {/* 27/09/2026 (cliente: «muy estático», sin competir con Capacidad,
+              donde los envases crecen): los glifos se dibujan de abajo arriba
+              en cascada al entrar la lista, y al pasar el cursor se levantan
+              con un leve giro. Nada escala. CSS: `.v2-gal` en globals. */}
+          <Reveal className="v2-gal mt-14">
+            <ul className="grid grid-cols-3 gap-x-4 gap-y-10 sm:grid-cols-5">
+              {v2Galenic.items.map((f, i) => (
+                <li
+                  key={f.id}
+                  className="v2-gal-item flex flex-col items-center gap-4 text-center"
+                  style={{ '--i': i } as CSSProperties}
+                >
+                  <GalenicIcon name={f.icon} className="v2-gal-glyph" />
+                  <span className="v2-gal-label text-[length:var(--text-note)] leading-snug">{f.label}</span>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
         </div>
       </div>
 
