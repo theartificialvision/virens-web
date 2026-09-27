@@ -2746,3 +2746,11 @@ vaivén medido ≈50 px, foco al deslizar, final), tablet 820 px y hover a 1440 
 - Nuevo token `--company-icon-lg` (1,2 × `--company-icon`) aplicado solo a los
   cinco pilares de «Quiénes somos». Texto y los iconos de «Qué hacemos» sin
   cambios. Medido: 86 → 103 px a 1440; 76 → 91 px a 390.
+
+### 2026-09-27 (23) — Claude — Historia: hover sin transparencias y círculo mayor
+
+- Con cursor sobre un hito, los demás se atenuaban con opacidad en todo el
+  nodo y su vidrio dejaba ver la línea de debajo. Ahora se atenúan solo el aro
+  y el año (`--history-dim`); el círculo sigue tapando la línea.
+- El hito señalado crece un 10 % más: `--history-hover` 1,14 → 1,25
+  (80 → 100 px a 1440).

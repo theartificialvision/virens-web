@@ -1091,7 +1091,8 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   --history-node:   var(--company-history-node);
   --history-gap:    2.25rem;   /* separación vertical entre hitos en móvil */
   --history-rest:   0.34;      /* escala del círculo antes de formarse */
-  --history-hover:  1.14;      /* escala del hito señalado con cursor */
+  --history-hover:  1.25;      /* escala del hito señalado con cursor (27/09: 1,14 → +10 %) */
+  --history-dim:    0.45;      /* atenuado de los demás hitos con cursor */
   --history-form:   850ms;     /* lo que tarda un círculo en formarse */
   --history-ping:   1300ms;    /* pulso al formarse */
   --history-line:   rgb(255 255 255 / 0.22);
@@ -1217,6 +1218,7 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
       opacity var(--history-form) var(--motion-ease);
   }
   .company-history-ring circle { transition: stroke-dashoffset var(--history-form) var(--motion-ease) 120ms; }
+  .company-history-ring { transition: opacity var(--motion-enter) var(--motion-ease); }
   .company-history-year { transition: opacity var(--motion-enter) var(--motion-ease) 260ms; }
   .company-history-copy {
     transition: opacity var(--motion-enter) var(--motion-ease) 180ms, transform var(--motion-enter) var(--motion-ease) 180ms;
@@ -1246,7 +1248,10 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
    los demás retroceden. Solo con puntero fino; en táctil manda el scroll. */
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
   .company-history-list:hover .company-history-item:not(:hover) .company-history-copy { opacity: 0.45; }
-  .company-history-list:hover .company-history-item:not(:hover) .company-history-node { opacity: 0.7; }
+  /* Los demás se atenúan por dentro (aro y año), no el círculo entero: con
+     opacidad en el nodo, su vidrio dejaba ver la línea de debajo (cliente). */
+  .company-history-list:hover .company-history-item:not(:hover) .company-history-ring,
+  .company-history-list:hover .company-history-item:not(:hover) .company-history-year { opacity: var(--history-dim); }
   .company-history[data-ready] .company-history-item:hover .company-history-node,
   .company-history-item:hover .company-history-node {
     transform: scale(var(--history-hover));
