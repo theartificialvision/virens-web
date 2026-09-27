@@ -20,11 +20,8 @@ export function CapacityBlock() {
               <p className="mt-6 max-w-[var(--measure-max)] text-[length:var(--text-small)] leading-[1.85] text-gray-700">
                 {v2Capacity.lead}
               </p>
-              <p className="mt-8 flex items-center gap-2.5 text-[length:var(--text-micro)] font-semibold uppercase tracking-label text-gray-500">
-                <span aria-hidden className="h-px w-4 bg-current" />
-                <span className="cap-hint-pointer">{v2Capacity.hint.pointer}</span>
-                <span className="cap-hint-touch">{v2Capacity.hint.touch}</span>
-              </p>
+              {/* 27/09/2026 (cliente): fuera la indicación «pasa el cursor / toca
+                  un formato para ver su tamaño». */}
             </Reveal>
           </div>
 

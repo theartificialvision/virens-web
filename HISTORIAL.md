@@ -2635,3 +2635,9 @@ de scroll) y 1440 px (cuatro posiciones + hover).
 **Verificado**: `npm run typecheck` limpio; Chromium a 1440 px (seis puntos del
 recorrido, incluido el salto directo al último servicio) y 390 px (los seis
 servicios y las certificaciones de Tech y Home).
+
+### 2026-09-27 (15) — Claude — Home: fuera la indicación de Capacidad productiva
+
+- Se quita de la home la línea «Pasa el cursor / Toca un formato para ver su
+  tamaño» bajo el texto de Capacidad productiva (cliente: «solo eso»). La
+  interacción sigue igual; el texto queda en `v2Capacity.hint` sin usarse.
