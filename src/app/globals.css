@@ -953,6 +953,8 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   --company-hero-copy-y:       clamp(4rem, 2.8rem + 3vw, 6rem);
   --company-hero-media-mobile: 20rem;
   --company-icon:              clamp(4.75rem, 4rem + 1.5vw, 5.75rem);
+  /* «Quiénes somos»: un 20 % mayores (27/09/2026, cliente); el texto no cambia. */
+  --company-icon-lg:           clamp(5.7rem, 4.8rem + 1.8vw, 6.9rem);
   --company-section-index:     clamp(4.75rem, 3.1rem + 5.5vw, 8.25rem);
   --company-process-h:         22rem;
   --company-stagger:           90ms;

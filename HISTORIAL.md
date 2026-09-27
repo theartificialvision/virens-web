@@ -2740,3 +2740,9 @@ cinco páginas inglesas, menú y cambio de idioma EN → ES.
 
 **Verificado**: `npm run typecheck` limpio; Chromium móvil táctil 390 px (inicio,
 vaivén medido ≈50 px, foco al deslizar, final), tablet 820 px y hover a 1440 px.
+
+### 2026-09-27 (22) — Claude — Compañía: iconos de «Quiénes somos» un 20 % mayores
+
+- Nuevo token `--company-icon-lg` (1,2 × `--company-icon`) aplicado solo a los
+  cinco pilares de «Quiénes somos». Texto y los iconos de «Qué hacemos» sin
+  cambios. Medido: 86 → 103 px a 1440; 76 → 91 px a 390.

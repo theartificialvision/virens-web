@@ -45,7 +45,7 @@ export function CompanyView({ locale }: { locale: Locale }) {
             <ul className="grid gap-x-7 gap-y-12 sm:grid-cols-2 lg:grid-cols-5">
               {pillars.map((pillar, index) => (
                 <li key={pillar.label} className="company-stagger-item flex flex-col items-center text-center" style={{ '--i': index } as CSSProperties}>
-                  <CompanyIcon name={pillar.icon as CompanyIconName} className="text-labs" />
+                  <CompanyIcon name={pillar.icon as CompanyIconName} className="size-[var(--company-icon-lg)] text-labs" />
                   <p className="mt-6 max-w-[18rem] text-[length:var(--text-small)] font-medium leading-snug text-blue">
                     {pillar.label}
                   </p>
