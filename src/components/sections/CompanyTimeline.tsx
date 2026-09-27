@@ -1,9 +1,9 @@
 import Image from 'next/image';
-import type { CSSProperties } from 'react';
 import type { TimelineEntry } from '@/lib/types';
 import { Container } from '@/components/ui/Container';
 import { Reveal } from '@/components/ui/Reveal';
 import { CompanySectionHeading } from './CompanySectionHeading';
+import { CompanyHistoryList } from './CompanyHistoryList';
 
 export function CompanyTimeline({
   heading,
@@ -29,24 +29,9 @@ export function CompanyTimeline({
           <CompanySectionHeading index={heading.index} title={heading.title} inverse />
         </Reveal>
 
-        <Reveal className="company-history mt-14">
-          <ol className="company-history-list">
-            {entries.map((entry, index) => (
-              <li
-                key={`${entry.year}-${index}`}
-                className="company-history-item"
-                style={{ '--i': index } as CSSProperties}
-              >
-                <p className="company-history-copy text-[length:var(--text-note)] font-semibold leading-[1.35]">
-                  {entry.text}
-                </p>
-                <span className="company-history-node text-[length:var(--text-small)] font-semibold">
-                  {entry.year}
-                </span>
-              </li>
-            ))}
-          </ol>
-        </Reveal>
+        <div className="mt-14">
+          <CompanyHistoryList entries={entries} />
+        </div>
       </Container>
     </section>
   );

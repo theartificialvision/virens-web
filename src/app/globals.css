@@ -951,45 +951,6 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   padding: var(--company-research-pad);
 }
 
-.company-history-list {
-  display: grid;
-  gap: 1.5rem;
-}
-.company-history-item {
-  position: relative;
-  display: grid;
-  grid-template-columns: var(--company-history-node) minmax(0, 1fr);
-  align-items: center;
-  gap: 1.25rem;
-  min-height: var(--company-history-node);
-}
-.company-history-item:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  top: calc(var(--company-history-node) / 2);
-  left: calc(var(--company-history-node) / 2);
-  width: 1px;
-  height: calc(100% + 1.5rem);
-  background: rgb(255 255 255 / 0.72);
-}
-.company-history-copy { grid-column: 2; }
-.company-history-node {
-  grid-column: 1;
-  display: grid;
-  place-items: center;
-  width: var(--company-history-node);
-  height: var(--company-history-node);
-  border: 1px solid rgb(255 255 255 / 0.78);
-  border-radius: 999px;
-  background-color: rgb(255 255 255 / 0.12);
-  -webkit-backdrop-filter: blur(16px) saturate(175%);
-          backdrop-filter: blur(16px) saturate(175%);
-  box-shadow:
-    inset 0 1px 0 rgb(255 255 255 / 0.72),
-    0 16px 32px -24px var(--color-blue-deep);
-}
-
 @media (min-width: 1024px) {
   .company-hero-media {
     position: absolute;
@@ -999,42 +960,6 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
     clip-path: ellipse(76% 92% at 75% 50%);
   }
   .company-research-copy { margin: 0; }
-}
-
-@media (min-width: 1280px) {
-  .company-history-list {
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-    gap: 0;
-  }
-  .company-history-item {
-    grid-template-columns: 1fr;
-    grid-template-rows: var(--company-history-copy) var(--company-history-node) var(--company-history-copy);
-    gap: 0;
-    min-height: calc(var(--company-history-copy) * 2 + var(--company-history-node));
-    text-align: center;
-  }
-  .company-history-copy {
-    grid-column: 1;
-    grid-row: 1;
-    align-self: end;
-    padding: 0 0.75rem 1.25rem;
-  }
-  .company-history-item:nth-child(even) .company-history-copy {
-    grid-row: 3;
-    align-self: start;
-    padding: 1.25rem 0.75rem 0;
-  }
-  .company-history-node {
-    grid-column: 1;
-    grid-row: 2;
-    justify-self: center;
-  }
-  .company-history-item:not(:last-child)::after {
-    top: calc(var(--company-history-copy) + var(--company-history-node) / 2);
-    left: 50%;
-    width: 100%;
-    height: 1px;
-  }
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -1057,21 +982,184 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   }
   .company-stagger[data-visible='false'] .company-icon svg > * { stroke-dashoffset: 1; }
 
-  .company-history-item::after {
-    transform-origin: top;
-    transition: transform var(--company-draw) var(--motion-ease);
-  }
-  .company-history[data-visible='false'] .company-history-item::after { transform: scaleY(0); }
-  .company-history-node,
-  .company-history-copy {
-    transition: opacity var(--motion-enter) var(--motion-ease) calc(var(--i) * var(--company-stagger)),
-                transform var(--motion-enter) var(--motion-ease) calc(var(--i) * var(--company-stagger));
-  }
-  .company-history[data-visible='false'] .company-history-node { opacity: 0; transform: scale(0.82); }
-  .company-history[data-visible='false'] .company-history-copy { opacity: 0; transform: translateY(var(--reveal-distance)); }
 }
 
-@media (min-width: 1280px) and (prefers-reduced-motion: no-preference) {
-  .company-history-item::after { transform-origin: left; }
-  .company-history[data-visible='false'] .company-history-item::after { transform: scaleX(0); }
+
+/* Historia de Compañía (27/09/2026, cliente: «en mobile está desfasada; con
+   hover o desplazamiento que se vayan formando o agrandando los círculos»).
+   Una única línea de progreso une los nodos y avanza con el scroll —vertical
+   en móvil, horizontal desde 1280 px—. Cada círculo que alcanza se «forma»:
+   crece desde un punto, dibuja su aro, lanza un pulso y descubre año y texto.
+   La geometría (--h-start, --h-cross, --h-length) y el avance (--h-progress)
+   los pone `CompanyHistoryList`. Los estados apagados solo existen con
+   `data-ready`: sin JS se ve todo, completo y estático. */
+@theme {
+  --history-node:   var(--company-history-node);
+  --history-gap:    2.25rem;   /* separación vertical entre hitos en móvil */
+  --history-rest:   0.34;      /* escala del círculo antes de formarse */
+  --history-hover:  1.14;      /* escala del hito señalado con cursor */
+  --history-form:   850ms;     /* lo que tarda un círculo en formarse */
+  --history-ping:   1300ms;    /* pulso al formarse */
+  --history-line:   rgb(255 255 255 / 0.22);
+  --history-fill:   rgb(255 255 255 / 0.9);
+}
+
+.company-history-list {
+  display: grid;
+  gap: var(--history-gap);
+}
+.company-history-item {
+  display: grid;
+  grid-template-columns: var(--history-node) minmax(0, 1fr);
+  align-items: center;
+  column-gap: 1.5rem;
+}
+/* Texto y nodo en la MISMA fila: antes el texto ocupaba una fila y el círculo
+   la siguiente, de ahí el desfase en móvil. */
+.company-history-copy { grid-column: 2; grid-row: 1; }
+.company-history-node {
+  position: relative;
+  grid-column: 1;
+  grid-row: 1;
+  display: grid;
+  place-items: center;
+  width: var(--history-node);
+  height: var(--history-node);
+  border-radius: 999px;
+  background-color: rgb(255 255 255 / 0.12);
+  -webkit-backdrop-filter: blur(16px) saturate(175%);
+          backdrop-filter: blur(16px) saturate(175%);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.72),
+    0 16px 32px -24px var(--color-blue-deep);
+}
+.company-history-ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  overflow: visible;
+}
+.company-history-ring circle {
+  fill: none;
+  stroke: var(--history-fill);
+  stroke-width: 1.5px;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+.company-history-year { position: relative; }
+/* Pulso: un aro que se expande y se desvanece una sola vez al formarse. */
+.company-history-node::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--history-fill);
+  border-radius: 999px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Línea: pista tenue + progreso blanco. Sin JS no hay geometría: no se pinta. */
+.company-history-track {
+  position: absolute;
+  z-index: 0;
+  display: none;
+  background: var(--history-line);
+  left: var(--h-cross);
+  top: var(--h-start);
+  width: 2px;
+  height: var(--h-length);
+  transform: translateX(-50%);
+}
+.company-history-progress {
+  position: absolute;
+  inset: 0;
+  background: var(--history-fill);
+  transform-origin: top;
+  transform: scaleY(var(--h-progress, 1));
+}
+.company-history[data-ready] .company-history-track { display: block; }
+.company-history-list { position: relative; z-index: 1; }
+
+@media (min-width: 1280px) {
+  .company-history-list {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 0;
+  }
+  .company-history-item {
+    grid-template-columns: 1fr;
+    grid-template-rows: var(--company-history-copy) var(--history-node) var(--company-history-copy);
+    text-align: center;
+  }
+  .company-history-copy {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: end;
+    padding: 0 0.75rem 1.25rem;
+  }
+  .company-history-item:nth-child(even) .company-history-copy {
+    grid-row: 3;
+    align-self: start;
+    padding: 1.25rem 0.75rem 0;
+  }
+  .company-history-node { grid-row: 2; justify-self: center; }
+  .company-history-track {
+    left: var(--h-start);
+    top: var(--h-cross);
+    width: var(--h-length);
+    height: 2px;
+    transform: translateY(-50%);
+  }
+  .company-history-progress { transform-origin: left; transform: scaleX(var(--h-progress, 1)); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .company-history-node {
+    transition:
+      transform var(--history-form) var(--motion-ease),
+      background-color var(--history-form) var(--motion-ease),
+      opacity var(--history-form) var(--motion-ease);
+  }
+  .company-history-ring circle { transition: stroke-dashoffset var(--history-form) var(--motion-ease) 120ms; }
+  .company-history-year { transition: opacity var(--motion-enter) var(--motion-ease) 260ms; }
+  .company-history-copy {
+    transition: opacity var(--motion-enter) var(--motion-ease) 180ms, transform var(--motion-enter) var(--motion-ease) 180ms;
+  }
+
+  /* Antes de que llegue la línea: un punto de luz, sin aro ni texto. */
+  .company-history[data-ready] .company-history-item:not([data-active='true']) .company-history-node {
+    transform: scale(var(--history-rest));
+    background-color: rgb(255 255 255 / 0.55);
+  }
+  .company-history[data-ready] .company-history-item:not([data-active='true']) .company-history-ring circle { stroke-dashoffset: 1; }
+  .company-history[data-ready] .company-history-item:not([data-active='true']) .company-history-year { opacity: 0; }
+  .company-history[data-ready] .company-history-item:not([data-active='true']) .company-history-copy {
+    opacity: 0.18;
+    transform: translateY(var(--reveal-distance));
+  }
+  .company-history[data-ready] .company-history-item[data-active='true'] .company-history-node::after {
+    animation: history-ping var(--history-ping) var(--motion-ease) 200ms both;
+  }
+}
+@keyframes history-ping {
+  0%   { opacity: 0.7; transform: scale(1); }
+  100% { opacity: 0;   transform: scale(1.65); }
+}
+
+/* Cursor: el hito señalado se forma aunque la línea no haya llegado, crece y
+   los demás retroceden. Solo con puntero fino; en táctil manda el scroll. */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .company-history-list:hover .company-history-item:not(:hover) .company-history-copy { opacity: 0.45; }
+  .company-history-list:hover .company-history-item:not(:hover) .company-history-node { opacity: 0.7; }
+  .company-history[data-ready] .company-history-item:hover .company-history-node,
+  .company-history-item:hover .company-history-node {
+    transform: scale(var(--history-hover));
+    background-color: rgb(255 255 255 / 0.24);
+    opacity: 1;
+  }
+  .company-history[data-ready] .company-history-item:hover .company-history-ring circle { stroke-dashoffset: 0; }
+  .company-history[data-ready] .company-history-item:hover .company-history-year,
+  .company-history[data-ready] .company-history-item:hover .company-history-copy { opacity: 1; transform: none; }
 }

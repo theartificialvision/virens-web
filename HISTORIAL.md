@@ -2593,3 +2593,23 @@ Netlify. Rescatada en cfadbe5; este cambio se reaplica encima.
 **Verificado**: `npm run typecheck` limpio; Compañía, Tech, Contacto y
 Noticias en Chromium a 1440 y 390 px con scroll real (sin Montserrat en este
 entorno; el build de Netlify sí la descarga).
+
+### 2026-09-27 (13) — Claude — Compañía: línea de tiempo animada
+
+- **Desfase en móvil corregido**: texto y círculo compartían columna de rejilla
+  pero no fila (el texto caía en una fila y el círculo en la siguiente). Ahora
+  van en la misma fila, círculo a la izquierda y texto centrado a su lado.
+- **Efecto** (cliente: «que con hover o desplazamiento se vayan formando o
+  agrandando los círculos, pro premium»): nuevo `CompanyHistoryList`. Una sola
+  línea de progreso une los nodos y avanza con el scroll (vertical en móvil,
+  horizontal desde 1280 px). Cada círculo que alcanza pasa de punto de luz a
+  círculo completo: crece, dibuja su aro (SVG), lanza un pulso y descubre año y
+  texto. Con cursor, el hito señalado se forma aunque la línea no haya llegado,
+  crece (`--history-hover`) y el resto se atenúa.
+- Accesibilidad: sin JS se ve todo completo; con movimiento reducido el
+  progreso queda en 1 y no hay transiciones. Tokens nuevos `--history-*`.
+- **Pendiente de confirmar**: el hito 2026 repite literalmente el texto de 2023
+  (viene así de la maqueta). No se ha tocado.
+
+**Verificado**: `npm run typecheck` limpio; Chromium a 390 px (seis posiciones
+de scroll) y 1440 px (cuatro posiciones + hover).
