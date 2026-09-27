@@ -19,8 +19,8 @@ export const techHero = {
   video: { poster: '/img/tech-hero-portada.webp' },
 } as const;
 
-// LITERAL (§2.4): "CTA final: banner Visitar Labs -> /virens-labs".
-export const crossLink = { label: 'Visitar Labs', href: '/virens-labs' } as const;
+// Labs vive en la home desde el 27/09/2026.
+export const crossLink = { label: 'Visitar Labs', href: '/' } as const;
 
 // LITERAL de la intro de Tech (§2.4), partido en título + cuerpo.
 export const techIntro = {
@@ -85,7 +85,7 @@ export const techServices: ServiceBlock[] = [
     imageRatio: 55,
     tone: 'gray',
     image: { src: '/img/tech-galenicos.jpg', alt: 'Cápsulas, comprimidos y polvos en bandeja de laboratorio' },
-    link: { label: 'Ver formas galénicas disponibles', href: '/virens-labs#formas-galenicas' },
+    link: { label: 'Ver formas galénicas disponibles', href: '/#formas-galenicas' },
   },
   {
     // LITERAL (§2.4).

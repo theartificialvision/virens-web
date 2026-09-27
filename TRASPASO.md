@@ -45,25 +45,24 @@ archivo si cambió algo de lo de abajo.
   Hero (vídeo corporativo) → Private Label / Full service → **Formas
   galénicas** (dos pisos: texto + foto; debajo franja a todo el ancho con 10
   formatos, entrada «dibujada» y foco con zoom al pasar el cursor) →
-  **Capacidad productiva** (diseño del cliente: siluetas que crecen por
-  tamaños al pasar el cursor; en táctil recorrido automático + toque) → Áreas
-  terapéuticas → Certificaciones («Nuestras certificaciones») → CTA.
+  **Capacidad productiva** (escala numérica integrada desde Labs: +2.000 m²,
+  9 formatos, 2 niveles y capacidad por formato) → Áreas terapéuticas →
+  Certificaciones («Nuestras certificaciones») → CTA.
 - **Virens Tech** (`src/app/virens-tech/page.tsx`): portada nueva tintada en
   azul (WebP), sin isotipo 3D blanco, sin botón «Visitar Labs» en el hero,
   **sin barra horizontal de anclas**, y los seis servicios en un **slide
   guiado por el scroll** (`ServicesSlider` + `ServiceSlide`) con panel
   alterno azul #00285C / verde #164E3B.
-- **Virens Labs:** hero sin isotipo 3D blanco. Resto según `HISTORIAL.md`.
-- **CTA «¿Hablamos de tu proyecto?»:** el mismo icono en home, Labs, Tech y
-  Compañía.
+- **Virens Labs es la Home:** la página `/virens-labs` se retiró y redirige
+  permanentemente a `/`; menú, pie y enlaces cruzados apuntan ya a la Home.
+- **CTA «¿Hablamos de tu proyecto?»:** el mismo icono en Home, Tech y Compañía.
 - El isotipo 3D **blanco** no va en ninguna parte (cliente). Los isotipos de
   color de cabecera y pie sí se quedan.
 
 ## Pendiente / preguntas abiertas
 
-- Franja final de Tech (`DivisionSwitch`, «Visitar Labs») y su equivalente en
-  Labs («Visitar Tech»): el cliente quitó el botón del hero; preguntar si
-  también quiere quitar estas franjas.
+- Franja final de Tech (`DivisionSwitch`, «Visitar Labs»): el cliente quitó el
+  botón del hero; preguntar si también quiere quitar esta franja.
 - Slide de Tech: empieza en azul por el primer slide del diseño del cliente;
   confirmar si prefiere empezar en verde. La frase destacada (`highlight`) de
   cada servicio no se muestra (su diseño no la lleva).

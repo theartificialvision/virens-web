@@ -2518,3 +2518,22 @@ foco), 820 y 390 (carril táctil).
   asistente pueda seguir): dónde está todo, flujo de publicación, estado a
   27/09 y preguntas abiertas. `CLAUDE.md` apunta a él al principio y la
   sección «Estado actual» de este archivo avisa de que su snapshot es del 02/09.
+
+### 2026-09-27 (9) — Codex — La Home absorbe Labs y recupera la escala productiva numérica
+
+- La Home pasa a ser también la página de Virens Labs. Se retira la ruta
+  `/virens-labs` y se conserva una redirección permanente a `/` para no romper
+  enlaces históricos. El menú deja de duplicar Inicio/Labs; sitemap, pie y los
+  accesos desde Tech apuntan ahora a la Home o a sus anclas.
+- Justo después de Formas galénicas, Capacidad productiva recupera la versión
+  numérica de Labs, adaptada al ancho y la tipografía de la Home: `+2.000 m²`,
+  `9` formatos, `2` niveles y las nueve capacidades por formato (`200M` a
+  `5M`). Las cifras y los glifos mantienen la carga animada accesible al entrar
+  en pantalla.
+- Sale la versión intermedia de siete siluetas que crecían por tamaños, junto
+  con sus componentes, datos geométricos y CSS ya sin uso.
+
+**Verificado**: `npm run typecheck` limpio; compilación, validación de tipos y
+generación estática de Next correctas; Chrome headless a 1440 y 390 px con la
+Home completa, orden y contenido del HTML comprobados; `/virens-labs` responde
+con redirección permanente 308 a `/`.

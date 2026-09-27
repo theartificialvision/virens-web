@@ -7,7 +7,7 @@ export interface NavItem {
 }
 
 /**
- * Overlay de menú (§5.3): Compañía · Virens Labs · Virens Tech · Noticias ·
+ * Overlay de menú (§5.3): Inicio · Compañía · Virens Tech · Noticias ·
  * Contacto. "Inicio" se añadió el 2026-09-02 al quitar el logotipo de texto
  * de la cabecera (petición del cliente): sin él, el menú es la única forma
  * de volver a Home.
@@ -15,20 +15,9 @@ export interface NavItem {
 export const mainNav: NavItem[] = [
   { href: '/', label: 'Inicio' },
   { href: '/compania', label: 'Compañía' },
-  { href: '/virens-labs', label: 'Virens Labs', division: 'labs' },
   { href: '/virens-tech', label: 'Virens Tech', division: 'tech' },
   { href: '/noticias', label: 'Noticias' },
   { href: '/contacto', label: 'Contacto' },
-];
-
-/** Barra de anclas sticky de /virens-labs (§10.8) — un ítem por bloque con id. */
-export const labsAnchors: NavItem[] = [
-  { href: '#private-label', label: 'Private Label' },
-  { href: '#full-service', label: 'Full Service' },
-  { href: '#formas-galenicas', label: 'Formas galénicas' },
-  { href: '#capacidad-productiva', label: 'Capacidad productiva' },
-  { href: '#calidad', label: 'Calidad' },
-  { href: '#areas-terapeuticas', label: 'Áreas terapéuticas' },
 ];
 
 /** Barra de anclas sticky de /virens-tech. */
@@ -42,9 +31,8 @@ export const legalNav: NavItem[] = [
 ];
 
 /**
- * Rutas del pivote oscuro 2026-09-01 (las dos divisiones; la Home salió de la
- * lista el 2026-09-22 al promoverse la V2 clara a la raíz). El resto del sitio
- * (Compañía/Contacto/Noticias) se queda en el sistema claro hasta su propia
- * fase — Header y Grain se autolimitan a esta lista.
+ * Ruta del pivote oscuro 2026-09-01. Labs vive ahora en la Home clara; el
+ * resto del sitio (Compañía/Contacto/Noticias) se queda en el sistema claro
+ * hasta su propia fase — Header y Grain se autolimitan a esta lista.
  */
-export const DARK_ROUTES = ['/virens-labs', '/virens-tech'] as const;
+export const DARK_ROUTES = ['/virens-tech'] as const;

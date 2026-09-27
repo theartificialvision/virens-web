@@ -23,7 +23,7 @@ export function DualServices() {
       <div className="mx-auto w-full max-w-[var(--container-max)] px-5 py-[var(--v2-section)] md:px-8 lg:px-12 2xl:px-20">
         <div className="grid gap-12 md:grid-cols-2 md:gap-0">
           {v2Services.map((s, i) => (
-            <article key={s.id} className="flex flex-col">
+            <article id={s.id} key={s.id} className="flex scroll-mt-24 flex-col">
               <Reveal delay={i * 0.08} className={cn(i === 0 ? 'md:pr-4' : 'md:pl-4')}>
                 <div className="relative aspect-video overflow-hidden">
                   <div className="v2-media absolute inset-0">

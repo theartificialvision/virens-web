@@ -96,23 +96,29 @@ export const v2Galenic = {
 export const v2Capacity = {
   title: 'Capacidad productiva',
   lead: 'Contamos con más de 2000 m² de instalaciones donde llevamos a cabo la fabricación, acondicionamiento primario y secundario.',
-  /** Indicación bajo el párrafo. `pointer`: literal del diseño del cliente
-   *  (27/09/2026); `touch`: su equivalente en pantallas táctiles, donde no hay
-   *  cursor. */
-  hint: {
-    pointer: 'Pasa el cursor para ver cada formato',
-    touch: 'Toca un formato para ver sus tamaños',
-  },
-  /** Formatos. Sus siluetas viven en `lib/capacityShapes.ts` (mismo `id`). */
-  items: [
-    { id: 'dropper', label: 'Dropper bottles', range: '30ml a 60ml' },
-    { id: 'vials', label: 'Vials', range: '10ml a 25ml' },
-    { id: 'jar', label: 'Jar filling', range: '50ml a 500ml' },
-    { id: 'syrups', label: 'Syrups', range: '100ml a 1000ml' },
-    { id: 'blisters', label: 'Blisters', range: 'PVDC-Pvc/Alu + Alu/Alu' },
-    { id: 'sticks', label: 'Sticks', range: '5grs a 20grs' },
-    { id: 'sachets', label: 'Sachets', range: '5grs' },
+  /** Cifras literales del material de Labs, ahora integrado en la home. */
+  stats: [
+    { value: '+2.000', unit: 'm²', label: 'Instalaciones propias' },
+    { value: '9', unit: '', label: 'Formatos de producción' },
+    { value: '2', unit: '', label: 'Niveles de acondicionamiento' },
   ],
+  items: [
+    { id: 'capsulas', label: 'Cápsulas', units: '200M', icon: 'capsule' },
+    { id: 'comprimidos', label: 'Comprimidos', units: '150M', icon: 'tablet' },
+    { id: 'viales', label: 'Viales', units: '20M', range: '10 ml a 25 ml', icon: 'vial' },
+    { id: 'blisters', label: 'Blísters', units: '15M', range: 'PVDC-PVC/Alu + Alu/Alu', icon: 'blister' },
+    { id: 'sticks', label: 'Sticks', units: '10M', range: '5 g a 20 g', icon: 'stick' },
+    { id: 'sobres', label: 'Sobres', units: '10M', range: '5 g a 10 g', icon: 'sachet' },
+    { id: 'frascos', label: 'Llenado de frascos', units: '10M', range: '50 ml a 500 ml', icon: 'jarfill' },
+    { id: 'goteros', label: 'Goteros', units: '5M', range: '30 ml a 60 ml', icon: 'dropper' },
+    { id: 'jarabes', label: 'Jarabes', units: '5M', range: '100 ml a 1000 ml', icon: 'syrup' },
+  ],
+  operations: [
+    'Estuchado automático',
+    'Envasado en frasco',
+    'Acondicionado primario y secundario',
+  ],
+  note: 'Capacidades orientativas. Unidad y periodo pendientes de confirmación.',
 } as const;
 
 export const v2Areas = {
@@ -177,9 +183,9 @@ export const v2FooterNav = [
   {
     title: 'Virens Labs',
     items: [
-      { label: 'Fórmulas sólidas', href: '/virens-labs#formas-galenicas' },
-      { label: 'Fórmulas líquidas', href: '/virens-labs#formas-galenicas' },
-      { label: 'Fabricación por contrato', href: '/virens-labs' },
+      { label: 'Fórmulas sólidas', href: '/#formas-galenicas' },
+      { label: 'Fórmulas líquidas', href: '/#formas-galenicas' },
+      { label: 'Fabricación por contrato', href: '/#private-label' },
     ],
   },
   {
@@ -194,7 +200,7 @@ export const v2FooterNav = [
     title: 'Empresa',
     items: [
       { label: 'Quiénes somos', href: '/compania' },
-      { label: 'Calidad', href: '/virens-labs#calidad' },
+      { label: 'Calidad', href: '/#calidad' },
       { label: 'Instalaciones', href: '/compania' },
     ],
   },

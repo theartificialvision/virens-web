@@ -3,7 +3,7 @@ import { site } from '@/config/site';
 
 /** Sitemap generado en build. Sustituye al de Yoast, que publica 60 entradas para 10 URLs. */
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = ['', '/virens-labs', '/virens-tech', '/compania', '/noticias', '/contacto'];
+  const routes = ['', '/virens-tech', '/compania', '/noticias', '/contacto'];
   return routes.map((route) => ({
     url: `${site.url}${route}`,
     lastModified: new Date(),

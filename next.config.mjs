@@ -9,7 +9,8 @@ const nextConfig = {
       // La home V2 vivió en /v2 unos días (22/09/2026): por si quedó enlazada.
       ['/v2', '/'],
       ['/compania/', '/compania'],
-      ['/virens-labs/', '/virens-labs'],
+      // Labs ya es la home: se conserva la URL histórica como redirección.
+      ['/virens-labs', '/'],
       ['/virens-tech/', '/virens-tech'],
       ['/noticias/', '/noticias'],
       ['/contacto/', '/contacto'],
