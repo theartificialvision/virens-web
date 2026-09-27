@@ -21,6 +21,9 @@ archivo si cambió algo de lo de abajo.
 - **El cliente quiere que lo hagas todo tú**, incluido guardar y publicar: no le
   dejes comandos para que los ejecute él. Escribe en español, directo y breve.
 - **Publicar:** commit en `v2` y push a GitHub; Netlify despliega solo.
+  **Nunca publicar directo a Netlify** (`netlify deploy` desde el Mac): el
+  siguiente push a `v2` lo pisa. Pasó el 27/09 con la Compañía de Codex, que
+  hubo que rescatar de la copia del Mac.
   - Desde una sesión en la nube de Claude: añadir el repo con acceso `push`
     (herramienta `add_repo`), clonar la rama `v2`, trabajar, commit y push.
     Después sincronizar la copia del Mac: en la carpeta `web/` del Mac,
