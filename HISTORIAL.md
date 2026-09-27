@@ -2668,3 +2668,10 @@ Claude (única excepción de copy autorizada).
 - Página: hero → intro → magenta → slide → certificaciones → CTA.
 
 **Verificado**: `npm run typecheck` limpio; Chromium a 1440 y 390 px.
+
+### 2026-09-27 (18) — Claude — Tech: vuelven los cuatro pilares a la franja magenta
+
+- A petición del cliente vuelven «Desarrollo a medida · Alta calidad
+  garantizada · Cumplimiento normativo · Innovación constante», pero la franja
+  se mantiene baja: ritmo compacto siempre, pilares pegados al texto (≈360 px
+  de alto a 1440). Sigue sin el rótulo «Soluciones integradas».

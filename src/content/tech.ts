@@ -28,12 +28,17 @@ export const techIntro = {
     'En Virens Tech ayudamos a nuestros clientes a tener los mejores productos, con exclusividad en los desarrollos, asegurando que sus fórmulas son industrialmente factibles.',
 } as const;
 
-/** Frase puente sobre #A2195B (texto facilitado por el cliente). 27/09/2026:
- *  reducida a titular + una línea; fuera el rótulo y los cuatro pilares, que
- *  repetían los servicios en genérico. */
+/** Franja sobre #A2195B (texto facilitado por el cliente). 27/09/2026: sin
+ *  rótulo y más baja; los cuatro pilares vuelven a petición del cliente. */
 export const integratedSolutions = {
   title: 'De la idea al producto final',
   body: 'Acompañamos cada etapa del desarrollo de tu producto con un enfoque integral, flexible y orientado a resultados.',
+  pillars: [
+    'Desarrollo a medida',
+    'Alta calidad garantizada',
+    'Cumplimiento normativo',
+    'Innovación constante',
+  ],
 } as const;
 
 /**

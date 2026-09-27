@@ -20,8 +20,10 @@ export function TypographicBlock({
   body: string;
   pillars?: readonly string[];
 }) {
+  // 27/09/2026 (cliente): franja baja —ritmo compacto y pilares pegados al
+  // texto— aunque lleve los cuatro pilares.
   return (
-    <Section tone="tech" rhythm={pillars ? 'base' : 'compact'} className="relative overflow-hidden">
+    <Section tone="tech" rhythm="compact" className="relative overflow-hidden">
       <MolecularField variant="tech" className="hidden lg:block" />
       <Container className="relative text-center">
         <div className="mx-auto max-w-[56rem]">
@@ -40,9 +42,9 @@ export function TypographicBlock({
         </div>
 
         {pillars && (
-        <ul className="mt-8 grid lg:mt-16 grid-cols-2 gap-x-8 gap-y-8 lg:gap-y-12 lg:grid-cols-4">
+        <ul className="mx-auto mt-8 grid max-w-[64rem] grid-cols-2 gap-x-8 gap-y-6 lg:mt-10 lg:grid-cols-4">
           {pillars.map((p, i) => (
-            <li key={p} className="flex flex-col items-center gap-4 text-[length:var(--text-small)] font-medium">
+            <li key={p} className="flex flex-col items-center gap-2 text-[length:var(--text-small)] font-medium">
               <span className="text-[length:var(--text-note)] font-semibold tracking-label text-blue">{String(i + 1).padStart(2, '0')}</span>
               {p}
             </li>
