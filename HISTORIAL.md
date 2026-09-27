@@ -2568,3 +2568,28 @@ transición de fondos y ausencia de solapamientos.
 
 **Verificado**: `npm run typecheck` limpio; revisión visual con Chrome headless
 en escritorio 1440 px y móvil 390 px, con scroll real para activar `Reveal`.
+
+### 2026-09-27 (12) — Claude — Tipografía y tamaños: la home manda (reaplicado)
+
+Petición del cliente: «toma de norma la home y corrige las demás secciones
+para combinar». Primer intento (ce25425) revertido: se publicó desde GitHub y
+pisó la Compañía de Codex, que solo estaba en el Mac y en un deploy directo a
+Netlify. Rescatada en cfadbe5; este cambio se reaplica encima.
+
+- **H1** de Tech, Contacto y Noticias: `--v2-hero-title`, peso normal, 1,08,
+  −0,02em; subtítulo y entradilla del hero de Tech como la home.
+- **H2**: `--text-h2` peso medio, −0,015em (slides de Tech, formulario,
+  cabeceras de sección de Compañía). Intro de Tech (párrafo literal) en H3
+  con peso de la home.
+- **Cuerpo**: `--text-small` / 1,85 / gris 700. Numeraciones como Formas
+  galénicas; cifras como Capacidad.
+- **Compañía**: se respeta la maquetación de Codex (maqueta del cliente);
+  solo pesos (semibold → medium), interlineados y ritmo vertical.
+- **Ritmo y márgenes**: `Section` con `--v2-section(-tight)`, `Container`
+  con 32 px en tablet como la home; fuera el `pt-52` de Contacto y Noticias.
+- **CTA final**: `CtaBand` (el de la home) en Tech y Compañía; se retira
+  `CtaContact`.
+
+**Verificado**: `npm run typecheck` limpio; Compañía, Tech, Contacto y
+Noticias en Chromium a 1440 y 390 px con scroll real (sin Montserrat en este
+entorno; el build de Netlify sí la descarga).

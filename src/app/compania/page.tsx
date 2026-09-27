@@ -5,7 +5,7 @@ import { CompanyHero } from '@/components/sections/CompanyHero';
 import { CompanyIcon, type CompanyIconName } from '@/components/sections/CompanyIcon';
 import { CompanySectionHeading } from '@/components/sections/CompanySectionHeading';
 import { CompanyTimeline } from '@/components/sections/CompanyTimeline';
-import { CtaContact } from '@/components/sections/CtaContact';
+import { CtaBand } from '@/components/v2/CtaBand';
 import { Section } from '@/components/ui/Section';
 import { Container } from '@/components/ui/Container';
 import { Reveal } from '@/components/ui/Reveal';
@@ -37,7 +37,7 @@ export default function CompaniaPage() {
             </Reveal>
             <div className="lg:col-span-6 lg:col-start-7">
               <Reveal>
-                <p className="text-[length:var(--text-lead)] font-semibold leading-[1.55] text-blue">
+                <p className="text-[length:var(--text-lead)] font-medium leading-[1.55] text-blue">
                   {companyIntro.title}
                 </p>
               </Reveal>
@@ -72,14 +72,14 @@ export default function CompaniaPage() {
         <Image src="/img/labs-planta.jpg" alt="Línea de producción de Laboratorios Virens" fill sizes="100vw" className="-z-30 object-cover grayscale" />
         <span aria-hidden className="absolute inset-0 -z-20 bg-blue/[0.92] mix-blend-multiply" />
         <span aria-hidden className="absolute inset-0 -z-10 bg-blue/[0.35]" />
-        <Container className="py-[var(--section-base)]">
+        <Container className="py-[var(--v2-section)]">
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
             <Reveal className="lg:col-span-5">
               <CompanySectionHeading index={companySections.work.index} title={companySections.work.title} inverse />
             </Reveal>
             <Reveal className="lg:col-span-6 lg:col-start-7">
-              <p className="text-[length:var(--text-lead)] font-semibold leading-snug">{companySections.work.intro}</p>
-              <p className="mt-5 max-w-[var(--measure-max)] text-[length:var(--text-small)] leading-[1.8] text-white/72">
+              <p className="text-[length:var(--text-lead)] font-medium leading-snug">{companySections.work.intro}</p>
+              <p className="mt-5 max-w-[var(--measure-max)] text-[length:var(--text-small)] leading-[1.85] text-white/75">
                 {companySections.work.body}
               </p>
             </Reveal>
@@ -93,7 +93,7 @@ export default function CompaniaPage() {
                     <CompanyIcon name={step.icon as CompanyIconName} className="text-labs" />
                     <span className="text-[length:var(--text-note)] font-semibold tracking-label text-blue/35">{step.index}</span>
                   </div>
-                  <h3 className="mt-7 text-[length:var(--text-h4)] font-semibold leading-tight tracking-normal">{step.title}</h3>
+                  <h3 className="mt-7 text-[length:var(--text-h4)] font-medium leading-tight tracking-[-0.015em]">{step.title}</h3>
                   <p className="mt-4 text-[length:var(--text-note)] leading-[1.65] text-gray-700">{step.body}</p>
                 </li>
               ))}
@@ -115,7 +115,7 @@ export default function CompaniaPage() {
               <span aria-hidden className="company-section-index block font-semibold leading-[0.75] tracking-normal text-blue/10">
                 {companySections.research.index}
               </span>
-              <p className="mt-9 text-[length:var(--text-lead)] font-medium leading-[1.72] text-blue">
+              <p className="mt-9 text-[length:var(--text-lead)] font-normal leading-[1.72] text-blue">
                 {companyResearch.body.map((segment, index) => (
                   <span key={`${segment.text}-${index}`} className={segment.accent ? 'font-semibold text-labs' : undefined}>{segment.text}</span>
                 ))}
@@ -127,7 +127,7 @@ export default function CompaniaPage() {
 
       <CompanyTimeline heading={companySections.history} entries={timeline} />
 
-      <CtaContact />
+      <CtaBand />
     </>
   );
 }

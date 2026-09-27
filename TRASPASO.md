@@ -64,7 +64,10 @@ archivo si cambió algo de lo de abajo.
   «Expertos en complementos alimenticios», bloque «Quiénes somos» con cinco
   pilares iconográficos, «Qué hacemos» con cadena de valor en panel continuo,
   bloque I+D/control de calidad y timeline rediseñada en vidrio sobre foto.
-- **CTA «¿Hablamos de tu proyecto?»:** el mismo icono en Home, Tech y Compañía.
+- **CTA «¿Hablamos de tu proyecto?»:** el mismo componente (`CtaBand`) en Home, Tech y Compañía.
+- **Tipografía (27/09):** la home es la norma para todas las páginas (H1
+  `--v2-hero-title` peso normal, H2 `--text-h2` peso medio, cuerpo
+  `--text-small`/1,85, ritmo `--v2-section`). Ver `HISTORIAL.md` (12).
 - El isotipo 3D **blanco** no va en ninguna parte (cliente). Los isotipos de
   color de cabecera y pie sí se quedan.
 

@@ -16,12 +16,12 @@ export const metadata: Metadata = {
  */
 export default function NoticiasPage() {
   return (
-    <Section tone="white" rhythm="air" className="pt-20 md:pt-28 lg:pt-52">
+    <Section tone="white" rhythm="air">
       <Container>
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-9">
             <Eyebrow className="text-labs">Actualidad</Eyebrow>
-            <h1 className="mt-6 max-w-[22ch] text-[length:var(--text-h1)] font-bold leading-[1.05] tracking-[-0.02em]">
+            <h1 className="mt-6 max-w-[22ch] text-[length:var(--v2-hero-title)] font-normal leading-[1.08] tracking-[-0.02em]">
               Noticias y actualidad de Laboratorios Virens
             </h1>
           </div>

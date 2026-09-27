@@ -41,7 +41,7 @@ export function ContactForm({
       // que el envío se configure.
       onSubmit={(event) => event.preventDefault()}
     >
-      <h2 className="text-[length:var(--text-h2)] font-normal leading-tight tracking-[-0.02em] text-blue">
+      <h2 className="text-[length:var(--text-h2)] font-medium leading-tight tracking-[-0.015em] text-blue">
         {contactForm.heading}
       </h2>
 

@@ -24,7 +24,7 @@ export function CompanyTimeline({
       <span aria-hidden className="absolute inset-0 -z-10 bg-labs/[0.88] mix-blend-multiply" />
       <span aria-hidden className="absolute inset-0 -z-10 bg-blue/[0.18]" />
 
-      <Container className="py-[var(--section-base)]">
+      <Container className="py-[var(--v2-section)]">
         <Reveal>
           <CompanySectionHeading index={heading.index} title={heading.title} inverse />
         </Reveal>

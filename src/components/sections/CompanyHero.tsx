@@ -15,7 +15,7 @@ export function CompanyHero() {
           <p className="v2-load mt-7 text-[length:var(--v2-hero-sub)] font-medium leading-snug text-white" style={{ '--i': 2 } as CSSProperties}>
             {companyHero.subtitle}
           </p>
-          <p className="v2-load mt-7 max-w-[var(--measure-narrow)] text-[length:var(--text-small)] leading-[1.8] text-white/74" style={{ '--i': 3 } as CSSProperties}>
+          <p className="v2-load mt-7 max-w-[var(--measure-narrow)] text-[length:var(--text-small)] leading-[1.85] text-white/75" style={{ '--i': 3 } as CSSProperties}>
             {companyHero.body}
           </p>
         </div>
