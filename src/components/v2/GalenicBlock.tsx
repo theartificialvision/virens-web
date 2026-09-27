@@ -6,61 +6,66 @@ import { SectionTitle } from './SectionTitle';
 import { v2Galenic } from '@/content/v2-home';
 
 /**
- * Mitad teal + mitad fotografía (§ maqueta, bloque 03).
- * La foto va virada al color de la división —escala de grises + capa #00A099
- * en `multiply`— para que las dos mitades lean como un solo bloque y no como
- * una imagen pegada al lado de un color.
+ * Formas galénicas (§ maqueta, bloque 03), en dos pisos desde el 27/09/2026:
  *
- * 23/09/2026 — el texto vive dentro del mismo contenedor que el resto de la
- * home y la foto se posiciona a sangre en la mitad derecha. Antes el bloque era
- * una rejilla de dos columnas a sangre y, a partir de 1440 px, su texto
- * arrancaba 128 px más a la izquierda que todas las demás secciones.
+ * - Arriba, mitad teal con titular y párrafo y mitad fotografía, virada al
+ *   color de la división (escala de grises + capa #00A099 en `multiply`).
+ * - Debajo, a todo el ancho (cliente: «ponlo en total wide así sumas
+ *   tamaño»), la franja de los diez formatos con filetes compartidos: una
+ *   fila en escritorio, dos en tablet y un carril deslizable en móvil.
+ *
+ * Movimiento (cliente: que sea interesante de ver sin competir con Capacidad
+ * productiva, donde los envases crecen por tamaños): cada glifo se dibuja de
+ * abajo arriba al entrar la franja y, con cursor, el formato señalado se
+ * adelanta —zoom— mientras los demás retroceden. CSS: `.v2-gal` en globals.
  */
 export function GalenicBlock() {
   return (
-    <section id="formas-galenicas" className="relative bg-labs text-white">
-      <div className="mx-auto w-full max-w-[var(--container-max)] px-5 md:px-8 lg:px-12 2xl:px-20">
-        <div className="py-[var(--v2-section)] lg:w-1/2 lg:pr-16">
-          <SectionTitle>{v2Galenic.title}</SectionTitle>
-          <Reveal>
-            <p className="mt-6 max-w-[var(--measure-max)] text-[length:var(--text-small)] leading-[1.85]">
-              {v2Galenic.lead}
-            </p>
-          </Reveal>
-
-          {/* 27/09/2026 (cliente: «muy estático», sin competir con Capacidad,
-              donde los envases crecen): los glifos se dibujan de abajo arriba
-              en cascada al entrar la lista, y al pasar el cursor se levantan
-              con un leve giro. Nada escala. CSS: `.v2-gal` en globals. */}
-          <Reveal className="v2-gal mt-14">
-            <ul className="grid grid-cols-3 gap-x-4 gap-y-10 sm:grid-cols-5">
-              {v2Galenic.items.map((f, i) => (
-                <li
-                  key={f.id}
-                  className="v2-gal-item flex flex-col items-center gap-4 text-center"
-                  style={{ '--i': i } as CSSProperties}
-                >
-                  <GalenicIcon name={f.icon} className="v2-gal-glyph" />
-                  <span className="v2-gal-label text-[length:var(--text-note)] leading-snug">{f.label}</span>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
+    <section id="formas-galenicas" className="bg-labs text-white">
+      <div className="relative">
+        <div className="mx-auto w-full max-w-[var(--container-max)] px-5 md:px-8 lg:px-12 2xl:px-20">
+          <div className="pb-[var(--gal-top-pb)] pt-[var(--v2-section)] lg:w-1/2 lg:pr-16">
+            <SectionTitle>{v2Galenic.title}</SectionTitle>
+            <Reveal>
+              <p className="mt-6 max-w-[var(--measure-max)] text-[length:var(--text-small)] leading-[1.85]">
+                {v2Galenic.lead}
+              </p>
+            </Reveal>
+          </div>
         </div>
+
+        <Reveal className="relative min-h-[16rem] overflow-hidden lg:absolute lg:inset-y-0 lg:right-0 lg:min-h-0 lg:w-1/2">
+          <div className="v2-media absolute inset-0">
+            <Image
+              src={v2Galenic.image.src}
+              alt={v2Galenic.image.alt}
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover grayscale brightness-110 contrast-105"
+            />
+          </div>
+          <span aria-hidden className="absolute inset-0 bg-labs mix-blend-multiply opacity-[0.62]" />
+          <span aria-hidden className="absolute inset-y-0 left-0 hidden w-2/5 bg-gradient-to-r from-labs to-transparent lg:block" />
+        </Reveal>
       </div>
 
-      <Reveal className="relative min-h-[20rem] overflow-hidden lg:absolute lg:inset-y-0 lg:right-0 lg:min-h-0 lg:w-1/2">
-        <div className="v2-media absolute inset-0">
-          <Image
-            src={v2Galenic.image.src}
-            alt={v2Galenic.image.alt}
-            fill
-            sizes="(max-width: 1024px) 100vw, 50vw"
-            className="object-cover grayscale brightness-110 contrast-105"
-          />
-        </div>
-        <span aria-hidden className="absolute inset-0 bg-labs mix-blend-multiply opacity-[0.62]" />
-        <span aria-hidden className="absolute inset-y-0 left-0 hidden w-2/5 bg-gradient-to-r from-labs to-transparent lg:block" />
+      {/* Franja de formatos a todo el ancho */}
+      <Reveal className="v2-gal border-t border-white/25">
+        <ul className="v2-gal-list flex snap-x snap-mandatory overflow-x-auto md:grid md:grid-cols-5 md:overflow-visible lg:grid-cols-10">
+          {v2Galenic.items.map((f, i) => (
+            <li
+              key={f.id}
+              className="v2-gal-item flex w-[var(--gal-cell-sm)] shrink-0 snap-start flex-col items-center border-r border-white/25 px-3 pb-12 pt-8 text-center md:w-auto md:[&:nth-child(5n)]:border-r-0 md:[&:nth-child(-n+5)]:border-b lg:[&:nth-child(-n+5)]:border-b-0 lg:[&:nth-child(5n)]:border-r lg:last:border-r-0"
+              style={{ '--i': i } as CSSProperties}
+            >
+              <span className="self-start text-[length:var(--text-note)] font-semibold tracking-label text-white/60">
+                {String(i + 1).padStart(2, '0')}
+              </span>
+              <GalenicIcon name={f.icon} className="v2-gal-glyph mt-6 size-[var(--gal-icon)]" />
+              <span className="v2-gal-label mt-6 text-[length:var(--text-small)] font-medium leading-snug">{f.label}</span>
+            </li>
+          ))}
+        </ul>
       </Reveal>
     </section>
   );

@@ -676,15 +676,24 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   .reveal .v2-media { transition: transform var(--v2-media-time) var(--motion-ease); }
   .reveal[data-visible='false'] .v2-media { transform: scale(var(--v2-media-zoom)); }
 }
-/* Formas galénicas (home), 27/09/2026: movimiento propio que no compita con
-   Capacidad productiva (allí los envases crecen). Entrada: cada glifo se
-   dibuja de abajo arriba, en cascada, y su nombre aparece detrás. Hover: el
-   glifo se levanta con un giro leve, alterno por columna. Nada escala. */
+/* Formas galénicas (home), 27/09/2026. Franja de diez formatos a todo el
+   ancho, bajo el titular y la foto. Entrada: cada glifo se dibuja de abajo
+   arriba, en cascada, y su nombre aparece detrás. Con cursor, el formato
+   señalado se adelanta (zoom) y los demás retroceden (más pequeños y
+   apagados): foco, no crecimiento por tamaños como en Capacidad productiva. */
 @theme {
-  --gal-step:  70ms;     /* desfase entre glifos en la entrada */
-  --gal-draw:  900ms;    /* lo que tarda cada glifo en dibujarse */
-  --gal-lift:  0.375rem; /* 6 — elevación al pasar el cursor */
-  --gal-tilt:  6deg;
+  --gal-icon:    clamp(4.5rem, 2.5rem + 3.4vw, 6.75rem); /* 72 -> 108 */
+  --gal-cell-sm: 40vw;      /* ancho de cada formato en el carril móvil */
+  --gal-top-pb:  clamp(3rem, 2rem + 3vw, 5rem);
+  --gal-step:    70ms;      /* desfase entre glifos en la entrada */
+  --gal-draw:    900ms;     /* lo que tarda cada glifo en dibujarse */
+  --gal-focus:   1.16;      /* zoom del formato señalado */
+  --gal-rest:    0.94;      /* escala de los demás */
+}
+.v2-gal-list { scrollbar-width: none; }
+.v2-gal-list::-webkit-scrollbar { display: none; }
+.v2-gal-glyph, .v2-gal-label, .v2-gal-item > span:first-child {
+  transition: transform 550ms var(--motion-ease), opacity 400ms var(--motion-ease);
 }
 @media (prefers-reduced-motion: no-preference) {
   .reveal.v2-gal[data-visible='false'] { opacity: 1; transform: none; }
@@ -692,17 +701,21 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
     clip-path: inset(0 0 0 0);
     transition:
       clip-path var(--gal-draw) var(--motion-ease) calc(var(--i, 0) * var(--gal-step)),
-      transform 500ms var(--ease-spring);
+      transform 550ms var(--motion-ease), opacity 400ms var(--motion-ease);
   }
   .v2-gal[data-visible='false'] .v2-gal-glyph { clip-path: inset(100% 0 0 0); }
-  .v2-gal .v2-gal-label {
-    transition: opacity 600ms var(--motion-ease) calc(var(--i, 0) * var(--gal-step) + 450ms);
-  }
   .v2-gal[data-visible='false'] .v2-gal-label { opacity: 0; }
+  .v2-gal .v2-gal-label {
+    transition: opacity 600ms var(--motion-ease) calc(var(--i, 0) * var(--gal-step) + 450ms),
+                transform 550ms var(--motion-ease);
+  }
 }
-@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .v2-gal-item:hover .v2-gal-glyph { transform: translateY(calc(var(--gal-lift) * -1)) rotate(calc(var(--gal-tilt) * -1)); }
-  .v2-gal-item:nth-child(even):hover .v2-gal-glyph { transform: translateY(calc(var(--gal-lift) * -1)) rotate(var(--gal-tilt)); }
+@media (hover: hover) {
+  .v2-gal-list:hover .v2-gal-item:not(:hover) .v2-gal-glyph { transform: scale(var(--gal-rest)); opacity: 0.45; }
+  .v2-gal-list:hover .v2-gal-item:not(:hover) .v2-gal-label,
+  .v2-gal-list:hover .v2-gal-item:not(:hover) > span:first-child { opacity: 0.45; }
+  .v2-gal-item:hover .v2-gal-glyph { transform: scale(var(--gal-focus)); }
+  .v2-gal-item:hover .v2-gal-label { transform: translateY(0.375rem); }
 }
 /* Capacidad productiva (home), diseño del cliente del 27/09/2026 — sustituye
    al escaparate 3D. Cada formato es una silueta de trazo que, al activarse,

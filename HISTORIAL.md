@@ -2480,3 +2480,28 @@ con táctil emulado (recorrido automático, toque, indicación correcta).
 
 **Verificado**: `npm run typecheck` limpio; Playwright a 1440 px (cascada de
 entrada y hover).
+
+### 2026-09-27 (7) — Claude (Cowork) — Home, Formas galénicas: franja a todo el ancho, foco con zoom y dos glifos redibujados
+
+Feedback del cliente sobre la sesión (6): el giro «queda un poco goofy»; el
+efecto tiene que ser «un adelanto, un zoom con respecto al resto»; ponerlo
+«en total wide así sumas tamaño»; mejorar el blíster y la máquina («no sé si
+están muy gruesas las líneas»); «tiene que ser interesante de ver».
+
+- **Dos pisos:** arriba titular + párrafo (mitad teal) y foto virada (mitad
+  derecha, solo a la altura del texto); debajo, **franja de los diez formatos
+  a todo el ancho**, con filetes compartidos (regla 7: no son tarjetas),
+  número 01–10 en cada celda y glifos más grandes (`--gal-icon`, 72→108 px).
+  Escritorio: una fila de 10; tablet: 5 + 5; móvil: carril deslizable con
+  `scroll-snap` (celdas de 40vw).
+- **Hover = foco:** el formato señalado se adelanta (`scale(1.16)`) y los
+  demás retroceden (0,94 y opacidad 0,45). Fuera el giro. La entrada (glifos
+  que se dibujan de abajo arriba en cascada) se mantiene.
+- **Glifos redibujados:** `blister.svg` (8 alvéolos limpios, sin las rayas
+  internas que lo empastaban) y `autocapsule.svg` (tolva, cuerpo con ventana,
+  tres cápsulas y panel de control; menos piezas). Mismo grosor de trazo que
+  el resto del juego (2,2 sobre 100). Los originales vectorizados siguen en el
+  historial de git. Afecta también a /virens-labs, que usa el mismo juego.
+
+**Verificado**: `npm run typecheck` limpio; Playwright a 1440 (entrada y
+foco), 820 y 390 (carril táctil).
