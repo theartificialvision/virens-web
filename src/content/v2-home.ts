@@ -75,8 +75,8 @@ export const v2Galenic = {
   title: 'Formas galénicas',
   lead: 'En Laboratorios Virens fabricamos complementos alimenticios en diferentes formas galénicas: sólidas (comprimidos, cápsulas) y líquidas (pequeños en distintos formatos: blister, bote, stick, viales, dropper).',
   image: {
-    src: '/img/v2/galenicas.jpg',
-    alt: 'Cápsulas blancas cayendo desde la tolva de una encapsuladora',
+    src: '/img/v2/galenicas-4k.jpg',
+    alt: 'Cápsulas blancas avanzando por una línea farmacéutica de acero inoxidable',
   },
   /** Orden exacto de la maqueta: dos filas de cinco. */
   items: [

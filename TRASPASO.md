@@ -57,6 +57,10 @@ archivo si cambió algo de lo de abajo.
   alterno azul #00285C / verde #164E3B.
 - **Virens Labs es la Home:** la página `/virens-labs` se retiró y redirige
   permanentemente a `/`; menú, pie y enlaces cruzados apuntan ya a la Home.
+- **Compañía** (`src/app/compania/page.tsx`): portada nueva con claim
+  «Expertos en complementos alimenticios», bloque «Quiénes somos» con cinco
+  pilares iconográficos, «Qué hacemos» con cadena de valor en panel continuo,
+  bloque I+D/control de calidad y timeline rediseñada en vidrio sobre foto.
 - **CTA «¿Hablamos de tu proyecto?»:** el mismo icono en Home, Tech y Compañía.
 - El isotipo 3D **blanco** no va en ninguna parte (cliente). Los isotipos de
   color de cabecera y pie sí se quedan.

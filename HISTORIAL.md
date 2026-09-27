@@ -2552,3 +2552,19 @@ con redirección permanente 308 a `/`.
 **Verificado**: `npm run typecheck` limpio; Home completa en Chrome headless a
 1440 y 390 px con movimiento reducido para comprobar cifras finales, orden,
 transición de fondos y ausencia de solapamientos.
+
+### 2026-09-27 (11) — Codex — Compañía según maqueta del cliente
+
+- Renovada `/compania` con la dirección de la maqueta `QuienesSomos copia.pdf`:
+  hero editorial «Expertos en complementos alimenticios», bloque «Quiénes
+  somos» con cinco pilares iconográficos, capítulo «Qué hacemos» con la cadena
+  de valor en cinco pasos, bloque de I+D/control de calidad y timeline
+  horizontal/vertical sobre imagen.
+- Añadidos componentes específicos (`CompanyHero`, `CompanyIcon`,
+  `CompanySectionHeading`, `CompanyTimeline`) y CSS propio dentro del sistema
+  de tokens. El copy sigue centralizado en `src/content/company.ts`.
+- Home/Formas galénicas cambia a la nueva imagen 4K
+  `public/img/v2/galenicas-4k.jpg`.
+
+**Verificado**: `npm run typecheck` limpio; revisión visual con Chrome headless
+en escritorio 1440 px y móvil 390 px, con scroll real para activar `Reveal`.

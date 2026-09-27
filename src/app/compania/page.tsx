@@ -1,53 +1,131 @@
+import Image from 'next/image';
+import type { CSSProperties } from 'react';
 import type { Metadata } from 'next';
-import { Timeline } from '@/components/sections/Timeline';
+import { CompanyHero } from '@/components/sections/CompanyHero';
+import { CompanyIcon, type CompanyIconName } from '@/components/sections/CompanyIcon';
+import { CompanySectionHeading } from '@/components/sections/CompanySectionHeading';
+import { CompanyTimeline } from '@/components/sections/CompanyTimeline';
 import { CtaContact } from '@/components/sections/CtaContact';
 import { Section } from '@/components/ui/Section';
 import { Container } from '@/components/ui/Container';
-import { Eyebrow } from '@/components/ui/Eyebrow';
-import { companyIntro, pillars, timeline } from '@/content/company';
+import { Reveal } from '@/components/ui/Reveal';
+import {
+  companyIntro,
+  companyResearch,
+  companySections,
+  pillars,
+  timeline,
+  valueChain,
+} from '@/content/company';
 
 export const metadata: Metadata = {
   title: 'Compañía',
-  description: 'Laboratorio propio en Sant Andreu de la Barca desde 2000. Historia, calidad, certificaciones e instalaciones.',
+  description: 'Más de 20 años desarrollando y fabricando complementos alimenticios con instalaciones propias, I+D y control de calidad.',
   alternates: { canonical: '/compania' },
 };
 
 export default function CompaniaPage() {
   return (
     <>
-      <Section tone="white" rhythm="air" className="pt-20 md:pt-28 lg:pt-52">
+      <CompanyHero />
+
+      <Section id="quienes-somos" tone="white" rhythm="air">
         <Container>
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-9">
-              <Eyebrow className="text-labs">Compañía</Eyebrow>
-              {/* Texto LITERAL (frase real de "Quiénes somos", no un titular corto). */}
-              <h1 className="mt-6 max-w-[26ch] text-[length:var(--text-h1)] font-bold leading-[1.15] tracking-[-0.015em]">
-                {companyIntro.title}
-              </h1>
-              <p className="mt-8 max-w-[var(--measure-max)] text-[length:var(--text-lead)] text-gray-700">
-                {companyIntro.lead}
-              </p>
+            <Reveal className="lg:col-span-5">
+              <CompanySectionHeading {...companySections.identity} />
+            </Reveal>
+            <div className="lg:col-span-6 lg:col-start-7">
+              <Reveal>
+                <p className="text-[length:var(--text-lead)] font-semibold leading-[1.55] text-blue">
+                  {companyIntro.title}
+                </p>
+              </Reveal>
+              <div className="mt-7 space-y-5">
+                {companyIntro.body.map((paragraph, index) => (
+                  <Reveal key={paragraph} delay={(index + 1) * 0.06}>
+                    <p className="max-w-[var(--measure-max)] text-[length:var(--text-small)] leading-[1.85] text-gray-700">
+                      {paragraph}
+                    </p>
+                  </Reveal>
+                ))}
+              </div>
             </div>
+          </div>
+
+          <Reveal className="company-stagger mt-16 lg:mt-24">
+            <ul className="grid gap-x-7 gap-y-12 sm:grid-cols-2 lg:grid-cols-5">
+              {pillars.map((pillar, index) => (
+                <li key={pillar.label} className="company-stagger-item flex flex-col items-center text-center" style={{ '--i': index } as CSSProperties}>
+                  <CompanyIcon name={pillar.icon as CompanyIconName} className="text-labs" />
+                  <p className="mt-6 max-w-[18rem] text-[length:var(--text-small)] font-medium leading-snug text-blue">
+                    {pillar.label}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </Container>
+      </Section>
+
+      <section id="que-hacemos" className="company-process relative isolate overflow-hidden bg-blue text-white" data-header-tone="dark">
+        <Image src="/img/labs-planta.jpg" alt="Línea de producción de Laboratorios Virens" fill sizes="100vw" className="-z-30 object-cover grayscale" />
+        <span aria-hidden className="absolute inset-0 -z-20 bg-blue/[0.92] mix-blend-multiply" />
+        <span aria-hidden className="absolute inset-0 -z-10 bg-blue/[0.35]" />
+        <Container className="py-[var(--section-base)]">
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+            <Reveal className="lg:col-span-5">
+              <CompanySectionHeading index={companySections.work.index} title={companySections.work.title} inverse />
+            </Reveal>
+            <Reveal className="lg:col-span-6 lg:col-start-7">
+              <p className="text-[length:var(--text-lead)] font-semibold leading-snug">{companySections.work.intro}</p>
+              <p className="mt-5 max-w-[var(--measure-max)] text-[length:var(--text-small)] leading-[1.8] text-white/72">
+                {companySections.work.body}
+              </p>
+            </Reveal>
+          </div>
+
+          <Reveal className="company-stagger mt-14 lg:mt-20">
+            <ol className="company-liquid-panel grid overflow-hidden text-blue md:grid-cols-5 md:divide-x md:divide-blue/12">
+              {valueChain.map((step, index) => (
+                <li key={step.index} className="company-stagger-item relative z-10 flex flex-col border-b border-blue/12 p-6 last:border-b-0 md:min-h-[var(--company-process-h)] md:border-b-0 lg:p-8" style={{ '--i': index } as CSSProperties}>
+                  <div className="flex items-start justify-between gap-4">
+                    <CompanyIcon name={step.icon as CompanyIconName} className="text-labs" />
+                    <span className="text-[length:var(--text-note)] font-semibold tracking-label text-blue/35">{step.index}</span>
+                  </div>
+                  <h3 className="mt-7 text-[length:var(--text-h4)] font-semibold leading-tight tracking-normal">{step.title}</h3>
+                  <p className="mt-4 text-[length:var(--text-note)] leading-[1.65] text-gray-700">{step.body}</p>
+                </li>
+              ))}
+            </ol>
+          </Reveal>
+        </Container>
+      </section>
+
+      <Section id="investigacion" tone="soft" rhythm="air">
+        <Container>
+          <h2 className="sr-only">{companyResearch.title}</h2>
+          <div className="company-research-grid grid items-center lg:grid-cols-12">
+            <Reveal className="lg:col-span-7 lg:col-start-1 lg:row-start-1">
+              <div className="company-research-media relative aspect-[4/3] overflow-hidden">
+                <Image src={companyResearch.image.src} alt={companyResearch.image.alt} fill sizes="(max-width: 1024px) 100vw, 58vw" className="v2-media object-cover" />
+              </div>
+            </Reveal>
+            <Reveal className="company-research-copy company-liquid-panel lg:col-span-6 lg:col-start-7 lg:row-start-1 lg:self-center">
+              <span aria-hidden className="company-section-index block font-semibold leading-[0.75] tracking-normal text-blue/10">
+                {companySections.research.index}
+              </span>
+              <p className="mt-9 text-[length:var(--text-lead)] font-medium leading-[1.72] text-blue">
+                {companyResearch.body.map((segment, index) => (
+                  <span key={`${segment.text}-${index}`} className={segment.accent ? 'font-semibold text-labs' : undefined}>{segment.text}</span>
+                ))}
+              </p>
+            </Reveal>
           </div>
         </Container>
       </Section>
 
-      <Section tone="soft" rhythm="base">
-        <Container>
-          <ul className="grid gap-x-10 gap-y-8 md:grid-cols-2 lg:grid-cols-5">
-            {pillars.map((p, i) => (
-              <li key={p} className="flex flex-col gap-4 lg:gap-6">
-                <span className="text-[length:var(--text-h3)] font-bold leading-none tracking-[-0.03em] text-labs">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <p className="text-[length:var(--text-body)] font-medium leading-snug text-blue">{p}</p>
-              </li>
-            ))}
-          </ul>
-        </Container>
-      </Section>
-
-      <Timeline entries={timeline} />
+      <CompanyTimeline heading={companySections.history} entries={timeline} />
 
       <CtaContact />
     </>

@@ -1,51 +1,101 @@
 import type { TimelineEntry } from '@/lib/types';
 
-/** COMPAÑÍA — extraído de lvirens.com/compania (01/09/2026). */
+/**
+ * COMPAÑÍA — texto literal de lvirens.com y de la maqueta
+ * `QuienesSomos copia.pdf` entregada por el cliente (27/09/2026).
+ */
+
+export const companyHero = {
+  prefix: 'Expertos en',
+  title: 'Complementos alimenticios',
+  subtitle: 'Contract Manufacturing & Development',
+  body: 'En Laboratorios Virens fabricamos complementos alimenticios con los más altos estándares para mejorar el bienestar físico, mental y social.',
+  image: {
+    src: '/img/labs-hero-poster.jpg',
+    alt: 'Técnica supervisando una línea de fabricación de complementos alimenticios',
+  },
+} as const;
 
 // LITERAL de "Quiénes somos" (§2.2). El H1 y la entradilla propuestos en el
 // documento (§08.5) son una reescritura nueva sin equivalente en la web
 // actual: se sustituyen por el texto real, partido en título + cuerpo.
 export const companyIntro = {
   title: 'Laboratorios Virens es una empresa con más de 20 años de experiencia en la fabricación de complementos alimenticios.',
-  lead: 'En Virens entendemos la salud como un estado de bienestar físico, mental y social y no solo como la ausencia de enfermedades. Somos expertos en elaborar productos de alta calidad y valor añadido satisfaciendo así las exigencias de nuestros clientes.',
+  body: [
+    'En Virens entendemos la salud como un estado de bienestar físico, mental y social y no solo como la ausencia de enfermedades.',
+    'Somos expertos en elaborar productos de alta calidad y valor añadido satisfaciendo así las exigencias de nuestros clientes.',
+  ],
 } as const;
 
 /** Literal de la web. */
 export const pillars = [
-  'Fabricación en instalaciones propias',
-  'Equipo altamente cualificado y orientado al cliente',
-  'Altos estándares de calidad, seguridad y control',
-  'Conocimiento científico de nutrición y fitoterapia',
-  'Empresa con vocación internacional',
+  { icon: 'facilities', label: 'Fabricación en instalaciones propias' },
+  { icon: 'team', label: 'Equipo altamente cualificado y orientado al cliente' },
+  { icon: 'quality', label: 'Altos estándares de calidad, seguridad y control' },
+  { icon: 'science', label: 'Conocimiento científico de nutrición y fitoterapia' },
+  { icon: 'international', label: 'Empresa con vocación internacional' },
 ] as const;
 
-/** Literal de la web. Se reutiliza también en la home ("Cómo trabajamos"). */
+export const companySections = {
+  identity: { index: '01', title: 'Quiénes somos' },
+  work: {
+    index: '02',
+    title: 'Qué hacemos',
+    intro: 'Laboratorios Virens ofrece soluciones integrales.',
+    body: 'Desde el desarrollo del producto a su entrega como producto final para su puesta en el mercado; pasando por el proceso de formulación, producción y acondicionamiento.',
+  },
+  research: { index: '03', title: 'I+D y control de calidad' },
+  history: { index: '04', title: 'Nuestra historia' },
+} as const;
+
+/** Cinco etapas de la maqueta del cliente (imagen, 27/09/2026). */
 export const valueChain = [
   {
     index: '01',
+    icon: 'development',
     title: 'Desarrollo y formulación',
-    items: [
-      'Elaboración de la fórmula siguiendo las directrices establecidas',
-      'Elaboración de muestras',
-      'Realización de tests para conseguir el producto deseado por el cliente',
-    ],
+    body: 'Elaboración de la fórmula siguiendo las directrices establecidas',
   },
   {
     index: '02',
-    title: 'Fabricación y envasado',
-    items: ['Transformación de la idea inicial en producto'],
+    icon: 'samples',
+    title: 'Elaboración de muestras',
+    body: 'Realización de tests para conseguir el producto deseado por el cliente',
   },
   {
     index: '03',
-    title: 'Acondicionado',
-    items: ['Acondicionado primario y secundario'],
+    icon: 'manufacturing',
+    title: 'Fabricación y envasado',
+    body: 'Transformación de la idea inicial en producto',
   },
   {
     index: '04',
+    icon: 'conditioning',
+    title: 'Acondicionado',
+    body: 'Acondicionado primario y secundario',
+  },
+  {
+    index: '05',
+    icon: 'control',
     title: 'Control de calidad',
-    items: ['Definición y supervisión de protocolos para asegurar la calidad del producto y procesos'],
+    body: 'Definición y supervisión de protocolos para asegurar la calidad del producto y procesos',
   },
 ] as const;
+
+export const companyResearch = {
+  title: companySections.research.title,
+  image: {
+    src: '/img/tech-galenicos.jpg',
+    alt: 'Formas galénicas y materias primas preparadas para su desarrollo en laboratorio',
+  },
+  body: [
+    { text: 'Disponemos de un ', accent: false },
+    { text: 'equipo de I+D', accent: true },
+    { text: ' el cual cuenta con una amplia experiencia en el desarrollo de nuevas fórmulas y asesora a nuestros clientes a personalizar las suyas. Además contamos con un ', accent: false },
+    { text: 'Laboratorio de Control de Calidad', accent: true },
+    { text: ' equipado para garantizar el cumplimiento de las especificaciones y requerimientos solicitados. También tenemos la capacidad para elaborar muestras, realizar test piloto y estudios de estabilidad si el proceso lo requiere.', accent: false },
+  ],
+} as const;
 
 /**
  * Línea de tiempo. En la web actual este contenido SOLO existe dentro del PNG
@@ -59,4 +109,6 @@ export const timeline: TimelineEntry[] = [
   { year: '2015', text: 'Certificación ECO y Veterinaria. Expansión internacional en más de 20 países' },
   { year: '2021', text: 'Ampliación de las instalaciones, aumento de capacidad productiva y almacén' },
   { year: '2023', text: 'Creación de Virens Tech, ampliación de I+D y nuevo laboratorio de calidad' },
+  // La maqueta entregada repite literalmente el hito de 2023 en 2026.
+  { year: '2026', text: 'Creación de Virens Tech, ampliación de I+D y nuevo laboratorio de calidad' },
 ];
