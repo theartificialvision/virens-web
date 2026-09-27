@@ -1,7 +1,6 @@
 import Image from 'next/image';
-import type { CSSProperties } from 'react';
 import { Reveal } from '@/components/ui/Reveal';
-import { GalenicIcon } from './GalenicIcon';
+import { GalenicRail } from './GalenicRail';
 import { SectionTitle } from './SectionTitle';
 import { homeContent } from '@/content';
 import type { Locale } from '@/lib/i18n';
@@ -51,23 +50,9 @@ export function GalenicBlock({ locale }: { locale: Locale }) {
         </Reveal>
       </div>
 
-      {/* Franja de formatos a todo el ancho */}
+      {/* Franja de formatos a todo el ancho; carril deslizable bajo lg. */}
       <Reveal className="v2-gal border-t border-white/25">
-        <ul className="v2-gal-list flex snap-x snap-mandatory overflow-x-auto md:grid md:grid-cols-5 md:overflow-visible lg:grid-cols-10">
-          {v2Galenic.items.map((f, i) => (
-            <li
-              key={f.id}
-              className="v2-gal-item flex w-[var(--gal-cell-sm)] shrink-0 snap-start flex-col items-center border-r border-white/25 px-3 pb-12 pt-8 text-center md:w-auto md:[&:nth-child(5n)]:border-r-0 md:[&:nth-child(-n+5)]:border-b lg:[&:nth-child(-n+5)]:border-b-0 lg:[&:nth-child(5n)]:border-r lg:last:border-r-0"
-              style={{ '--i': i } as CSSProperties}
-            >
-              <span className="self-start text-[length:var(--text-note)] font-semibold tracking-label text-white/60">
-                {String(i + 1).padStart(2, '0')}
-              </span>
-              <GalenicIcon name={f.icon} className="v2-gal-glyph mt-6 size-[var(--gal-icon)]" />
-              <span className="v2-gal-label mt-6 text-[length:var(--text-small)] font-medium leading-snug">{f.label}</span>
-            </li>
-          ))}
-        </ul>
+        <GalenicRail items={v2Galenic.items} label={v2Galenic.title} hint={v2Galenic.swipeHint} />
       </Reveal>
     </section>
   );

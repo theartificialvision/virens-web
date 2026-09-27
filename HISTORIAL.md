@@ -2720,3 +2720,23 @@ cinco páginas inglesas, menú y cambio de idioma EN → ES.
 - El rótulo de la fila de acondicionamiento de Capacidad productiva estaba
   escrito en el JSX y salía en español también en `/en`. Pasa a contenido
   (`v2Capacity.operationsTitle`): «Acondicionamiento» / «Packaging» ([TR]).
+
+### 2026-09-27 (21) — Claude — Formas galénicas: carril deslizable con invitación y foco
+
+- Nuevo `GalenicRail` (cliente: «que se intuya un scroll horizontal, micro
+  animación que invite a deslizar, foco con aumento sutil, deslizamiento
+  perfecto»). Por debajo de lg (móvil y ahora también tablet, antes rejilla
+  5×2) la franja es un carril con snap al centro: en móvil el formato activo
+  queda centrado y el siguiente asoma; en tablet arranca en el margen.
+- Invitación: vaivén único del carril al entrar en pantalla (no toca el
+  scroll, así no pelea con el snap) si nadie lo ha tocado; «Desliza →» con
+  flecha que empuja; barra de progreso fina; fundido en los bordes solo donde
+  queda contenido. Con movimiento reducido no hay vaivén.
+- Foco táctil: el formato más cercano al centro crece (`--gal-focus`) y el
+  resto se atenúa. En escritorio el hover es más sutil (1,16 → 1,10; resto
+  0,95 y opacidad 0,5).
+- Deslizamiento: `overscroll-behavior-x: contain`, snap obligatorio al centro,
+  carril enfocable con teclado. Textos nuevos `swipeHint`: «Desliza» / «Swipe».
+
+**Verificado**: `npm run typecheck` limpio; Chromium móvil táctil 390 px (inicio,
+vaivén medido ≈50 px, foco al deslizar, final), tablet 820 px y hover a 1440 px.

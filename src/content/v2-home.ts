@@ -78,6 +78,7 @@ export const v2Galenic = {
     src: '/img/v2/galenicas-4k.jpg',
     alt: 'Cápsulas blancas avanzando por una línea farmacéutica de acero inoxidable',
   },
+  swipeHint: 'Desliza',
   /** Orden exacto de la maqueta: dos filas de cinco. */
   items: [
     { id: 'capsulas', icon: 'capsule', label: 'Cápsulas' },

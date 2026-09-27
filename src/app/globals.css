@@ -683,18 +683,65 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
    apagados): foco, no crecimiento por tamaños como en Capacidad productiva. */
 @theme {
   --gal-icon:    clamp(4.5rem, 2.5rem + 3.4vw, 6.75rem); /* 72 -> 108 */
-  --gal-cell-sm: 40vw;      /* ancho de cada formato en el carril móvil */
+  --gal-cell:    42vw;      /* ancho de cada formato en el carril (móvil) */
+  --gal-cell-md: 24vw;      /* carril en tablet */
   --gal-top-pb:  clamp(3rem, 2rem + 3vw, 5rem);
   --gal-step:    70ms;      /* desfase entre glifos en la entrada */
   --gal-draw:    900ms;     /* lo que tarda cada glifo en dibujarse */
-  --gal-focus:   1.16;      /* zoom del formato señalado */
-  --gal-rest:    0.94;      /* escala de los demás */
+  /* 27/09/2026 (cliente: «aumento de iconos sutil»): antes 1,16 / 0,94. */
+  --gal-focus:   1.1;       /* zoom del formato señalado / en foco */
+  --gal-rest:    0.95;      /* escala de los demás */
+  --gal-dim:     0.5;       /* opacidad de los demás */
+  --gal-fade:    3.5rem;    /* fundido de los bordes del carril */
+  --gal-nudge:   -3.25rem;  /* recorrido del vaivén que invita a deslizar */
 }
+@media (min-width: 768px) { :root { --gal-cell: var(--gal-cell-md); } }
+
 .v2-gal-list { scrollbar-width: none; }
 .v2-gal-list::-webkit-scrollbar { display: none; }
 .v2-gal-glyph, .v2-gal-label, .v2-gal-item > span:first-child {
   transition: transform 550ms var(--motion-ease), opacity 400ms var(--motion-ease);
 }
+
+/* Carril (por debajo de lg). Snap al centro con relleno lateral para que el
+   primer y el último formato también puedan quedar centrados; el siguiente
+   siempre asoma. `overscroll-behavior` evita que el gesto arrastre la página. */
+@media (max-width: 1023.98px) {
+  .v2-gal-list {
+    padding-inline: calc(50% - var(--gal-cell) / 2);
+    scroll-padding-inline: calc(50% - var(--gal-cell) / 2);
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    /* Fundido solo donde queda contenido (--gal-fade-l/-r, 0 → 1, desde JS). */
+    -webkit-mask-image: linear-gradient(to right,
+      rgb(0 0 0 / calc(1 - var(--gal-fade-l, 0))) 0,
+      #000 var(--gal-fade), #000 calc(100% - var(--gal-fade)),
+      rgb(0 0 0 / calc(1 - var(--gal-fade-r, 1))) 100%);
+            mask-image: linear-gradient(to right,
+      rgb(0 0 0 / calc(1 - var(--gal-fade-l, 0))) 0,
+      #000 var(--gal-fade), #000 calc(100% - var(--gal-fade)),
+      rgb(0 0 0 / calc(1 - var(--gal-fade-r, 1))) 100%);
+  }
+  /* Tablet: el carril arranca en el margen de la página (centrar el primero
+     dejaba un hueco de un tercio de pantalla); los intermedios siguen
+     deteniéndose centrados. */
+  @media (min-width: 768px) {
+    .v2-gal-list { padding-inline: 2rem; scroll-padding-inline: 2rem; }
+  }
+  /* Foco táctil: el formato centrado crece un poco; el resto se apaga. */
+  .v2-gal-rail:has([data-focus]) .v2-gal-item:not([data-focus]) .v2-gal-glyph { transform: scale(var(--gal-rest)); opacity: var(--gal-dim); }
+  .v2-gal-rail:has([data-focus]) .v2-gal-item:not([data-focus]) .v2-gal-label,
+  .v2-gal-rail:has([data-focus]) .v2-gal-item:not([data-focus]) > span:first-child { opacity: var(--gal-dim); }
+  .v2-gal-item[data-focus] .v2-gal-glyph { transform: scale(var(--gal-focus)); }
+
+  .v2-gal-thumb {
+    width: calc(var(--gal-thumb, 0.3) * 100%);
+    transform: translateX(calc(var(--gal-progress, 0) * (1 / var(--gal-thumb, 0.3) - 1) * 100%));
+  }
+  .v2-gal-hint { transition: opacity 500ms var(--motion-ease); }
+  .v2-gal-rail[data-touched] .v2-gal-hint { opacity: 0.45; }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .reveal.v2-gal[data-visible='false'] { opacity: 1; transform: none; }
   .v2-gal .v2-gal-glyph {
@@ -709,11 +756,29 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
     transition: opacity 600ms var(--motion-ease) calc(var(--i, 0) * var(--gal-step) + 450ms),
                 transform 550ms var(--motion-ease);
   }
+
+  /* Invitación a deslizar: un vaivén único del carril (no mueve el scroll,
+     así no pelea con el snap) y la flecha que empuja hacia la derecha. */
+  @media (max-width: 1023.98px) {
+    .v2-gal-rail[data-nudge]:not([data-touched]) .v2-gal-item { animation: gal-nudge 1500ms var(--motion-ease) both; }
+    .v2-gal-hint-arrow { display: inline-block; animation: gal-arrow 1800ms var(--motion-ease) infinite; }
+    .v2-gal-rail[data-touched] .v2-gal-hint-arrow { animation: none; }
+  }
 }
-@media (hover: hover) {
-  .v2-gal-list:hover .v2-gal-item:not(:hover) .v2-gal-glyph { transform: scale(var(--gal-rest)); opacity: 0.45; }
+@keyframes gal-nudge {
+  0%, 100% { transform: translateX(0); }
+  40%      { transform: translateX(var(--gal-nudge)); }
+  70%      { transform: translateX(calc(var(--gal-nudge) * -0.12)); }
+}
+@keyframes gal-arrow {
+  0%, 100% { transform: translateX(0); opacity: 1; }
+  50%      { transform: translateX(0.35rem); opacity: 0.6; }
+}
+
+@media (hover: hover) and (min-width: 1024px) {
+  .v2-gal-list:hover .v2-gal-item:not(:hover) .v2-gal-glyph { transform: scale(var(--gal-rest)); opacity: var(--gal-dim); }
   .v2-gal-list:hover .v2-gal-item:not(:hover) .v2-gal-label,
-  .v2-gal-list:hover .v2-gal-item:not(:hover) > span:first-child { opacity: 0.45; }
+  .v2-gal-list:hover .v2-gal-item:not(:hover) > span:first-child { opacity: var(--gal-dim); }
   .v2-gal-item:hover .v2-gal-glyph { transform: scale(var(--gal-focus)); }
   .v2-gal-item:hover .v2-gal-label { transform: translateY(0.375rem); }
 }

@@ -64,6 +64,7 @@ export const v2Galenic = {
     src: '/img/v2/galenicas-4k.jpg',
     alt: 'White capsules moving along a stainless steel pharmaceutical line', // [TR]
   },
+  swipeHint: 'Swipe', // [TR]
   items: [
     { id: 'capsulas', icon: 'capsule', label: 'Capsules' }, // [EN]
     { id: 'comprimidos', icon: 'tablet', label: 'Tablets' }, // [EN]
