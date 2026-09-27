@@ -2424,3 +2424,19 @@ revisadas en Playwright a 1440 y 390 px, sin el lienzo del isotipo.
 
 **Verificado**: `npm run typecheck` limpio; Playwright a 1440×900 (los seis
 tramos, mitad de transición, enlace con hash) y 390 px. Sin errores de consola.
+
+### 2026-09-27 (4) — Claude (Cowork) — Panel del slide azul/verde e icono único en los CTA
+
+- **Slide de servicios de Tech:** el panel de la derecha alterna **azul
+  (#00285C) y verde oscuro (#164E3B)** por diapositiva (cliente: «uno verde y
+  uno azul»), empezando en azul como el primer slide de su diseño. El color de
+  la diapositiva que llega sube como cortina sobre el de la que se va y se
+  queda (antes la cortina, del mismo verde, subía y salía por arriba). El
+  índice anterior se guarda en estado (`prev`) en lugar de disparar un
+  `setState` dentro del actualizador de otro.
+- **Icono del CTA:** `CtaContact` (Labs, Tech, Compañía) usa ahora el mismo
+  icono que el CTA de la home («¿Hablamos de tu proyecto?»):
+  `CircleIcon name="chat"`. Fuera el bocadillo en vidrio (`ContactGlyph`).
+
+**Verificado**: `npm run typecheck` limpio; Playwright a 1440 px (colores del
+panel en las diapositivas 1-3, en mitad de la cortina, y el CTA de /virens-tech).

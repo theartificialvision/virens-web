@@ -6,6 +6,11 @@ import type { ServiceBlock } from '@/lib/types';
 import { ServiceSlide } from './ServiceSlide';
 
 const pad = (n: number) => String(n).padStart(2, '0');
+
+/** Color del panel, alterno por diapositiva (27/09/2026, cliente: «uno verde
+ *  y uno azul»). Empieza en azul como el primer slide de su diseño. */
+const PANEL = ['var(--color-blue)', 'var(--color-green-deep)'] as const;
+const panelColor = (i: number) => PANEL[i % PANEL.length];
 const DESKTOP = '(min-width: 1024px)';
 
 /**
@@ -20,7 +25,9 @@ const DESKTOP = '(min-width: 1024px)';
 export function ServicesSlider({ services, label }: { services: ServiceBlock[]; label: string }) {
   const ref = useRef<HTMLElement>(null);
   const [active, setActive] = useState(0);
+  const [prev, setPrev] = useState(0); // la diapositiva de la que se viene
   const [run, setRun] = useState(0); // reinicia la cortina en cada cambio
+  const activeRef = useRef(0);
   const [desktop, setDesktop] = useState(false);
   const n = services.length;
 
@@ -37,10 +44,11 @@ export function ServicesSlider({ services, label }: { services: ServiceBlock[]; 
       const rect = el.getBoundingClientRect();
       const step = (rect.height - window.innerHeight) / Math.max(n - 1, 1);
       const idx = Math.min(n - 1, Math.max(0, Math.round(-rect.top / step)));
-      setActive((prev) => {
-        if (prev !== idx) setRun((r) => r + 1);
-        return idx;
-      });
+      if (idx === activeRef.current) return;
+      setPrev(activeRef.current);
+      activeRef.current = idx;
+      setActive(idx);
+      setRun((r) => r + 1);
     };
     const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
     update();
@@ -88,14 +96,25 @@ export function ServicesSlider({ services, label }: { services: ServiceBlock[]; 
           <div className="absolute inset-0 bg-gray-100/75" />
         </div>
 
-        {/* Panel verde de la derecha, con la misma foto como textura */}
-        <div aria-hidden className="absolute inset-y-0 right-0 hidden w-[var(--svc-panel-w)] overflow-hidden bg-green-deep lg:block">
+        {/* Panel de la derecha, azul y verde alternos: el color de la
+            diapositiva que llega sube como una cortina sobre el de la que se
+            va (GIF de referencia). Encima, la foto del servicio como textura. */}
+        <div
+          aria-hidden
+          className="absolute inset-y-0 right-0 hidden w-[var(--svc-panel-w)] overflow-hidden lg:block"
+          style={{ background: panelColor(prev) }}
+        >
+          <div
+            key={run}
+            data-run={run > 0 || undefined}
+            className="svc-curtain absolute inset-0"
+            style={{ background: panelColor(active) }}
+          />
           {services.map((s, i) => (
             <div key={s.id} data-active={i === active || undefined} className="svc-bg absolute inset-0">
               <Image src={s.image.src} alt="" fill sizes="30vw" className="scale-110 object-cover opacity-15 mix-blend-luminosity blur-lg grayscale" />
             </div>
           ))}
-          <div key={run} data-run={run > 0 || undefined} className="svc-curtain absolute inset-0 bg-green-deep" />
           <p className="absolute right-12 top-32 text-[length:var(--text-eyebrow)] font-bold tracking-eyebrow text-white 2xl:right-20">
             {pad(active + 1)} — {pad(n)}
           </p>
