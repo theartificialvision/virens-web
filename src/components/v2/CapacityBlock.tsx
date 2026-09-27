@@ -57,7 +57,7 @@ export function CapacityBlock({ locale }: { locale: Locale }) {
 
           <div className="mt-14 grid gap-6 border-t border-gray-200 pt-8 lg:grid-cols-12 lg:items-start">
             <p className="text-[length:var(--text-eyebrow)] font-bold uppercase tracking-eyebrow text-gray-500">
-              Acondicionamiento
+              {v2Capacity.operationsTitle}
             </p>
             <ul className="flex flex-wrap gap-x-10 gap-y-2 text-[length:var(--text-small)] text-gray-700 lg:col-span-8">
               {v2Capacity.operations.map((operation) => (

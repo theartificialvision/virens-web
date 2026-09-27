@@ -112,6 +112,7 @@ export const v2Capacity = {
     { id: 'goteros', label: 'Droppers', units: '5M', range: '30 ml to 60 ml', icon: 'dropper' }, // [IMG]
     { id: 'jarabes', label: 'Syrups', units: '5M', range: '100 ml to 1000 ml', icon: 'syrup' }, // [IMG]
   ],
+  operationsTitle: 'Packaging', // [TR] (ES: «Acondicionamiento»)
   operations: [
     'Automatic cartoning', // [EN]
     'Bottling', // [TR]

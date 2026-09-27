@@ -128,6 +128,7 @@ export const v2Capacity = {
     { id: 'goteros', label: 'Goteros', units: '5M', range: '30 ml a 60 ml', icon: 'dropper' },
     { id: 'jarabes', label: 'Jarabes', units: '5M', range: '100 ml a 1000 ml', icon: 'syrup' },
   ],
+  operationsTitle: 'Acondicionamiento',
   operations: [
     'Estuchado automático',
     'Envasado en frasco',

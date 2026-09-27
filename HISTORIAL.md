@@ -2714,3 +2714,9 @@ el HTML; redirecciones seguidas hasta destino; Chromium a 1440 y 390 px en las
 cinco páginas inglesas, menú y cambio de idioma EN → ES.
 
 **Pendiente**: sincronizar la copia del Mac (ver TRASPASO); páginas legales.
+
+### 2026-09-27 (20) — Claude — Home EN: «Acondicionamiento» sin traducir
+
+- El rótulo de la fila de acondicionamiento de Capacidad productiva estaba
+  escrito en el JSX y salía en español también en `/en`. Pasa a contenido
+  (`v2Capacity.operationsTitle`): «Acondicionamiento» / «Packaging» ([TR]).
