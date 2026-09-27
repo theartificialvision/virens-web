@@ -2613,3 +2613,25 @@ entorno; el build de Netlify sí la descarga).
 
 **Verificado**: `npm run typecheck` limpio; Chromium a 390 px (seis posiciones
 de scroll) y 1440 px (cuatro posiciones + hover).
+
+### 2026-09-27 (14) — Claude — Tech: slide más fluido, versión móvil y certificaciones
+
+- **Scroll más fluido (escritorio)**: nuevo `useSlideProgress`. El progreso
+  sigue al scroll con una inercia corta por tiempo (`TAU` 110 ms, igual a
+  cualquier tasa de refresco) y cada diapositiva recibe `--d` (distancia a la
+  activa): texto y foto derivan con el scroll (`.svc-drift`, `--svc-drift`),
+  así que ya no hay tramos muertos entre cambios. Entradas más solapadas
+  (foto a 80 ms, texto a 280 ms, palabras desde 200 ms), el anillo de progreso
+  avanza de forma continua y el tramo por servicio baja de 85 a 70 svh.
+- **Móvil adaptado**: misma composición que la escena fija en vertical — panel
+  azul/verde con el contador «0X — 06» asomando detrás de la foto, fondos
+  alternos, y al entrar cada servicio en pantalla se abre la foto, el panel
+  crece, el filete magenta se dibuja y el titular entra palabra a palabra.
+  Las entradas van condicionadas a `data-ready` (sin JS todo visible).
+- **Certificaciones en Tech** (`CertStrip`, tras las cifras). En móvil, en
+  Tech y en la Home, filas de 3, 3 y 2 con la última centrada; `--v2-seal`
+  baja su mínimo a 60 px para que caben tres por fila.
+
+**Verificado**: `npm run typecheck` limpio; Chromium a 1440 px (seis puntos del
+recorrido, incluido el salto directo al último servicio) y 390 px (los seis
+servicios y las certificaciones de Tech y Home).

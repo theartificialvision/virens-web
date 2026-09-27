@@ -622,7 +622,7 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   --v2-galenic-icon:  clamp(4rem, 2.8rem + 2.4vw, 5.5rem);      /* 64 -> 88, home */
   --galenic-form-icon: clamp(4rem, 2.5rem + 3vw, 6rem);         /* 64 -> 96, /virens-labs */
   --v2-block-icon:    4.5rem;   /* 72 — círculo de Private Label / Full service */
-  --v2-seal:          clamp(4.5rem, 3rem + 2.6vw, 6.5rem);   /* 72 -> 104 — lado del cuadrado de superficie de cada sello */
+  --v2-seal:          clamp(3.75rem, 2.4rem + 3.2vw, 6.5rem);   /* 60 -> 104 — lado del cuadrado de superficie de cada sello */
 
   /* Altura de la banda de siluetas: todas comparten caja y se alinean por la
      base, así que la escala relativa entre envases es la del original. */
@@ -802,7 +802,12 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
    escena se queda fija y cada tramo `--svc-step` cambia de servicio. */
 @theme {
   --color-green-deep: #164E3B;   /* verde oscuro del panel, alterna con el azul (dato del cliente) */
-  --svc-step:     85svh;         /* scroll necesario para pasar de servicio */
+  --svc-step:     70svh;         /* scroll necesario para pasar de servicio (antes 85: tramos muertos largos) */
+  --svc-drift:    9svh;          /* deriva vertical por diapositiva de distancia (escritorio) */
+  --svc-m-panel-w: 58%;          /* panel de color detrás de la foto, móvil */
+  --svc-m-panel-h: 72%;
+  --svc-m-inset:  1.75rem;       /* cuánto asoma el panel por la derecha */
+  --svc-m-top:    3rem;          /* y por arriba, donde va el contador */
   --svc-panel-w:  30.5%;         /* panel de color, medido sobre su diseño */
   --svc-photo-x:  46%;           /* borde izquierdo de la foto */
   --svc-photo-w:  45%;           /* ancho de la foto (4:3) */
@@ -811,35 +816,57 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   --svc-ring:     2.75rem;       /* anillo de progreso */
 }
 
+/* Fondo y panel: solo existen en la escena fija de escritorio. */
 @media (min-width: 1024px) {
   .svc-bg { opacity: 0; transition: opacity 900ms var(--ease-out-quart); }
   .svc-bg[data-active] { opacity: 1; }
 
   .svc-slide { pointer-events: none; }
   .svc-slide[data-active] { pointer-events: auto; }
-
-  .svc-photo { opacity: 0; transition: opacity 350ms var(--ease-out-quart); }
-  .svc-slide[data-active] .svc-photo {
-    opacity: 1;
-    animation: svc-wipe 950ms var(--ease-out-quart) 250ms both;
-  }
-
-  .svc-copy { opacity: 0; transform: translateY(0.75rem); transition: opacity 300ms var(--ease-out-quart), transform 300ms var(--ease-out-quart); }
-  .svc-slide[data-active] .svc-copy {
-    opacity: 1; transform: none;
-    transition: opacity 700ms var(--ease-out-quart) 500ms, transform 700ms var(--ease-out-quart) 500ms;
-  }
-  .svc-word { opacity: 0; transition: opacity 250ms var(--ease-out-quart); }
-  .svc-slide[data-active] .svc-word {
-    animation: svc-word 700ms var(--ease-out-quart) both;
-    animation-delay: calc(450ms + var(--i) * 70ms);
-  }
-
-  .svc-line { transform: scaleX(0); transform-origin: left; transition: transform 300ms var(--ease-out-quart); }
-  .svc-slide[data-active] .svc-line { transform: scaleX(1); transition: transform 800ms var(--ease-out-quart) 900ms; }
-
   .svc-curtain[data-run] { animation: svc-curtain 1000ms var(--ease-out-quart) both; }
 }
+
+/* Deriva continua con el scroll (escritorio). `--d` es la distancia a la
+   diapositiva activa: la que está en pantalla sube despacio mientras se lee,
+   la saliente sigue subiendo mientras se funde y la entrante llega desde
+   abajo. `--k` gradúa la profundidad: el texto se mueve el doble que la foto. */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .svc-drift {
+    transform: translate3d(0, calc(var(--d, 0) * var(--k, 1) * var(--svc-drift) * -1), 0);
+    will-change: transform;
+  }
+}
+
+/* Entradas de cada diapositiva. En escritorio las dispara el índice activo;
+   en móvil, la llegada del servicio a pantalla. Van condicionadas a
+   `data-ready`: sin JS todo se ve completo. */
+.svc-track[data-ready] .svc-photo { opacity: 0; transition: opacity 500ms var(--ease-out-quart); }
+.svc-track[data-ready] .svc-slide[data-active] .svc-photo {
+  opacity: 1;
+  animation: svc-wipe 950ms var(--ease-out-quart) 80ms both;
+}
+.svc-track[data-ready] .svc-copy {
+  opacity: 0;
+  transform: translateY(0.75rem);
+  transition: opacity 450ms var(--ease-out-quart), transform 450ms var(--ease-out-quart);
+}
+.svc-track[data-ready] .svc-slide[data-active] .svc-copy {
+  opacity: 1;
+  transform: none;
+  transition: opacity 700ms var(--ease-out-quart) 280ms, transform 700ms var(--ease-out-quart) 280ms;
+}
+.svc-track[data-ready] .svc-word { opacity: 0; transition: opacity 350ms var(--ease-out-quart); }
+.svc-track[data-ready] .svc-slide[data-active] .svc-word {
+  animation: svc-word 700ms var(--ease-out-quart) both;
+  animation-delay: calc(200ms + var(--i) * 60ms);
+}
+.svc-track[data-ready] .svc-line { transform: scaleX(0); transform-origin: left; transition: transform 350ms var(--ease-out-quart); }
+.svc-track[data-ready] .svc-slide[data-active] .svc-line { transform: scaleX(1); transition: transform 800ms var(--ease-out-quart) 600ms; }
+
+/* Móvil: el panel de color asoma por arriba y por la derecha de la foto. */
+.svc-m-panel { width: var(--svc-m-panel-w); height: var(--svc-m-panel-h); }
+.svc-track[data-ready] .svc-m-panel { transform: scaleY(0); transform-origin: bottom; transition: transform 700ms var(--ease-out-quart); }
+.svc-track[data-ready] .svc-slide[data-active] .svc-m-panel { transform: none; }
 
 @keyframes svc-wipe { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
 @keyframes svc-word { from { opacity: 0; transform: translateY(0.4em); } to { opacity: 1; transform: none; } }

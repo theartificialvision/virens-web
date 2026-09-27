@@ -5,6 +5,7 @@ import { TypographicBlock } from '@/components/sections/TypographicBlock';
 import { StatRow } from '@/components/sections/StatRow';
 import { DivisionSwitch } from '@/components/sections/DivisionSwitch';
 import { CtaBand } from '@/components/v2/CtaBand';
+import { CertStrip } from '@/components/v2/CertStrip';
 import { Section } from '@/components/ui/Section';
 import { Container } from '@/components/ui/Container';
 import { Eyebrow } from '@/components/ui/Eyebrow';
@@ -70,6 +71,9 @@ export default function VirensTechPage() {
 
       {/* 10 */}
       <StatRow stats={techStats} tone="soft" accent="var(--color-labs)" />
+
+      {/* 27/09/2026 (cliente): las certificaciones también en Tech. */}
+      <CertStrip />
 
       {/* 11 — no hay botón "Virens Tech" en esta página */}
       <DivisionSwitch to="labs" label={crossLink.label} href={crossLink.href} />

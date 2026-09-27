@@ -1,8 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import type { ServiceBlock } from '@/lib/types';
+import { usePrefersReducedMotion } from '@/lib/useReducedMotion';
+import { useSlideProgress } from '@/lib/useSlideProgress';
 import { ServiceSlide } from './ServiceSlide';
 
 const pad = (n: number) => String(n).padStart(2, '0');
@@ -10,7 +12,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
 /** Color del panel, alterno por diapositiva (27/09/2026, cliente: «uno verde
  *  y uno azul»). Empieza en azul como el primer slide de su diseño. */
 const PANEL = ['var(--color-blue)', 'var(--color-green-deep)'] as const;
-const panelColor = (i: number) => PANEL[i % PANEL.length];
+const panelColor = (i: number): string => PANEL[i % PANEL.length] ?? PANEL[0];
 const DESKTOP = '(min-width: 1024px)';
 
 /**
@@ -24,42 +26,47 @@ const DESKTOP = '(min-width: 1024px)';
  */
 export function ServicesSlider({ services, label }: { services: ServiceBlock[]; label: string }) {
   const ref = useRef<HTMLElement>(null);
-  const [active, setActive] = useState(0);
-  const [prev, setPrev] = useState(0); // la diapositiva de la que se viene
-  const [run, setRun] = useState(0); // reinicia la cortina en cada cambio
-  const activeRef = useRef(0);
   const [desktop, setDesktop] = useState(false);
+  const [ready, setReady] = useState(false);
+  const [seen, setSeen] = useState<ReadonlySet<number>>(() => new Set());
+  const reduced = usePrefersReducedMotion();
   const n = services.length;
+  const active = useSlideProgress(ref, n, desktop, reduced);
 
-  // Índice activo según el scroll dentro de la sección.
+  // La cortina del panel necesita saber de qué color se viene.
+  const [prev, setPrev] = useState(0);
+  const [run, setRun] = useState(0);
+  const last = useRef(0);
+  useEffect(() => {
+    if (active === last.current) return;
+    setPrev(last.current);
+    last.current = active;
+    setRun((r) => r + 1);
+  }, [active]);
+
+  useEffect(() => {
+    const mq = window.matchMedia(DESKTOP);
+    const update = () => setDesktop(mq.matches);
+    update();
+    setReady(true);
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+
+  // Móvil: cada servicio se «monta» (foto que se abre, titular palabra a
+  // palabra) al entrar en pantalla, una sola vez — las mismas animaciones que
+  // en la escena fija, para que las dos versiones hablen el mismo idioma.
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
-    const mq = window.matchMedia(DESKTOP);
-    let raf = 0;
-    const update = () => {
-      raf = 0;
-      setDesktop(mq.matches);
-      if (!mq.matches) return;
-      const rect = el.getBoundingClientRect();
-      const step = (rect.height - window.innerHeight) / Math.max(n - 1, 1);
-      const idx = Math.min(n - 1, Math.max(0, Math.round(-rect.top / step)));
-      if (idx === activeRef.current) return;
-      setPrev(activeRef.current);
-      activeRef.current = idx;
-      setActive(idx);
-      setRun((r) => r + 1);
-    };
-    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
-    update();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-      if (raf) cancelAnimationFrame(raf);
-    };
-  }, [n]);
+    if (!el || desktop) return;
+    const slides = Array.from(el.querySelectorAll<HTMLElement>('.svc-slide'));
+    const io = new IntersectionObserver((entries) => {
+      const hit = entries.filter((e) => e.isIntersecting).map((e) => slides.indexOf(e.target as HTMLElement));
+      if (hit.length) setSeen((old) => new Set([...old, ...hit]));
+    }, { threshold: 0.25 });
+    slides.forEach((s) => io.observe(s));
+    return () => io.disconnect();
+  }, [desktop]);
 
   // Enlaces a un servicio (#formulacion, #rd-galenicos… desde el pie): en
   // escritorio el id cae dentro de la escena fija, así que se lleva el scroll
@@ -82,8 +89,9 @@ export function ServicesSlider({ services, label }: { services: ServiceBlock[]; 
     <section
       ref={ref}
       aria-label={label}
+      data-ready={ready || undefined}
       className="svc-track relative"
-      style={{ ['--n' as string]: n }}
+      style={{ '--n': n } as CSSProperties}
     >
       <div className="lg:sticky lg:top-0 lg:h-[100svh] lg:overflow-hidden lg:bg-gray-100">
         {/* Fondo: la foto de cada servicio en gris, desenfocada y aclarada */}
@@ -118,12 +126,19 @@ export function ServicesSlider({ services, label }: { services: ServiceBlock[]; 
           <p className="absolute right-12 top-32 text-[length:var(--text-eyebrow)] font-bold tracking-eyebrow text-white 2xl:right-20">
             {pad(active + 1)} — {pad(n)}
           </p>
-          <Ring value={(active + 1) / n} />
+          <Ring n={n} />
         </div>
 
         {services.map((s, i) => (
           <div key={s.id} id={s.id} className="scroll-mt-24 lg:contents">
-            <ServiceSlide block={s} active={i === active} stacked={!desktop} />
+            <ServiceSlide
+              block={s}
+              active={desktop ? i === active : seen.has(i)}
+              stacked={!desktop}
+              index={i}
+              counter={`${pad(i + 1)} — ${pad(n)}`}
+              panel={panelColor(i)}
+            />
           </div>
         ))}
       </div>
@@ -131,16 +146,17 @@ export function ServicesSlider({ services, label }: { services: ServiceBlock[]; 
   );
 }
 
-/** Anillo de progreso del GIF de referencia, abajo a la derecha del panel. */
-function Ring({ value }: { value: number }) {
+/** Anillo de progreso del GIF de referencia, abajo a la derecha del panel.
+ *  Sigue a `--svc-p` de forma continua, no a saltos por diapositiva. */
+function Ring({ n }: { n: number }) {
   const c = 2 * Math.PI * 20;
   return (
     <svg viewBox="0 0 44 44" className="absolute bottom-12 right-12 size-[var(--svc-ring)] -rotate-90 text-white 2xl:right-20">
       <circle cx="22" cy="22" r="20" fill="none" stroke="currentColor" strokeOpacity="0.25" strokeWidth="1.5" />
       <circle
         cx="22" cy="22" r="20" fill="none" stroke="currentColor" strokeWidth="1.5"
-        strokeDasharray={c} strokeDashoffset={c * (1 - value)}
-        className="transition-[stroke-dashoffset] duration-700"
+        strokeDasharray={c}
+        style={{ strokeDashoffset: `calc(${c.toFixed(3)} * (1 - (var(--svc-p, 0) + 1) / ${n}))` }}
       />
     </svg>
   );

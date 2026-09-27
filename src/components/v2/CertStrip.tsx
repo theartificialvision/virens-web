@@ -19,6 +19,9 @@ import { SectionTitle } from './SectionTitle';
  * sello ocupa el área de un cuadrado de `--v2-seal`: alto = lado / √ratio,
  * ancho = lado · √ratio.
  *
+ * Móvil (27/09/2026, cliente): filas de 3, 3 y 2, la última centrada — de
+ * ahí `flex-wrap` con celdas de un tercio en vez de rejilla de dos columnas.
+ *
  * `showPending` saca además los marcados `unverified` (hoy: "FDA Approved",
  * claim de riesgo — la FDA no aprueba complementos alimenticios). Su sello
  * está vectorizado y listo, pero no se muestra hasta que el cliente confirme.
@@ -32,9 +35,9 @@ export function CertStrip({ showPending = false }: { showPending?: boolean }) {
     <section id="calidad" className="border-y border-gray-200 bg-gray-50 text-blue">
       <div className="mx-auto w-full max-w-[var(--container-max)] px-5 py-[var(--v2-section-tight)] md:px-8 lg:px-12 2xl:px-20">
         <SectionTitle accent>{v2CertificationsTitle}</SectionTitle>
-        <ul className="mt-14 grid grid-cols-2 items-center justify-items-center gap-x-6 gap-y-12 sm:grid-cols-4 lg:flex lg:justify-between lg:gap-8">
+        <ul className="mt-14 flex flex-wrap items-center justify-center gap-y-10 sm:grid sm:grid-cols-4 sm:justify-items-center sm:gap-x-6 sm:gap-y-12 lg:flex lg:justify-between lg:gap-8">
           {visible.map((c, i) => (
-            <li key={c.id}>
+            <li key={c.id} className="flex w-1/3 justify-center px-1.5 sm:w-auto sm:px-0">
               <Reveal delay={(i % 4) * 0.03}>
                 <Seal cert={c} />
               </Reveal>
