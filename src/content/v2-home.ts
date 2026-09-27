@@ -96,15 +96,22 @@ export const v2Galenic = {
 export const v2Capacity = {
   title: 'Capacidad productiva',
   lead: 'Contamos con más de 2000 m² de instalaciones donde llevamos a cabo la fabricación, acondicionamiento primario y secundario.',
-  /** Siluetas vectoriales del archivo Objetosweb.ai del cliente (22/09/2026). */
+  /** Indicación bajo el párrafo. `pointer`: literal del diseño del cliente
+   *  (27/09/2026); `touch`: su equivalente en pantallas táctiles, donde no hay
+   *  cursor. */
+  hint: {
+    pointer: 'Pasa el cursor para ver cada formato',
+    touch: 'Toca un formato para ver sus tamaños',
+  },
+  /** Formatos. Sus siluetas viven en `lib/capacityShapes.ts` (mismo `id`). */
   items: [
-    { id: 'dropper', file: 'dropper', label: 'Dropper bottles', range: '30ml a 60ml' },
-    { id: 'vials', file: 'vial', label: 'Vials', range: '10ml a 25ml' },
-    { id: 'jar', file: 'jar', label: 'Jar filling', range: '50ml a 500ml' },
-    { id: 'syrups', file: 'syrup', label: 'Syrups', range: '100ml a 1000ml' },
-    { id: 'blisters', file: 'blister', label: 'Blisters', range: 'PVDC-Pvc/Alu + Alu/Alu' },
-    { id: 'sticks', file: 'stick', label: 'Sticks', range: '5grs a 20grs' },
-    { id: 'sachets', file: 'sachet', label: 'Sachets', range: '5grs' },
+    { id: 'dropper', label: 'Dropper bottles', range: '30ml a 60ml' },
+    { id: 'vials', label: 'Vials', range: '10ml a 25ml' },
+    { id: 'jar', label: 'Jar filling', range: '50ml a 500ml' },
+    { id: 'syrups', label: 'Syrups', range: '100ml a 1000ml' },
+    { id: 'blisters', label: 'Blisters', range: 'PVDC-Pvc/Alu + Alu/Alu' },
+    { id: 'sticks', label: 'Sticks', range: '5grs a 20grs' },
+    { id: 'sachets', label: 'Sachets', range: '5grs' },
   ],
 } as const;
 

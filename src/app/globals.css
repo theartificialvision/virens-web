@@ -676,62 +676,43 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   .reveal .v2-media { transition: transform var(--v2-media-time) var(--motion-ease); }
   .reveal[data-visible='false'] .v2-media { transform: scale(var(--v2-media-zoom)); }
 }
-/* Capacidad productiva (home, 24/09/2026): entrada de las siluetas de envase.
-   Cada envase «se llena» de abajo arriba (recorte que baja) mientras sube un
-   poco; después crece el filete hacia abajo y aparecen nombre y rango. En
-   cascada de izquierda a derecha (`--i` en cada <li>). La fila no se desplaza
-   como bloque: anima cada pieza. Sin JS o con movimiento reducido, todo queda
-   quieto y visible. */
+/* Capacidad productiva (home), diseño del cliente del 27/09/2026 — sustituye
+   al escaparate 3D. Cada formato es una silueta de trazo que, al activarse,
+   crece por sus tamaños con un rebote corto; los demás tamaños quedan como
+   contornos punteados y el filete de debajo se alarga en teal. */
 @theme {
-  --v2-cap-time: 1200ms;
-  --v2-cap-step: 110ms;
-  --v2-cap-rise: 1.25rem;
-  --v2-cap-stem: 600ms;
+  --cap-col-min:  6.5rem;    /* 104 — columna mínima de la rejilla (diseño) */
+  --cap-icon-max: 7.5rem;    /* 120 — ancho máximo de cada silueta */
+  --cap-icon-max-sm: 4.5rem; /* 72 — en móvil y tablet */
+  --cap-text-w:   28.75rem;  /* 460 — columna de texto */
+  --cap-line-off: 2.5rem;    /* 40 — filete en reposo */
+  --cap-line-on:  3rem;      /* 48 — filete activo */
+  --cap-grow:     170ms;     /* paso entre tamaños (diseño) */
+  --ease-spring:  cubic-bezier(0.3, 1.5, 0.55, 1);
 }
-@media (prefers-reduced-motion: no-preference) {
-  .reveal.v2-cap[data-visible='false'] { opacity: 1; transform: none; }
-
-  .v2-cap .v2-cap-vessel {
-    clip-path: inset(0 0 0 0);
-    transition:
-      clip-path var(--v2-cap-time) var(--motion-ease) calc(var(--i, 0) * var(--v2-cap-step)),
-      transform var(--v2-cap-time) var(--motion-ease) calc(var(--i, 0) * var(--v2-cap-step));
-  }
-  .v2-cap[data-visible='false'] .v2-cap-vessel {
-    clip-path: inset(100% 0 0 0);
-    transform: translateY(var(--v2-cap-rise));
-  }
-
-  .v2-cap .v2-cap-stem {
-    transform-origin: top center;
-    transition: transform var(--v2-cap-stem) var(--motion-ease) calc(var(--i, 0) * var(--v2-cap-step) + 450ms);
-  }
-  .v2-cap[data-visible='false'] .v2-cap-stem { transform: scaleY(0); }
-
-  .v2-cap .v2-cap-text {
-    transition:
-      opacity var(--v2-cap-stem) var(--motion-ease) calc(var(--i, 0) * var(--v2-cap-step) + 650ms),
-      transform var(--v2-cap-stem) var(--motion-ease) calc(var(--i, 0) * var(--v2-cap-step) + 650ms);
-  }
-  .v2-cap[data-visible='false'] .v2-cap-text {
-    opacity: 0;
-    transform: translateY(var(--v2-load-rise));
-  }
+.cap-shape { transform-box: fill-box; transform-origin: 50% 100%; }
+.cap-solid {
+  stroke: var(--color-blue);
+  fill: color-mix(in srgb, var(--color-labs) 0%, transparent);
+  transition: transform 260ms var(--ease-out-quart), fill 240ms var(--ease-out-quart);
 }
-/* Bandeja del escaparate 3D de capacidad (diseño del cliente, 24/09/2026):
-   degradado gris vertical a todo el ancho del contenedor, sin radio. */
-@theme {
-  --v2-cap3d-h:        20rem;   /* 320 — alto del escenario de cada envase */
-  --color-stage-1:     #DADFE0;
-  --color-stage-2:     #E3E7E7;
-  --color-stage-3:     #ECEEED;
-  --color-stage-4:     #F0F2F1;
-  --color-stage-5:     #E4E8E7;
+.cap-solid[data-active] {
+  fill: color-mix(in srgb, var(--color-labs) 7%, transparent);
+  transition: transform var(--cap-grow) var(--ease-spring), fill 240ms var(--ease-out-quart);
 }
-.v2-cap-stage {
-  scrollbar-width: none;
-  background: linear-gradient(180deg, var(--color-stage-1) 0%, var(--color-stage-2) 48%,
-    var(--color-stage-3) 67%, var(--color-stage-4) 74%, var(--color-stage-5) 100%);
+.cap-ghost { stroke: var(--color-gray-500); opacity: 0.6; transition: opacity 180ms, stroke 200ms; }
+.cap-ghost[data-active] { stroke: var(--color-labs); opacity: 0.85; }
+.cap-line {
+  width: 1px; height: var(--cap-line-off); background: var(--color-gray-300);
+  transition: height 220ms var(--ease-spring), background-color 200ms;
+}
+.cap-item[data-active] .cap-line { width: 2px; height: var(--cap-line-on); background: var(--color-labs); }
+.cap-item:focus-visible { outline: 2px solid var(--color-labs); outline-offset: 6px; }
+/* La indicación cambia según haya cursor o no. */
+.cap-hint-touch { display: none; }
+@media (hover: none) {
+  .cap-hint-touch { display: flex; }
+  .cap-hint-pointer { display: none; }
 }
 /* Caja del icono 3D del menú (`MenuGlyph3D`): el motor dibuja con 8 px de
    sangrado alrededor para la sombra y el giro, fuera de esta caja. */

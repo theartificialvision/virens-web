@@ -2440,3 +2440,27 @@ tramos, mitad de transición, enlace con hash) y 390 px. Sin errores de consola.
 
 **Verificado**: `npm run typecheck` limpio; Playwright a 1440 px (colores del
 panel en las diapositivas 1-3, en mitad de la cortina, y el CTA de /virens-tech).
+
+### 2026-09-27 (5) — Claude (Cowork) — Home: Capacidad productiva según el nuevo diseño del cliente (fuera el 3D)
+
+- Sustituye al escaparate 3D (`CapacityStage` + `lib/capacity3d.ts`,
+  borrados) el diseño del cliente `Capacidad_Productiva.html`: texto a la
+  izquierda (filete teal, titular, párrafo e indicación «Pasa el cursor para
+  ver cada formato») y los siete formatos en silueta de trazo a la derecha.
+  Al pasar el cursor (o con el foco), el envase **crece por sus tamaños**
+  (paso de 170 ms, rebote corto), los demás tamaños quedan como contornos
+  punteados y el filete de debajo se alarga en teal. Siluetas y escalas del
+  diseño en `lib/capacityShapes.ts`; componentes `CapacityFormats` y
+  `FormatIcon`. `three` se queda: lo siguen usando los isotipos.
+- Titular con `SectionTitle accent`, el estilo único de la home, en vez del
+  tamaño propio del diseño (40–64 px); colores del diseño llevados a tokens
+  de marca (#0B2A6B → azul, #0E9C94 → teal Labs, grises del sistema).
+- **Móvil / táctil (sin hover):** mientras la lista está en pantalla los
+  formatos se activan solos, uno cada 2,2 s, y un toque activa el que se
+  quiera (el recorrido se pausa 6 s). La indicación cambia a «Toca un formato
+  para ver sus tamaños» (`(hover: none)`). Rejilla de 4 + 3 centrada con
+  siluetas más pequeñas (72 px), los siete en una fila en tablet. Con
+  movimiento reducido no hay recorrido automático.
+
+**Verificado**: `npm run typecheck` limpio; Playwright a 1440 (hover) y 390
+con táctil emulado (recorrido automático, toque, indicación correcta).
