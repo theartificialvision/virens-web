@@ -9,7 +9,7 @@ import { MolecularField } from '@/components/ui/MolecularField';
 interface HeroVideoProps {
   eyebrow: string;
   title: string;
-  subtitle: string;
+  subtitle?: string;
   lead?: string;
   video: { webm?: string; mp4?: string; poster: string };
   children?: React.ReactNode; // CTA opcional (p. ej. el enlace a la otra división)
@@ -38,12 +38,14 @@ export function HeroVideo({ eyebrow, title, subtitle, lead, video, children, mol
     if (play) ref.current?.play().catch(() => undefined);
   }, [play]);
 
+  // Alto = pantalla menos la cabecera sticky (27/09/2026): con 100svh el
+  // titular quedaba cortado por abajo en la primera vista.
   // `text-white` explicito en la seccion: el fondo es azul de marca y hasta el
   // 07/09 el blanco venia heredado del `body`, que era oscuro. Al pasar la web
   // a claro eso dejo de funcionar y el titular se quedo azul sobre azul. Un
   // bloque de fondo oscuro declara su propio color y no depende del de fuera.
   return (
-    <section data-header-tone="dark" className="relative flex h-[100svh] min-h-[600px] items-end overflow-hidden bg-blue text-white">
+    <section data-header-tone="dark" className="relative flex h-[calc(100svh-var(--v2-header))] min-h-[34rem] items-end overflow-hidden bg-blue text-white">
       {play ? (
         <video
           ref={ref}
@@ -87,7 +89,7 @@ export function HeroVideo({ eyebrow, title, subtitle, lead, video, children, mol
               className="text-[length:var(--v2-hero-title)] font-normal leading-[1.08] tracking-[-0.02em] text-white"
             />
           </div>
-          <p className="mt-5 max-w-[58ch] text-[length:var(--v2-hero-sub)] font-normal leading-snug text-white/90">{subtitle}</p>
+          {subtitle && <p className="mt-5 max-w-[58ch] text-[length:var(--v2-hero-sub)] font-normal leading-snug text-white/90">{subtitle}</p>}
           {lead && (
             <p className="mt-8 max-w-[var(--measure-narrow)] text-[length:var(--text-body)] leading-relaxed text-white/75">
               {lead}

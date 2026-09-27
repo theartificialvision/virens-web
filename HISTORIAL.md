@@ -2646,3 +2646,25 @@ servicios y las certificaciones de Tech y Home).
 
 - `CtaBand` («¿Hablamos de tu proyecto?», en Home, Tech y Compañía): en móvil
   el botón «Contactar ahora» va centrado; en escritorio sigue a la derecha.
+
+### 2026-09-27 (17) — Claude — Tech sin repeticiones
+
+Revisión con el cliente («siento que se repiten cosas»); aprobada la propuesta
+entera, con el bloque magenta reducido y el titular de portada redactado por
+Claude (única excepción de copy autorizada).
+
+- **Portada**: titular propio «Desarrollo y formulación de complementos
+  alimenticios» (antes el mismo de Home y Compañía). Fuera subtítulo y
+  entradilla, que repetían la intro. Alto = pantalla menos cabecera: antes el
+  titular quedaba cortado por abajo en la primera vista.
+- **Intro**: solo la frase literal principal, a lo ancho con filete magenta.
+  Fuera el párrafo de estabilidad/controles (servicios 04 y 05) y la lista de
+  los seis servicios (los presenta el slide).
+- **Bloque magenta**: titular + una línea; fuera rótulo y los cuatro pilares.
+- **Servicio 01 Formulación**: fuera el párrafo de «zonas de fabricación
+  separadas» (es de fabricación, no de formulación).
+- **Fuera** la franja de cifras (2023, +20 años y 10 áreas repetían Compañía y
+  Home) y el puente «Visitar Labs» (Labs es la Home).
+- Página: hero → intro → magenta → slide → certificaciones → CTA.
+
+**Verificado**: `npm run typecheck` limpio; Chromium a 1440 y 390 px.

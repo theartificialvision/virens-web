@@ -53,11 +53,13 @@ archivo si cambió algo de lo de abajo.
   y, debajo, «Escala industrial propia» con +2.000 m², 9 formatos, 2 niveles y
   capacidad numérica por formato → Áreas terapéuticas → Certificaciones
   («Nuestras certificaciones») → CTA.
-- **Virens Tech** (`src/app/virens-tech/page.tsx`): portada nueva tintada en
-  azul (WebP), sin isotipo 3D blanco, sin botón «Visitar Labs» en el hero,
-  **sin barra horizontal de anclas**, y los seis servicios en un **slide
-  guiado por el scroll** (`ServicesSlider` + `ServiceSlide`) con panel
-  alterno azul #00285C / verde #164E3B.
+- **Virens Tech** (`src/app/virens-tech/page.tsx`), sin repeticiones desde
+  el 27/09: portada con titular propio «Desarrollo y formulación de
+  complementos alimenticios» → intro de una frase → frase puente magenta
+  (sin pilares) → **slide guiado por el scroll** de los seis servicios
+  (`ServicesSlider` + `ServiceSlide` + `useSlideProgress`, inercia y deriva
+  continuas; panel alterno azul #00285C / verde #164E3B; versión móvil propia)
+  → certificaciones → CTA. Fuera cifras, «Visitar Labs» y la barra de anclas.
 - **Virens Labs es la Home:** la página `/virens-labs` se retiró y redirige
   permanentemente a `/`; menú, pie y enlaces cruzados apuntan ya a la Home.
 - **Compañía** (`src/app/compania/page.tsx`): portada nueva con claim
@@ -73,8 +75,8 @@ archivo si cambió algo de lo de abajo.
 
 ## Pendiente / preguntas abiertas
 
-- Franja final de Tech (`DivisionSwitch`, «Visitar Labs»): el cliente quitó el
-  botón del hero; preguntar si también quiere quitar esta franja.
+- Compañía: el hito 2026 de la historia repite literalmente el texto de 2023
+  (viene así de la maqueta). Pedir el texto real o quitar el hito.
 - Slide de Tech: empieza en azul por el primer slide del diseño del cliente;
   confirmar si prefiere empezar en verde. La frase destacada (`highlight`) de
   cada servicio no se muestra (su diseño no la lleva).

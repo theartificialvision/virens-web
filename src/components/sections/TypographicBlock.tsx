@@ -15,28 +15,31 @@ export function TypographicBlock({
   body,
   pillars,
 }: {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   body: string;
-  pillars: readonly string[];
+  pillars?: readonly string[];
 }) {
   return (
-    <Section tone="tech" rhythm="base" className="relative overflow-hidden">
+    <Section tone="tech" rhythm={pillars ? 'base' : 'compact'} className="relative overflow-hidden">
       <MolecularField variant="tech" className="hidden lg:block" />
       <Container className="relative text-center">
         <div className="mx-auto max-w-[56rem]">
-          <p className="text-[length:var(--text-eyebrow)] font-bold uppercase tracking-eyebrow text-blue">
-            {eyebrow}
-          </p>
+          {eyebrow && (
+            <p className="mb-8 text-[length:var(--text-eyebrow)] font-bold uppercase tracking-eyebrow text-blue">
+              {eyebrow}
+            </p>
+          )}
           <Reveal>
-            <h2 className="mt-8 text-[length:var(--v2-hero-title)] font-normal leading-[1.08] tracking-[-0.02em]">
+            <h2 className="text-[length:var(--text-h2)] font-medium leading-tight tracking-[-0.015em]">
               {title}
             </h2>
           </Reveal>
           {/* Doc maestro §10.1: texto siempre blanco puro sobre #A2195B. */}
-          <p className="mx-auto mt-8 max-w-[var(--measure-max)] text-[length:var(--text-small)] leading-[1.85] text-white">{body}</p>
+          <p className="mx-auto mt-5 max-w-[var(--measure-max)] text-[length:var(--text-small)] leading-[1.85] text-white">{body}</p>
         </div>
 
+        {pillars && (
         <ul className="mt-8 grid lg:mt-16 grid-cols-2 gap-x-8 gap-y-8 lg:gap-y-12 lg:grid-cols-4">
           {pillars.map((p, i) => (
             <li key={p} className="flex flex-col items-center gap-4 text-[length:var(--text-small)] font-medium">
@@ -45,6 +48,7 @@ export function TypographicBlock({
             </li>
           ))}
         </ul>
+        )}
       </Container>
     </Section>
   );

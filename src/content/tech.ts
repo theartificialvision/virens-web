@@ -6,49 +6,34 @@ import type { ServiceBlock } from '@/lib/types';
  * página. Aquí se usa la denominación oficial (la de las pestañas).
  */
 
-// Título: traducción del claim real "Experts in food supplements" (§8.1,
-// mismo criterio que Labs). Subtítulo: traducción literal de "Development".
+// 27/09/2026 (cliente): titular propio de Tech —antes repetía el de la Home y
+// Compañía («Expertos en complementos alimenticios»)—. Redactado por Claude
+// por encargo expreso del cliente (única excepción de copy). Sin subtítulo ni
+// entradilla: decían lo mismo que la intro de debajo.
 export const techHero = {
   eyebrow: 'VIRENS TECH',
-  title: 'Expertos en complementos alimenticios',
-  subtitle: 'Desarrollo',
-  lead: 'Desarrollamos fórmulas propias, verificamos su factibilidad industrial y las validamos antes de fabricar.',
+  title: 'Desarrollo y formulación de complementos alimenticios',
   // 27/09/2026 (cliente): portada nueva, foto propia tintada en el azul de
   // marca (duotono #00285C) y servida en WebP. El isotipo 3D blanco sale del
   // hero: el cliente no lo quiere en ninguna parte.
   video: { poster: '/img/tech-hero-portada.webp' },
 } as const;
 
-// Labs vive en la home desde el 27/09/2026.
-export const crossLink = { label: 'Visitar Labs', href: '/' } as const;
-
-// LITERAL de la intro de Tech (§2.4), partido en título + cuerpo.
+// LITERAL de la intro de Tech (§2.4). 27/09/2026 (cliente): se queda solo la
+// frase principal. Fuera el segundo párrafo (estabilidad y controles: ya son
+// los servicios 04 y 05) y la lista de los seis servicios, que el slide
+// presenta justo debajo.
 export const techIntro = {
-  eyebrow: 'DEVELOPMENT',
   title:
     'En Virens Tech ayudamos a nuestros clientes a tener los mejores productos, con exclusividad en los desarrollos, asegurando que sus fórmulas son industrialmente factibles.',
-  body: 'Les ayudamos también en testar los productos en nuestras cámaras de estabilidad para requerimientos de calidad interna y export, así como les ofrecemos los controles y análisis más avanzados.',
-  points: [
-    { index: '01', label: 'Formulación' },
-    { index: '02', label: 'R+D galénicos' },
-    { index: '03', label: 'Centro de sabores' },
-    { index: '04', label: 'Estabilidad de productos' },
-    { index: '05', label: 'Garantía de calidad' },
-    { index: '06', label: 'Regulatory consulting' },
-  ],
 } as const;
 
-/** Bloque tipográfico sobre #A2195B. Texto facilitado por el cliente. */
+/** Frase puente sobre #A2195B (texto facilitado por el cliente). 27/09/2026:
+ *  reducida a titular + una línea; fuera el rótulo y los cuatro pilares, que
+ *  repetían los servicios en genérico. */
 export const integratedSolutions = {
-  eyebrow: 'SOLUCIONES INTEGRADAS',
   title: 'De la idea al producto final',
   body: 'Acompañamos cada etapa del desarrollo de tu producto con un enfoque integral, flexible y orientado a resultados.',
-  pillars: [
-    'Desarrollo a medida',
-    'Alta calidad garantizada',
-    'Cumplimiento normativo',
-    'Innovación constante',
-  ],
 } as const;
 
 /**
@@ -65,7 +50,9 @@ export const techServices: ServiceBlock[] = [
     title: 'Formulación',
     body: [
       'Nuestro departamento de I+D desarrolla nuevas fórmulas para cooperar eficazmente con nuestros clientes y sus departamentos técnicos y de desarrollo.',
-      'Contamos con zonas de fabricación separadas y diferenciadas para asegurar el aislamiento de los distintos productos y evitar el contacto de unos procesos con otros.',
+      // 27/09/2026 (cliente): fuera «Contamos con zonas de fabricación
+      // separadas y diferenciadas…» — es de fabricación (Labs), no de
+      // formulación.
     ],
     highlight: 'Zonas de fabricación segregadas',
     imageSide: 'left',
@@ -151,8 +138,6 @@ export const techServicesSlider = {
   label: 'Servicios de Virens Tech',
 } as const;
 
-export const techStats = [
-  { value: '2023', label: 'Creación de Virens Tech y nuevo laboratorio de calidad' },
-  { value: '+20', label: 'Años de experiencia en formulación' },
-  { value: '10', label: 'Áreas terapéuticas' },
-] as const;
+// 27/09/2026 (cliente): fuera la franja de cifras de Tech. Las tres repetían
+// datos de otras páginas (2023 y +20 años en la historia de Compañía; 10 áreas
+// terapéuticas en la home).
