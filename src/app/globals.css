@@ -1070,11 +1070,15 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
     transform: translateY(var(--v2-load-rise));
   }
   .company-stagger .company-icon svg > * {
-    stroke-dasharray: 1;
+    /* Guion y hueco de 1,5 (no 1) sobre un trazo de longitud 1: Safari
+       redondea `pathLength` y con guion exacto el trazo se quedaba corto —
+       hueco visible en figuras cerradas (escudo, hoja, globo). Con margen
+       siempre cierra; 1,5 de desfase lo oculta por completo. */
+    stroke-dasharray: 1.5 1.5;
     stroke-dashoffset: 0;
     transition: stroke-dashoffset var(--company-draw) var(--motion-ease) calc(var(--i) * var(--company-stagger) + 120ms);
   }
-  .company-stagger[data-visible='false'] .company-icon svg > * { stroke-dashoffset: 1; }
+  .company-stagger[data-visible='false'] .company-icon svg > * { stroke-dashoffset: 1.5; }
 
 }
 
@@ -1141,7 +1145,7 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   stroke: var(--history-fill);
   stroke-width: 1.5px;
   vector-effect: non-scaling-stroke;
-  stroke-dasharray: 1;
+  stroke-dasharray: 1.5 1.5; /* margen contra el redondeo de Safari (ver iconos de Compañía) */
   stroke-dashoffset: 0;
 }
 .company-history-year { position: relative; }
@@ -1229,7 +1233,7 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
     transform: scale(var(--history-rest));
     background-color: rgb(255 255 255 / 0.55);
   }
-  .company-history[data-ready] .company-history-item:not([data-active='true']) .company-history-ring circle { stroke-dashoffset: 1; }
+  .company-history[data-ready] .company-history-item:not([data-active='true']) .company-history-ring circle { stroke-dashoffset: 1.5; }
   .company-history[data-ready] .company-history-item:not([data-active='true']) .company-history-year { opacity: 0; }
   .company-history[data-ready] .company-history-item:not([data-active='true']) .company-history-copy {
     opacity: 0.18;

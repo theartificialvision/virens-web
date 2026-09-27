@@ -2777,3 +2777,15 @@ vaivén medido ≈50 px, foco al deslizar, final), tablet 820 px y hover a 1440 
 
 **Verificado**: `npm run typecheck` limpio; hoja de revisión a 200 px y
 página en Chromium a 1440 y 390 px.
+
+### 2026-09-27 (26) — Claude — Iconos «rotos» en Safari (iPhone)
+
+- El cliente vio huecos en figuras cerradas (escudo, hoja, globo) en su
+  iPhone. Causa: la animación de trazo usa `pathLength="1"` + guion de 1, y
+  Safari redondea la longitud normalizada, así que el guion se quedaba corto
+  justo donde empieza/acaba el trazo. Guion y hueco pasan a 1,5 (y el
+  desfase oculto a 1,5): siempre cierra aunque el cálculo falle hasta un 50 %.
+  Mismo arreglo en el aro de los círculos de la historia.
+
+**Verificado**: simulando el error de Safari en Chromium (longitud forzada un
+8 % mayor) las figuras cierran y la entrada sigue dibujándolas.
