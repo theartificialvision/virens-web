@@ -32,7 +32,10 @@ export function CompanyTimeline({
         </Reveal>
 
         <div className="mt-14">
-          <CompanyHistoryList entries={entries} />
+          {/* 27/09/2026 (cliente): orden inverso, del hito más reciente al más
+              antiguo, en escritorio y móvil. El contenido sigue en orden
+              cronológico; solo se invierte al pintar. */}
+          <CompanyHistoryList entries={[...entries].reverse()} />
         </div>
       </Container>
     </section>

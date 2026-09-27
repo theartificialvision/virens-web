@@ -2754,3 +2754,9 @@ vaivén medido ≈50 px, foco al deslizar, final), tablet 820 px y hover a 1440 
   y el año (`--history-dim`); el círculo sigue tapando la línea.
 - El hito señalado crece un 10 % más: `--history-hover` 1,14 → 1,25
   (80 → 100 px a 1440).
+
+### 2026-09-27 (24) — Claude — Historia en orden inverso
+
+- La cronología de Compañía se pinta del hito más reciente al más antiguo
+  (2026 → 2000) en escritorio y móvil, en los dos idiomas. El contenido sigue
+  en orden cronológico; `CompanyTimeline` lo invierte al pintar.
