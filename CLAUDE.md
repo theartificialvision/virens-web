@@ -4,6 +4,9 @@ Rediseño completo de `lvirens.com`. Documento maestro (fuente de verdad de cont
 arquitectura, copy y sistema visual): [`docs/00-auditoria-y-rediseno-virens.md`](docs/00-auditoria-y-rediseno-virens.md).
 Ante cualquier duda de color, espaciado, texto u orden de bloque, la respuesta está ahí — no improvisar.
 
+**Para retomar el trabajo:** lee primero [`TRASPASO.md`](TRASPASO.md) (dónde está todo, cómo se
+publica, estado actual y preguntas abiertas) y las últimas entradas de [`HISTORIAL.md`](HISTORIAL.md).
+
 ## Stack — cerrado
 
 Next.js 15 (App Router) · TypeScript estricto · Tailwind CSS v4 · Framer Motion.

@@ -53,6 +53,12 @@ datos/lista, es un cambio rápido — están todos centralizados en `src/content
 
 ## Estado actual (snapshot — se sobreescribe cada sesión)
 
+> **27/09/2026:** el resumen vigente para retomar el proyecto (dónde está
+> todo, cómo se publica, estado de Home/Tech/Labs y preguntas abiertas) está
+> en [`TRASPASO.md`](TRASPASO.md). Lo de debajo es el snapshot del 02/09 y
+> varias cosas han cambiado desde entonces (home V2 en `/`, fondo claro,
+> etc.): tómalo como histórico.
+
 - **Fase A (Base sólida):** cerrada. Tokens, Header condicional por página,
   MenuOverlay con mecánica direccional (desktop abajo / mobile arriba) y
   trampa de foco real verificada, placeholders de imagen en `public/img/`
@@ -2505,3 +2511,10 @@ están muy gruesas las líneas»); «tiene que ser interesante de ver».
 
 **Verificado**: `npm run typecheck` limpio; Playwright a 1440 (entrada y
 foco), 820 y 390 (carril táctil).
+
+### 2026-09-27 (8) — Claude (Cowork) — Traspaso
+
+- Nuevo `TRASPASO.md` en la raíz (a petición del cliente, para que otro
+  asistente pueda seguir): dónde está todo, flujo de publicación, estado a
+  27/09 y preguntas abiertas. `CLAUDE.md` apunta a él al principio y la
+  sección «Estado actual» de este archivo avisa de que su snapshot es del 02/09.
