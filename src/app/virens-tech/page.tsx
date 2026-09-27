@@ -4,7 +4,7 @@ import { ServicesSlider } from '@/components/sections/ServicesSlider';
 import { TypographicBlock } from '@/components/sections/TypographicBlock';
 import { StatRow } from '@/components/sections/StatRow';
 import { DivisionSwitch } from '@/components/sections/DivisionSwitch';
-import { CtaBand } from '@/components/v2/CtaBand';
+import { CtaContact } from '@/components/sections/CtaContact';
 import { Section } from '@/components/ui/Section';
 import { Container } from '@/components/ui/Container';
 import { Eyebrow } from '@/components/ui/Eyebrow';
@@ -37,22 +37,21 @@ export default function VirensTechPage() {
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-5">
               <Eyebrow className="text-tech">{techIntro.eyebrow}</Eyebrow>
-              {/* Texto LITERAL: párrafo real, no un titular corto. Con el
-                  cuerpo H2 de la home ocupaba ocho líneas, así que baja un
-                  escalón (H3) pero con el peso y el tracking de la home (27/09). */}
-              <h2 className="mt-6 text-[length:var(--text-h3)] font-medium leading-snug tracking-[-0.015em]">
+              {/* Texto LITERAL (párrafo real, más largo que el de Compañía:
+                  se queda en H3 para no desequilibrar frente a la columna). */}
+              <h2 className="mt-6 text-[length:var(--text-h3)] font-semibold leading-[1.3] tracking-[-0.01em]">
                 {techIntro.title}
               </h2>
             </div>
             <div className="lg:col-span-6 lg:col-start-7">
-              <p className="max-w-[var(--measure-max)] text-[length:var(--text-small)] leading-[1.85] text-gray-700">
+              <p className="max-w-[var(--measure-max)] text-[length:var(--text-lead)] text-gray-700">
                 {techIntro.body}
               </p>
               <ul className="mt-10 grid gap-x-8 gap-y-8 sm:grid-cols-2">
                 {techIntro.points.map((p) => (
                   <li key={p.index} className="flex flex-col gap-3">
-                    <span className="text-[length:var(--text-note)] font-semibold tracking-label text-tech">{p.index}</span>
-                    <span className="text-[length:var(--text-small)] font-medium leading-snug">{p.label}</span>
+                    <span className="text-[length:var(--text-eyebrow)] font-bold tracking-label text-tech">{p.index}</span>
+                    <span className="font-medium leading-snug">{p.label}</span>
                   </li>
                 ))}
               </ul>
@@ -74,7 +73,7 @@ export default function VirensTechPage() {
       {/* 11 — no hay botón "Virens Tech" en esta página */}
       <DivisionSwitch to="labs" label={crossLink.label} href={crossLink.href} />
 
-      <CtaBand />
+      <CtaContact />
     </>
   );
 }

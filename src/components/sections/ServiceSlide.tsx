@@ -23,7 +23,7 @@ export function ServiceSlide({ block, active, stacked }: { block: ServiceBlock; 
       aria-hidden={hidden || undefined}
       inert={hidden || undefined}
       className={cn(
-        'svc-slide bg-bone py-[var(--v2-section-tight)] even:bg-gray-100 lg:absolute lg:inset-0 lg:bg-transparent lg:py-0 lg:even:bg-transparent',
+        'svc-slide bg-bone py-[var(--section-compact)] even:bg-gray-100 lg:absolute lg:inset-0 lg:bg-transparent lg:py-0 lg:even:bg-transparent',
       )}
     >
       {/* Foto nítida, montada entre la zona clara y el panel */}
@@ -42,7 +42,7 @@ export function ServiceSlide({ block, active, stacked }: { block: ServiceBlock; 
 
       {/* Texto */}
       <div className="mt-10 px-5 md:px-6 lg:absolute lg:left-0 lg:top-1/2 lg:mt-0 lg:w-[var(--svc-text-w)] lg:-translate-y-1/2 lg:pl-12 lg:pr-0 2xl:pl-20">
-        <h3 className="text-[length:var(--text-h2)] font-medium leading-tight tracking-[-0.015em] text-blue">
+        <h3 className="text-[length:var(--text-h2)] font-semibold leading-tight tracking-[-0.015em] text-blue">
           {/* Palabra a palabra (GIF de referencia); el espacio va fuera del
               inline-block para que el titular pueda partir línea. */}
           {words.map((w, i) => (
@@ -54,7 +54,7 @@ export function ServiceSlide({ block, active, stacked }: { block: ServiceBlock; 
             </span>
           ))}
         </h3>
-        <div className="svc-copy mt-6 max-w-[var(--measure-max)] space-y-4 text-[length:var(--text-small)] leading-[1.85] text-gray-700">
+        <div className="svc-copy mt-6 max-w-[var(--measure-max)] space-y-4 text-[length:var(--text-lead)] leading-[1.55] text-blue">
           {block.body.map((p) => (
             <p key={p}>{p}</p>
           ))}

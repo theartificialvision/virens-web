@@ -2552,32 +2552,3 @@ con redirección permanente 308 a `/`.
 **Verificado**: `npm run typecheck` limpio; Home completa en Chrome headless a
 1440 y 390 px con movimiento reducido para comprobar cifras finales, orden,
 transición de fondos y ausencia de solapamientos.
-
-### 2026-09-27 (11) — Claude — Tipografía y tamaños: la home manda
-
-Petición del cliente: «tipografías, tamaños, etc., toma de norma la home y
-corrige las demás secciones para combinar». Tech, Compañía, Contacto y
-Noticias pasan a la escala de la home V2:
-
-- **H1 de página** (hero de Tech, Compañía, Contacto, Noticias): `--v2-hero-title`
-  (36→64 px), peso normal, interlineado 1,08, tracking −0,02em. Subtítulo del
-  hero de Tech con `--v2-hero-sub` y entradilla al 75 %, como en la home.
-- **Titulares de sección**: `--text-h2`, peso medio (antes bold/semibold),
-  tracking −0,015em (Timeline usa `SectionTitle`; slides de Tech y formulario
-  de contacto igual). La intro de Tech, que es un párrafo literal, se queda en
-  H3 pero con el peso de la home.
-- **Cuerpo**: `--text-small` con interlineado 1,85 y gris 700 (antes
-  `--text-lead` en Tech, Compañía y slides). Numeraciones «01» como las de
-  Formas galénicas (`--text-note`, seminegrita). Cifras de Timeline y StatRow
-  con el estilo de las cifras de Capacidad (`--text-stat-compact`, 1,0, −0,03em).
-- **Márgenes y ritmo**: `Container` con los márgenes laterales de la home
-  (32 px en tablet) y `Section` con `--v2-section` / `--v2-section-tight` en
-  vez de la escala V1 (hasta 200 px por lado). Fuera el `pt-52` extra de las
-  cabeceras de Compañía, Contacto y Noticias (la cabecera es sticky, en flujo).
-- **CTA final**: Tech y Compañía usan `CtaBand`, el mismo componente de la
-  home. Se retira `CtaContact`.
-
-**Verificado**: `npm run typecheck` limpio; las cinco páginas revisadas en
-Chromium a 1440 y 390 px (servidor de desarrollo; aquí no se puede descargar
-Montserrat de Google Fonts, así que el `next build` local falla solo por eso —
-en Netlify sí la descarga).

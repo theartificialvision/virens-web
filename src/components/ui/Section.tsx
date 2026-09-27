@@ -18,13 +18,10 @@ const TONE: Record<SectionTone, string> = {
   surface: 'bg-surface text-white',
 };
 
-// 27/09/2026 (cliente: «toma de norma la home»): las páginas interiores usan
-// el mismo ritmo vertical que la home V2 en lugar de la escala V1 (hasta
-// 200 px por lado), que las hacía parecer de otra web.
 const RHYTHM = {
-  compact: 'py-[var(--v2-section-tight)]',
-  base: 'py-[var(--v2-section)]',
-  air: 'py-[var(--v2-section)]',
+  compact: 'py-[var(--section-compact)]',
+  base: 'py-[var(--section-base)]',
+  air: 'py-[var(--section-air)]',
 } as const;
 
 interface SectionProps {
