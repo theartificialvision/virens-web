@@ -2358,3 +2358,22 @@ cabecera sobre el hero oscuro, sobre la barra de anclas y sobre texto claro.
   - Arranque escalonado (un envase por paso, `compileAsync`, primer pintado
     en cascada) para no congelar el scroll al llegar.
   - GPU `low-power` para no despertar la gráfica dedicada en portátiles.
+
+### 2026-09-27 — Claude (Cowork) — Mudanza al Mac y título de certificaciones
+
+- **Proyecto trasladado de Windows al Mac.** Carpeta del proyecto:
+  `~/Documents/Claude/Projects/WEB VIRENS` (en iCloud), con `web/` (este
+  repo, rama `v2`), `material/` (vídeos, marca, iconos, fotos IA,
+  referencias, prototipos 3D) y los scripts `ARRANCAR WEB.command` /
+  `GUARDAR Y PUBLICAR.command`, que sustituyen a los `.bat`.
+- Como la carpeta está en iCloud, `node_modules` y `.next` son enlaces a
+  `node_modules.nosync` / `.next.nosync` (iCloud no sincroniza `*.nosync`).
+  Añadido `*.nosync` a `.gitignore` y a `exclude` de `tsconfig.json` (si no,
+  `tsc` revisaba las dependencias).
+- **Home, certificaciones:** el bloque no tenía título. Ahora lleva
+  «Nuestras certificaciones» (texto del cliente) con `SectionTitle accent`,
+  el mismo estilo que el resto de títulos de la home. Texto en
+  `v2CertificationsTitle` (`content/v2-home.ts`).
+
+**Verificado**: `tsc --noEmit` limpio; revisado en el navegador (28 px, igual
+que los demás títulos de sección).

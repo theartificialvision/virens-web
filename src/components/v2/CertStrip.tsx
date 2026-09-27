@@ -1,6 +1,7 @@
 import type { CSSProperties } from 'react';
 import { Reveal } from '@/components/ui/Reveal';
-import { v2Certifications, type V2Cert } from '@/content/v2-home';
+import { v2Certifications, v2CertificationsTitle, type V2Cert } from '@/content/v2-home';
+import { SectionTitle } from './SectionTitle';
 
 /**
  * Franja de certificaciones (§ maqueta, bloque 06).
@@ -30,7 +31,8 @@ export function CertStrip({ showPending = false }: { showPending?: boolean }) {
   return (
     <section id="calidad" className="border-y border-gray-200 bg-gray-50 text-blue">
       <div className="mx-auto w-full max-w-[var(--container-max)] px-5 py-[var(--v2-section-tight)] md:px-8 lg:px-12 2xl:px-20">
-        <ul className="grid grid-cols-2 items-center justify-items-center gap-x-6 gap-y-12 sm:grid-cols-4 lg:flex lg:justify-between lg:gap-8">
+        <SectionTitle accent>{v2CertificationsTitle}</SectionTitle>
+        <ul className="mt-14 grid grid-cols-2 items-center justify-items-center gap-x-6 gap-y-12 sm:grid-cols-4 lg:flex lg:justify-between lg:gap-8">
           {visible.map((c, i) => (
             <li key={c.id}>
               <Reveal delay={(i % 4) * 0.03}>

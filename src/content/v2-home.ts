@@ -144,6 +144,9 @@ export interface V2Cert {
  * vectorizados a `/img/v2/sellos/{id}.svg`. `name` queda como nombre
  * accesible del sello. `unverified` no se muestra por defecto (regla 3).
  */
+/** Título del bloque de certificaciones (27/09/2026, texto del cliente). */
+export const v2CertificationsTitle = 'Nuestras certificaciones';
+
 export const v2Certifications: V2Cert[] = [
   { id: 'iso22000', name: 'ISO 22000', issuer: 'SGS', status: 'image-only', ratio: 1.027 },
   { id: 'gmp', name: 'GMP', issuer: 'SGS', status: 'image-only', ratio: 1.027 },
