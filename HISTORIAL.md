@@ -2827,3 +2827,8 @@ página en Chromium a 1440 y 390 px.
 
 **Verificado**: `npm run typecheck` limpio; Chromium a 1440 y 390 px, ES y EN,
 midiendo tamaño y peso del texto sin cambios.
+
+### 2026-09-28 (28) — Claude — Pictogramas del marquee más sutiles
+
+- Trazo `--v2-area-stroke` 2,4 → 1,75 (cliente: «siento las líneas muy
+  gruesas, más sutil»). Tamaño del pictograma y tipografía sin cambios.
