@@ -2789,3 +2789,12 @@ página en Chromium a 1440 y 390 px.
 
 **Verificado**: simulando el error de Safari en Chromium (longitud forzada un
 8 % mayor) las figuras cierran y la entrada sigue dibujándolas.
+
+### 2026-09-28 — Claude (nube) — Capacidad productiva: 7 formatos en una fila
+
+- Home, «Capacidad productiva»: el sachet caía solo a una segunda fila en
+  pantallas de ~1024–1439 px y en ≥1536 px (la rejilla `auto-fit` con mínimo
+  de 6,5rem solo metía 6 columnas junto al texto). Ahora los formatos son
+  `grid-cols-7` fijo desde `md` y el texto se pone al lado solo a partir de
+  1440 px (token nuevo `--breakpoint-cap`); por debajo va encima. En móvil
+  (<768 px) se mantiene el 4 + 3.

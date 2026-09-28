@@ -789,6 +789,8 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   --cap-icon-max: 7.5rem;
   --cap-icon-max-sm: 4.5rem;
   --cap-text-w:   28.75rem;
+  /* Texto al lado de los 7 formatos solo cuando caben en una fila (28/09/2026). */
+  --breakpoint-cap: 90rem;
   --cap-line-off: 2.5rem;
   --cap-line-on:  3rem;
   --cap-grow:     170ms;

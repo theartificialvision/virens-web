@@ -66,7 +66,7 @@ export function CapacityFormats({ locale }: { locale: Locale }) {
   return (
     <ul
       ref={listRef}
-      className="flex flex-wrap items-start justify-center gap-y-10 lg:grid lg:grid-cols-[repeat(auto-fit,minmax(var(--cap-col-min),1fr))] lg:gap-x-2"
+      className="flex flex-wrap items-start justify-center gap-y-10 md:grid md:grid-cols-7 md:gap-x-2"
     >
       {items.map((item, index) => {
         const shape = CAPACITY_SHAPES[item.id];
@@ -76,7 +76,7 @@ export function CapacityFormats({ locale }: { locale: Locale }) {
             key={item.id}
             tabIndex={0}
             data-active={on || undefined}
-            className="cap-item flex w-1/4 cursor-default flex-col items-center px-1 text-center outline-none md:w-[calc(100%/7)] lg:w-auto lg:px-0"
+            className="cap-item flex w-1/4 cursor-default flex-col items-center px-1 text-center outline-none md:w-auto md:px-0"
             onMouseEnter={() => activate(index)}
             onMouseLeave={() => activate(null)}
             onFocus={() => activate(index)}
