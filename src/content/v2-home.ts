@@ -79,16 +79,17 @@ export const v2Galenic = {
     alt: 'Cápsulas blancas avanzando por una línea farmacéutica de acero inoxidable',
   },
   swipeHint: 'Desliza',
-  /** Orden exacto de la maqueta: dos filas de cinco. */
+  /** Orden de la maqueta. 28/09/2026 (cliente): fuera «Encapsulado
+   *  automático»; quedan los nueve formatos con capacidad en `v2Capacity`,
+   *  cuya cifra se pinta bajo cada forma (el `id` es la clave común). */
   items: [
     { id: 'capsulas', icon: 'capsule', label: 'Cápsulas' },
     { id: 'comprimidos', icon: 'tablet', label: 'Comprimidos' },
-    { id: 'encapsulado', icon: 'autocapsule', label: 'Encapsulado automático' },
     { id: 'viales', icon: 'vial', label: 'Viales' },
     { id: 'blisters', icon: 'blister', label: 'Blísters' },
     { id: 'jarabes', icon: 'syrup', label: 'Jarabes' },
     { id: 'goteros', icon: 'dropper', label: 'Goteros' },
-    { id: 'frasco', icon: 'jarfill', label: 'Envasado en frasco' },
+    { id: 'frascos', icon: 'jarfill', label: 'Envasado en frasco' },
     { id: 'sticks', icon: 'stick', label: 'Sticks' },
     { id: 'sobres', icon: 'sachet', label: 'Sobres' },
   ],

@@ -3,6 +3,7 @@
 import { useRef, type CSSProperties } from 'react';
 import type { CapacityItem } from '@/lib/types';
 import { FormIcon } from '@/components/ui/FormIcon';
+import { cn } from '@/lib/utils';
 import { formatFigure, parseFigure, useLoadProgress } from '@/lib/useLoadProgress';
 
 /**
@@ -55,19 +56,24 @@ export function CapacityMeter({ item, index }: { item: CapacityItem; index: numb
   );
 }
 
-/** Cifra grande de la cabecera del bloque («+2.000 m²», «9», «2»), contando. */
+/** Cifra grande de la cabecera del bloque («+2.000 m²», «9», «2»), contando.
+ *  `labelClassName` permite usarla sobre fondo de color (formas galénicas). */
 export function CapacityStat({
   stat,
   index,
+  className,
+  labelClassName = 'text-gray-500',
 }: {
   stat: { value: string; unit?: string; label: string };
   index: number;
+  className?: string;
+  labelClassName?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const t = useLoadProgress(ref, { delay: index * 120, duration: 1900 });
   const fig = parseFigure(stat.value);
   return (
-    <div ref={ref} className="flex flex-col">
+    <div ref={ref} className={cn('flex flex-col', className)}>
       <dd className="text-[length:var(--text-stat-compact)] font-bold leading-none tracking-[-0.03em] tabular-nums">
         <span aria-hidden>
           {fig.prefix}
@@ -77,7 +83,7 @@ export function CapacityStat({
         <span className="sr-only">{stat.value}</span>
         {stat.unit && <span className="ml-1 align-top text-[0.42em]">{stat.unit}</span>}
       </dd>
-      <dt className="mt-4 text-[length:var(--text-eyebrow)] font-bold uppercase tracking-eyebrow text-gray-500">
+      <dt className={cn('mt-4 text-[length:var(--text-eyebrow)] font-bold uppercase tracking-eyebrow', labelClassName)}>
         {stat.label}
       </dt>
     </div>

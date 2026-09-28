@@ -1,26 +1,37 @@
 import Image from 'next/image';
 import { Reveal } from '@/components/ui/Reveal';
 import { GalenicRail } from './GalenicRail';
+import { GalenicScale } from './GalenicScale';
+import type { RailItem } from './GalenicRailItem';
 import { SectionTitle } from './SectionTitle';
 import { homeContent } from '@/content';
 import type { Locale } from '@/lib/i18n';
 
 /**
- * Formas galénicas (§ maqueta, bloque 03), en dos pisos desde el 27/09/2026:
+ * Formas galénicas + escala industrial (§ maqueta, bloque 03). Desde el
+ * 28/09/2026 (cliente: «formas galénicas y escala industrial propia se unen,
+ * números debajo de cada forma») es un solo bloque teal en tres pisos:
  *
- * - Arriba, mitad teal con titular y párrafo y mitad fotografía, virada al
- *   color de la división (escala de grises + capa #00A099 en `multiply`).
- * - Debajo, a todo el ancho (cliente: «ponlo en total wide así sumas
- *   tamaño»), la franja de los diez formatos con filetes compartidos: una
- *   fila en escritorio, dos en tablet y un carril deslizable en móvil.
+ * - Arriba, titular y párrafo; a la derecha la fotografía virada al color de
+ *   la división (grises + #00A099 en `multiply`).
+ * - En medio, a todo el ancho, los nueve formatos con filetes compartidos y,
+ *   bajo cada forma, su capacidad contando y su rango. Carril deslizable
+ *   por debajo de lg.
+ * - Abajo (`GalenicScale`), la escala de la planta como fila de totales, el
+ *   acondicionamiento y la nota de cifras pendientes.
  *
- * Movimiento (cliente: que sea interesante de ver sin competir con Capacidad
- * productiva, donde los envases crecen por tamaños): cada glifo se dibuja de
- * abajo arriba al entrar la franja y, con cursor, el formato señalado se
- * adelanta —zoom— mientras los demás retroceden. CSS: `.v2-gal` en globals.
+ * Movimiento: cada glifo se dibuja de abajo arriba al entrar la franja y,
+ * con cursor, el formato señalado se adelanta mientras los demás se apagan.
  */
 export function GalenicBlock({ locale }: { locale: Locale }) {
-  const { v2Galenic } = homeContent(locale);
+  const { v2Galenic, v2Capacity } = homeContent(locale);
+  // La capacidad de cada forma sale de `v2Capacity` por `id`; si una forma
+  // no la tiene, se pinta sin cifra (nunca una supuesta).
+  const capacity = new Map<string, { units: string; range?: string }>(
+    v2Capacity.items.map((c) => [c.id, { units: c.units, range: 'range' in c ? c.range : undefined }]),
+  );
+  const items: RailItem[] = v2Galenic.items.map((f) => ({ ...f, ...capacity.get(f.id) }));
+
   return (
     <section id="formas-galenicas" className="bg-labs text-white">
       <div className="relative">
@@ -50,10 +61,12 @@ export function GalenicBlock({ locale }: { locale: Locale }) {
         </Reveal>
       </div>
 
-      {/* Franja de formatos a todo el ancho; carril deslizable bajo lg. */}
+      {/* Franja de formatos con su capacidad, a todo el ancho; carril bajo lg. */}
       <Reveal className="v2-gal border-t border-white/25">
-        <GalenicRail items={v2Galenic.items} label={v2Galenic.title} hint={v2Galenic.swipeHint} />
+        <GalenicRail items={items} label={v2Galenic.title} hint={v2Galenic.swipeHint} />
       </Reveal>
+
+      <GalenicScale content={v2Capacity} />
     </section>
   );
 }

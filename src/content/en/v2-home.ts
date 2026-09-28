@@ -68,12 +68,11 @@ export const v2Galenic = {
   items: [
     { id: 'capsulas', icon: 'capsule', label: 'Capsules' }, // [EN]
     { id: 'comprimidos', icon: 'tablet', label: 'Tablets' }, // [EN]
-    { id: 'encapsulado', icon: 'autocapsule', label: 'Automatic encapsulation' }, // [TR] (ES: «Encapsulado automático»)
     { id: 'viales', icon: 'vial', label: 'Vials' }, // [EN]
     { id: 'blisters', icon: 'blister', label: 'Blisters' }, // [EN]
     { id: 'jarabes', icon: 'syrup', label: 'Syrups' }, // [EN]
     { id: 'goteros', icon: 'dropper', label: 'Droppers' }, // [EN]
-    { id: 'frasco', icon: 'jarfill', label: 'Bottled' }, // [EN]
+    { id: 'frascos', icon: 'jarfill', label: 'Bottled' }, // [EN]
     { id: 'sticks', icon: 'stick', label: 'Sticks' }, // [EN]
     { id: 'sobres', icon: 'sachet', label: 'Sachets' }, // [IMG]
   ],

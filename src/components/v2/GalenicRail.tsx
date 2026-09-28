@@ -1,12 +1,8 @@
 'use client';
 
-import { useEffect, useRef, type CSSProperties } from 'react';
+import { useEffect, useRef } from 'react';
 import { usePrefersReducedMotion } from '@/lib/useReducedMotion';
-import { GalenicIcon } from './GalenicIcon';
-
-type GalenicName = Parameters<typeof GalenicIcon>[0]['name'];
-
-interface RailItem { id: string; icon: GalenicName; label: string }
+import { GalenicRailItem, type RailItem } from './GalenicRailItem';
 
 const WIDE = '(min-width: 1024px)';
 /** Espera tras entrar en pantalla antes del vaivén que invita a deslizar. */
@@ -17,8 +13,11 @@ const NUDGE_DELAY = 700;
  * horizontal, una micro animación que invite a deslizar, foco con aumento
  * sutil de iconos, deslizamiento perfecto»).
  *
- * - Desde lg: los diez formatos en una fila; con cursor, el señalado crece un
- *   poco y el resto se apaga (solo CSS).
+ * - Desde lg: los nueve formatos en una fila; con cursor, el señalado crece
+ *   un poco y el resto se apaga (solo CSS).
+ * - 28/09/2026: bajo cada forma, su capacidad y su rango. Cada celda es una
+ *   subrejilla de cinco filas (número, glifo, nombre, cifra, rango), así
+ *   nombres de una o dos líneas no descuadran las cifras de la fila.
  * - Por debajo: carril con el formato activo centrado (snap al centro) y el
  *   siguiente asomando. El que queda en el centro es el «foco» — el
  *   equivalente táctil del hover — y se calcula aquí. Fundido en los bordes
@@ -116,20 +115,10 @@ export function GalenicRail({ items, label, hint }: { items: readonly RailItem[]
         ref={listRef}
         aria-label={label}
         tabIndex={0}
-        className="v2-gal-list flex snap-x snap-mandatory overflow-x-auto outline-offset-[-4px] lg:grid lg:grid-cols-10 lg:overflow-visible"
+        className="v2-gal-list grid snap-x snap-mandatory auto-cols-[var(--gal-cell)] grid-flow-col grid-rows-[repeat(5,auto)] overflow-x-auto outline-offset-[-4px] lg:grid-flow-row lg:grid-cols-9 lg:overflow-visible"
       >
         {items.map((f, i) => (
-          <li
-            key={f.id}
-            className="v2-gal-item flex w-[var(--gal-cell)] shrink-0 snap-center flex-col items-center border-r border-white/25 px-3 pb-12 pt-8 text-center first:border-l lg:w-auto lg:first:border-l-0 lg:last:border-r-0"
-            style={{ '--i': i } as CSSProperties}
-          >
-            <span className="self-start text-[length:var(--text-note)] font-semibold tracking-label text-white/60">
-              {String(i + 1).padStart(2, '0')}
-            </span>
-            <GalenicIcon name={f.icon} className="v2-gal-glyph mt-6 size-[var(--gal-icon)]" />
-            <span className="v2-gal-label mt-6 text-[length:var(--text-small)] font-medium leading-snug">{f.label}</span>
-          </li>
+          <GalenicRailItem key={f.id} item={f} index={i} />
         ))}
       </ul>
 

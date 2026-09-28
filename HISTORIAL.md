@@ -2841,3 +2841,28 @@ midiendo tamaño y peso del texto sin cambios.
 - Franja más baja con tokens nuevos: `--v2-marquee-pad` (aire vertical 44→72
   px pasa a 32→48 px) y `--v2-marquee-gap` (título–línea 40 → 24 px). Alto a
   1440: ≈376 → 315 px; a 390: 206 px. Tipografía sin cambios.
+
+### 2026-09-28 (30) — Claude — Formas galénicas + Escala industrial en un solo bloque
+
+- Cliente: «formas galénicas y escala industrial propia se unen, números
+  debajo de cada forma, más pro» y «encapsulado automático no va».
+- Fuera «Encapsulado automático» (ES y EN): quedan nueve formas, una fila de
+  nueve en escritorio. El `id` de «Envasado en frasco» pasa a `frascos` para
+  casar con `v2Capacity.items`.
+- Bajo cada forma, su capacidad contando (`GalenicFigure`, misma curva que
+  Capacidad productiva; cifra real en `sr-only`) y su rango. Cada celda es una
+  subrejilla de cinco filas (`GalenicRailItem`): nombres de una o dos líneas
+  no descuadran las cifras. Cifras sin inventar: salen de `v2Capacity` por
+  `id`; si una forma no la tuviera, se pinta sin cifra.
+- Pie del bloque (`GalenicScale`): «Escala industrial propia» como fila de
+  totales (+2.000 m² · 9 · 2), después acondicionamiento y la nota de unidad
+  y periodo pendientes. Desaparece la sección gris `#escala-industrial` de
+  `CapacityBlock`, que queda solo con los siete formatos por tamaños.
+- Arreglo de paso: el apagado de nombres en hover llegaba con el retardo de la
+  cascada de entrada (hasta ~1 s). La entrada va ahora con `animation`
+  (`gal-copy-in`, relleno `backwards`) y el hover responde al momento.
+- Tokens nuevos: `--gal-fig` (= `--text-h3`), `--gal-fig-gap`, `--gal-range-w`.
+  Tipografía existente sin cambios.
+
+**Verificado**: `npm run typecheck` limpio; Chromium a 1440, 1280 y 390 px, ES
+y EN: cifras alineadas en la fila, sin solapes ni scroll horizontal.
