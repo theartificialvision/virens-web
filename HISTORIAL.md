@@ -2984,3 +2984,15 @@ atascada en la home, Compañía ni Tech.
 - Cierre separado explícitamente en dos líneas ES/EN. CTA existente intacto.
 - Typecheck y diff comprobados; imágenes inspeccionadas. Sin navegador
   conectado para comprobar visualmente el hover en esta sesión.
+
+
+### 2026-09-28 (40) — Codex — Información sincronizada y sección compacta
+
+- Cada capacidad tiene un texto breve ES/EN basado en el contenido existente.
+  Panel lateral en desktop, bajo la foto en móvil; foto/texto funden juntos
+  y mantienen la selección anterior hasta que cargue la siguiente imagen.
+- Altura y ritmo responden al viewport (svh), con límites y sin recortar
+  texto. Móvil reorganizado; controles en dos columnas. Cierre en dos líneas.
+- Typecheck y diff limpios; páginas locales ES/EN y cinco controles/textos
+  comprobados. Corregida interferencia de caché parando el servidor duplicado
+  de esta sesión; se usa el existente en 3000. Revisión visual pendiente.

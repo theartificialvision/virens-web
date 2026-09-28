@@ -239,11 +239,11 @@ export const v2Laboratory = {
   serviceSummaries: ['Desarrollamos y fabricamos complementos alimenticios para tu marca, con fórmulas a medida y total confidencialidad.', 'De la formulación a la fabricación, el control de calidad, el envasado y la logística. Un servicio integral, de principio a fin.'],
   caption: 'DEL DESARROLLO AL PRODUCTO TERMINADO',
   capabilities: [
-    { label: 'I+D y formulación', image: { src: '/img/laboratory/formulation.webp', alt: 'Pipeta y material de vidrio para representar la formulación' } },
-    { label: 'Fabricación', image: { src: '/img/laboratory/manufacturing.webp', alt: 'Cápsulas y maquinaria de precisión para representar la fabricación' } },
-    { label: 'Control de calidad', image: { src: '/img/laboratory/quality.webp', alt: 'Muestras e instrumental analítico para representar el control de calidad' } },
-    { label: 'Envasado', image: { src: '/img/laboratory/packaging.webp', alt: 'Frascos ámbar alineados para representar el envasado' } },
-    { label: 'Logística', image: { src: '/img/laboratory/logistics.webp', alt: 'Cajas y frascos ordenados para representar la logística' } },
+    { label: 'I+D y formulación', description: 'Desarrollamos fórmulas a medida en colaboración con tu equipo técnico y de desarrollo.', image: { src: '/img/laboratory/formulation.webp', alt: 'Pipeta y material de vidrio para representar la formulación' } },
+    { label: 'Fabricación', description: 'Fabricamos complementos alimenticios en formas sólidas y líquidas, adaptadas a cada proyecto.', image: { src: '/img/laboratory/manufacturing.webp', alt: 'Cápsulas y maquinaria de precisión para representar la fabricación' } },
+    { label: 'Control de calidad', description: 'Realizamos controles microbiológicos y físico-químicos durante la fabricación y en el producto acabado.', image: { src: '/img/laboratory/quality.webp', alt: 'Muestras e instrumental analítico para representar el control de calidad' } },
+    { label: 'Envasado', description: 'Integramos el envasado y el acondicionamiento primario y secundario del producto.', image: { src: '/img/laboratory/packaging.webp', alt: 'Frascos ámbar alineados para representar el envasado' } },
+    { label: 'Logística', description: 'Te acompañamos hasta la logística, como parte de un servicio integral del concepto al producto terminado.', image: { src: '/img/laboratory/logistics.webp', alt: 'Cajas y frascos ordenados para representar la logística' } },
   ],
   closing: ['Todo un laboratorio.', 'Al servicio de tu marca.'],
 } as const;
