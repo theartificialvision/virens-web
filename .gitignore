@@ -1,5 +1,8 @@
 node_modules/
 .next/
+# En el Mac (iCloud) son enlaces a *.nosync, no carpetas: sin barra final.
+/node_modules
+/.next
 out/
 .env*.local
 .DS_Store

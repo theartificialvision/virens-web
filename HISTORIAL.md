@@ -2887,3 +2887,21 @@ y EN: cifras alineadas en la fila, sin solapes ni scroll horizontal.
 **Verificado**: typecheck limpio; Chromium 1440, 1280 y 390, ES y EN. En móvil,
 1–2 suben al llegar con scroll y 3–9 al deslizar; ninguna cifra se queda
 atascada en la home, Compañía ni Tech.
+
+### 2026-09-28 (32) — Claude — Proyecto listo para trabajar desde VS Code
+
+- Cliente: «deja memoria para usar VS Code». `TRASPASO.md` gana la sección
+  «Trabajar desde VS Code (Mac)»: abrir `web/`, pull antes de tocar, tareas
+  para arrancar/comprobar/traer, publicar con Commit + Sync a `v2`, inicio de
+  sesión con GitHub desde VS Code y el cuidado con los enlaces `*.nosync`.
+- `.vscode/`: `settings.json` (TypeScript del proyecto, Tailwind v4 apuntando a
+  `globals.css`, `*.nosync` fuera del buscador y del vigilante, `main`
+  protegida), `extensions.json` (Claude Code, Tailwind CSS IntelliSense,
+  ESLint) y `tasks.json` (arrancar web, typecheck, traer de GitHub).
+- `AGENTS.md` para Codex/Copilot: remite a `TRASPASO.md` y `CLAUDE.md`.
+- `.gitignore`: `/node_modules` y `/.next` sin barra, porque en el Mac son
+  enlaces y el patrón con barra solo ignora carpetas.
+- Copia del Mac puesta al día con `origin/v2` (estaba en c81210b con 25
+  archivos a medio sincronizar, guardados en `git stash`); enlace de
+  `node_modules` rehecho hacia `node_modules.nosync` (apuntaba a un `/tmp` de
+  otra sesión) y carpetas duplicadas vacías de iCloud eliminadas.

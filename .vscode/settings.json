@@ -1,0 +1,40 @@
+{
+  // Proyecto Virens — ajustes de VS Code compartidos (28/09/2026).
+  // TypeScript del proyecto, no el de VS Code: mismas reglas que `npm run typecheck`.
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
+  // Tailwind v4: no hay tailwind.config; los tokens viven en el bloque @theme de globals.css.
+  "tailwindCSS.experimental.configFile": "src/app/globals.css",
+  "tailwindCSS.classAttributes": ["class", "className"],
+  "files.associations": { "*.css": "tailwindcss" },
+  "editor.quickSuggestions": { "strings": "on" },
+  "css.lint.unknownAtRules": "ignore",
+
+  // La carpeta está en iCloud: dependencias y compilación viven en *.nosync.
+  // Fuera del buscador, del vigilante de archivos y del explorador.
+  "files.exclude": {
+    "**/node_modules.nosync": true,
+    "**/.next.nosync": true,
+    "**/*.tsbuildinfo": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/node_modules.nosync": true,
+    "**/.next": true,
+    "**/.next.nosync": true,
+    "HISTORIAL.md": false
+  },
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/node_modules.nosync/**": true,
+    "**/.next/**": true,
+    "**/.next.nosync/**": true
+  },
+
+  "editor.tabSize": 2,
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "git.branchProtection": ["main"],
+  "git.autofetch": true
+}

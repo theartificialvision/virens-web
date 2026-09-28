@@ -1,0 +1,30 @@
+{
+  // Menú Terminal → Ejecutar tarea… (o ⇧⌘P → «Tasks: Run Task»).
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Arrancar web (localhost:3000)",
+      "type": "npm",
+      "script": "dev",
+      "isBackground": true,
+      "problemMatcher": [],
+      "group": { "kind": "build", "isDefault": true },
+      "presentation": { "reveal": "always", "panel": "dedicated" }
+    },
+    {
+      "label": "Comprobar tipos (typecheck)",
+      "type": "npm",
+      "script": "typecheck",
+      "problemMatcher": ["$tsc"],
+      "group": "test",
+      "presentation": { "reveal": "always", "panel": "shared" }
+    },
+    {
+      "label": "Traer lo último de GitHub (v2)",
+      "type": "shell",
+      "command": "git pull --ff-only origin v2",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "shared" }
+    }
+  ]
+}

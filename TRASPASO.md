@@ -1,4 +1,4 @@
-# Traspaso — cómo retomar el proyecto (actualizado 27/09/2026)
+# Traspaso — cómo retomar el proyecto (actualizado 28/09/2026)
 
 Nota para cualquier asistente (Claude, Codex, otro) que continúe. Léelo antes
 que nada; luego [`CLAUDE.md`](CLAUDE.md) (reglas) y las últimas entradas de
@@ -15,6 +15,41 @@ archivo si cambió algo de lo de abajo.
 | Carpeta del cliente en su Mac | `~/Documents/Claude/Projects/WEB VIRENS` (en iCloud): `web/` = este repo; `material/` = vídeos, logos, iconos, fotos IA, referencias, prototipos 3D; `LEEME.md`; `ARRANCAR WEB.command` y `GUARDAR Y PUBLICAR.command`. |
 | Repo duplicado | `theartificialvision/VIrensLab` es una copia vieja parada el 22/09. No usar. |
 | Otros proyectos de Netlify | `virens-v2`, `virenslabv2`, `virens-web` son pruebas antiguas. El bueno es `virenslab`. |
+
+## Trabajar desde VS Code (Mac) — desde el 28/09/2026
+
+El cliente sigue el proyecto en **VS Code** en su Mac (con Claude Code, Codex u
+otra IA dentro). Todo está preparado en el repo:
+
+- **Abrir:** VS Code → Archivo → Abrir carpeta →
+  `~/Documents/Claude/Projects/WEB VIRENS/web` (la carpeta `web`, no la de
+  arriba). VS Code propondrá las extensiones recomendadas
+  (`.vscode/extensions.json`: Claude Code, Tailwind CSS IntelliSense, ESLint):
+  aceptar.
+- **Reglas para la IA:** Claude Code lee `CLAUDE.md` solo; Codex y Copilot leen
+  `AGENTS.md`, que remite a este archivo y a `CLAUDE.md`. Mismas reglas para
+  todas.
+- **Antes de tocar nada:** traer lo último de GitHub. Panel Control de código
+  → «…» → Pull, o Terminal → Ejecutar tarea → «Traer lo último de GitHub (v2)».
+  Hay sesiones en la nube que suben a `v2`; trabajar sobre una copia vieja es
+  lo que rompió la Compañía el 27/09.
+- **Ver la web:** Terminal → Ejecutar tarea → «Arrancar web (localhost:3000)»
+  (o doble clic en `ARRANCAR WEB.command`). La primera vez instala
+  dependencias si faltan.
+- **Comprobar:** tarea «Comprobar tipos (typecheck)»: tiene que salir limpio.
+- **Publicar:** panel Control de código → escribir mensaje → Commit → Sync
+  (push a `v2`; Netlify publica en 1-2 min). La primera vez VS Code pide
+  «Iniciar sesión con GitHub» en el navegador: así el Mac queda con
+  credenciales y el push funciona (también el de `GUARDAR Y PUBLICAR.command`
+  si usa las mismas). Nunca commit en `main` (VS Code avisa: está protegida
+  en `.vscode/settings.json`).
+- **iCloud:** `node_modules` y `.next` son **enlaces** a `node_modules.nosync` y
+  `.next.nosync` (iCloud no sube `*.nosync`). No convertirlos en carpetas. Si
+  alguna vez `node_modules` apunta a otro sitio (p. ej. `/tmp/...`), rehacer
+  el enlace: `ln -sfn node_modules.nosync node_modules` dentro de `web/`.
+  `.vscode/settings.json` los saca del buscador y del vigilante de archivos.
+- Si aparecen carpetas «nombre 2», «nombre 3» vacías: son duplicados de iCloud,
+  se pueden borrar.
 
 ## Cómo se trabaja (flujo acordado con el cliente)
 
@@ -42,17 +77,18 @@ archivo si cambió algo de lo de abajo.
   verifica con scroll real.
 - **Commits:** autor «Ignacio Pisano <pisanoignacio@gmail.com>».
 
-## Estado a 27/09/2026
+## Estado a 28/09/2026
 
-- **Home** (`src/app/page.tsx`, componentes en `src/components/v2/`):
+- **Home** (`src/views/HomeView.tsx`, componentes en `src/components/v2/`):
   Hero (vídeo corporativo) → Private Label / Full service → **Formas
-  galénicas** (dos pisos: texto + foto; debajo franja a todo el ancho con 10
-  formatos, entrada «dibujada» y foco con zoom al pasar el cursor) →
-  **Capacidad productiva integrada en dos tiempos**: primero las siete
-  siluetas que crecen por tamaños (hover/foco; recorrido automático en táctil)
-  y, debajo, «Escala industrial propia» con +2.000 m², 9 formatos, 2 niveles y
-  capacidad numérica por formato → Áreas terapéuticas → Certificaciones
-  («Nuestras certificaciones») → CTA.
+  galénicas + escala industrial** en un solo bloque (`GalenicBlock`): cabecera
+  teal con texto y foto; debajo, en gris, las **nueve** formas (fuera
+  «Encapsulado automático») con su capacidad contando y su rango bajo cada
+  una (`GalenicRailItem`, `GalenicFigure`; carril deslizable en móvil) y la
+  fila de totales +2.000 m² · 9 · 2 con acondicionamiento (`GalenicScale`) →
+  **Capacidad productiva**: las siete siluetas que crecen por tamaños →
+  Áreas terapéuticas (marquee de texto, sin pictogramas, franja baja) →
+  Certificaciones → CTA. Ver `HISTORIAL.md` (29)–(31).
 - **Virens Tech** (`src/app/virens-tech/page.tsx`), sin repeticiones desde
   el 27/09: portada con titular propio «Desarrollo y formulación de
   complementos alimenticios» → intro de una frase → frase puente magenta
@@ -100,12 +136,11 @@ archivo si cambió algo de lo de abajo.
 
 ## Pendiente / preguntas abiertas
 
-- **Copia del Mac desactualizada desde el 27/09 (i18n):** GitHub `v2` está al
-  día; la carpeta `web/` del Mac no, porque la fase i18n movió archivos
-  (`src/app/page.tsx` → `src/app/(es)/page.tsx`, etc.) y sin terminal no se
-  pudieron borrar los viejos. Antes de trabajar en local: en `web/`,
-  `git fetch origin v2 && git reset --hard origin/v2` (necesita permiso de
-  borrado en la carpeta). No publicar desde el Mac hasta hacerlo.
+- **Copia del Mac sincronizada el 28/09/2026** con `origin/v2` (reset desde
+  una sesión en la nube; enlace de `node_modules` rehecho). Lo que tenía sin
+  subir —restos de la sincronización a medias del 27/09— quedó guardado en
+  `git stash` («copia Mac antes de sincronizar 28/09») por si hiciera falta.
+  Desde ahora: pull antes de trabajar y publicar solo por push a `v2`.
 - **Páginas legales**: no existen aún en ningún idioma (`/legal/*`,
   `/en/legal/*`); pie, formulario y redirecciones ya apuntan ahí.
 - **Revisión del inglés `[TR]`** por el cliente: `docs/i18n-ingles.md`.
