@@ -236,12 +236,9 @@ export const v2FooterNav = [
 export const v2Laboratory = {
   source: 'rewritten',
   eyebrow: 'CIENCIA, DESARROLLO Y FABRICACIÓN',
-  title: ['Todo un laboratorio.', 'Al servicio de tu marca.'],
-  body: 'Integramos conocimiento científico, tecnología y capacidad de fabricación para acompañar tu producto de principio a fin.',
-  capabilitiesLink: 'Conoce nuestras capacidades',
+  serviceSummaries: ['Desarrollamos y fabricamos complementos alimenticios para tu marca, con fórmulas a medida y total confidencialidad.', 'De la formulación a la fabricación, el control de calidad, el envasado y la logística. Un servicio integral, de principio a fin.'],
   image: { src: '/img/labs-instalaciones.jpg', alt: 'Vista panorámica de líneas de producción y equipos de acero inoxidable' },
   caption: 'DEL DESARROLLO AL PRODUCTO TERMINADO',
   capabilities: ['I+D y formulación', 'Fabricación', 'Control de calidad', 'Envasado', 'Logística'],
-  closing: 'Private Label, de principio a fin.',
-  contactLink: 'Tu proyecto empieza aquí',
+  closing: 'Todo un laboratorio. Al servicio de tu marca.',
 } as const;

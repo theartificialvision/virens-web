@@ -2954,3 +2954,13 @@ atascada en la home, Compañía ni Tech.
 - Verificado: typecheck limpio, diff sin errores, HTTP 200 y contenido/ancla
   de destino correctos en ES y EN. Revisión visual 1440/390 pendiente:
   inventario de navegadores conectados vacío.
+
+
+### 2026-09-28 (37) — Codex — Híbrido Private Label / Full service
+
+- Por petición del cliente, Private Label y Full service vuelven como títulos
+  principales, con resúmenes breves sobre la panorámica y las cinco capacidades.
+- Retirados los CTA y estilos de enlace propios del bloque; se reutiliza
+  Button variant labs y el texto Contactar ahora del CTA existente, en ES/EN.
+- Verificación: tipos de rutas regenerados, typecheck y diff limpios; HTTP 200
+  ES/EN, ambos h2 y botón compartido presentes. Sin revisión visual nueva.

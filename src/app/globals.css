@@ -17,8 +17,6 @@
   --lab-body-leading: 1.85;
   --lab-title-tracking: -0.035em;
   --lab-rule: 1px;
-  --lab-focus: 2px;
-  --lab-focus-offset: 4px;
   --lab-teal-text: #007D79;
 
   /* --- Color -------------------------------------------------- */
@@ -1301,27 +1299,24 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
 /* Laboratorio — composición editorial aprobada, 28/09/2026. */
 .laboratory { background: white; color: var(--color-blue); scroll-margin-top: var(--anchor-offset); }
 .laboratory__inner { max-width: var(--container-max); margin-inline: auto; padding: var(--lab-section) var(--lab-gutter); }
-.laboratory__intro { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: var(--lab-gap); align-items: end; margin-bottom: var(--lab-gap); }
+.laboratory__intro { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--lab-gap); align-items: start; margin-bottom: var(--lab-gap); }
 .laboratory__eyebrow, .laboratory__caption { font-size: var(--text-eyebrow); letter-spacing: var(--tracking-label); line-height: var(--lab-body-leading); }
 .laboratory__eyebrow { color: var(--lab-teal-text); margin-bottom: var(--lab-cell-gap); }
 .laboratory__title { font-size: var(--text-h2); font-weight: 500; line-height: var(--lab-title-leading); letter-spacing: var(--lab-title-tracking); }
-.laboratory__title span { display: block; }
+.laboratory__service { scroll-margin-top: var(--anchor-offset); }
+.laboratory__service .laboratory__title { margin-bottom: var(--lab-cell-gap); }
 .laboratory__description { font-size: var(--text-small); line-height: var(--lab-body-leading); color: var(--color-gray-700); }
-.laboratory__description .laboratory__link { margin-top: var(--lab-cell-gap); }
-.laboratory__link { display: inline-flex; align-items: baseline; gap: var(--lab-caption-gap); color: var(--color-blue); text-decoration: underline; text-decoration-color: var(--color-labs); text-underline-offset: var(--lab-caption-gap); font-size: var(--text-small); }
-.laboratory__link:hover { color: var(--lab-teal-text); }
-.laboratory__link:focus-visible { outline: var(--lab-focus) solid var(--lab-teal-text); outline-offset: var(--lab-focus-offset); }
 .laboratory__image { position: relative; aspect-ratio: 3.5 / 1; overflow: hidden; }
 .laboratory__caption { margin-top: var(--lab-caption-gap); color: var(--color-gray-700); }
 .laboratory__capabilities { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); list-style: none; padding: 0; margin-block: var(--lab-gap); scroll-margin-top: var(--anchor-offset); }
 .laboratory__capabilities li { display: flex; flex-direction: column; gap: var(--lab-small-gap); padding-inline: var(--lab-cell-gap); border-left: var(--lab-rule) solid var(--color-gray-200); font-size: var(--text-h4); font-weight: 500; line-height: var(--lab-title-leading); }
 .laboratory__capabilities li:first-child { padding-left: 0; border-left: 0; }
 .laboratory__number { color: var(--lab-teal-text); font-size: var(--text-label); font-weight: 400; }
-.laboratory__footer { display: flex; align-items: baseline; justify-content: space-between; gap: var(--lab-cell-gap); padding-top: var(--lab-cell-gap); border-top: var(--lab-rule) solid var(--color-gray-200); color: var(--color-gray-700); font-size: var(--text-micro); }
+.laboratory__footer { display: flex; align-items: center; justify-content: space-between; gap: var(--lab-cell-gap); padding-top: var(--lab-cell-gap); border-top: var(--lab-rule) solid var(--color-gray-200); color: var(--color-gray-700); font-size: var(--text-micro); }
 @media (max-width: 767px) {
   .laboratory__intro { grid-template-columns: 1fr; }
   .laboratory__image { aspect-ratio: 4 / 3; }
   .laboratory__capabilities { grid-template-columns: 1fr; }
   .laboratory__capabilities li, .laboratory__capabilities li:first-child { flex-direction: row; align-items: baseline; gap: var(--lab-cell-gap); padding: var(--lab-small-gap) 0; border-left: 0; border-bottom: var(--lab-rule) solid var(--color-gray-200); }
-  .laboratory__footer { flex-direction: column; }
+  .laboratory__footer { flex-direction: column; align-items: flex-start; }
 }

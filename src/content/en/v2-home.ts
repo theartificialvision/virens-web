@@ -198,12 +198,9 @@ export const v2FooterNav = [
 export const v2Laboratory = {
   source: 'rewritten',
   eyebrow: 'SCIENCE, DEVELOPMENT AND MANUFACTURING',
-  title: ['A complete laboratory.', 'At the service of your brand.'],
-  body: 'We bring together scientific expertise, technology and manufacturing capabilities to support your product from start to finish.',
-  capabilitiesLink: 'Explore our capabilities',
+  serviceSummaries: ['We develop and manufacture food supplements for your brand, with tailored formulas and complete confidentiality.', 'From formulation to manufacturing, quality control, packaging and logistics. An integrated service, from start to finish.'],
   image: { src: '/img/labs-instalaciones.jpg', alt: 'Panoramic view of production lines and stainless steel equipment' },
   caption: 'FROM DEVELOPMENT TO FINISHED PRODUCT',
   capabilities: ['R&D and formulation', 'Manufacturing', 'Quality control', 'Packaging', 'Logistics'],
-  closing: 'Private Label, from start to finish.',
-  contactLink: 'Your project starts here',
+  closing: 'A complete laboratory. At the service of your brand.',
 } as const satisfies Loosen<typeof es.v2Laboratory>;
