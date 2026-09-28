@@ -2,18 +2,7 @@ import { homeContent } from '@/content';
 import type { Locale } from '@/lib/i18n';
 import { SectionTitle } from './SectionTitle';
 
-/**
- * Áreas terapéuticas (§ maqueta, bloque 05): una sola línea tipográfica de
- * gran cuerpo que recorre el ancho, con los nombres alternando blanco, teal y
- * magenta —los dos colores de división— separados por barras.
- *
- * El desplazamiento es CSS puro: dos copias de la misma lista, la segunda
- * `aria-hidden`, y una traslación del 50%. Sin JS y, bajo
- * `prefers-reduced-motion`, la animación se detiene (regla global de
- * globals.css) y queda una línea estática legible.
- */
-const ACCENT = ['text-white', 'text-labs-glow', 'text-white', 'text-tech-glow'] as const;
-
+/** Franja tipográfica sobria; la segunda copia permite el bucle continuo. */
 export function AreasMarquee({ locale }: { locale: Locale }) {
   const { v2Areas } = homeContent(locale);
   const items = v2Areas.items;
@@ -21,7 +10,7 @@ export function AreasMarquee({ locale }: { locale: Locale }) {
   return (
     <section id="areas-terapeuticas" className="overflow-hidden bg-blue py-[var(--v2-marquee-pad)] text-white">
       <div className="mx-auto w-full max-w-[var(--container-max)] px-5 md:px-8 lg:px-12 2xl:px-20">
-        <SectionTitle accent>{v2Areas.label}</SectionTitle>
+        <SectionTitle>{v2Areas.label}</SectionTitle>
       </div>
 
       <div className="mt-[var(--v2-marquee-gap)] flex w-full overflow-hidden">
@@ -36,12 +25,12 @@ function Track({ items, ariaHidden = false }: { items: readonly string[]; ariaHi
   return (
     <ul
       aria-hidden={ariaHidden || undefined}
-      className="v2-marquee flex shrink-0 items-center gap-[0.6em] whitespace-nowrap pr-[0.6em] text-[length:var(--v2-marquee)] font-normal uppercase tracking-[-0.01em]"
+      className="v2-marquee flex shrink-0 items-center gap-[var(--v2-marquee-item-gap)] whitespace-nowrap pr-[var(--v2-marquee-item-gap)] text-[length:var(--v2-marquee)] font-normal leading-tight tracking-[-0.01em]"
     >
-      {items.map((area, i) => (
-        <li key={area} className="flex items-center gap-[0.6em]">
-          <span className={ACCENT[i % ACCENT.length]}>{area}</span>
-          <span aria-hidden className="text-white/30">/</span>
+      {items.map((area) => (
+        <li key={area} className="flex items-center gap-[var(--v2-marquee-item-gap)]">
+          <span className="text-white/80">{area}</span>
+          <span aria-hidden className="h-[var(--v2-marquee-dot)] w-[var(--v2-marquee-dot)] rounded-full bg-labs-glow/60" />
         </li>
       ))}
     </ul>

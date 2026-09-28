@@ -4,22 +4,10 @@ import { CapacityStat } from '@/components/sections/CapacityMeter';
 interface ScaleContent {
   scaleTitle: string;
   stats: readonly { value: string; unit?: string; label: string }[];
-  operationsTitle: string;
-  operations: readonly string[];
   note: string;
 }
 
-/**
- * Pie de Formas galénicas (28/09/2026, al unir «Escala industrial propia»):
- * bajo la capacidad de cada forma, las magnitudes de la planta como fila de
- * totales y, debajo, el acondicionamiento y la nota de que unidad y periodo
- * están pendientes (regla 3: la cifra no se presenta como cerrada).
- *
- * Comparte la rejilla de 12 columnas en las dos filas, así cifras y
- * operaciones arrancan en la misma vertical. En móvil, la primera magnitud
- * ocupa la fila y las otras dos van a pares en columnas de ancho propio
- * (`auto`): «Acondicionamiento» no cabe en media columna fija.
- */
+/** Totales de la planta y nota de cifras pendientes de confirmar (regla 3). */
 export function GalenicScale({ content }: { content: ScaleContent }) {
   return (
     <div className="border-t border-gray-300">
@@ -40,17 +28,7 @@ export function GalenicScale({ content }: { content: ScaleContent }) {
           </dl>
         </Reveal>
 
-        <div className="mt-12 grid gap-5 border-t border-gray-300 pt-8 lg:mt-16 lg:grid-cols-12 lg:items-baseline lg:gap-8">
-          <p className="text-[length:var(--text-eyebrow)] font-bold uppercase tracking-eyebrow text-gray-500 lg:col-span-3">
-            {content.operationsTitle}
-          </p>
-          <ul className="flex flex-wrap gap-x-10 gap-y-2 text-[length:var(--text-small)] font-medium text-gray-700 lg:col-span-6">
-            {content.operations.map((operation) => (
-              <li key={operation}>{operation}</li>
-            ))}
-          </ul>
-          <p className="text-[length:var(--text-note)] leading-relaxed text-gray-500 lg:col-span-3">{content.note}</p>
-        </div>
+        <p className="mt-8 text-[length:var(--text-note)] leading-relaxed text-gray-500">{content.note}</p>
       </div>
     </div>
   );

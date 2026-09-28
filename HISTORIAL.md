@@ -2905,3 +2905,18 @@ atascada en la home, Compañía ni Tech.
   archivos a medio sincronizar, guardados en `git stash`); enlace de
   `node_modules` rehecho hacia `node_modules.nosync` (apuntaba a un `/tmp` de
   otra sesión) y carpetas duplicadas vacías de iCloud eliminadas.
+
+
+### 2026-09-28 (33) — Codex — Home: sin fila de acondicionamiento y marquee más sobrio
+
+- Retirada la fila de acondicionamiento de `GalenicScale` en ES y EN; se
+  conservan los totales y la nota sobre unidad y periodo pendientes.
+- Marquee más compacto: padding vertical de 24–32 px, separación de 16 px,
+  título sin filete superior, nombres sin mayúsculas forzadas, blanco suave
+  y pequeños puntos teal. Bucle más pausado (56 s). Se mantienen familia,
+  tamaños y pesos tipográficos; movimiento reducido sigue la regla global.
+- Verificación: `npm run typecheck` limpio tras regenerar los tipos de rutas
+  con `next typegen` (había referencias antiguas en `.next`); respuesta HTTP
+  200 de la home local y `git diff --check` limpio.
+- Revisión visual a 1440/390 pendiente: no hay navegador conectado disponible
+  en esta sesión (inventario vacío).
