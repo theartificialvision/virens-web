@@ -8,8 +8,8 @@ import { useEffect, useRef, useState, type RefObject } from 'react';
  *
  * - El HTML del servidor sale con el valor final (`1`): sin JS, en buscadores
  *   y en lectores de pantalla las cifras son las reales desde el principio.
- * - Al montar, si el bloque aún no se ve, vuelve a `0` fuera de pantalla y
- *   espera; si ya se ve, anima desde `0` en ese momento.
+ * - Al montar vuelve a `0` y espera a que el observador lo vea (umbral 35 %,
+ *   `rootMargin` opcional); si ya se ve, anima desde `0` en ese momento.
  * - Con `prefers-reduced-motion` se queda en `1` y no abre bucle (regla 8:
  *   comprobación explícita en JS, la regla CSS no alcanza a un rAF).
  * - Curva ease-out quart: arranca con decisión y se asienta despacio, como
@@ -18,7 +18,7 @@ import { useEffect, useRef, useState, type RefObject } from 'react';
  */
 export function useLoadProgress<T extends Element>(
   ref: RefObject<T | null>,
-  { delay = 0, duration = 1600 }: { delay?: number; duration?: number } = {},
+  { delay = 0, duration = 1600, rootMargin = '0px' }: { delay?: number; duration?: number; rootMargin?: string } = {},
 ): number {
   const [t, setT] = useState(1);
   const started = useRef(false);
@@ -45,9 +45,14 @@ export function useLoadProgress<T extends Element>(
       }, delay);
     };
 
-    const rect = el.getBoundingClientRect();
-    const inView = rect.top < window.innerHeight && rect.bottom > 0;
-    if (!inView) setT(0);
+    // Siempre a 0 al montar y a esperar al observador (28/09/2026). Antes solo
+    // se ponía a 0 lo que quedaba fuera de pantalla según el rectángulo del
+    // montaje, y fallaba en el carril móvil de formas galénicas: los formatos
+    // de la derecha no cuentan como fuera de pantalla en vertical y, si el
+    // viewport se medía mal durante la carga, aparecían con la cifra final y
+    // sin subida al deslizar. Lo que ya está a la vista arranca igual: el
+    // observador avisa en el primer fotograma.
+    setT(0);
 
     const io = new IntersectionObserver(
       (entries) => {
@@ -56,7 +61,7 @@ export function useLoadProgress<T extends Element>(
           run();
         }
       },
-      { threshold: 0.35 },
+      { threshold: 0.35, rootMargin },
     );
     io.observe(el);
 
@@ -65,7 +70,7 @@ export function useLoadProgress<T extends Element>(
       cancelAnimationFrame(raf);
       window.clearTimeout(timer);
     };
-  }, [ref, delay, duration]);
+  }, [ref, delay, duration, rootMargin]);
 
   return t;
 }

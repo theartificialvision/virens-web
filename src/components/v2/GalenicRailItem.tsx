@@ -17,13 +17,13 @@ export interface RailItem { id: string; icon: GalenicName; label: string; units?
 export function GalenicRailItem({ item, index }: { item: RailItem; index: number }) {
   return (
     <li
-      className="v2-gal-item row-span-5 grid snap-center grid-rows-subgrid justify-items-center border-r border-white/25 px-3 pb-12 pt-8 text-center first:border-l lg:first:border-l-0 lg:last:border-r-0"
+      className="v2-gal-item row-span-5 grid snap-center grid-rows-subgrid justify-items-center border-r border-gray-300 px-3 pb-12 pt-[var(--gal-cell-pt)] text-center first:border-l lg:first:border-l-0 lg:last:border-r-0"
       style={{ '--i': index } as CSSProperties}
     >
-      <span className="v2-gal-meta justify-self-start text-[length:var(--text-note)] font-semibold tracking-label text-white/60">
+      <span className="v2-gal-meta justify-self-start text-[length:var(--text-note)] font-semibold tracking-label text-gray-500">
         {String(index + 1).padStart(2, '0')}
       </span>
-      <GalenicIcon name={item.icon} className="v2-gal-glyph mt-6 size-[var(--gal-icon)]" />
+      <GalenicIcon name={item.icon} className="v2-gal-glyph mt-6 size-[var(--gal-icon)] text-labs" />
       <span className="v2-gal-meta v2-gal-copy mt-6 text-[length:var(--text-small)] font-medium leading-snug">{item.label}</span>
       {item.units ? (
         <GalenicFigure
@@ -33,7 +33,7 @@ export function GalenicRailItem({ item, index }: { item: RailItem; index: number
         />
       ) : <span />}
       {item.range && (
-        <span className="v2-gal-meta v2-gal-copy mt-2 max-w-[var(--gal-range-w)] text-[length:var(--text-note)] leading-snug text-white/70">
+        <span className="v2-gal-meta v2-gal-copy mt-2.5 max-w-[var(--gal-range-w)] text-balance text-[length:var(--gal-range-text)] font-medium leading-snug text-gray-700">
           {item.range}
         </span>
       )}

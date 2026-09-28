@@ -124,12 +124,12 @@ export function GalenicRail({ items, label, hint }: { items: readonly RailItem[]
 
       {/* Invitación y progreso (solo carril). */}
       <div aria-hidden className="v2-gal-meter mx-auto flex w-full max-w-[var(--container-max)] items-center gap-5 px-5 pb-8 md:px-8 lg:hidden">
-        <span className="v2-gal-hint flex items-center gap-2 text-[length:var(--text-note)] font-semibold uppercase tracking-label text-white/80">
+        <span className="v2-gal-hint flex items-center gap-2 text-[length:var(--text-note)] font-semibold uppercase tracking-label text-blue">
           {hint}
           <span className="v2-gal-hint-arrow">&rarr;</span>
         </span>
-        <span className="relative h-[2px] flex-1 overflow-hidden bg-white/20">
-          <span className="v2-gal-thumb absolute inset-y-0 left-0 bg-white" />
+        <span className="relative h-[2px] flex-1 overflow-hidden bg-gray-300">
+          <span className="v2-gal-thumb absolute inset-y-0 left-0 bg-labs" />
         </span>
       </div>
     </div>

@@ -15,7 +15,7 @@ import type { Locale } from '@/lib/i18n';
  * Orden de bloques y ritmo de fondos, tal cual la maqueta:
  *   01 hero (foto/vídeo a sangre, velo azul)
  *   02 Private Label / Full service        blanco
- *   03 Formas galénicas + escala industrial teal + foto (28/09/2026)
+ *   03 Formas galénicas + escala industrial teal + foto → gris (28/09/2026)
  *   04 Capacidad por tamaños               blanco
  *   05 Áreas terapéuticas                  azul
  *   06 Certificaciones                     gris claro

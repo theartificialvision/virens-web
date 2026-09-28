@@ -702,7 +702,11 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   --gal-nudge:   -3.25rem;  /* recorrido del vaivén que invita a deslizar */
   --gal-fig:     var(--text-h3); /* cifra de capacidad bajo cada forma */
   --gal-fig-gap: 1.25rem;   /* nombre → cifra */
-  --gal-range-w: 9rem;      /* rango en dos líneas como mucho, centrado */
+  --gal-range-w: 10rem;     /* rango en dos líneas como mucho, centrado */
+  /* 28/09/2026 (cliente: «las medidas se ven poco»): 12 px blanco al 70 %
+     sobre teal → 14 px gris 700 sobre gris claro. */
+  --gal-range-text: 0.875rem;
+  --gal-cell-pt: clamp(2.5rem, 2rem + 1.5vw, 3.5rem); /* aire sobre el nº de orden */
 }
 @media (min-width: 768px) { :root { --gal-cell: var(--gal-cell-md); } }
 

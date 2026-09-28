@@ -2866,3 +2866,24 @@ midiendo tamaño y peso del texto sin cambios.
 
 **Verificado**: `npm run typecheck` limpio; Chromium a 1440, 1280 y 390 px, ES
 y EN: cifras alineadas en la fila, sin solapes ni scroll horizontal.
+
+### 2026-09-28 (31) — Claude — Formas galénicas: segunda parte en gris, medidas legibles, subida con scroll
+
+- Cliente: «que no sea tan bloque verde grande, a la segunda parte pon gris».
+  Solo la cabecera (titular, texto y foto) sigue en teal; formatos con su
+  capacidad y la escala industrial pasan a `gray-100` con filetes `gray-300`,
+  glifos en teal, nombres y cifras en azul.
+- «Mejora el tamaño del texto de las medidas, se ve poco»: rango de 12 px
+  blanco al 70 % sobre teal → 14 px (`--gal-range-text`) gris 700 sobre gris,
+  con `text-balance` para que no quede «ml» suelto en la segunda línea.
+- «En móvil las cifras deben subir cuando hay scroll»: `useLoadProgress` ahora
+  pone siempre la cifra a 0 al montar y espera al observador. Antes solo lo
+  hacía si el rectángulo del montaje caía fuera de pantalla, y en el carril
+  móvil los formatos de la derecha (fuera solo en horizontal) se quedaban con
+  la cifra final y no subían al deslizar. Además las cifras de las formas
+  arrancan ya dentro de pantalla (`rootMargin` −15 % abajo), no al asomar.
+  Con movimiento reducido, igual que antes: cifra final sin animación.
+
+**Verificado**: typecheck limpio; Chromium 1440, 1280 y 390, ES y EN. En móvil,
+1–2 suben al llegar con scroll y 3–9 al deslizar; ninguna cifra se queda
+atascada en la home, Compañía ni Tech.

@@ -3,6 +3,9 @@
 import { useRef } from 'react';
 import { formatFigure, parseFigure, useLoadProgress } from '@/lib/useLoadProgress';
 
+/** La cifra arranca al pasar por encima del 15 % inferior de la pantalla. */
+const ROOT_MARGIN = '0px 0px -15% 0px';
+
 /**
  * Capacidad de un formato bajo su forma galénica (28/09/2026, cliente:
  * «formas galénicas y escala industrial se unen, números debajo de cada
@@ -11,12 +14,17 @@ import { formatFigure, parseFigure, useLoadProgress } from '@/lib/useLoadProgres
  *
  * Cascada solo en la fila de escritorio: en el carril móvil cada cifra
  * arranca cuando el propio formato entra deslizando, sin esperar su turno.
+ *
+ * 28/09/2026 (cliente: «que suban cuando hay scroll»): la subida no empieza
+ * al asomar la cifra por el borde inferior, sino ya dentro de pantalla
+ * (`ROOT_MARGIN`), para que se vea.
+ *
  * El texto real va en `sr-only`; lo que cuenta es `aria-hidden`.
  */
 export function GalenicFigure({ units, index, className }: { units: string; index: number; className?: string }) {
   const ref = useRef<HTMLParagraphElement>(null);
   const wide = typeof window !== 'undefined' && window.matchMedia('(min-width: 1024px)').matches;
-  const t = useLoadProgress(ref, { delay: wide ? index * 80 : 0, duration: 2000 });
+  const t = useLoadProgress(ref, { delay: wide ? index * 80 : 0, duration: 2000, rootMargin: ROOT_MARGIN });
   const fig = parseFigure(units);
 
   return (

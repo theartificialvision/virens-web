@@ -10,7 +10,8 @@ import type { Locale } from '@/lib/i18n';
 /**
  * Formas galénicas + escala industrial (§ maqueta, bloque 03). Desde el
  * 28/09/2026 (cliente: «formas galénicas y escala industrial propia se unen,
- * números debajo de cada forma») es un solo bloque teal en tres pisos:
+ * números debajo de cada forma») es un solo bloque en tres pisos; desde la
+ * misma tarde solo el primero es teal y los otros dos van en gris:
  *
  * - Arriba, titular y párrafo; a la derecha la fotografía virada al color de
  *   la división (grises + #00A099 en `multiply`).
@@ -33,8 +34,8 @@ export function GalenicBlock({ locale }: { locale: Locale }) {
   const items: RailItem[] = v2Galenic.items.map((f) => ({ ...f, ...capacity.get(f.id) }));
 
   return (
-    <section id="formas-galenicas" className="bg-labs text-white">
-      <div className="relative">
+    <section id="formas-galenicas">
+      <div className="relative bg-labs text-white">
         <div className="mx-auto w-full max-w-[var(--container-max)] px-5 md:px-8 lg:px-12 2xl:px-20">
           <div className="pb-[var(--gal-top-pb)] pt-[var(--v2-section)] lg:w-1/2 lg:pr-16">
             <SectionTitle>{v2Galenic.title}</SectionTitle>
@@ -61,12 +62,14 @@ export function GalenicBlock({ locale }: { locale: Locale }) {
         </Reveal>
       </div>
 
-      {/* Franja de formatos con su capacidad, a todo el ancho; carril bajo lg. */}
-      <Reveal className="v2-gal border-t border-white/25">
-        <GalenicRail items={items} label={v2Galenic.title} hint={v2Galenic.swipeHint} />
-      </Reveal>
-
-      <GalenicScale content={v2Capacity} />
+      {/* Segunda parte en gris (28/09/2026, cliente: «que no sea tan bloque
+          verde grande»): formatos con su capacidad, carril bajo lg, y escala. */}
+      <div className="bg-gray-100 text-blue">
+        <Reveal className="v2-gal">
+          <GalenicRail items={items} label={v2Galenic.title} hint={v2Galenic.swipeHint} />
+        </Reveal>
+        <GalenicScale content={v2Capacity} />
+      </div>
     </section>
   );
 }
