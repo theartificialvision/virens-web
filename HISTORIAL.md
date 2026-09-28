@@ -2832,3 +2832,12 @@ midiendo tamaño y peso del texto sin cambios.
 
 - Trazo `--v2-area-stroke` 2,4 → 1,75 (cliente: «siento las líneas muy
   gruesas, más sutil»). Tamaño del pictograma y tipografía sin cambios.
+
+### 2026-09-28 (29) — Claude — Marquee: fuera los pictogramas y franja más baja
+
+- Cliente: «quitamos los icons, no convencen, menos altura el marquee».
+  Revertidos los commits edc60ee y e2b3a83 (pictogramas, `areaPictograms.ts`,
+  `{ id, label }` en contenido, vuelta de 56 s → 42 s otra vez).
+- Franja más baja con tokens nuevos: `--v2-marquee-pad` (aire vertical 44→72
+  px pasa a 32→48 px) y `--v2-marquee-gap` (título–línea 40 → 24 px). Alto a
+  1440: ≈376 → 315 px; a 390: 206 px. Tipografía sin cambios.

@@ -140,19 +140,18 @@ export const v2Capacity = {
 
 export const v2Areas = {
   label: 'Áreas terapéuticas',
-  /** Denominaciones verificadas contra lvirens.com. No modificar sin aprobación.
-   *  `id` = pictograma animado (`components/v2/areaPictograms.ts`). */
+  /** Denominaciones verificadas contra lvirens.com. No modificar sin aprobación. */
   items: [
-    { id: 'peso', label: 'Peso' },
-    { id: 'sistema-nervioso', label: 'Sist. Nervioso' },
-    { id: 'articulaciones', label: 'Articulaciones' },
-    { id: 'digestivo', label: 'Digestivo' },
-    { id: 'infantil', label: 'Infantil' },
-    { id: 'cardiovascular', label: 'Cardiovascular' },
-    { id: 'inmunitario', label: 'Inmunitario' },
-    { id: 'salud-mujer', label: 'Salud Mujer' },
-    { id: 'mascotas', label: 'Mascotas' },
-    { id: 'sport-nutrition', label: 'Sport nutrition' },
+    'Peso',
+    'Sist. Nervioso',
+    'Articulaciones',
+    'Digestivo',
+    'Infantil',
+    'Cardiovascular',
+    'Inmunitario',
+    'Salud Mujer',
+    'Mascotas',
+    'Sport nutrition',
   ],
 } as const;
 

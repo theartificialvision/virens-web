@@ -629,16 +629,12 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   --v2-vessel-h:      clamp(7rem, 3.4rem + 9.5vw, 12.5rem);         /* 112 -> 200 */
 
   --v2-marquee:       clamp(2rem, 1.10rem + 3.8vw, 4.25rem);      /* 32 -> 68 */
-  /* 28/09/2026: con los pictogramas cada área es más ancha; la vuelta se
-     alarga para mantener la misma velocidad de lectura. */
-  --v2-marquee-time:  56s;
-  --v2-area-icon:     1.45em;   /* caja 48 del pictograma: su dibujo (7–41) algo mayor que las mayúsculas */
-  /* Trazo del pictograma en unidades de su caja 48 (28/09/2026, cliente:
-     opción «con ajuste»). Con el 1,5 original la línea quedaba en ~2 px
-     frente a los ~6 px de la letra y los iconos pesaban la mitad que la
-     palabra. Solo afecta al pictograma: la tipografía no cambia. */
-  --v2-area-stroke:   1.75;   /* 28/09: 2,4 resultaba grueso (cliente: «más sutil») */
-  --v2-area-gap:      0.3em;
+  --v2-marquee-time:  42s;
+  /* Franja más baja (28/09/2026, cliente: «menos altura el marquee»): aire
+     vertical 44→72 px pasa a 32→48 px y el título se acerca a la línea
+     (40 → 24 px). La tipografía no cambia. */
+  --v2-marquee-pad:   clamp(2rem, 1.3rem + 1.8vw, 3rem);
+  --v2-marquee-gap:   1.5rem;
 }
 
 /* Marquee de áreas terapéuticas: dos pistas idénticas y una traslación del
@@ -650,8 +646,6 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   to   { transform: translateX(-100%); }
 }
 .v2-marquee { animation: v2-marquee var(--v2-marquee-time) linear infinite; }
-.v2-area-icon { width: var(--v2-area-icon); height: var(--v2-area-icon); }
-.v2-area-icon svg { display: block; width: 100%; height: 100%; stroke-width: var(--v2-area-stroke); }
 
 /* Movimiento de la home V2 (23/09/2026). Tres reglas, nada más:
    1. Carga: solo el hero. El vídeo aparece en fundido sobre el azul y los

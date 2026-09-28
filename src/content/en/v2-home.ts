@@ -125,16 +125,16 @@ export const v2Capacity = {
 export const v2Areas = {
   label: 'Therapeutic areas', // [EN] («Therapeutical areas» en la web actual, corregido)
   items: [
-    { id: 'peso', label: 'Weight management' }, // [EN]
-    { id: 'sistema-nervioso', label: 'Nervous system' }, // [EN]
-    { id: 'articulaciones', label: 'Joints' }, // [EN]
-    { id: 'digestivo', label: 'Digestive' }, // [EN]
-    { id: 'infantil', label: 'Kids' }, // [EN]
-    { id: 'cardiovascular', label: 'Cardiovascular' }, // [EN]
-    { id: 'inmunitario', label: 'Immune system' }, // [EN]
-    { id: 'salud-mujer', label: "Women's health" }, // [EN]
-    { id: 'mascotas', label: 'Pets' }, // [EN]
-    { id: 'sport-nutrition', label: 'Sports nutrition' }, // [EN]
+    'Weight management', // [EN]
+    'Nervous system', // [EN]
+    'Joints', // [EN]
+    'Digestive', // [EN]
+    'Kids', // [EN]
+    'Cardiovascular', // [EN]
+    'Immune system', // [EN]
+    "Women's health", // [EN]
+    'Pets', // [EN]
+    'Sports nutrition', // [EN]
   ],
 } as const satisfies Loosen<typeof es.v2Areas>;
 
