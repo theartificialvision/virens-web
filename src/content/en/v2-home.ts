@@ -193,3 +193,17 @@ export const v2FooterNav = [
     ],
   },
 ] as const satisfies Loosen<typeof es.v2FooterNav>;
+
+/** [TR] Traducción de la maqueta aprobada; pendiente de revisión editorial. */
+export const v2Laboratory = {
+  source: 'rewritten',
+  eyebrow: 'SCIENCE, DEVELOPMENT AND MANUFACTURING',
+  title: ['A complete laboratory.', 'At the service of your brand.'],
+  body: 'We bring together scientific expertise, technology and manufacturing capabilities to support your product from start to finish.',
+  capabilitiesLink: 'Explore our capabilities',
+  image: { src: '/img/labs-instalaciones.jpg', alt: 'Panoramic view of production lines and stainless steel equipment' },
+  caption: 'FROM DEVELOPMENT TO FINISHED PRODUCT',
+  capabilities: ['R&D and formulation', 'Manufacturing', 'Quality control', 'Packaging', 'Logistics'],
+  closing: 'Private Label, from start to finish.',
+  contactLink: 'Your project starts here',
+} as const satisfies Loosen<typeof es.v2Laboratory>;

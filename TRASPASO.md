@@ -80,7 +80,8 @@ otra IA dentro). Todo está preparado en el repo:
 ## Estado a 28/09/2026
 
 - **Home** (`src/views/HomeView.tsx`, componentes en `src/components/v2/`):
-  Hero (vídeo corporativo) → Private Label / Full service → **Formas
+  Hero (vídeo corporativo) → presentación integral del laboratorio (titular,
+  panorámica y cinco capacidades; maqueta aprobada 28/09) → **Formas
   galénicas + escala industrial** en un solo bloque (`GalenicBlock`): cabecera
   teal con texto y foto; debajo, en gris, las **nueve** formas (fuera
   «Encapsulado automático») con su capacidad contando y su rango bajo cada

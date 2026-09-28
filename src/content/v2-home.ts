@@ -231,3 +231,17 @@ export const v2FooterNav = [
     ],
   },
 ] as const;
+
+/** Reescritura de los servicios existentes según la maqueta aprobada (28/09/2026). */
+export const v2Laboratory = {
+  source: 'rewritten',
+  eyebrow: 'CIENCIA, DESARROLLO Y FABRICACIÓN',
+  title: ['Todo un laboratorio.', 'Al servicio de tu marca.'],
+  body: 'Integramos conocimiento científico, tecnología y capacidad de fabricación para acompañar tu producto de principio a fin.',
+  capabilitiesLink: 'Conoce nuestras capacidades',
+  image: { src: '/img/labs-instalaciones.jpg', alt: 'Vista panorámica de líneas de producción y equipos de acero inoxidable' },
+  caption: 'DEL DESARROLLO AL PRODUCTO TERMINADO',
+  capabilities: ['I+D y formulación', 'Fabricación', 'Control de calidad', 'Envasado', 'Logística'],
+  closing: 'Private Label, de principio a fin.',
+  contactLink: 'Tu proyecto empieza aquí',
+} as const;

@@ -2941,3 +2941,16 @@ atascada en la home, Compañía ni Tech.
   Familia, tamaño y peso sin cambios. Acondicionamiento sigue retirado.
 - Validación: typecheck y diff revisados; revisión visual pendiente al no
   disponer de navegador conectado en esta sesión.
+
+
+### 2026-09-28 (36) — Codex — Presentación integral del laboratorio
+
+- Sustituido el bloque de dos servicios por la composición editorial aprobada:
+  titular, introducción, panorámica existente, cinco capacidades y contacto.
+- Conservados Montserrat, identidad, anclas private-label/full-service y rutas
+  localizadas. Textos ES/EN en contenido; tokens y adaptación móvil en CSS.
+- Imagen existente labs-instalaciones.jpg: no se atribuye a instalaciones
+  reales verificadas. Sin nuevas cifras ni certificaciones.
+- Verificado: typecheck limpio, diff sin errores, HTTP 200 y contenido/ancla
+  de destino correctos en ES y EN. Revisión visual 1440/390 pendiente:
+  inventario de navegadores conectados vacío.
