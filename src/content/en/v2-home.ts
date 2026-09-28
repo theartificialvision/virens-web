@@ -199,8 +199,13 @@ export const v2Laboratory = {
   source: 'rewritten',
   eyebrow: 'SCIENCE, DEVELOPMENT AND MANUFACTURING',
   serviceSummaries: ['We develop and manufacture food supplements for your brand, with tailored formulas and complete confidentiality.', 'From formulation to manufacturing, quality control, packaging and logistics. An integrated service, from start to finish.'],
-  image: { src: '/img/labs-instalaciones.jpg', alt: 'Panoramic view of production lines and stainless steel equipment' },
   caption: 'FROM DEVELOPMENT TO FINISHED PRODUCT',
-  capabilities: ['R&D and formulation', 'Manufacturing', 'Quality control', 'Packaging', 'Logistics'],
-  closing: 'A complete laboratory. At the service of your brand.',
+  capabilities: [
+    { label: 'R&D and formulation', image: { src: '/img/laboratory/formulation.webp', alt: 'Pipette and glassware representing formulation' } },
+    { label: 'Manufacturing', image: { src: '/img/laboratory/manufacturing.webp', alt: 'Capsules and precision machinery representing manufacturing' } },
+    { label: 'Quality control', image: { src: '/img/laboratory/quality.webp', alt: 'Samples and analytical equipment representing quality control' } },
+    { label: 'Packaging', image: { src: '/img/laboratory/packaging.webp', alt: 'Aligned amber bottles representing packaging' } },
+    { label: 'Logistics', image: { src: '/img/laboratory/logistics.webp', alt: 'Organised cartons and bottles representing logistics' } },
+  ],
+  closing: ['A complete laboratory.', 'At the service of your brand.'],
 } as const satisfies Loosen<typeof es.v2Laboratory>;

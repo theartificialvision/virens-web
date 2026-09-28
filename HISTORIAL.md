@@ -2973,3 +2973,14 @@ atascada en la home, Compañía ni Tech.
   suave y mayor brillo en hover/foco. Conserva Button y material glass.
 - Movimiento reducido: reflejo estático. Sin cambios en otros botones.
 - Validación: typecheck y diff limpios.
+
+
+### 2026-09-28 (39) — Codex — Capacidades con imágenes conceptuales
+
+- Serie ImageGen de cinco fotografías conceptuales coherentes, optimizadas
+  a WebP; paleta fría, vidrio/acero y acentos teal, sin atribuir instalaciones.
+- Selector por hover, foco y toque; capas persistentes con fundido de 1,1 s,
+  estado activo accesible y cambio directo con movimiento reducido.
+- Cierre separado explícitamente en dos líneas ES/EN. CTA existente intacto.
+- Typecheck y diff comprobados; imágenes inspeccionadas. Sin navegador
+  conectado para comprobar visualmente el hover en esta sesión.

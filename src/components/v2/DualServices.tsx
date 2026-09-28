@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import { LaboratoryCapabilities } from './LaboratoryCapabilities';
 import { Button } from '@/components/ui/Button';
 import { homeContent } from '@/content';
 import { pathFor, type Locale } from '@/lib/i18n';
@@ -18,23 +18,9 @@ export function DualServices({ locale }: { locale: Locale }) {
             </div>
           ))}
         </div>
-        <figure className="laboratory__figure">
-          <div className="laboratory__image">
-            <Image src={content.image.src} alt={content.image.alt} fill
-              sizes="(max-width: 1440px) 100vw, 1440px" className="object-cover" />
-          </div>
-          <figcaption className="laboratory__caption">{content.caption}</figcaption>
-        </figure>
-        <ol className="laboratory__capabilities">
-          {content.capabilities.map((label, index) => (
-            <li key={label}>
-              <span className="laboratory__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-              <span>{label}</span>
-            </li>
-          ))}
-        </ol>
+        <LaboratoryCapabilities content={content} />
         <div className="laboratory__footer">
-          <p className="laboratory__closing">{content.closing}</p>
+          <p className="laboratory__closing">{content.closing.map((line) => <span key={line}>{line}</span>)}</p>
           <Button href={pathFor('contact', locale)} variant="labs" className="laboratory__cta">
             {v2Cta.button} <span aria-hidden>&rarr;</span>
           </Button>

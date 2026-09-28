@@ -237,8 +237,13 @@ export const v2Laboratory = {
   source: 'rewritten',
   eyebrow: 'CIENCIA, DESARROLLO Y FABRICACIÓN',
   serviceSummaries: ['Desarrollamos y fabricamos complementos alimenticios para tu marca, con fórmulas a medida y total confidencialidad.', 'De la formulación a la fabricación, el control de calidad, el envasado y la logística. Un servicio integral, de principio a fin.'],
-  image: { src: '/img/labs-instalaciones.jpg', alt: 'Vista panorámica de líneas de producción y equipos de acero inoxidable' },
   caption: 'DEL DESARROLLO AL PRODUCTO TERMINADO',
-  capabilities: ['I+D y formulación', 'Fabricación', 'Control de calidad', 'Envasado', 'Logística'],
-  closing: 'Todo un laboratorio. Al servicio de tu marca.',
+  capabilities: [
+    { label: 'I+D y formulación', image: { src: '/img/laboratory/formulation.webp', alt: 'Pipeta y material de vidrio para representar la formulación' } },
+    { label: 'Fabricación', image: { src: '/img/laboratory/manufacturing.webp', alt: 'Cápsulas y maquinaria de precisión para representar la fabricación' } },
+    { label: 'Control de calidad', image: { src: '/img/laboratory/quality.webp', alt: 'Muestras e instrumental analítico para representar el control de calidad' } },
+    { label: 'Envasado', image: { src: '/img/laboratory/packaging.webp', alt: 'Frascos ámbar alineados para representar el envasado' } },
+    { label: 'Logística', image: { src: '/img/laboratory/logistics.webp', alt: 'Cajas y frascos ordenados para representar la logística' } },
+  ],
+  closing: ['Todo un laboratorio.', 'Al servicio de tu marca.'],
 } as const;
