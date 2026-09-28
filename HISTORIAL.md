@@ -2807,3 +2807,23 @@ página en Chromium a 1440 y 390 px.
   suficiente. Ahora, al asomar la lista al 85 % del viewport, la línea recorre
   los 7 hitos sola en 2,8 s (`DESKTOP_DURATION`) y se forman todos, también el
   último. Móvil sigue ligado al scroll; movimiento reducido, todo completo.
+
+### 2026-09-28 (27) — Claude — Áreas terapéuticas: pictogramas animados en el marquee
+
+- El cliente diseñó en Claude Design diez pictogramas de línea animados en
+  bucle (uno por área: báscula, neurona, rodilla, digestivo, niño, corazón con
+  electro, escudo con anticuerpo, mujer caminando, perro moviendo la cola,
+  corredor). Van en `components/v2/areaPictograms.ts`, transcritos del zip
+  (`virens-pictogramas-areas-terapeuticas.zip`) solo sin `width`/`height`,
+  `role` ni `<title>` (decorativos: la palabra ya lo dice).
+- `AreasMarquee`: cada palabra lleva delante su pictograma, insertado en línea
+  para que herede el color de la palabra y conserve su animación CSS. Los
+  textos pasan a `{ id, label }` en los dos idiomas (`id` = pictograma).
+- Tamaño y trazo (opción elegida por el cliente): caja `--v2-area-icon` 1,45em
+  y trazo `--v2-area-stroke` 2,4 (antes 1,5), para que pesen como la palabra.
+  **La tipografía no cambia** (68 px / 400 en escritorio, 32 px en móvil).
+  La vuelta del marquee pasa de 42 a 56 s para mantener la velocidad de
+  lectura con las áreas más anchas. Con movimiento reducido, todo quieto.
+
+**Verificado**: `npm run typecheck` limpio; Chromium a 1440 y 390 px, ES y EN,
+midiendo tamaño y peso del texto sin cambios.
