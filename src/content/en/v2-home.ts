@@ -197,6 +197,7 @@ export const v2FooterNav = [
 /** [TR] Traducción de la maqueta aprobada; pendiente de revisión editorial. */
 export const v2Laboratory = {
   source: 'rewritten',
+  navigation: { previous: 'Previous capability', next: 'Next capability' }, // [TR]
   eyebrow: 'SCIENCE, DEVELOPMENT AND MANUFACTURING',
   serviceSummaries: ['We develop and manufacture food supplements for your brand, with tailored formulas and complete confidentiality.', 'From formulation to manufacturing, quality control, packaging and logistics. An integrated service, from start to finish.'],
   caption: 'FROM DEVELOPMENT TO FINISHED PRODUCT',

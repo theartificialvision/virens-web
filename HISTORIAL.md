@@ -2996,3 +2996,12 @@ atascada en la home, Compañía ni Tech.
 - Typecheck y diff limpios; páginas locales ES/EN y cinco controles/textos
   comprobados. Corregida interferencia de caché parando el servidor duplicado
   de esta sesión; se usa el existente en 3000. Revisión visual pendiente.
+
+
+### 2026-09-28 (41) — Codex — Flechas laterales de capacidades
+
+- Añadidas dos flechas minimalistas sobre los laterales de la imagen.
+  Navegación anterior/siguiente circular, sincronizada con el selector
+  existente y su fundido. Zona táctil de 44 px, foco y etiquetas ES/EN.
+- Sin cambios de composición ni contenido. Typecheck y diff limpios;
+  HTTP 200 ES/EN y ambas flechas presentes en el HTML.

@@ -235,6 +235,7 @@ export const v2FooterNav = [
 /** Reescritura de los servicios existentes según la maqueta aprobada (28/09/2026). */
 export const v2Laboratory = {
   source: 'rewritten',
+  navigation: { previous: 'Capacidad anterior', next: 'Siguiente capacidad' },
   eyebrow: 'CIENCIA, DESARROLLO Y FABRICACIÓN',
   serviceSummaries: ['Desarrollamos y fabricamos complementos alimenticios para tu marca, con fórmulas a medida y total confidencialidad.', 'De la formulación a la fabricación, el control de calidad, el envasado y la logística. Un servicio integral, de principio a fin.'],
   caption: 'DEL DESARROLLO AL PRODUCTO TERMINADO',

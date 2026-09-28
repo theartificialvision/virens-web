@@ -7,6 +7,9 @@
    ============================================================ */
 
 @theme {
+  --lab-arrow-icon: 1.25rem;
+  --lab-arrow-surface: rgba(255, 255, 255, 0.88);
+
   --lab-visual-height: clamp(10rem, 25svh, 17rem);
   --lab-detail-padding: clamp(1rem, 2vw, 2rem);
   --lab-compact-title: clamp(1.75rem, 3.5svh, 2.5rem);
@@ -1402,3 +1405,11 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
 @media (prefers-reduced-motion: reduce) {
   .laboratory__detail-layer { transition: none; }
 }
+
+/* Flechas discretas sobre la foto; área táctil de 44 px y foco visible. */
+.laboratory__arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 1; display: grid; place-items: center; width: var(--lab-control-min); height: var(--lab-control-min); color: var(--color-blue); background: var(--lab-arrow-surface); border-radius: var(--radius-field); cursor: pointer; touch-action: manipulation; transition: color var(--motion-control) var(--motion-ease), background-color var(--motion-control) var(--motion-ease); }
+.laboratory__arrow--previous { left: var(--lab-caption-gap); }
+.laboratory__arrow--next { right: var(--lab-caption-gap); }
+.laboratory__arrow svg { width: var(--lab-arrow-icon); height: var(--lab-arrow-icon); }
+.laboratory__arrow:hover { color: var(--lab-teal-text); background: var(--color-bone); }
+.laboratory__arrow:focus-visible { outline: var(--lab-active-rule) solid var(--color-blue); outline-offset: var(--lab-active-rule); }

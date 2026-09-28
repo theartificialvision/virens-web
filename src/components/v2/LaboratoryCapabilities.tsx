@@ -25,6 +25,20 @@ export function LaboratoryCapabilities({ content }: { content: Loosen<typeof v2L
                 onLoad={() => setReady((previous) => new Set(previous).add(index))} />
             </div>
           ))}
+          <button type="button" className="laboratory__arrow laboratory__arrow--previous"
+            aria-label={content.navigation.previous} aria-controls="laboratory-visual laboratory-detail"
+            onClick={() => setSelected((current) => (current - 1 + content.capabilities.length) % content.capabilities.length)}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true" focusable="false">
+              <path d="m14 5-7 7 7 7" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+          <button type="button" className="laboratory__arrow laboratory__arrow--next"
+            aria-label={content.navigation.next} aria-controls="laboratory-visual laboratory-detail"
+            onClick={() => setSelected((current) => (current + 1) % content.capabilities.length)}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true" focusable="false">
+              <path d="m10 5 7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
         </div>
         <figcaption id="laboratory-detail" className="laboratory__detail">
           <p className="laboratory__caption">{content.caption}</p>
