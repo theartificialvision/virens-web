@@ -633,8 +633,7 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   /* Franja compacta: sin filete sobre el título, separadores discretos y ritmo pausado. */
   --v2-marquee-pad:   clamp(1.5rem, 1rem + 1.2vw, 2rem);
   --v2-marquee-gap:   1rem;
-  --v2-marquee-item-gap: 0.65em;
-  --v2-marquee-dot:   0.08em;
+  --v2-marquee-item-gap: 0.55em;
 }
 
 /* Marquee de áreas terapéuticas: dos pistas idénticas y una traslación del

@@ -87,7 +87,7 @@ otra IA dentro). Todo está preparado en el repo:
   una (`GalenicRailItem`, `GalenicFigure`; carril deslizable en móvil) y la
   fila de totales +2.000 m² · 9 · 2, sin la fila de acondicionamiento (`GalenicScale`) →
   **Capacidad productiva**: las siete siluetas que crecen por tamaños →
-  Áreas terapéuticas (marquee compacto de texto, sin pictogramas, separadores puntuales y movimiento pausado) →
+  Áreas terapéuticas (marquee compacto en mayúsculas, blanco/teal/magenta, barras sutiles y movimiento pausado) →
   Certificaciones → CTA. Ver `HISTORIAL.md` (29)–(31).
 - **Virens Tech** (`src/app/virens-tech/page.tsx`), sin repeticiones desde
   el 27/09: portada con titular propio «Desarrollo y formulación de

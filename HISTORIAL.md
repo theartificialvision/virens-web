@@ -2929,3 +2929,15 @@ atascada en la home, Compañía ni Tech.
   como `theartificialvision` sin mostrar material privado.
 - Remoto local `origin` pasado a SSH y `core.sshCommand` del repositorio
   configurado para usar `~/.ssh/id_ed25519_github`. Traspaso corregido.
+
+
+### 2026-09-28 (35) — Codex — Marquee: recuperar el carácter del original
+
+- Cliente: prefiere las mayúsculas y colores de la versión anterior.
+  Restaurados en ES y EN: alternancia blanco / teal / blanco / magenta y
+  barras separadoras, ahora más discretas (blanco al 20 %).
+- Se mantiene la franja compacta, sin filete sobre el título, interlínea
+  ajustada y bucle pausado. Separación horizontal afinada a 0,55 em.
+  Familia, tamaño y peso sin cambios. Acondicionamiento sigue retirado.
+- Validación: typecheck y diff revisados; revisión visual pendiente al no
+  disponer de navegador conectado en esta sesión.
