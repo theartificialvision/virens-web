@@ -6,10 +6,12 @@ import { usePrefersReducedMotion } from '@/lib/useReducedMotion';
 
 /** Punto de la pantalla (fracción del alto) donde «llega» la línea en móvil. */
 const MOBILE_FOCUS = 0.62;
-/** Tramo de scroll en escritorio: la línea arranca con la lista al 85 % del
- *  viewport y termina cuando llega al 35 %. */
+/** Escritorio (28/09/2026, cliente: «el último círculo no se despliega, que
+ *  sea automático»): al asomar la lista al 85 % del viewport la línea recorre
+ *  todos los hitos sola, en este tiempo, sin depender de cuánto se pueda
+ *  hacer scroll (tras la historia apenas queda página y el último no llegaba). */
 const DESKTOP_START = 0.85;
-const DESKTOP_SPAN = 0.5;
+const DESKTOP_DURATION = 2800;
 
 const clamp = (v: number) => Math.min(1, Math.max(0, v));
 
@@ -37,6 +39,7 @@ export function CompanyHistoryList({ entries }: { entries: TimelineEntry[] }) {
     const nodes = items.map((item) => item.querySelector<HTMLElement>('.company-history-node'));
     const wide = window.matchMedia('(min-width: 1280px)');
     let frame = 0;
+    let autoStart = 0;
 
     const update = () => {
       frame = 0;
@@ -52,8 +55,12 @@ export function CompanyHistoryList({ entries }: { entries: TimelineEntry[] }) {
 
       const horizontal = wide.matches;
       const length = horizontal ? last.x - first.x : last.y - first.y;
+      if (horizontal && !autoStart && box.top < vh * DESKTOP_START && box.bottom > 0) {
+        autoStart = performance.now();
+      }
+      const auto = autoStart ? clamp((performance.now() - autoStart) / DESKTOP_DURATION) : 0;
       const progress = reduced ? 1 : horizontal
-        ? clamp((vh * DESKTOP_START - box.top) / (vh * DESKTOP_SPAN))
+        ? auto
         : clamp((vh * MOBILE_FOCUS - (box.top + first.y)) / Math.max(length, 1));
 
       list.style.setProperty('--h-start', `${horizontal ? first.x : first.y}px`);
@@ -67,6 +74,9 @@ export function CompanyHistoryList({ entries }: { entries: TimelineEntry[] }) {
         const item = items[i];
         if (item && (item.dataset.active === 'true') !== active) item.dataset.active = String(active);
       });
+
+      // Mientras dura el recorrido automático, un fotograma más.
+      if (horizontal && !reduced && autoStart && auto < 1) schedule();
     };
 
     const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };

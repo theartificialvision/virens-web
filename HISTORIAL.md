@@ -2798,3 +2798,12 @@ página en Chromium a 1440 y 390 px.
   `grid-cols-7` fijo desde `md` y el texto se pone al lado solo a partir de
   1440 px (token nuevo `--breakpoint-cap`); por debajo va encima. En móvil
   (<768 px) se mantiene el 4 + 3.
+
+### 2026-09-28 — Claude (nube) — Historia de Compañía: automática en escritorio
+
+- En escritorio (≥1280 px) el último hito no llegaba a formarse: la línea
+  dependía del scroll (terminaba con la lista al 35 % del viewport) y tras la
+  historia solo quedan CTA y pie, así que en pantallas altas no había recorrido
+  suficiente. Ahora, al asomar la lista al 85 % del viewport, la línea recorre
+  los 7 hitos sola en 2,8 s (`DESKTOP_DURATION`) y se forman todos, también el
+  último. Móvil sigue ligado al scroll; movimiento reducido, todo completo.
