@@ -7,6 +7,13 @@
    ============================================================ */
 
 @theme {
+  --lab-closing-size: clamp(1.5rem, 1.1rem + 1.5vw, 2.25rem);
+  --lab-closing-measure: 26ch;
+  --lab-cta-glow: 0 0 24px rgba(0, 160, 153, 0.3), 0 8px 22px -8px rgba(0, 125, 121, 0.45);
+  --lab-cta-glow-active: 0 0 36px rgba(0, 160, 153, 0.48), 0 10px 28px -8px rgba(0, 125, 121, 0.55);
+  --lab-cta-sheen: rgba(255, 255, 255, 0.72);
+  --lab-cta-pulse: 3.6s;
+
   --lab-gutter: clamp(1.25rem, 4vw, 5rem);
   --lab-section: clamp(3.5rem, 8vw, 7.5rem);
   --lab-gap: clamp(2rem, 4vw, 4rem);
@@ -1319,4 +1326,20 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   .laboratory__capabilities { grid-template-columns: 1fr; }
   .laboratory__capabilities li, .laboratory__capabilities li:first-child { flex-direction: row; align-items: baseline; gap: var(--lab-cell-gap); padding: var(--lab-small-gap) 0; border-left: 0; border-bottom: var(--lab-rule) solid var(--color-gray-200); }
   .laboratory__footer { flex-direction: column; align-items: flex-start; }
+}
+
+/* Refuerzo localizado: conserva el botón glass compartido y su interacción. */
+.laboratory__closing { max-width: var(--lab-closing-measure); font-size: var(--lab-closing-size); line-height: var(--lab-title-leading); font-weight: 500; letter-spacing: var(--lab-title-tracking); color: var(--color-blue); text-wrap: balance; }
+.laboratory__cta { flex-shrink: 0; --glass-shadow: var(--lab-cta-glow); --glass-sheen: var(--lab-cta-sheen); }
+.laboratory__cta:focus-visible { box-shadow: var(--lab-cta-glow-active); }
+@media (hover: hover) and (pointer: fine) {
+  .laboratory__cta:hover { box-shadow: var(--lab-cta-glow-active); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .laboratory__cta::after { animation: laboratory-cta-light var(--lab-cta-pulse) ease-in-out infinite; }
+  .laboratory__cta:hover::after, .laboratory__cta:focus-visible::after { animation: none; opacity: 1; }
+}
+@keyframes laboratory-cta-light {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; }
 }

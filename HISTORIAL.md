@@ -2964,3 +2964,12 @@ atascada en la home, Compañía ni Tech.
   Button variant labs y el texto Contactar ahora del CTA existente, en ES/EN.
 - Verificación: tipos de rutas regenerados, typecheck y diff limpios; HTTP 200
   ES/EN, ambos h2 y botón compartido presentes. Sin revisión visual nueva.
+
+
+### 2026-09-28 (38) — Codex — Frase de cierre y brillo del CTA
+
+- Frase de cierre ampliada a 24–36 px, azul y peso medio, con ancho de lectura
+  limitado. CTA existente reforzado solo en este bloque: halo teal, reflejo
+  suave y mayor brillo en hover/foco. Conserva Button y material glass.
+- Movimiento reducido: reflejo estático. Sin cambios en otros botones.
+- Validación: typecheck y diff limpios.

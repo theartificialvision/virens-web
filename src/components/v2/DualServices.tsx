@@ -34,8 +34,8 @@ export function DualServices({ locale }: { locale: Locale }) {
           ))}
         </ol>
         <div className="laboratory__footer">
-          <p>{content.closing}</p>
-          <Button href={pathFor('contact', locale)} variant="labs">
+          <p className="laboratory__closing">{content.closing}</p>
+          <Button href={pathFor('contact', locale)} variant="labs" className="laboratory__cta">
             {v2Cta.button} <span aria-hidden>&rarr;</span>
           </Button>
         </div>
