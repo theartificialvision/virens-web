@@ -65,8 +65,8 @@ otra IA dentro). Todo está preparado en el repo:
     `git fetch origin v2 && git reset --hard origin/v2` (hace falta permiso
     de borrado en esa carpeta para que git reescriba archivos).
   - Desde el Mac: `GUARDAR Y PUBLICAR.command` (mensaje en
-    `mensaje-commit.txt` junto al script). **Ojo:** el Mac aún no tiene
-    credenciales de GitHub guardadas; ese push pide usuario y token.
+    `mensaje-commit.txt` junto al script). El repo del Mac usa SSH con la clave `~/.ssh/id_ed25519_github`,
+    verificada con GitHub; no necesita usuario y token por HTTPS.
 - **Ver en local (Mac):** `ARRANCAR WEB.command` → http://localhost:3000.
   La carpeta está en iCloud, así que `node_modules` y `.next` son enlaces a
   `node_modules.nosync` / `.next.nosync` (iCloud no sincroniza `*.nosync`).

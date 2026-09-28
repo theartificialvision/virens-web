@@ -2920,3 +2920,12 @@ atascada en la home, Compañía ni Tech.
   200 de la home local y `git diff --check` limpio.
 - Revisión visual a 1440/390 pendiente: no hay navegador conectado disponible
   en esta sesión (inventario vacío).
+
+
+### 2026-09-28 (34) — Codex — Publicación del Mac mediante SSH
+
+- El push por HTTPS fallaba por falta de credenciales de ese protocolo,
+  pero el Mac sí tenía una clave SSH de GitHub válida. Autenticación comprobada
+  como `theartificialvision` sin mostrar material privado.
+- Remoto local `origin` pasado a SSH y `core.sshCommand` del repositorio
+  configurado para usar `~/.ssh/id_ed25519_github`. Traspaso corregido.
