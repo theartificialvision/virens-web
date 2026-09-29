@@ -3046,3 +3046,18 @@ atascada en la home, Compañía ni Tech.
   rebote y cambia de color. Movimiento reducido: todo inmediato.
 - CTA «Contactar ahora» del laboratorio: fuera el halo turquesa y el destello
   en bucle; sombra de contacto corta y sutil (`--lab-cta-glow*`).
+
+### 2026-09-29 — Claude (nube) — Pop-up de entrada CPHI Milán
+
+- Portado el pop-up del cliente («Pop-ups_CPHI_evento.zip», diseño en HTML
+  con versión escritorio y móvil) a `src/components/cphi/` y montado en
+  `RootShell` (todas las páginas, ES y EN). Texto en `src/content/cphi.ts`
+  (inglés, como la pieza); imágenes en `public/img/cphi/`. Estilos al final
+  de globals.css con sus tokens `--cphi-*`.
+- Comportamiento: sale 0,9 s después de cargar, una vez por visita
+  (sessionStorage `virens-cphi-popup`); cierra con X, clic fuera o Esc;
+  trampa de foco y devolución del foco. Cuenta atrás hasta el 6/10 09:30;
+  durante la feria «Live now · Hall 8»; desde el 8/10 17:00 no se monta.
+  Retirar después: quitar `<CphiPopup>` de RootShell (y el peso 800 de
+  Montserrat si ya no se usa).
+- «Book a meeting» lleva a la página de Contacto (el diseño tenía `#`).

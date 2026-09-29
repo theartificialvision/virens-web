@@ -2,6 +2,7 @@ import { Montserrat } from 'next/font/google';
 import { V2Header } from '@/components/v2/V2Header';
 import { V2Footer } from '@/components/v2/V2Footer';
 import { Grain } from '@/components/ui/Grain';
+import { CphiPopup } from '@/components/cphi/CphiPopup';
 import { site } from '@/config/site';
 import { ui } from '@/content';
 import type { Locale } from '@/lib/i18n';
@@ -9,7 +10,7 @@ import '@/app/globals.css';
 
 const montserrat = Montserrat({
   subsets: ['latin', 'latin-ext'],
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '500', '600', '700', '800'], // 800: pop-up CPHI
   variable: '--font-montserrat',
   display: 'swap',
 });
@@ -37,6 +38,8 @@ export function RootShell({ locale, children }: { locale: Locale; children: Reac
         <main id="contenido">{children}</main>
         <V2Footer locale={locale} />
         <Grain />
+        {/* 29/09/2026: pop-up de CPHI Milán; se desmonta solo tras la feria. */}
+        <CphiPopup locale={locale} />
         <OrganizationSchema />
       </body>
     </html>

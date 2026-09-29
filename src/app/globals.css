@@ -1578,3 +1578,203 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   .laboratory__number,
   .laboratory__label { transition: none; }
 }
+
+/* ============================================================
+   Pop-up CPHI Milán (29/09/2026). Pieza cerrada del cliente
+   («Pop-ups_CPHI_evento.zip»): conserva su paleta, su radio y su
+   sombra de elevación —elemento flotante puntual, regla 4— y todas
+   sus medidas en cqw para que escale como el diseño. Escritorio en
+   dos columnas + franja inferior; bajo 760 px, tarjeta vertical.
+   ============================================================ */
+@theme {
+  --cphi-teal:      #22A597;
+  --cphi-teal-hi:   #2BBCAD;
+  --cphi-navy:      #13253D;
+  --cphi-ink:       #0C1C2E;
+  --cphi-scrim:     rgba(8, 18, 32, 0.62);
+  --cphi-bg:        linear-gradient(135deg, #34547C 0%, #1F3857 52%, #13253D 100%);
+  --cphi-bg-mobile: linear-gradient(160deg, #34547C 0%, #1F3857 50%, #13253D 100%);
+  --cphi-radius:    20px;
+  --cphi-elevate:   0 40px 100px -20px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+  --cphi-rule:      rgba(255, 255, 255, 0.14);
+  --cphi-glass:     rgba(255, 255, 255, 0.1);
+  --cphi-glass-line: rgba(255, 255, 255, 0.16);
+  --cphi-close-line: rgba(255, 255, 255, 0.28);
+  --cphi-ease:      cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+@keyframes cphi-fade  { from { opacity: 0; } to { opacity: 1; } }
+@keyframes cphi-card  { from { opacity: 0; transform: translateY(28px) scale(0.96); } to { opacity: 1; transform: none; } }
+@keyframes cphi-up    { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+@keyframes cphi-line  { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes cphi-drift { from { transform: translateX(0) rotate(7deg); } to { transform: translateX(5cqw) rotate(7deg); } }
+@keyframes cphi-shine { 0% { transform: translateX(-140%) skewX(-20deg); } 28%, 100% { transform: translateX(260%) skewX(-20deg); } }
+@keyframes cphi-pulse { 0% { box-shadow: 0 0 0 0 rgba(34, 165, 151, 0.55); } 70% { box-shadow: 0 0 0 10px rgba(34, 165, 151, 0); } 100% { box-shadow: 0 0 0 0 rgba(34, 165, 151, 0); } }
+
+.cphi {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  font-family: var(--font-montserrat), system-ui, sans-serif;
+  color: white;
+  transition: opacity 0.35s ease;
+}
+.cphi[data-closing] { opacity: 0; }
+.cphi__backdrop {
+  position: absolute;
+  inset: 0;
+  background: var(--cphi-scrim);
+  -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
+  animation: cphi-fade 0.5s ease both;
+}
+.cphi__card {
+  position: relative;
+  width: min(1000px, 94vw, (100svh - 32px) * 1000 / 580);
+  aspect-ratio: 1000 / 580;
+  container-type: inline-size;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1.12fr 1fr;
+  grid-template-rows: 1fr auto;
+  column-gap: 4cqw;
+  padding: 5.2cqw 5.6cqw 4.6cqw;
+  border-radius: var(--cphi-radius);
+  background: var(--cphi-bg);
+  box-shadow: var(--cphi-elevate);
+  animation: cphi-card 0.8s var(--cphi-ease) 0.1s both;
+}
+.cphi__in { animation: cphi-up 0.7s var(--cphi-ease) var(--delay, 0s) both; }
+
+/* Haces de luz que derivan y viñeta, como en el diseño. */
+.cphi__light { position: absolute; inset: 0; pointer-events: none; }
+.cphi__light span { position: absolute; top: -20%; height: 140%; animation: cphi-drift 9s ease-in-out infinite alternate; }
+.cphi__light span:nth-child(1) { left: 22%; width: 3.2cqw; background: linear-gradient(180deg, transparent, rgba(190, 215, 245, 0.16) 45%, transparent); filter: blur(1.4cqw); }
+.cphi__light span:nth-child(2) { left: 47%; width: 1.6cqw; background: linear-gradient(180deg, transparent, rgba(220, 235, 255, 0.22) 40%, transparent); filter: blur(0.8cqw); animation-duration: 11s; animation-delay: -3s; }
+.cphi__light span:nth-child(3) { left: 70%; width: 4.5cqw; background: linear-gradient(180deg, transparent, rgba(160, 195, 235, 0.12) 55%, transparent); filter: blur(2cqw); animation-duration: 13s; animation-delay: -6s; }
+.cphi__light::before { content: ''; position: absolute; left: -15%; bottom: -45%; width: 70%; height: 90%; background: radial-gradient(closest-side, rgba(34, 165, 151, 0.28), transparent); filter: blur(2cqw); }
+.cphi__light::after { content: ''; position: absolute; inset: 0; background: radial-gradient(120% 90% at 30% 40%, transparent 40%, rgba(6, 14, 26, 0.55) 100%); }
+
+.cphi__close {
+  position: absolute;
+  top: 1.8cqw;
+  right: 1.8cqw;
+  z-index: 3;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid var(--cphi-close-line);
+  background: rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+  animation: cphi-fade 0.4s ease 1.2s both;
+}
+.cphi__close::before,
+.cphi__close::after { content: ''; position: absolute; left: 50%; top: 50%; width: 16px; height: 2px; margin: -1px 0 0 -8px; background: white; border-radius: 2px; transform: rotate(45deg); }
+.cphi__close::after { transform: rotate(-45deg); }
+.cphi__close:hover { background: rgba(255, 255, 255, 0.2); transform: rotate(90deg); }
+.cphi__close:focus-visible, .cphi__cta:focus-visible { outline: 2px solid white; outline-offset: 3px; }
+
+.cphi__left, .cphi__right { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: center; }
+.cphi__left { gap: 2.2cqw; }
+.cphi__right { gap: 2.4cqw; }
+.cphi__kicker { color: var(--cphi-teal); font-weight: 800; font-size: 4.9cqw; line-height: 0.98; letter-spacing: -0.01em; text-transform: uppercase; }
+.cphi__brand { position: relative; width: 44cqw; aspect-ratio: 1540 / 750; }
+.cphi__wordmark { position: absolute; left: 0; top: 0; width: 70.13%; height: auto; }
+.cphi__mark { position: absolute; left: 71.75%; top: 2.67%; width: 26.3%; aspect-ratio: 1; }
+.cphi__mark span { position: absolute; background: white; border-radius: 999px; }
+.cphi__logo { width: 26cqw; height: auto; align-self: flex-end; margin: -1.4cqw 3.6cqw 1cqw 0; }
+.cphi__stand {
+  position: relative;
+  overflow: hidden;
+  padding: 1.1cqw 3cqw;
+  border-radius: 999px;
+  background: white;
+  color: var(--cphi-navy);
+  text-align: center;
+  font-weight: 800;
+  font-size: 4.2cqw;
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+}
+.cphi__shine { position: absolute; top: 0; left: 0; width: 35%; height: 100%; background: linear-gradient(90deg, transparent, rgba(34, 165, 151, 0.28), transparent); animation: cphi-shine 5s ease-in-out 2.2s infinite; }
+.cphi__join { font-size: 2.5cqw; line-height: 1.28; text-wrap: pretty; }
+.cphi__join > strong { display: block; font-weight: 700; }
+.cphi__join strong { font-weight: 700; }
+
+.cphi__dates, .cphi__actions {
+  position: relative;
+  z-index: 2;
+  grid-row: 2;
+  padding-top: 2.6cqw;
+  border-top: 1px solid var(--cphi-rule);
+}
+/* Filete continuo bajo las dos columnas: la fecha lo alarga sobre el hueco. */
+.cphi__dates { grid-column: 1; display: flex; flex-direction: column; gap: 0.5cqw; margin-right: -4cqw; padding-right: 4cqw; animation-delay: 1s; }
+.cphi__actions { grid-column: 2; display: flex; flex-direction: column; align-items: flex-end; justify-content: flex-end; gap: 1.2cqw; }
+.cphi__range { display: flex; align-items: center; gap: 1.4cqw; font-weight: 700; font-size: 3.8cqw; line-height: 1; letter-spacing: -0.01em; white-space: nowrap; }
+.cphi__dash { display: block; width: 8cqw; height: 0.34cqw; background: white; border-radius: 2px; transform-origin: left; animation: cphi-line 0.9s cubic-bezier(0.6, 0, 0.2, 1) 1.3s both; }
+.cphi__meet { font-size: 2.1cqw; opacity: 0.92; white-space: nowrap; }
+.cphi__countdown { display: flex; align-items: center; gap: 0.5cqw; font-size: 1.15cqw; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.cphi__countdown-label { margin-right: 0.5cqw; opacity: 0.75; }
+.cphi__unit { display: flex; align-items: baseline; gap: 0.25cqw; padding: 0.5cqw 0.8cqw; border-radius: 8px; background: var(--cphi-glass); border: 1px solid var(--cphi-glass-line); }
+.cphi__unit b { font-size: 1.9cqw; font-weight: 700; letter-spacing: 0; }
+.cphi__live { display: flex; align-items: center; gap: 0.8cqw; font-size: 1.2cqw; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+.cphi__live span { width: 10px; height: 10px; border-radius: 999px; background: var(--cphi-teal); animation: cphi-pulse 1.8s infinite; }
+.cphi__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 1cqw;
+  padding: 1.2cqw 2.2cqw;
+  border-radius: 999px;
+  background: var(--cphi-teal);
+  color: var(--cphi-ink);
+  font-weight: 700;
+  font-size: 1.6cqw;
+  white-space: nowrap;
+  text-decoration: none;
+  transition: transform 0.2s, background-color 0.2s;
+}
+.cphi__cta:hover { background: var(--cphi-teal-hi); transform: translateY(-2px); }
+
+/* Móvil: tarjeta vertical. Las columnas se disuelven (`display: contents`) y
+   el orden sigue el diseño: logo y X, fechas, «We are exhibiting at», CPHI,
+   stand, texto y, abajo, cuenta atrás y botón. */
+@media (max-width: 759px) {
+  .cphi__card {
+    width: min(400px, 94vw);
+    max-height: calc(100% - 8px);
+    aspect-ratio: auto;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5cqw;
+    padding: 6cqw 7cqw 7cqw;
+    border-radius: 22px;
+    background: var(--cphi-bg-mobile);
+  }
+  .cphi__left, .cphi__right { display: contents; }
+  .cphi__logo { order: 1; width: 38cqw; align-self: flex-start; margin: 0; }
+  .cphi__close { top: 6cqw; right: 7cqw; width: 44px; height: 44px; }
+  .cphi__dates { order: 2; margin-right: 0; padding: 0; border-top: 0; gap: 1.4cqw; animation-delay: 0.4s; }
+  .cphi__kicker { order: 3; font-size: 10.6cqw; }
+  .cphi__brand { order: 4; width: 78cqw; }
+  .cphi__stand { order: 5; padding: 2.6cqw 5cqw; font-size: 8.4cqw; }
+  .cphi__join { order: 6; font-size: 5cqw; line-height: 1.3; }
+  .cphi__actions { order: 7; align-items: stretch; gap: 3.4cqw; padding-top: 4.4cqw; }
+  .cphi__range { gap: 3cqw; font-size: 7.6cqw; }
+  .cphi__dash { flex: 1; width: auto; max-width: 18cqw; height: 0.8cqw; animation-delay: 0.9s; }
+  .cphi__meet { font-size: 4.2cqw; white-space: normal; }
+  .cphi__countdown { justify-content: space-between; gap: 1.4cqw; font-size: 2.8cqw; letter-spacing: 0.12em; }
+  .cphi__countdown-label { margin-right: auto; }
+  .cphi__unit { gap: 0.6cqw; padding: 1.4cqw 2cqw; }
+  .cphi__unit b { font-size: 4.6cqw; }
+  .cphi__live { gap: 2cqw; font-size: 3cqw; }
+  .cphi__cta { justify-content: center; gap: 2cqw; min-height: 48px; font-size: 4.2cqw; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .cphi__light span, .cphi__shine { animation: none; }
+}
