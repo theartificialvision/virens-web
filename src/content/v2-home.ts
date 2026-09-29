@@ -235,14 +235,14 @@ export const v2FooterNav = [
 /** Reescritura de los servicios existentes según la maqueta aprobada (28/09/2026). */
 export const v2Laboratory = {
   source: 'rewritten',
-  navigation: { previous: 'Capacidad anterior', next: 'Siguiente capacidad' },
+  navigation: { previous: 'Capacidad anterior', next: 'Siguiente capacidad', pause: 'Pausar el recorrido', play: 'Reanudar el recorrido' },
   eyebrow: 'CIENCIA, DESARROLLO Y FABRICACIÓN',
   serviceSummaries: ['Desarrollamos y fabricamos complementos alimenticios para tu marca, con fórmulas a medida y total confidencialidad.', 'De la formulación a la fabricación, el control de calidad, el envasado y la logística. Un servicio integral, de principio a fin.'],
   caption: 'DEL DESARROLLO AL PRODUCTO TERMINADO',
-  /** Selector de servicio (29/09/2026, cliente): cuántos pasos de
-   *  `capabilities`, desde el primero, abarca cada servicio. Private Label
-   *  desarrolla y fabrica; Full service llega hasta la logística. */
-  serviceScope: [2, 5],
+  /** Private Label → Full service (29/09/2026, cliente: «cuando llega a
+   *  Logística se transforma en Full service»): índice de `capabilities`
+   *  desde el que el recorrido pasa a ser Full service (4 = Logística). */
+  fullServiceFrom: 4,
   capabilities: [
     { label: 'I+D y formulación', description: 'Desarrollamos fórmulas a medida en colaboración con tu equipo técnico y de desarrollo.', image: { src: '/img/laboratory/formulation.webp', alt: 'Pipeta y material de vidrio para representar la formulación' } },
     { label: 'Fabricación', description: 'Fabricamos complementos alimenticios en formas sólidas y líquidas, adaptadas a cada proyecto.', image: { src: '/img/laboratory/manufacturing.webp', alt: 'Cápsulas y maquinaria de precisión para representar la fabricación' } },

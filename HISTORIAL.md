@@ -3095,3 +3095,27 @@ atascada en la home, Compañía ni Tech.
   Code (18 artículos reales, índice, plantilla, imágenes, estilos y 301) queda
   guardado en `aparcado/noticias/`, fuera de la build (`tsconfig` lo excluye).
   Ver su README para reactivarlo. La web publicada no cambia.
+
+### 2026-09-29 — Claude (nube) — Laboratorio simplificado: un solo recorrido que se tiñe y se transforma en Full service
+
+- Petición del cliente: simplificar «Ciencia, desarrollo y fabricación»; fuera la
+  línea verde bajo el paso activo; color avanzando en la barra; al llegar a
+  Logística, Private Label se transforma en Full service; todo coordinado.
+- Un único estado (`useLabTour`) mueve foto, texto, barra y nombre del servicio.
+  El recorrido avanza solo (5 s por paso, 6,5 s en el último) mientras la
+  sección se ve; la barra se rellena hacia el siguiente punto (`LabRail`, tres
+  capas: pista, tramo recorrido y temporizador CSS) y al llegar cambian foto y
+  texto. En Logística (`fullServiceFrom: 4`) el título «Private Label» se
+  transforma en «Full service» (`ServiceMorph`) y la barra entera pasa del azul
+  al magenta. Luego vuelve al principio.
+- Fuera: las dos pestañas, su indicador deslizante, el subrayado verde, el halo
+  y los pulsos de los puntos (`ServiceTabs.tsx` y `useStepProgress.ts` borrados,
+  CSS y tokens asociados retirados). Se mantienen las flechas sobre la foto.
+- Controles: clic en cualquier paso o flecha salta allí y sigue desde ese paso;
+  botón de pausa en la esquina de la foto (WCAG 2.2.2). Se detiene fuera de
+  pantalla, con la pestaña oculta y con foco de teclado dentro. Con movimiento
+  reducido no avanza solo. `#full-service` abre el recorrido en Logística.
+- Móvil: la misma barra con los números 01–05 (el nombre del paso ya está en el
+  texto de la tarjeta).
+- Decisión a confirmar: Private Label abarca ahora los pasos 1–4 (antes 1–2),
+  porque el cliente pidió que la transformación ocurra al llegar a Logística.

@@ -4,7 +4,7 @@ import { homeContent } from '@/content';
 import { pathFor, type Locale } from '@/lib/i18n';
 
 /** Una sola presentación del laboratorio; conserva las anclas de los servicios
- *  (#private-label en la sección, #full-service en su pestaña). */
+ *  (#private-label en la sección; #full-service abre el recorrido en Logística). */
 export function DualServices({ locale }: { locale: Locale }) {
   const { v2Laboratory: content, v2Services, v2Cta } = homeContent(locale);
   return (

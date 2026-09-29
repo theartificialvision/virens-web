@@ -8,16 +8,14 @@
 
 @theme {
   /* Pestañas de servicio y recorrido 01–05 (29/09/2026). */
-  --lab-tab-gap: clamp(1.5rem, 4vw, 3.5rem);
-  --lab-dot: 0.625rem;
-  --lab-rail-space: 1.5rem;
-  --lab-rail-ease: cubic-bezier(0.65, 0, 0.35, 1); /* = EASE en useStepProgress */
-  --lab-rail-head: 1.375rem;
-  --lab-tab-transition: 520ms;
-  --lab-tab-ease: cubic-bezier(0.34, 1.3, 0.64, 1);
-  --lab-dot-transition: 260ms;
-  --lab-dot-pop: 520ms;
-  --lab-dot-ping: 900ms;
+  /* Barra del recorrido (29/09/2026, 2.ª vuelta). */
+  --lab-dot: 0.75rem;
+  --lab-dot-current: 1.35;
+  --lab-bar: 3px;
+  --lab-rail-space: 1.75rem;
+  --lab-fill: 560ms;
+  --lab-morph: 640ms;
+  --lab-toggle-icon: 1rem;
   --lab-arrow-icon: 1.25rem;
   --lab-arrow-surface: rgba(255, 255, 255, 0.88);
 
@@ -33,7 +31,6 @@
   --lab-image-transition: 1100ms;
   --lab-image-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --lab-active-rule: 2px;
-  --lab-active-space: 0.75rem;
 
   --lab-closing-size: clamp(1.5rem, 1.1rem + 1.5vw, 2.25rem);
   --lab-closing-measure: 26ch;
@@ -1347,16 +1344,10 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
 .laboratory__description { font-size: var(--text-small); line-height: var(--lab-body-leading); color: var(--color-gray-700); }
 .laboratory__image { position: relative; aspect-ratio: 3.5 / 1; overflow: hidden; }
 .laboratory__caption { margin-top: var(--lab-caption-gap); color: var(--color-gray-700); }
-.laboratory__capabilities { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); list-style: none; padding: 0; margin-block: var(--lab-gap); scroll-margin-top: var(--anchor-offset); }
-.laboratory__capabilities li { display: flex; flex-direction: column; gap: var(--lab-small-gap); padding-inline: var(--lab-cell-gap); border-left: var(--lab-rule) solid var(--color-gray-200); font-size: var(--text-h4); font-weight: 500; line-height: var(--lab-title-leading); }
-.laboratory__capabilities li:first-child { padding-left: 0; border-left: 0; }
-.laboratory__number { color: var(--lab-teal-text); font-size: var(--text-label); font-weight: 400; }
 .laboratory__footer { display: flex; align-items: center; justify-content: space-between; gap: var(--lab-cell-gap); padding-top: var(--lab-cell-gap); border-top: var(--lab-rule) solid var(--color-gray-200); color: var(--color-gray-700); font-size: var(--text-micro); }
 @media (max-width: 767px) {
   .laboratory__intro { grid-template-columns: 1fr; }
   .laboratory__image { aspect-ratio: 4 / 3; }
-  .laboratory__capabilities { grid-template-columns: 1fr; }
-  .laboratory__capabilities li, .laboratory__capabilities li:first-child { flex-direction: row; align-items: baseline; gap: var(--lab-cell-gap); padding: var(--lab-small-gap) 0; border-left: 0; border-bottom: var(--lab-rule) solid var(--color-gray-200); }
   .laboratory__footer { flex-direction: column; align-items: flex-start; }
 }
 
@@ -1374,12 +1365,7 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
 .laboratory__closing { max-width: none; text-wrap: initial; }
 .laboratory__image-layer { position: absolute; inset: 0; opacity: 0; transition: opacity var(--lab-image-transition) var(--lab-image-ease); }
 .laboratory__image-layer[data-active="true"] { opacity: 1; }
-.laboratory__capability { display: flex; flex-direction: column; align-items: flex-start; gap: var(--lab-small-gap); width: 100%; height: 100%; text-align: left; cursor: pointer; padding-bottom: var(--lab-active-space); border-bottom: var(--lab-active-rule) solid transparent; transition: border-color var(--motion-control) var(--motion-ease), color var(--motion-control) var(--motion-ease); }
-.laboratory__capability[aria-pressed="true"] { border-bottom-color: var(--color-labs); }
-.laboratory__capability:hover { color: var(--lab-teal-text); }
-.laboratory__capability:focus-visible { outline: var(--lab-active-rule) solid var(--color-blue); outline-offset: var(--lab-active-space); }
 @media (max-width: 767px) {
-  .laboratory__capability { flex-direction: row; align-items: baseline; gap: var(--lab-cell-gap); }
   .laboratory__closing { font-size: var(--text-h4); }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1399,16 +1385,11 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
 .laboratory__detail-layer[data-active="true"] { opacity: 1; }
 .laboratory__detail-layer h3 { font-size: var(--lab-detail-size); font-weight: 500; line-height: var(--lab-title-leading); margin-bottom: var(--lab-small-gap); }
 .laboratory__detail-layer p { font-size: var(--text-small); line-height: var(--lab-body-leading); color: var(--color-gray-700); }
-.laboratory__capabilities li { font-size: var(--lab-control-size); }
-.laboratory__capability { min-height: var(--lab-control-min); gap: var(--lab-compact-gap); }
 .laboratory__closing { font-size: var(--lab-compact-title); }
 @media (max-width: 767px) {
   .laboratory__presentation { grid-template-columns: 1fr; }
   .laboratory__presentation .laboratory__image { min-height: var(--lab-mobile-image-height); }
   .laboratory__intro { gap: var(--lab-small-gap); }
-  .laboratory__capabilities { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--lab-compact-gap) var(--lab-small-gap); }
-  .laboratory__capabilities li, .laboratory__capabilities li:first-child { padding: 0; border: 0; }
-  .laboratory__capability { gap: var(--lab-compact-gap); }
   .laboratory__closing { font-size: var(--text-h4); }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1424,100 +1405,110 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
 .laboratory__arrow:focus-visible { outline: var(--lab-active-rule) solid var(--color-blue); outline-offset: var(--lab-active-rule); }
 
 
-/* Pestañas Private Label / Full service y fila 01–05 como recorrido
-   (29/09/2026). Escritorio: una línea une los puntos de los cinco pasos y se
-   tiñe hasta el último que abarca el servicio elegido (`--covered`).
-   Animación (cliente: «progresión chulísima y pro»): la línea avanza o
-   retrocede con `--lab-rail-ease`, una cabeza luminosa la guía y cada punto
-   se enciende —con un pulso— justo cuando la línea lo alcanza (`--d`, lo
-   calcula `useStepProgress`). Las pestañas comparten un indicador que se
-   desliza y cambia de color. */
-.laboratory__services {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--lab-small-gap) var(--lab-tab-gap);
-  margin-bottom: var(--lab-gap);
-}
-.laboratory__service-tab {
-  position: relative;
-  padding-bottom: var(--lab-compact-gap);
+/* Recorrido del laboratorio (29/09/2026, 2.ª vuelta del cliente: «simplificar;
+   sin línea verde debajo; color avanzando en la barra; al llegar a Logística se
+   transforma en Full service; intuitivo, amigable y coordinado»).
+   Un solo paso (`--step`) mueve la barra, los puntos, los rótulos y el nombre
+   del servicio. La barra tiene tres capas: pista gris, tramo recorrido y el
+   temporizador que avanza hacia el siguiente punto durante `--dwell`; al
+   pausar se congela (`animation-play-state`). Todo toma el color del servicio
+   en curso (`--rail-accent`): azul en Private Label, magenta en Full service. */
+.lab-head { margin-bottom: var(--lab-gap); scroll-margin-top: var(--anchor-offset); }
+
+/* Nombre del servicio: los dos en la misma celda; el activo entra desde abajo
+   y el otro sale hacia arriba, con un leve desenfoque que lo «transforma». */
+.lab-service {
+  display: inline-grid;
   font-size: var(--lab-compact-title);
   font-weight: 500;
   line-height: var(--lab-title-leading);
   letter-spacing: var(--lab-title-tracking);
+}
+.lab-service__name {
+  grid-area: 1 / 1;
+  color: var(--service-accent);
+  opacity: 0;
+  transform: translateY(-0.45em);
+  filter: blur(6px);
+  transition:
+    opacity var(--lab-morph) var(--motion-ease),
+    transform var(--lab-morph) var(--motion-ease),
+    filter var(--lab-morph) var(--motion-ease);
+}
+.lab-service__name:last-child { transform: translateY(0.45em); }
+.lab-service__name[data-active] { opacity: 1; transform: none; filter: none; }
+
+/* Barra */
+.lab-rail {
+  position: relative;
+  margin-block: var(--lab-gap);
+  padding-top: var(--lab-rail-space);
+}
+.lab-rail__track,
+.lab-rail__done,
+.lab-rail__timer {
+  position: absolute;
+  top: calc(var(--lab-dot) / 2 - var(--lab-bar) / 2);
+  left: calc(var(--lab-dot) / 2);
+  height: var(--lab-bar);
+  pointer-events: none;
+}
+.lab-rail__track {
+  width: calc(100% / var(--steps) * (var(--steps) - 1));
+  background: var(--color-gray-200);
+}
+.lab-rail__done {
+  width: calc(100% / var(--steps) * var(--step));
+  background: var(--rail-accent);
+  transition: background-color var(--lab-morph) var(--motion-ease);
+}
+/* En los saltos (clic, flecha, vuelta al principio) el tramo se desliza hasta
+   su sitio; en el avance normal ya llega relleno por el temporizador. */
+.lab-rail[data-jump] .lab-rail__done {
+  transition:
+    width var(--lab-fill) var(--motion-ease),
+    background-color var(--lab-morph) var(--motion-ease);
+}
+.lab-rail__timer {
+  left: calc(var(--lab-dot) / 2 + 100% / var(--steps) * var(--step));
+  width: calc(100% / var(--steps));
+  background: var(--rail-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: lab-timer var(--dwell) linear forwards;
+}
+/* Último paso: no hay tramo que recorrer; el temporizador solo marca la pausa. */
+.lab-rail__timer[data-last] { width: 0; }
+.lab-rail[data-paused] .lab-rail__timer { animation-play-state: paused; }
+@keyframes lab-timer { to { transform: scaleX(1); } }
+
+/* Pasos */
+.lab-rail__steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--steps), minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.lab-rail__step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--lab-compact-gap);
+  width: 100%;
+  min-height: var(--lab-control-min);
+  padding-right: var(--lab-cell-gap);
+  text-align: left;
+  font-size: var(--lab-control-size);
+  font-weight: 500;
+  line-height: var(--lab-title-leading);
   color: var(--color-gray-500);
   cursor: pointer;
-  transition: color var(--lab-tab-transition) var(--motion-ease);
+  transition: color var(--lab-morph) var(--motion-ease);
 }
-.laboratory__service-tab[aria-pressed="true"] { color: var(--service-accent); }
-.laboratory__service-tab:hover { color: var(--service-accent); }
-.laboratory__service-tab:focus-visible { outline: var(--lab-active-rule) solid var(--color-blue); outline-offset: var(--lab-active-space); }
-/* Sin JS (o antes de medir): subrayado fijo en la activa. */
-.laboratory__services:not([data-measured]) .laboratory__service-tab[aria-pressed="true"] {
-  background: linear-gradient(var(--service-accent), var(--service-accent)) no-repeat bottom / 100% var(--lab-active-rule);
-}
-.laboratory__tab-indicator {
-  position: absolute;
-  top: calc(var(--tab-y, 0px) - var(--lab-active-rule));
-  left: 0;
-  width: var(--tab-w, 0px);
-  height: var(--lab-active-rule);
-  background: var(--tab-accent);
-  transform: translateX(var(--tab-x, 0px));
-  pointer-events: none;
-}
-.laboratory__services:not([data-measured]) .laboratory__tab-indicator { opacity: 0; }
-.laboratory__services[data-measured] .laboratory__tab-indicator {
-  transition:
-    transform var(--lab-tab-transition) var(--lab-tab-ease),
-    width var(--lab-tab-transition) var(--lab-tab-ease),
-    background-color var(--lab-tab-transition) var(--motion-ease);
-}
-
-.laboratory__capabilities {
-  --col: calc(100% / var(--steps));
-  --fill: calc(var(--col) * (var(--covered) - 1) + min(1, var(--covered) - 1) * var(--lab-cell-gap));
-  position: relative;
-  padding-top: var(--lab-rail-space);
-  /* Pista gris: del primer punto al último. */
-  background: linear-gradient(var(--color-gray-200), var(--color-gray-200)) no-repeat
-    0 calc(var(--lab-dot) / 2 - var(--lab-rule) / 2) / calc(100% - var(--col) + var(--lab-cell-gap)) var(--lab-rule);
-}
-.laboratory__capabilities::before,
-.laboratory__capabilities::after {
-  content: '';
-  position: absolute;
-  top: calc(var(--lab-dot) / 2);
-  left: 0;
-  pointer-events: none;
-}
-/* Tramo del servicio. */
-.laboratory__capabilities::before {
-  width: max(var(--fill), 0px);
-  height: var(--lab-active-rule);
-  background: var(--service-accent);
-  transform: translateY(-50%);
-  transition:
-    width var(--rail-duration, 0ms) var(--lab-rail-ease) var(--rail-lead, 0ms),
-    background-color var(--lab-tab-transition) var(--motion-ease);
-}
-/* Cabeza: halo que guía la punta de la línea (señal de marca, sin sombra). */
-.laboratory__capabilities::after {
-  width: var(--lab-rail-head);
-  height: var(--lab-rail-head);
-  border-radius: 999px;
-  background: radial-gradient(circle, color-mix(in srgb, var(--service-accent) 55%, transparent) 0%, transparent 68%);
-  left: max(var(--fill), 0px);
-  transform: translate(-50%, -50%);
-  opacity: 0;
-  transition:
-    left var(--rail-duration, 0ms) var(--lab-rail-ease) var(--rail-lead, 0ms),
-    opacity var(--lab-tab-transition) var(--motion-ease);
-}
-.laboratory__capabilities[data-lit]::after { opacity: 1; }
-.laboratory__capability { position: relative; }
-.laboratory__dot {
+.lab-rail__dot {
   position: absolute;
   top: calc(-1 * var(--lab-rail-space));
   left: 0;
@@ -1527,61 +1518,54 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   border-radius: 999px;
   background: white;
   transition:
-    background-color var(--lab-dot-transition) var(--motion-ease) var(--d, 0ms),
-    border-color var(--lab-dot-transition) var(--motion-ease) var(--d, 0ms),
-    transform var(--lab-dot-transition) var(--lab-tab-ease) var(--d, 0ms);
+    background-color var(--lab-morph) var(--motion-ease),
+    border-color var(--lab-morph) var(--motion-ease),
+    transform var(--lab-fill) var(--motion-ease);
 }
-/* Pulso al encenderse: un aro que se abre y se desvanece. */
-.laboratory__dot::after {
-  content: '';
+.lab-rail__number { font-size: var(--text-label); font-weight: 400; }
+.lab-rail li[data-state] .lab-rail__dot { background: var(--rail-accent); border-color: var(--rail-accent); }
+.lab-rail li[data-state="current"] .lab-rail__dot { transform: scale(var(--lab-dot-current)); }
+.lab-rail li[data-state="done"] .lab-rail__step { color: var(--color-blue); }
+.lab-rail li[data-state="current"] .lab-rail__step { color: var(--rail-accent); }
+@media (hover: hover) and (pointer: fine) {
+  .lab-rail__step:hover { color: var(--color-blue); }
+}
+.lab-rail__step:focus-visible { outline: var(--lab-active-rule) solid var(--color-blue); outline-offset: var(--lab-compact-gap); }
+
+/* Pausa: discreta, en la esquina inferior de la foto, con el mismo material
+   que las flechas; solo aparece si el recorrido avanza solo. */
+.lab-toggle {
   position: absolute;
-  inset: calc(-1 * var(--lab-rule));
-  border: var(--lab-rule) solid var(--service-accent);
-  border-radius: 999px;
-  opacity: 0;
+  right: var(--lab-caption-gap);
+  bottom: var(--lab-caption-gap);
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: var(--lab-control-min);
+  height: var(--lab-control-min);
+  color: var(--color-blue);
+  background: var(--lab-arrow-surface);
+  border-radius: var(--radius-field);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: color var(--motion-control) var(--motion-ease), background-color var(--motion-control) var(--motion-ease);
 }
-.laboratory__capabilities li[data-covered] .laboratory__dot {
-  background: var(--service-accent);
-  border-color: var(--service-accent);
-}
-.laboratory__number,
-.laboratory__label {
-  transition: color var(--lab-dot-transition) var(--motion-ease) var(--d, 0ms);
-}
-.laboratory__capabilities li[data-covered] .laboratory__number { color: var(--service-accent); }
-.laboratory__capabilities li:not([data-covered]) .laboratory__number,
-.laboratory__capabilities li:not([data-covered]) .laboratory__label { color: var(--color-gray-500); }
-.laboratory__capabilities li .laboratory__capability:hover .laboratory__label { color: var(--lab-teal-text); transition-delay: 0ms; }
+.lab-toggle svg { width: var(--lab-toggle-icon); height: var(--lab-toggle-icon); }
+.lab-toggle:hover { color: var(--lab-teal-text); background: var(--color-bone); }
+.lab-toggle:focus-visible { outline: var(--lab-active-rule) solid var(--color-blue); outline-offset: var(--lab-active-rule); }
 
-@media (prefers-reduced-motion: no-preference) {
-  .laboratory__capabilities li[data-covered] .laboratory__dot { animation: lab-dot-pop var(--lab-dot-pop) var(--lab-tab-ease) var(--d, 0ms) both; }
-  .laboratory__capabilities li[data-covered] .laboratory__dot::after { animation: lab-dot-ping var(--lab-dot-ping) var(--motion-ease) var(--d, 0ms) forwards; }
-}
-@keyframes lab-dot-pop {
-  0%   { transform: scale(1); }
-  45%  { transform: scale(1.55); }
-  100% { transform: scale(1); }
-}
-@keyframes lab-dot-ping {
-  0%   { opacity: 0.7; transform: scale(1); }
-  100% { opacity: 0;   transform: scale(3.2); }
-}
-
-/* Móvil: la fila pasa a rejilla de 2 columnas; sin línea, el punto va junto
-   al número y se enciende igual, en cadena. */
+/* Móvil: la misma barra, solo con los números; el nombre del paso ya está
+   en el texto de arriba. */
 @media (max-width: 767px) {
-  .laboratory__capabilities { padding-top: 0; background: none; }
-  .laboratory__capabilities::before,
-  .laboratory__capabilities::after { display: none; }
-  .laboratory__dot { position: static; flex-shrink: 0; align-self: center; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .laboratory__capabilities::before,
-  .laboratory__capabilities::after,
-  .laboratory__tab-indicator,
-  .laboratory__dot,
-  .laboratory__number,
-  .laboratory__label { transition: none; }
+  .lab-rail__step { align-items: flex-start; padding-right: 0; }
+  .lab-rail__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
 }
 
 /* ============================================================

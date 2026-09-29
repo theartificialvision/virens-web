@@ -197,14 +197,12 @@ export const v2FooterNav = [
 /** [TR] Traducción de la maqueta aprobada; pendiente de revisión editorial. */
 export const v2Laboratory = {
   source: 'rewritten',
-  navigation: { previous: 'Previous capability', next: 'Next capability' }, // [TR]
+  navigation: { previous: 'Previous capability', next: 'Next capability', pause: 'Pause the tour', play: 'Resume the tour' }, // [TR]
   eyebrow: 'SCIENCE, DEVELOPMENT AND MANUFACTURING',
   serviceSummaries: ['We develop and manufacture food supplements for your brand, with tailored formulas and complete confidentiality.', 'From formulation to manufacturing, quality control, packaging and logistics. An integrated service, from start to finish.'],
   caption: 'FROM DEVELOPMENT TO FINISHED PRODUCT',
-  /** Selector de servicio (29/09/2026, cliente): cuántos pasos de
-   *  `capabilities`, desde el primero, abarca cada servicio. Private Label
-   *  desarrolla y fabrica; Full service llega hasta la logística. */
-  serviceScope: [2, 5],
+  /** Ver el español: del paso 4 (Logistics) en adelante, Full service. */
+  fullServiceFrom: 4,
   capabilities: [
     { label: 'R&D and formulation', description: 'We develop tailored formulas in collaboration with your technical and development teams.', image: { src: '/img/laboratory/formulation.webp', alt: 'Pipette and glassware representing formulation' } },
     { label: 'Manufacturing', description: 'We manufacture food supplements in solid and liquid forms, adapted to each project.', image: { src: '/img/laboratory/manufacturing.webp', alt: 'Capsules and precision machinery representing manufacturing' } },
