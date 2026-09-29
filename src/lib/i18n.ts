@@ -18,6 +18,11 @@ export const routes = {
   company: { es: '/compania', en: '/en/company' },
   tech: { es: '/virens-tech', en: '/en/virens-tech' },
   contact: { es: '/contacto', en: '/en/contact' },
+  // Textos legales (29/09/2026): las rutas que ya esperaban las redirecciones
+  // de la web WordPress, el formulario y el pie.
+  legalNotice: { es: '/legal/aviso-legal', en: '/en/legal/legal-notice' },
+  privacy: { es: '/legal/politica-de-privacidad', en: '/en/legal/privacy-policy' },
+  sales: { es: '/legal/condiciones-generales-de-venta', en: '/en/legal/sales-terms-and-conditions' },
 } as const satisfies Record<string, Record<Locale, string>>;
 
 export type PageKey = keyof typeof routes;

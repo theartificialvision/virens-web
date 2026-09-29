@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { isIndexable, site } from '@/config/site';
-import { ui } from '@/content';
+import { legalContent, ui } from '@/content';
 import { alternatesFor, type Locale, type PageKey } from '@/lib/i18n';
 
 /** Metadatos del layout raíz de cada idioma. */
@@ -17,6 +17,7 @@ export function rootMetadata(locale: Locale): Metadata {
 
 /** Título, descripción, canónica y hreflang de una página en un idioma. */
 export function pageMetadata(page: PageKey, locale: Locale): Metadata {
-  const m = ui[locale].meta[page];
+  const legal = legalContent(locale).legalDocs.find((d) => d.key === page);
+  const m = legal ? { title: legal.title, description: legal.description } : ui[locale].meta[page as Exclude<keyof typeof ui.es.meta, 'defaultTitle' | 'description'>];
   return { title: m.title, description: m.description, alternates: alternatesFor(page, locale) };
 }

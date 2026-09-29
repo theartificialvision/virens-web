@@ -17,7 +17,7 @@ export function CompanyTimeline({
   return (
     <section id="historia" className="relative isolate overflow-hidden text-white" data-header-tone="dark">
       <Image
-        src="/img/tech-formulacion.jpg"
+        src="/img/compania/historia-laboratorios-virens-investigacion.webp"
         alt={imageAlt}
         fill
         sizes="100vw"

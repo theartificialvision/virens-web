@@ -3163,3 +3163,37 @@ Cambios pedidos por el cliente, en ES y EN:
 - CTA: frase de debajo «¿Quieres formar parte de Laboratorios Virens?»
   (EN [TR]: «Would you like to be part of Laboratorios Virens?»).
 - Pie: fuera el logo de Virens Tech; queda solo el de Labs.
+
+### 2026-09-29 — Claude (nube) — Fotos nuevas del cliente y textos legales
+
+**Fotos** (PowerPoint «Imagenes web» del cliente: sobre cada captura de la web
+superpuso la foto que quiere; originales en su carpeta «Textos legales»).
+Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
+- Laboratorio (home), `public/img/laboratorio/`: pesaje-materias-primas…,
+  capsulas-blister…, control-calidad-analisis…, envasado-botes-linea…,
+  logistica-almacen…. Encuadre por foto (`image.position`) porque el marco es
+  muy apaisado.
+- Compañía, `public/img/compania/`: portada (taponado-frascos-ambar…),
+  bloque 03 I+D (laboratorio-id-control-calidad…), fondo de Nuestra historia
+  (historia-laboratorios-virens-investigacion).
+- Virens Tech, `public/img/virens-tech/`: Formulación, R+D galénicos,
+  Estabilidad, Garantía de calidad y Regulatory. Centro de sabores no tenía
+  foto nueva y no cambia. La de Regulatory no está en la carpeta: se sacó del
+  propio PowerPoint.
+- Borradas las fotos antiguas que ya no usa nadie (`img/laboratory/*`,
+  `tech-formulacion/galenicos/estabilidad/calidad/regulatory.jpg`).
+
+**Textos legales** (Word del cliente, solo ES y EN; el catalán no se usa):
+- Rutas: `/legal/aviso-legal`, `/legal/politica-de-privacidad`,
+  `/legal/condiciones-generales-de-venta` y `/en/legal/legal-notice`,
+  `/privacy-policy`, `/sales-terms-and-conditions` (las que ya esperaban las
+  redirecciones de WordPress y el formulario). Añadidas a `routes`, sitemap y
+  selector de idioma.
+- Contenido literal en `src/content/legal.ts` / `en/legal.ts`; `LegalView`
+  con banda azul, pestañas entre documentos, índice lateral fijo y apartados
+  numerados. Los correos del texto se enlazan con `mailto:`.
+- Pie: «Recursos» → **Documentación** con los tres documentos; fuera los
+  enlaces legales repetidos de la línea inferior (`ui.footer.legal`).
+- PENDIENTE del cliente: la política de datos dice que los derechos se
+  ejercen en «email@laempresa.com» (correo de plantilla, transcrito tal cual);
+  no hay texto de cookies, así que `/uso-de-cookies/` sigue sin destino.

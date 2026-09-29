@@ -46,14 +46,9 @@ export function V2Footer({ locale }: { locale: Locale }) {
         </div>
 
         <div className="mt-14 flex flex-col gap-4 border-t border-white/15 pt-7 text-[length:var(--text-note)] text-white/55 md:flex-row md:items-center md:justify-between">
+          {/* Los textos legales viven desde el 29/09/2026 en la columna
+              «Documentación»; aquí ya no se repiten. */}
           <p>&copy; {new Date().getFullYear()} Virens Labs &amp; Tech. {t.footer.rights}</p>
-          <ul className="flex flex-wrap gap-x-7 gap-y-2">
-            {t.footer.legal.map((l) => (
-              <li key={l.href}>
-                <Link href={l.href} className="hover:text-white">{l.label}</Link>
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
     </footer>

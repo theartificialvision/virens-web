@@ -11,8 +11,8 @@ export const companyHero = {
   subtitle: 'Contract Manufacturing & Development',
   body: 'En Laboratorios Virens fabricamos complementos alimenticios con los más altos estándares para mejorar el bienestar físico, mental y social.',
   image: {
-    src: '/img/labs-hero-poster.jpg',
-    alt: 'Técnica supervisando una línea de fabricación de complementos alimenticios',
+    src: '/img/compania/taponado-frascos-ambar-laboratorios-virens.webp',
+    alt: 'Frascos de vidrio ámbar con tapón blanco en una línea de taponado',
   },
 } as const;
 
@@ -85,8 +85,8 @@ export const valueChain = [
 export const companyResearch = {
   title: companySections.research.title,
   image: {
-    src: '/img/tech-galenicos.jpg',
-    alt: 'Formas galénicas y materias primas preparadas para su desarrollo en laboratorio',
+    src: '/img/compania/laboratorio-id-control-calidad-laboratorios-virens.webp',
+    alt: 'Técnica de laboratorio con guantes preparando una muestra en un agitador',
   },
   body: [
     { text: 'Disponemos de un ', accent: false },
@@ -100,7 +100,7 @@ export const companyResearch = {
 /** Textos alternativos de las fotos de fondo de «Qué hacemos» y de la historia. */
 export const companyImages = {
   process: 'Línea de producción de Laboratorios Virens',
-  history: 'Trabajo de formulación en el laboratorio de Laboratorios Virens',
+  history: 'Investigadora examinando un tubo de ensayo junto a un microscopio',
 } as const;
 
 /**

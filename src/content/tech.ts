@@ -63,7 +63,7 @@ export const techServices: ServiceBlock[] = [
     imageSide: 'left',
     imageRatio: 55,
     tone: 'white',
-    image: { src: '/img/tech-formulacion.jpg', alt: 'Técnico de laboratorio pipeteando una muestra sobre material de vidrio' },
+    image: { src: '/img/virens-tech/formulacion-microbiologia-virens-tech.webp', alt: 'Técnico pipeteando una muestra junto a placas de cultivo en una cabina de flujo laminar' },
   },
   {
     // LITERAL (§2.4).
@@ -76,7 +76,7 @@ export const techServices: ServiceBlock[] = [
     imageSide: 'right',
     imageRatio: 55,
     tone: 'gray',
-    image: { src: '/img/tech-galenicos.jpg', alt: 'Cápsulas, comprimidos y polvos en bandeja de laboratorio' },
+    image: { src: '/img/virens-tech/llenado-jarabes-formas-galenicas-virens-tech.webp', alt: 'Llenado de jarabe en frascos de vidrio ámbar en una línea dosificadora' },
     link: { label: 'Ver formas galénicas disponibles', href: '/#formas-galenicas' },
   },
   {
@@ -107,7 +107,7 @@ export const techServices: ServiceBlock[] = [
     imageSide: 'right',
     imageRatio: 55,
     tone: 'gray',
-    image: { src: '/img/tech-estabilidad.jpg', alt: 'Interior de una cámara climática con bandejas de muestras etiquetadas' },
+    image: { src: '/img/virens-tech/comprimidos-estabilidad-producto-virens-tech.webp', alt: 'Comprimidos blancos en la tolva de una línea de producción' },
   },
   {
     // LITERAL (§2.4).
@@ -120,7 +120,7 @@ export const techServices: ServiceBlock[] = [
     imageSide: 'left',
     imageRatio: 55,
     tone: 'white',
-    image: { src: '/img/tech-calidad.jpg', alt: 'Análisis microbiológico con placas de cultivo y material de laboratorio' },
+    image: { src: '/img/virens-tech/garantia-calidad-laboratorio-virens-tech.webp', alt: 'Dos técnicas con cofia revisando una muestra en un laboratorio de calidad' },
   },
   {
     // LITERAL (§2.4).
@@ -134,7 +134,7 @@ export const techServices: ServiceBlock[] = [
     imageSide: 'right',
     imageRatio: 55,
     tone: 'gray',
-    image: { src: '/img/tech-regulatory.jpg', alt: 'Documentación técnica y dosier de producto sobre una mesa de trabajo' },
+    image: { src: '/img/virens-tech/consultoria-regulatoria-complementos-alimenticios-virens-tech.webp', alt: 'Revisión de cápsulas sobre documentación técnica de producto' },
   },
 ];
 

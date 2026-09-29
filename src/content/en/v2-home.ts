@@ -184,10 +184,11 @@ export const v2FooterNav = [
     ],
   },
   {
-    title: 'Resources',
+    title: 'Documentation', // [TR]
     items: [
-      { label: 'Documentation', href: '/en/contact' }, // [TR]
-      { label: 'Contact', href: '/en/contact' }, // [EN]
+      { label: 'Legal notice', href: '/en/legal/legal-notice' },
+      { label: 'Data protection', href: '/en/legal/privacy-policy' },
+      { label: 'Sales conditions', href: '/en/legal/sales-terms-and-conditions' },
     ],
   },
 ] as const satisfies Loosen<typeof es.v2FooterNav>;
@@ -202,11 +203,11 @@ export const v2Laboratory = {
   /** Ver el español: del paso 4 (Logistics) en adelante, Full service. */
   fullServiceFrom: 4,
   capabilities: [
-    { label: 'R&D and formulation', description: 'We develop tailored formulas in collaboration with your technical and development teams.', image: { src: '/img/laboratory/formulation.webp', alt: 'Pipette and glassware representing formulation' } },
-    { label: 'Manufacturing', description: 'We manufacture food supplements in solid and liquid forms, adapted to each project.', image: { src: '/img/laboratory/manufacturing.webp', alt: 'Capsules and precision machinery representing manufacturing' } },
-    { label: 'Quality control', description: 'In our laboratory we carry out analyses to the highest standards.', image: { src: '/img/laboratory/quality.webp', alt: 'Samples and analytical equipment representing quality control' } },
-    { label: 'Packaging', description: 'We carry out the primary and secondary packaging of your product.', image: { src: '/img/laboratory/packaging.webp', alt: 'Aligned amber bottles representing packaging' } },
-    { label: 'Logistics', description: 'We manage shipping all the way to your warehouse.', image: { src: '/img/laboratory/logistics.webp', alt: 'Organised cartons and bottles representing logistics' } },
+    { label: 'R&D and formulation', description: 'We develop tailored formulas in collaboration with your technical and development teams.', image: { src: '/img/laboratorio/pesaje-materias-primas-formulacion-complementos-alimenticios.webp', alt: 'Weighing powdered raw material in a beaker on a laboratory scale', position: '50% 75%' } },
+    { label: 'Manufacturing', description: 'We manufacture food supplements in solid and liquid forms, adapted to each project.', image: { src: '/img/laboratorio/capsulas-blister-fabricacion-complementos-alimenticios.webp', alt: 'White capsules in the cavities of a stainless-steel blister machine', position: '50% 50%' } },
+    { label: 'Quality control', description: 'In our laboratory we carry out analyses to the highest standards.', image: { src: '/img/laboratorio/control-calidad-analisis-laboratorio-complementos-alimenticios.webp', alt: 'Gloved analyst measuring a sample with a pH meter in the quality control laboratory', position: '50% 60%' } },
+    { label: 'Packaging', description: 'We carry out the primary and secondary packaging of your product.', image: { src: '/img/laboratorio/envasado-botes-linea-complementos-alimenticios.webp', alt: 'White bottles moving along an automatic packaging line', position: '50% 60%' } },
+    { label: 'Logistics', description: 'We manage shipping all the way to your warehouse.', image: { src: '/img/laboratorio/logistica-almacen-complementos-alimenticios.webp', alt: 'Warehouse with pallet racking and a forklift', position: '50% 72%' } },
   ],
   closing: ['A complete laboratory.', 'At the service of your brand.'],
 } as const satisfies Loosen<typeof es.v2Laboratory>;

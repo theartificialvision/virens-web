@@ -16,7 +16,7 @@ interface Ui {
   mainNav: readonly NavLink[];
   menuAria: string;
   logoAria: { labs: string; tech: string };
-  footer: { rights: string; legal: readonly NavLink[] };
+  footer: { rights: string };
   meta: {
     defaultTitle: string;
     description: string;
@@ -43,10 +43,6 @@ export const ui: Record<Locale, Ui> = {
     logoAria: { labs: 'Virens Labs — inicio', tech: 'Virens Tech — inicio' },
     footer: {
       rights: 'Todos los derechos reservados.',
-      legal: [
-        { href: '/legal/aviso-legal', label: 'Aviso legal' },
-        { href: '/legal/politica-de-privacidad', label: 'Política de privacidad' },
-      ],
     },
     meta: {
       defaultTitle: 'Laboratorios Virens · Fabricación de complementos alimenticios',
@@ -86,10 +82,6 @@ export const ui: Record<Locale, Ui> = {
     logoAria: { labs: 'Virens Labs — home', tech: 'Virens Tech — home' }, // [TR]
     footer: {
       rights: 'All rights reserved.', // [TR]
-      legal: [
-        { href: '/en/legal/legal-notice', label: 'Legal notice' }, // [EN]
-        { href: '/en/legal/privacy-policy', label: 'Data protection policy' }, // [EN]
-      ],
     },
     meta: {
       defaultTitle: 'Laboratorios Virens · Food supplement manufacturing', // [TR]

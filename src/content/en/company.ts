@@ -14,8 +14,8 @@ export const companyHero = {
   subtitle: 'Contract Manufacturing & Development', // [EN]
   body: 'At Laboratorios Virens we manufacture food supplements to the highest standards to improve physical, mental and social well-being.', // [TR]
   image: {
-    src: '/img/labs-hero-poster.jpg',
-    alt: 'Technician supervising a food supplement manufacturing line', // [TR]
+    src: '/img/compania/taponado-frascos-ambar-laboratorios-virens.webp',
+    alt: 'Amber glass bottles with white caps on a capping line', // [TR]
   },
 } as const satisfies Loosen<typeof es.companyHero>;
 
@@ -58,8 +58,8 @@ export const valueChain = [
 export const companyResearch = {
   title: companySections.research.title,
   image: {
-    src: '/img/tech-galenicos.jpg',
-    alt: 'Dosage forms and raw materials prepared for development in the laboratory', // [TR]
+    src: '/img/compania/laboratorio-id-control-calidad-laboratorios-virens.webp',
+    alt: 'Gloved laboratory technician preparing a sample on a stirrer', // [TR]
   },
   // [EN] literal de /en/company, con los mismos dos acentos que en español.
   body: [
@@ -74,7 +74,7 @@ export const companyResearch = {
 /** Imágenes de fondo de «Qué hacemos» y de la historia (antes con alt fijo en español en el JSX). */
 export const companyImages = {
   process: 'Laboratorios Virens production line', // [TR]
-  history: 'Formulation work in the Laboratorios Virens laboratory', // [TR]
+  history: 'Researcher examining a test tube beside a microscope', // [TR]
 } as const satisfies Loosen<typeof es.companyImages>;
 
 /** [IMG] Transcrito de historia-eng-mobile.png. */

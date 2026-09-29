@@ -60,6 +60,9 @@ export function LaboratoryCapabilities({ content, services }: {
               <div key={item.label} className="laboratory__image-layer" data-active={shown === index} aria-hidden={shown !== index}>
                 <Image src={item.image.src} alt={item.image.alt} fill
                   sizes="(max-width: 767px) 100vw, (max-width: 1440px) 65vw, 920px" className="object-cover"
+                  /* Encuadre por foto (29/09/2026): el marco es muy apaisado y
+                     el centro geométrico cortaba el motivo. */
+                  style={{ objectPosition: item.image.position }}
                   onLoad={() => setReady((previous) => new Set(previous).add(index))} />
               </div>
             ))}

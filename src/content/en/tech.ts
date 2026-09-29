@@ -41,7 +41,7 @@ export const techServices: ServiceBlock[] = [
     imageSide: 'left',
     imageRatio: 55,
     tone: 'white',
-    image: { src: '/img/tech-formulacion.jpg', alt: 'Laboratory technician pipetting a sample over glassware' }, // [TR]
+    image: { src: '/img/virens-tech/formulacion-microbiologia-virens-tech.webp', alt: 'Technician pipetting a sample next to culture plates in a laminar flow cabinet' }, // [TR]
   },
   {
     id: 'rd-galenicos',
@@ -53,7 +53,7 @@ export const techServices: ServiceBlock[] = [
     imageSide: 'right',
     imageRatio: 55,
     tone: 'gray',
-    image: { src: '/img/tech-galenicos.jpg', alt: 'Capsules, tablets and powders on a laboratory tray' }, // [TR]
+    image: { src: '/img/virens-tech/llenado-jarabes-formas-galenicas-virens-tech.webp', alt: 'Syrup being filled into amber glass bottles on a dosing line' }, // [TR]
     link: { label: 'See available galenic forms', href: '/en#formas-galenicas' }, // [TR]
   },
   {
@@ -80,7 +80,7 @@ export const techServices: ServiceBlock[] = [
     imageSide: 'right',
     imageRatio: 55,
     tone: 'gray',
-    image: { src: '/img/tech-estabilidad.jpg', alt: 'Inside a climate chamber with trays of labelled samples' }, // [TR]
+    image: { src: '/img/virens-tech/comprimidos-estabilidad-producto-virens-tech.webp', alt: 'White tablets in the hopper of a production line' }, // [TR]
   },
   {
     id: 'garantia-de-calidad',
@@ -93,7 +93,7 @@ export const techServices: ServiceBlock[] = [
     imageSide: 'left',
     imageRatio: 55,
     tone: 'white',
-    image: { src: '/img/tech-calidad.jpg', alt: 'Microbiological analysis with culture plates and laboratory material' }, // [TR]
+    image: { src: '/img/virens-tech/garantia-calidad-laboratorio-virens-tech.webp', alt: 'Two technicians in hairnets reviewing a sample in a quality laboratory' }, // [TR]
   },
   {
     id: 'regulatory-consulting',
@@ -106,7 +106,7 @@ export const techServices: ServiceBlock[] = [
     imageSide: 'right',
     imageRatio: 55,
     tone: 'gray',
-    image: { src: '/img/tech-regulatory.jpg', alt: 'Technical documentation and product dossier on a desk' }, // [TR]
+    image: { src: '/img/virens-tech/consultoria-regulatoria-complementos-alimenticios-virens-tech.webp', alt: 'Capsules being reviewed over technical product documentation' }, // [TR]
   },
 ];
 

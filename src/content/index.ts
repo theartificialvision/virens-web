@@ -7,6 +7,8 @@ import * as techEs from './tech';
 import * as techEn from './en/tech';
 import * as contactEs from './contacto';
 import * as contactEn from './en/contacto';
+import * as legalEs from './legal';
+import * as legalEn from './en/legal';
 
 /**
  * Punto único de acceso al contenido por idioma (27/09/2026). Un componente
@@ -18,4 +20,5 @@ export const homeContent = (locale: Locale) => (locale === 'en' ? homeEn : homeE
 export const companyContent = (locale: Locale) => (locale === 'en' ? companyEn : companyEs);
 export const techContent = (locale: Locale) => (locale === 'en' ? techEn : techEs);
 export const contactContent = (locale: Locale) => (locale === 'en' ? contactEn : contactEs);
+export const legalContent = (locale: Locale) => (locale === 'en' ? legalEn : legalEs);
 export { ui } from './ui';

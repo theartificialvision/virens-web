@@ -228,10 +228,12 @@ export const v2FooterNav = [
     ],
   },
   {
-    title: 'Recursos',
+    /** 29/09/2026 (cliente): «Recursos» pasa a «Documentación» con los textos legales. */
+    title: 'Documentación',
     items: [
-      { label: 'Documentación', href: '/contacto' },
-      { label: 'Contacto', href: '/contacto' },
+      { label: 'Aviso legal', href: '/legal/aviso-legal' },
+      { label: 'Protección de datos', href: '/legal/politica-de-privacidad' },
+      { label: 'Condiciones de venta', href: '/legal/condiciones-generales-de-venta' },
     ],
   },
 ] as const;
@@ -248,11 +250,11 @@ export const v2Laboratory = {
    *  desde el que el recorrido pasa a ser Full service (4 = Logística). */
   fullServiceFrom: 4,
   capabilities: [
-    { label: 'I+D y formulación', description: 'Desarrollamos fórmulas a medida en colaboración con tu equipo técnico y de desarrollo.', image: { src: '/img/laboratory/formulation.webp', alt: 'Pipeta y material de vidrio para representar la formulación' } },
-    { label: 'Fabricación', description: 'Fabricamos complementos alimenticios en formas sólidas y líquidas, adaptadas a cada proyecto.', image: { src: '/img/laboratory/manufacturing.webp', alt: 'Cápsulas y maquinaria de precisión para representar la fabricación' } },
-    { label: 'Control de calidad', description: 'En nuestro laboratorio realizamos analíticas bajo los más altos estándares.', image: { src: '/img/laboratory/quality.webp', alt: 'Muestras e instrumental analítico para representar el control de calidad' } },
-    { label: 'Envasado', description: 'Realizamos el envasado primario y secundario de tu producto.', image: { src: '/img/laboratory/packaging.webp', alt: 'Frascos ámbar alineados para representar el envasado' } },
-    { label: 'Logística', description: 'Gestionamos el envío hasta tu almacén.', image: { src: '/img/laboratory/logistics.webp', alt: 'Cajas y frascos ordenados para representar la logística' } },
+    { label: 'I+D y formulación', description: 'Desarrollamos fórmulas a medida en colaboración con tu equipo técnico y de desarrollo.', image: { src: '/img/laboratorio/pesaje-materias-primas-formulacion-complementos-alimenticios.webp', alt: 'Pesaje de materia prima en polvo en un vaso de precipitados sobre una balanza de laboratorio', position: '50% 75%' } },
+    { label: 'Fabricación', description: 'Fabricamos complementos alimenticios en formas sólidas y líquidas, adaptadas a cada proyecto.', image: { src: '/img/laboratorio/capsulas-blister-fabricacion-complementos-alimenticios.webp', alt: 'Cápsulas blancas en los alveolos de una blistera de acero inoxidable', position: '50% 50%' } },
+    { label: 'Control de calidad', description: 'En nuestro laboratorio realizamos analíticas bajo los más altos estándares.', image: { src: '/img/laboratorio/control-calidad-analisis-laboratorio-complementos-alimenticios.webp', alt: 'Analista con guantes midiendo una muestra con un pHmetro en el laboratorio de control de calidad', position: '50% 60%' } },
+    { label: 'Envasado', description: 'Realizamos el envasado primario y secundario de tu producto.', image: { src: '/img/laboratorio/envasado-botes-linea-complementos-alimenticios.webp', alt: 'Botes blancos avanzando por una línea de envasado automática', position: '50% 60%' } },
+    { label: 'Logística', description: 'Gestionamos el envío hasta tu almacén.', image: { src: '/img/laboratorio/logistica-almacen-complementos-alimenticios.webp', alt: 'Almacén con estanterías de palés y carretilla elevadora', position: '50% 72%' } },
   ],
   closing: ['Todo un laboratorio.', 'Al servicio de tu marca.'],
 } as const;
