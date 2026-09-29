@@ -59,7 +59,7 @@ export const ui: Record<Locale, Ui> = {
       },
       tech: {
         title: 'Virens Tech · Desarrollo y formulación',
-        description: 'Formulación, galénica, estabilidad, control de calidad y consultoría regulatoria.',
+        description: 'Formulación, galénica, estabilidad, control de calidad y regulatorio.',
       },
       contact: {
         title: 'Contacto',
@@ -98,7 +98,7 @@ export const ui: Record<Locale, Ui> = {
       },
       tech: {
         title: 'Virens Tech · Development and formulation', // [TR]
-        description: 'Formulation, galenics, stability, quality assurance and regulatory consulting.', // [TR]
+        description: 'Formulation, galenics, stability, quality assurance and regulatory.', // [TR]
       },
       contact: {
         title: 'Contact', // [EN]

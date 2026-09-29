@@ -3275,3 +3275,10 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
   meta description y borrada `tech-sabores.jpg`, que ya no usa nadie.
 - Estabilidad de productos: un solo párrafo nuevo del cliente («Ofrecemos la
   posibilidad de realizar estudios de estabilidad…», punto final añadido). EN [TR].
+
+### 2026-09-29 — Claude (nube) — Tech: «Regulatory consulting» pasa a «Regulatorio»
+
+- Cliente: título «Regulatorio» y un solo texto: «Nuestro equipo brindará todo
+  el apoyo necesario con la elaboración de dosieres de productos y
+  documentación.» (punto final añadido). EN [TR]: «Regulatory». Meta
+  description de Tech actualizada. El ancla `#regulatory-consulting` no cambia.

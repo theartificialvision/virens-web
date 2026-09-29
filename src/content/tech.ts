@@ -113,10 +113,11 @@ export const techServices: ServiceBlock[] = [
     // LITERAL (§2.4).
     id: 'regulatory-consulting',
     index: '05',
-    title: 'Regulatory consulting',
+    // 29/09/2026 (cliente): título «Regulatorio» y un solo texto nuevo.
+    // El ancla `regulatory-consulting` se conserva.
+    title: 'Regulatorio',
     body: [
-      'Nuestro departamento de Atención al Cliente le brindará todo el apoyo técnico comercial necesario con la elaboración de dosieres técnicos de productos y documentación comercial.',
-      'También contamos con un servicio de regulatorio para registros y notificaciones de productos.',
+      'Nuestro equipo brindará todo el apoyo necesario con la elaboración de dosieres de productos y documentación.',
     ],
     imageSide: 'left',
     imageRatio: 55,

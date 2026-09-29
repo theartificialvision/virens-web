@@ -84,10 +84,9 @@ export const techServices: ServiceBlock[] = [
   {
     id: 'regulatory-consulting',
     index: '05',
-    title: 'Regulatory consulting', // [EN]
+    title: 'Regulatory', // [TR] (cliente 29/09: «Regulatorio»)
     body: [
-      'Our Customer Service department will provide you with the necessary technical and commercial support with the drafting of technical product dossiers and commercial documentation.', // [EN]
-      'We also have a regulatory service for product registrations and notifications.', // [EN]
+      'Our team will provide all the support you need in preparing product dossiers and documentation.', // [TR]
     ],
     imageSide: 'left',
     imageRatio: 55,
