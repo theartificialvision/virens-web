@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type CSSProperties } from 'react';
 import type { Loosen } from '@/lib/i18n';
 import type { v2Laboratory } from '@/content/v2-home';
 import { usePrefersReducedMotion } from '@/lib/useReducedMotion';
@@ -77,9 +77,18 @@ export function LaboratoryCapabilities({ content, services }: {
             <Arrow direction="previous" label={content.navigation.previous} onClick={() => go(step - 1)} />
             <Arrow direction="next" label={content.navigation.next} onClick={() => go(step + 1)} />
             {tour.autoplay && (
+              /* 29/09/2026 (cliente): el anillo de la pausa se completa al
+                 mismo ritmo que la barra —misma duración, mismo reinicio
+                 (`tick`), misma pausa— y en el color del servicio. */
               <button type="button" className="lab-toggle" onClick={tour.toggle}
+                data-paused={tour.paused || shown !== step || undefined}
+                style={{ '--dwell': `${tour.dwell}ms`, '--rail-accent': accent } as CSSProperties}
                 aria-label={tour.stopped ? content.navigation.play : content.navigation.pause}>
-                <svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false">
+                <svg key={tour.tick} viewBox="0 0 44 44" className="lab-toggle__ring" aria-hidden="true" focusable="false">
+                  <circle cx="22" cy="22" r="20" className="lab-toggle__track" />
+                  <circle cx="22" cy="22" r="20" pathLength={1} className="lab-toggle__fill" />
+                </svg>
+                <svg viewBox="0 0 16 16" fill="currentColor" className="lab-toggle__icon" aria-hidden="true" focusable="false">
                   {tour.stopped ? <path d="M5 3.5v9l7.5-4.5z" /> : <path d="M4.5 3h2.5v10H4.5zM9 3h2.5v10H9z" />}
                 </svg>
               </button>

@@ -3302,3 +3302,14 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
   - Movimiento reducido: molécula completa y todo visible, sin escaneo.
 - Las anclas (#formulacion, #rd-galenicos…) funcionan solas: cada paso es un
   elemento real. Rótulo de fase en contenido (`techServicesSlider.phase`).
+
+### 2026-09-29 — Claude (nube) — Laboratorio: flechas y pausa de vidrio líquido; anillo sincronizado
+
+- Cliente: flechas y pausa «liquid glass, iPhone, Human Interface». Botones
+  redondos de 44 px con desenfoque y saturación del fondo, filete de luz de
+  medio píxel, brillo especular arriba, sombra corta y un leve hundimiento al
+  pulsar (tokens `--lab-glass-*`).
+- La pausa lleva un anillo que se completa con el tiempo del paso en curso,
+  en el color del servicio: misma duración (`--dwell`), mismo reinicio (`key`
+  = `tick`) y se congela con la barra. Comprobado: barra y anillo van al
+  milisegundo.

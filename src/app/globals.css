@@ -17,7 +17,13 @@
   --lab-morph: 640ms;
   --lab-toggle-icon: 1rem;
   --lab-arrow-icon: 1.25rem;
-  --lab-arrow-surface: rgba(255, 255, 255, 0.88);
+  --lab-glass:        rgba(255, 255, 255, 0.34);
+  --lab-glass-hover:  rgba(255, 255, 255, 0.5);
+  --lab-glass-edge:   inset 0 0 0 0.5px rgba(255, 255, 255, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  --lab-glass-shadow: 0 6px 18px -6px rgba(0, 20, 50, 0.28);
+  --lab-glass-sheen:  linear-gradient(180deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0) 55%);
+  --lab-glass-track:  rgba(0, 40, 92, 0.14);
+  --lab-glass-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   --lab-detail-padding: clamp(1rem, 2vw, 2rem);
   --lab-compact-title: clamp(1.75rem, 3.5svh, 2.5rem);
@@ -1506,11 +1512,44 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
 }
 
 /* Flechas discretas sobre la foto; área táctil de 44 px y foco visible. */
-.laboratory__arrow { position: absolute; top: 50%; transform: translateY(-50%); z-index: 1; display: grid; place-items: center; width: var(--lab-control-min); height: var(--lab-control-min); color: var(--color-blue); background: var(--lab-arrow-surface); border-radius: var(--radius-field); cursor: pointer; touch-action: manipulation; transition: color var(--motion-control) var(--motion-ease), background-color var(--motion-control) var(--motion-ease); }
+/* 29/09/2026 (cliente: «liquid glass, iPhone, Human Interface»): flechas y
+   pausa como botones redondos de vidrio líquido —desenfoque y saturación del
+   fondo, filete de luz de medio píxel, brillo especular arriba y sombra corta—.
+   Al pulsar se hunden un poco, como en iOS. */
+.laboratory__arrow, .lab-toggle {
+  position: absolute;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: var(--lab-control-min);
+  height: var(--lab-control-min);
+  border-radius: 999px;
+  color: var(--color-blue);
+  background: var(--lab-glass);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+          backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: var(--lab-glass-edge), var(--lab-glass-shadow);
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background-color 250ms var(--motion-ease), transform 250ms var(--lab-glass-spring), box-shadow 250ms var(--motion-ease);
+}
+.laboratory__arrow::before, .lab-toggle::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--lab-glass-sheen);
+  pointer-events: none;
+}
+.laboratory__arrow { top: 50%; transform: translateY(-50%); }
+@media (hover: hover) and (pointer: fine) {
+  .laboratory__arrow:hover, .lab-toggle:hover { background: var(--lab-glass-hover); }
+}
+.laboratory__arrow:active { transform: translateY(-50%) scale(0.92); }
+.lab-toggle:active { transform: scale(0.92); }
 .laboratory__arrow--previous { left: var(--lab-caption-gap); }
 .laboratory__arrow--next { right: var(--lab-caption-gap); }
-.laboratory__arrow svg { width: var(--lab-arrow-icon); height: var(--lab-arrow-icon); }
-.laboratory__arrow:hover { color: var(--lab-teal-text); background: var(--color-bone); }
+.laboratory__arrow svg { position: relative; width: var(--lab-arrow-icon); height: var(--lab-arrow-icon); }
 .laboratory__arrow:focus-visible { outline: var(--lab-active-rule) solid var(--color-blue); outline-offset: var(--lab-active-rule); }
 
 
@@ -1658,26 +1697,28 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
 }
 .lab-rail__step:focus-visible { outline: var(--lab-active-rule) solid var(--color-blue); outline-offset: var(--lab-compact-gap); }
 
-/* Pausa: discreta, en la esquina inferior de la foto, con el mismo material
-   que las flechas; solo aparece si el recorrido avanza solo. */
-.lab-toggle {
-  position: absolute;
-  right: var(--lab-caption-gap);
-  bottom: var(--lab-caption-gap);
-  z-index: 1;
-  display: grid;
-  place-items: center;
-  width: var(--lab-control-min);
-  height: var(--lab-control-min);
-  color: var(--color-blue);
-  background: var(--lab-arrow-surface);
-  border-radius: var(--radius-field);
-  cursor: pointer;
-  touch-action: manipulation;
-  transition: color var(--motion-control) var(--motion-ease), background-color var(--motion-control) var(--motion-ease);
+/* Pausa: en la esquina inferior de la foto, mismo vidrio que las flechas.
+   Su anillo se rellena con el tiempo del paso en curso, sincronizado con el
+   temporizador de la barra: misma duración (`--dwell`), mismo reinicio (el
+   `key` del SVG es el `tick` del recorrido) y se congela con ella. */
+.lab-toggle { right: var(--lab-caption-gap); bottom: var(--lab-caption-gap); }
+.lab-toggle__icon { position: relative; width: var(--lab-toggle-icon); height: var(--lab-toggle-icon); }
+.lab-toggle__ring { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); pointer-events: none; }
+.lab-toggle__track, .lab-toggle__fill { fill: none; stroke-width: 2; }
+.lab-toggle__track { stroke: var(--lab-glass-track); }
+.lab-toggle__fill {
+  stroke: var(--rail-accent);
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke var(--lab-morph) var(--motion-ease);
+  animation: lab-ring var(--dwell) linear forwards;
 }
-.lab-toggle svg { width: var(--lab-toggle-icon); height: var(--lab-toggle-icon); }
-.lab-toggle:hover { color: var(--lab-teal-text); background: var(--color-bone); }
+.lab-toggle[data-paused] .lab-toggle__fill { animation-play-state: paused; }
+@keyframes lab-ring { to { stroke-dashoffset: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .laboratory__arrow, .lab-toggle { transition: none; }
+}
 .lab-toggle:focus-visible { outline: var(--lab-active-rule) solid var(--color-blue); outline-offset: var(--lab-active-rule); }
 
 /* Móvil: la misma barra, solo con los números; el nombre del paso ya está
