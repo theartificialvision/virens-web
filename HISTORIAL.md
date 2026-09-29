@@ -3061,3 +3061,16 @@ atascada en la home, Compañía ni Tech.
   Retirar después: quitar `<CphiPopup>` de RootShell (y el peso 800 de
   Montserrat si ya no se usa).
 - «Book a meeting» lleva a la página de Contacto (el diseño tenía `#`).
+
+### 2026-09-29 — Claude (nube) — Pop-up CPHI cortado en iPhone + desbordamiento horizontal en móvil
+
+- Causa principal: en móvil la home medía ~1.500 px de ancho. Los `.sr-only`
+  (absolutos) de las celdas del carril de formas galénicas tomaban como
+  bloque contenedor `.v2-gal-rail` y escapaban del recorte del scroll
+  horizontal. En iPhone la vista se desplazaba de lado y el pop-up salía
+  cortado. Arreglo: `.v2-gal-list { position: relative }`. Verificado a
+  375/390/430 px: ancho de página = ancho de pantalla.
+- Pop-up en móvil: los bloques ya no se encogen cuando la tarjeta no cabe
+  (`flex-shrink: 0`; la pastilla del stand se aplastaba), pastilla sin salto
+  de línea y tarjeta más compacta, con un escalón más para pantallas bajas
+  (≤700 px de alto). Cabe entera en iPhone SE y 14 con las barras de Safari.
