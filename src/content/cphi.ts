@@ -22,6 +22,18 @@ export const cphiPopup = {
   units: { d: 'd', h: 'h', m: 'm', s: 's' },
   live: 'Live now · Hall 8',
   cta: 'Book a meeting',
+  /** Pase de Apple Wallet (29/09/2026). Rutas en `public/`; los genera
+   *  `wallet/build-pass.sh`. El badge es el oficial de Apple, sin tocar. */
+  wallet: {
+    pass: '/wallet/virens-cphi-milan-2026.pkpass',
+    badge: '/img/wallet/add-to-apple-wallet.svg',
+    badgeAlt: 'Add to Apple Wallet',
+    qr: '/wallet/cphi-pass-qr.svg',
+    qrAlt: 'QR code to add the Virens Labs CPHI pass to Apple Wallet',
+    desktopLabel: 'Add to Apple Wallet',
+    scanTitle: 'Scan with your iPhone',
+    scanHint: 'The pass opens in Wallet',
+  },
   /** Cápsula que queda abajo a la izquierda al cerrar el pop-up. */
   dock: { name: 'CPHI Milan', date: '6–8 Oct 2026', live: 'Live now', aria: 'CPHI Milan, 6–8 October 2026 — open event details' },
 } as const;

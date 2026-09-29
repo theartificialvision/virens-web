@@ -53,3 +53,23 @@ mkdir -p "$(dirname "$OUT")"
 rm -f "$OUT"
 (cd "$WORK" && zip -q -r -X - . -x '.*') > "$OUT"
 echo "Listo: $OUT"
+
+# QR para escritorio: abre el pase en el iPhone. Apunta al dominio donde se
+# publica la web (SITE_URL; por defecto el de producción).
+SITE_URL="${SITE_URL:-https://lvirens.com}"
+python3 - "$SITE_URL" <<'PY'
+import sys
+try:
+    import qrcode, qrcode.image.svg
+except ImportError:
+    sys.exit("Falta el módulo qrcode (pip install qrcode) para generar el QR.")
+url = sys.argv[1].rstrip("/") + "/wallet/virens-cphi-milan-2026.pkpass"
+img = qrcode.make(url, image_factory=qrcode.image.svg.SvgPathImage, border=0)
+img.save("../public/wallet/cphi-pass-qr.svg")
+print("QR:", url)
+PY
+
+if [[ ! -f ../public/img/wallet/add-to-apple-wallet.svg ]]; then
+  echo "Aviso: falta el badge oficial en public/img/wallet/add-to-apple-wallet.svg"
+  echo "(developer.apple.com/wallet/add-to-apple-wallet-guidelines). Sin él el botón no sale."
+fi

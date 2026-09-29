@@ -3239,3 +3239,15 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
   `wallet/build-pass.sh` lo firma y lo deja en `public/wallet/`;
   `netlify.toml` ya sirve `.pkpass` con su tipo MIME. Ver `wallet/README.md`.
   El botón «Añadir a Apple Wallet» del pop-up se pone cuando exista el archivo.
+
+### 2026-09-29 — Claude (nube) — «Añadir a Apple Wallet» en el pop-up de CPHI
+
+- iPhone/iPad: badge oficial de Apple encima de «Book a meeting», descarga el
+  pase. Escritorio: botón fantasma «Add to Apple Wallet» junto a «Book a
+  meeting» que despliega un QR para abrir el pase en el iPhone. Android: nada
+  (Google Wallet sería otro pase). `CphiWallet`, textos en `cphi.ts`.
+- Se enciende solo cuando existen en `public/` el pase firmado, el badge
+  oficial (`img/wallet/add-to-apple-wallet.svg`) y el QR (`src/lib/walletReady.ts`,
+  comprobado en build). Hoy no existen: el pop-up sigue igual.
+- `wallet/build-pass.sh` genera también el QR (SITE_URL, por defecto
+  lvirens.com) y avisa si falta el badge.
