@@ -3227,3 +3227,15 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
   las coordenadas, y fuera los prefijos «Telf:» / «GPS:» (ya lo dice el rótulo).
 - Departamento como **control segmentado**: pista gris y píldora blanca que se
   desliza a la opción elegida. Campos con anillo de foco suave teal.
+
+### 2026-09-29 — Claude (nube) — Pase de Apple Wallet para CPHI (sin firmar)
+
+- Idea del cliente: pase de Wallet con logo, evento, stand y QR a la página de
+  contacto. Diseñado y listo en `wallet/cphi-milan-2026.pass` (pass.json
+  `eventTicket`, logo/icono/strip @1x-@3x, textos ES/EN, aviso en pantalla de
+  bloqueo por fecha y cercanía a Fiera Milano, caduca el 9/10). QR y reverso a
+  `lvirens.com/contacto` con UTM. Vista previa en `wallet/preview.png`.
+- Falta firmarlo con un certificado Pass Type ID de Apple Developer:
+  `wallet/build-pass.sh` lo firma y lo deja en `public/wallet/`;
+  `netlify.toml` ya sirve `.pkpass` con su tipo MIME. Ver `wallet/README.md`.
+  El botón «Añadir a Apple Wallet» del pop-up se pone cuando exista el archivo.
