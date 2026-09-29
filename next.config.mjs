@@ -14,7 +14,12 @@ const nextConfig = {
       // Labs ya es la home: se conserva la URL histórica como redirección.
       ['/virens-labs', '/'],
       ['/virens-tech/', '/virens-tech'],
-      ['/noticias/', '/noticias'],
+      // Noticias retirada (29/09/2026, decisión del cliente; el trabajo está en
+      // aparcado/noticias). Sus URLs van a la home del idioma.
+      ['/noticias', '/'],
+      ['/noticias/:path*', '/'],
+      ['/en/news', '/en'],
+      ['/en/news/:path*', '/en'],
       ['/contacto/', '/contacto'],
       ['/aviso-legal/', '/legal/aviso-legal'],
       ['/politica-de-proteccion-de-datos/', '/legal/politica-de-privacidad'],

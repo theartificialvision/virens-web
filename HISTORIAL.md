@@ -3119,3 +3119,14 @@ atascada en la home, Compañía ni Tech.
   texto de la tarjeta).
 - Decisión a confirmar: Private Label abarca ahora los pasos 1–4 (antes 1–2),
   porque el cliente pidió que la transformación ocurra al llegar a Logística.
+
+### 2026-09-29 — Claude (nube) — Noticias retirada de la web
+
+- Decisión del cliente: no habrá sección de noticias. Fuera la ruta
+  (`/noticias`, `/en/news`), `NewsView`, sus textos y metadatos en `ui.ts`,
+  el enlace del menú y el de «Recursos» en el pie (ES y EN), y la entrada del
+  sitemap (queda en 8 URLs).
+- Redirecciones 301: `/noticias` y `/noticias/*` → `/`; `/en/news` y
+  `/en/news/*` → `/en`. Comprobado con `next start`.
+- Lo de Muse sigue en `aparcado/noticias/` por si algún día se retoma.
+  `typecheck` y `next build` limpios.

@@ -187,7 +187,6 @@ export const v2FooterNav = [
   {
     title: 'Resources',
     items: [
-      { label: 'News', href: '/en/news' }, // [EN]
       { label: 'Documentation', href: '/en/contact' }, // [TR]
       { label: 'Contact', href: '/en/contact' }, // [EN]
     ],

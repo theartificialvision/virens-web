@@ -113,8 +113,8 @@ otra IA dentro). Todo está preparado en el repo:
 ## Idiomas (desde el 27/09/2026)
 
 - **ES + EN.** Español en la raíz (`/`, `/compania`, `/virens-tech`,
-  `/noticias`, `/contacto`); inglés con rutas traducidas, las mismas que ya
-  publica lvirens.com (`/en`, `/en/company`, `/en/virens-tech`, `/en/news`,
+  `/contacto`); inglés con rutas traducidas, las mismas que ya
+  publica lvirens.com (`/en`, `/en/company`, `/en/virens-tech`,
   `/en/contact`). Mapa de rutas y utilidades en `src/lib/i18n.ts`.
 - **Estructura:** cada idioma tiene su layout raíz (`src/app/(es)/layout.tsx`,
   `src/app/en/layout.tsx`, con `<html lang>` correcto). Las páginas son
@@ -143,9 +143,9 @@ otra IA dentro). Todo está preparado en el repo:
   recorrido del laboratorio ya publicado, quedó guardado en la rama local
   `respaldo-mac-2b2385e`, por si hiciera falta. Sigue también el `git stash`
   del 28/09. Desde ahora: pull antes de trabajar y publicar solo por push a `v2`.
-- **Noticias: fuera por decisión del cliente (29/09).** El trabajo de Muse está
-  en `aparcado/noticias/`, fuera de la build. `/noticias` y `/en/news` siguen
-  en menú, pie, sitemap y redirecciones: falta decidir si se quitan.
+- **Noticias: retirada por decisión del cliente (29/09).** Fuera del menú, el
+  pie, el sitemap y las rutas; `/noticias/*` redirige a `/` y `/en/news/*` a
+  `/en`. El trabajo de Muse está en `aparcado/noticias/`, fuera de la build.
 - **Páginas legales**: no existen aún en ningún idioma (`/legal/*`,
   `/en/legal/*`); pie, formulario y redirecciones ya apuntan ahí.
 - **Revisión del inglés `[TR]`** por el cliente: `docs/i18n-ingles.md`.

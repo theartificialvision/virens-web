@@ -9,7 +9,7 @@ export const defaultLocale: Locale = 'es';
  *
  * El español vive en la raíz, como hasta ahora; el inglés bajo `/en` con
  * rutas traducidas —las mismas que ya publica lvirens.com en inglés
- * (`/en/company/`, `/en/contact/`, `/en/news/`…), así no se pierde nada de lo
+ * (`/en/company/`, `/en/contact/`…), así no se pierde nada de lo
  * que Google ya tiene indexado—. Añadir un idioma es añadir una columna aquí,
  * su diccionario en `src/content/<idioma>` y su carpeta en `src/app`.
  */
@@ -17,7 +17,6 @@ export const routes = {
   home: { es: '/', en: '/en' },
   company: { es: '/compania', en: '/en/company' },
   tech: { es: '/virens-tech', en: '/en/virens-tech' },
-  news: { es: '/noticias', en: '/en/news' },
   contact: { es: '/contacto', en: '/en/contact' },
 } as const satisfies Record<string, Record<Locale, string>>;
 

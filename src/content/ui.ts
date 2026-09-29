@@ -23,10 +23,8 @@ interface Ui {
     home: { title: string; description: string };
     company: { title: string; description: string };
     tech: { title: string; description: string };
-    news: { title: string; description: string };
     contact: { title: string; description: string };
   };
-  news: { eyebrow: string; title: string };
 }
 
 export const ui: Record<Locale, Ui> = {
@@ -39,7 +37,6 @@ export const ui: Record<Locale, Ui> = {
       { href: '/', label: 'Inicio' },
       { href: '/compania', label: 'Compañía' },
       { href: '/virens-tech', label: 'Virens Tech', division: 'tech' },
-      { href: '/noticias', label: 'Noticias' },
       { href: '/contacto', label: 'Contacto' },
     ],
     menuAria: 'Menú principal',
@@ -68,13 +65,11 @@ export const ui: Record<Locale, Ui> = {
         title: 'Virens Tech · Desarrollo y formulación',
         description: 'Formulación, R+D galénicos, centro de sabores, estabilidad, control de calidad y consultoría regulatoria.',
       },
-      news: { title: 'Noticias', description: 'Actualidad de Laboratorios Virens: ferias, divulgación y compañía.' },
       contact: {
         title: 'Contacto',
         description: 'Sant Andreu de la Barca, Barcelona. (+34) 936 828 972. Cuéntenos su proyecto de fabricación o desarrollo.',
       },
     },
-    news: { eyebrow: 'Actualidad', title: 'Noticias y actualidad de Laboratorios Virens' },
   },
   en: {
     htmlLang: 'en',
@@ -85,7 +80,6 @@ export const ui: Record<Locale, Ui> = {
       { href: '/en', label: 'Home' }, // [EN]
       { href: '/en/company', label: 'Company' }, // [EN]
       { href: '/en/virens-tech', label: 'Virens Tech', division: 'tech' },
-      { href: '/en/news', label: 'News' }, // [EN]
       { href: '/en/contact', label: 'Contact' }, // [EN]
     ],
     menuAria: 'Main menu', // [TR]
@@ -114,12 +108,10 @@ export const ui: Record<Locale, Ui> = {
         title: 'Virens Tech · Development and formulation', // [TR]
         description: 'Formulation, galenic R+D, taste centre, stability, quality assurance and regulatory consulting.', // [TR]
       },
-      news: { title: 'News', description: 'Laboratorios Virens news: trade fairs, science and company.' }, // [TR]
       contact: {
         title: 'Contact', // [EN]
         description: 'Sant Andreu de la Barca, Barcelona. (+34) 936 828 972. Tell us about your manufacturing or development project.', // [TR]
       },
     },
-    news: { eyebrow: 'News', title: 'Laboratorios Virens news and updates' }, // [TR]
   },
 };

@@ -225,7 +225,6 @@ export const v2FooterNav = [
   {
     title: 'Recursos',
     items: [
-      { label: 'Noticias', href: '/noticias' },
       { label: 'Documentación', href: '/contacto' },
       { label: 'Contacto', href: '/contacto' },
     ],
