@@ -3215,3 +3215,15 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
   6–8 Oct 2026» (y el stand al pasar el cursor) que vuelve a abrir el pop-up.
   En las páginas siguientes de la visita solo sale la cápsula. Desaparece al
   cerrar la feria, como el pop-up.
+
+### 2026-09-29 — Claude (nube) — Contacto sin foto, estilo Apple
+
+- Cliente: «sin fondo de foto, Apple perfecta, mínimos upgrades». Fuera la
+  fotografía y sus velos (`home-scene-labs.jpg` borrada, ya no la usa nadie);
+  fondo gris muy claro liso y el panel del formulario con filete de medio
+  píxel y sombra corta (tokens `--contact-*`).
+- Datos en filas con rótulo pequeño y filete fino. Mejoras: fila de **Email**
+  (csp@lvirens.com, de `site.ts`), enlace **Cómo llegar** a Google Maps con
+  las coordenadas, y fuera los prefijos «Telf:» / «GPS:» (ya lo dice el rótulo).
+- Departamento como **control segmentado**: pista gris y píldora blanca que se
+  desliza a la opción elegida. Campos con anillo de foco suave teal.

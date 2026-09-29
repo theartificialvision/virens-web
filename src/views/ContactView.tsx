@@ -1,75 +1,67 @@
-import Image from 'next/image';
 import { ContactForm } from '@/components/sections/ContactForm';
-import { Section } from '@/components/ui/Section';
 import { Container } from '@/components/ui/Container';
 import { ContactIcon } from '@/components/ui/ContactIcon';
 import { Eyebrow } from '@/components/ui/Eyebrow';
+import { site } from '@/config/site';
 import { contactContent } from '@/content';
 import type { Locale } from '@/lib/i18n';
 
 /**
- * CONTACTO — composición del mockup del cliente (`contactos.png`, 06/09/2026):
- * datos de empresa sobre la fotografía de planta a la izquierda, panel blanco
- * de formulario a la derecha. En mobile se apilan, con los datos primero.
+ * CONTACTO — desde el 29/09/2026 (cliente: «sin fondo de foto, Apple perfecta,
+ * mínimos upgrades») sobre fondo claro liso: datos a la izquierda en filas con
+ * rótulo y filete de medio tono, formulario a la derecha en un panel blanco.
+ * Mejoras: correo visible, «Cómo llegar» a Google Maps y selector de
+ * departamento como control segmentado. En móvil se apilan, datos primero.
  *
  * El envío del formulario NO está configurado: ver `ContactForm`.
  */
 export function ContactView({ locale }: { locale: Locale }) {
   const { contactDepartments, contactDetails, contactFields, contactIntro } = contactContent(locale);
+  const maps = `https://www.google.com/maps/search/?api=1&query=${site.contact.geo.lat},${site.contact.geo.lng}`;
   return (
-    <Section tone="white" rhythm="air" className="contact-stage">
-      {/* 06/09 (8): fuera la de la sesión Midjourney. Era una nave genérica de
-          IA y el cliente la rechazó por anticuada. Pasa a la línea de envasado
-          en blanco y negro que aportó él mismo —la misma tanda que aprobó para
-          el hero— así que la página deja de depender de material provisional y
-          entra en la dirección visual vigente: fotografía B/N, nada de tinte.
-          Decorativa —el contenido lo dan los datos de al lado—, de ahí el alt
-          vacío. Sigue pendiente el reportaje propio de la planta (§9.2). */}
-      <div className="contact-photo">
-        <Image src="/img/home-scene-labs.jpg" alt="" fill priority sizes="100vw" quality={85} />
-      </div>
-
+    <section className="contact-stage" data-header-tone="light">
       <Container>
-        <div className="grid gap-14 lg:grid-cols-2 lg:items-start lg:gap-16 xl:gap-24">
-          <div>
+        <div className="grid gap-14 lg:grid-cols-12 lg:items-start lg:gap-16">
+          <div className="lg:col-span-5">
             <Eyebrow className="text-labs">{contactIntro.eyebrow}</Eyebrow>
-
             <h1 className="mt-6 max-w-[14ch] text-[length:var(--v2-hero-title)] font-normal leading-[1.08] tracking-[-0.02em] text-blue">
               {contactIntro.title}
             </h1>
-
-            {/* §14.1 pide "Dónde estamos" como H2 de la página. El mockup no lo
-                dibuja —la jerarquía la da el tamaño del titular— así que va en
-                el DOM y se oculta visualmente; no se inventa un rótulo. */}
-            <h2 className="sr-only">{contactIntro.locationHeading}</h2>
-
-            <address className="mt-10 not-italic">
-              <ul className="grid gap-6">
-                {contactDetails.map((detail) => (
-                  <li key={detail.id} className="flex items-start gap-4">
-                    <ContactIcon name={detail.icon} className="mt-1 size-6 shrink-0 text-labs" />
-                    <div className="text-[length:var(--text-body)] leading-relaxed text-blue">
-                      {detail.href ? (
-                        <a href={detail.href} className="font-medium hover:text-labs">
-                          {detail.lines[0]}
-                        </a>
-                      ) : (
-                        detail.lines.map((line) => <p key={line}>{line}</p>)
-                      )}
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            </address>
-
-            <p className="mt-8 max-w-[var(--measure-narrow)] text-[length:var(--text-small)] leading-[1.85] text-gray-700">
+            <p className="mt-6 max-w-[var(--measure-narrow)] text-[length:var(--text-small)] leading-[1.85] text-gray-700">
               {contactIntro.note}
             </p>
+
+            {/* §14.1 pide «Dónde estamos» como H2; va oculto, la jerarquía la da el titular. */}
+            <h2 className="sr-only">{contactIntro.locationHeading}</h2>
+
+            <address className="contact-details not-italic">
+              {contactDetails.map((detail) => (
+                <div key={detail.id} className="contact-detail">
+                  <ContactIcon name={detail.icon} className="contact-detail-icon" />
+                  <div className="min-w-0">
+                    <p className="contact-detail-label">{detail.label}</p>
+                    {detail.href ? (
+                      <a href={detail.href} className="contact-detail-link">{detail.lines[0]}</a>
+                    ) : (
+                      detail.lines.map((line) => <p key={line} className="contact-detail-value">{line}</p>)
+                    )}
+                    {detail.id === 'address' ? (
+                      <a href={maps} target="_blank" rel="noopener noreferrer" className="contact-directions">
+                        {contactIntro.directions}
+                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d="M5.5 10.5 10.5 5.5M6.5 5.5h4v4" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                      </a>
+                    ) : null}
+                  </div>
+                </div>
+              ))}
+            </address>
           </div>
 
-          <ContactForm departments={contactDepartments} fields={contactFields} locale={locale} />
+          <div className="lg:col-span-7 xl:col-span-6 xl:col-start-7">
+            <ContactForm departments={contactDepartments} fields={contactFields} locale={locale} />
+          </div>
         </div>
       </Container>
-    </Section>
+    </section>
   );
 }

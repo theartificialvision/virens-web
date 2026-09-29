@@ -28,6 +28,8 @@ export const contactIntro = {
   locationHeading: 'Dónde estamos',
   // IMAGE-ONLY: la frase completa solo existe dentro del mockup. `site.ts`
   // guarda la versión corta del dato ("A 20 km de Barcelona").
+  /** 29/09/2026: enlace «Cómo llegar» bajo la dirección (abre Google Maps con las coordenadas de `site.ts`). */
+  directions: 'Cómo llegar',
   note: 'Estamos ubicados a 20 km de Barcelona, en una zona industrial, nudo de infraestructuras de conexión de Barcelona con el resto del mundo.',
 } as const;
 
@@ -50,8 +52,16 @@ export const contactDetails: readonly ContactDetail[] = [
     id: 'phone',
     icon: 'phone',
     label: 'Teléfono',
-    lines: [`Telf: ${site.contact.phoneDisplay}`],
+    // 29/09/2026: sin «Telf:» delante, el rótulo ya lo dice.
+    lines: [site.contact.phoneDisplay],
     href: `tel:${site.contact.phone}`,
+  },
+  {
+    id: 'email',
+    icon: 'mail',
+    label: 'Email',
+    lines: [site.contact.email],
+    href: `mailto:${site.contact.email}`,
   },
   {
     id: 'gps',
@@ -59,7 +69,7 @@ export const contactDetails: readonly ContactDetail[] = [
     label: 'Coordenadas',
     // IMAGE-ONLY: el sexagesimal sale del mockup; `site.contact.geo` guarda el
     // mismo punto en decimal (41.4578, 1.9692).
-    lines: ['GPS: 41°27′28″ N  1°58′9″ E'],
+    lines: ['41°27′28″ N  1°58′9″ E'],
   },
 ] as const;
 

@@ -152,6 +152,9 @@
      Excepción puntual a "radio 0 / sin sombra": pendiente de confirmar
      en CLAUDE.md si se adopta como regla general o se queda aquí. */
   --radius-panel: 1.25rem; /* 20px */
+  --contact-hairline: rgba(0, 40, 92, 0.08);
+  --contact-shadow: 0 12px 32px -12px rgba(0, 20, 50, 0.14);
+  --contact-focus: rgba(0, 160, 153, 0.16);
   --shadow-panel: 0 20px 50px -12px rgba(0, 12, 30, 0.35);
 
   /* --- Menú: franja vertical (2026-09-04, petición del cliente) ----
@@ -374,83 +377,37 @@
 /* Móviles de poca altura: libera el área del menú flotante sin reducir
    el tamaño táctil de los botones de división. */
 
-/* --- Contacto (mockup `contactos.png` del cliente, 06/09/2026) ----------
-   Mitad izquierda con los datos de empresa sobre la fotografía de planta,
-   panel blanco de formulario a la derecha.
-
-   Regla 4: el panel es un elemento flotante único sobre la fotografía —no una
-   rejilla de tarjetas—, el mismo caso que el desplegable del menú, así que
-   reutiliza `--radius-panel` y `--shadow-panel` en vez de estrenar tokens.
-   Los campos llevan `--radius-field` por ser controles (ver el token). */
+/* --- Contacto (29/09/2026: «sin fondo de foto, Apple perfecta») --------
+   Fondo claro liso; datos en filas con rótulo y filete fino; el panel del
+   formulario es el único elemento que flota (regla 4, `--radius-panel`). */
 .contact-stage {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
+  background: var(--color-gray-50);
+  padding-block: calc(var(--v2-header) + var(--v2-section)) var(--v2-section);
 }
-.contact-photo {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
+.contact-details { margin-top: 2.75rem; border-top: 1px solid var(--color-gray-200); }
+.contact-detail {
+  display: grid;
+  grid-template-columns: 1.5rem 1fr;
+  gap: 1rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--color-gray-200);
 }
-/* El encuadre baja del centro: la nave es simétrica y con el centro exacto la
-   línea de fuga queda demasiado alta detrás del titular. */
-/* B/N explícito: el archivo ya viene en gris, pero así la página no depende de
-   que el siguiente que se cuelgue aquí también lo esté. Encuadre a la derecha:
-   ahí está la operaria y la línea llena; el lado izquierdo, que es donde cae el
-   texto, queda con la mesa vacía y se lee mucho mejor. */
-.contact-photo img {
-  object-fit: cover;
-  object-position: 68% center;
-  filter: grayscale(1) contrast(1.06);
+.contact-detail-icon { width: 1.25rem; height: 1.25rem; margin-top: 0.125rem; color: var(--color-labs); }
+.contact-detail-label { font-size: var(--text-micro); color: var(--color-gray-500); }
+.contact-detail-value, .contact-detail-link { display: block; margin-top: 0.125rem; font-size: var(--text-body); line-height: 1.5; color: var(--color-blue); }
+.contact-detail-link { font-weight: 500; transition: color 200ms var(--ease-out-quart); }
+.contact-detail-link:hover { color: var(--color-labs); }
+.contact-directions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-top: 0.5rem;
+  font-size: var(--text-micro);
+  font-weight: 600;
+  color: var(--lab-teal-text);
 }
-
-/* Velo. En el mockup la esquina superior izquierda es casi blanca —ahí caen el
-   rótulo y el H1— y la planta se va destapando hacia abajo. Se resuelve con
-   dos capas para que ninguna tenga que hacer las dos cosas a la vez.
-
-   Calibrado sobre la foto real: la del mockup es un primer plano claro (pastillas
-   blancas, poca profundidad) y aguanta un velo suave; la de la sesión Midjourney
-   es una nave entera con maquinaria oscura en la banda media, justo donde caen
-   el teléfono, el GPS y el párrafo. Con el velo del mockup ese texto no se leía,
-   así que el suelo del blanco sube al 80 %: la planta sigue reconociéndose como
-   fotografía, pero como fondo, no como imagen protagonista. */
-.contact-photo::before,
-.contact-photo::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  /* Imprescindible: `next/image` con `fill` deja un <img> posicionado, y entre
-     posicionados sin z-index manda el orden del árbol — el ::before caería
-     DETRÁS de la foto y el velo no se vería. */
-  z-index: 1;
-}
-.contact-photo::before {
-  /* El tramo 22–62 % es la banda donde cae el texto de la izquierda y va casi
-     opaco; por debajo no hay nada escrito, así que el blanco se retira y la
-     planta aparece. */
-  background: linear-gradient(
-    to bottom,
-    #fff 0%,
-    rgba(255, 255, 255, 0.94) 22%,
-    rgba(255, 255, 255, 0.86) 58%,
-    rgba(255, 255, 255, 0.72) 78%,
-    rgba(255, 255, 255, 0.58) 100%
-  );
-}
-/* La capa horizontal solo existe en desktop: es la que limpia el lado del
-   panel. En mobile el panel va debajo, sobre blanco, y sobraría. */
-.contact-photo::after { background: none; }
-@media (min-width: 1024px) {
-  .contact-photo::after {
-    background: linear-gradient(
-      to right,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(255, 255, 255, 0) 32%,
-      rgba(255, 255, 255, 0.62) 54%,
-      #fff 72%
-    );
-  }
-}
+.contact-directions svg { width: 0.875rem; height: 0.875rem; transition: transform 250ms var(--ease-out-quart); }
+.contact-directions:hover svg { transform: translate(2px, -2px); }
 
 /* Filete de marca bajo el titular. */
 .contact-rule {
@@ -464,7 +421,9 @@
 .contact-panel {
   background: #fff;
   border-radius: var(--radius-panel);
-  box-shadow: var(--shadow-panel);
+  /* 29/09/2026: sobre fondo claro basta un filete de medio píxel y una sombra
+     corta; la de `--shadow-panel` estaba pensada para ir sobre fotografía. */
+  box-shadow: 0 0 0 0.5px var(--contact-hairline), var(--contact-shadow);
   padding: clamp(1.75rem, 3.2vw, 3rem);
   /* Un item de rejilla no baja de su `min-content` salvo que se le diga: sin
      esto el panel ensancha la columna y con ella toda la página. */
@@ -476,40 +435,55 @@
    botones imponían su min-content (≈410 px con los iconos) y desbordaban la
    pantalla en un móvil de 390. */
 .contact-departments {
+  /* Control segmentado (29/09/2026): pista gris y una píldora blanca que se
+     desliza hasta la opción elegida (`--seg`). */
+  position: relative;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.75rem;
+  padding: 0.25rem;
+  border-radius: calc(var(--radius-field) + 0.25rem);
+  background: var(--color-gray-100);
+}
+.contact-departments::before {
+  content: "";
+  position: absolute;
+  top: 0.25rem;
+  bottom: 0.25rem;
+  left: 0.25rem;
+  width: calc((100% - 0.5rem) / 3);
+  border-radius: var(--radius-field);
+  background: #fff;
+  box-shadow: 0 0 0 0.5px var(--contact-hairline), 0 3px 8px -2px rgba(0, 20, 50, 0.12);
+  transform: translateX(calc(100% * var(--seg, 0)));
+  transition: transform 380ms cubic-bezier(0.32, 0.72, 0, 1);
 }
 .contact-department {
+  position: relative;
+  z-index: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  min-height: 3.25rem;
+  min-height: 2.75rem;
   padding: 0 0.75rem;
-  border: 1px solid var(--color-gray-200);
   border-radius: var(--radius-field);
-  color: var(--color-gray-700);
+  color: var(--color-gray-500);
   font-size: var(--text-small);
+  font-weight: 500;
   line-height: 1.2;
   text-align: center;
-  transition: border-color 200ms var(--ease-out-quart), color 200ms var(--ease-out-quart);
+  transition: color 250ms var(--ease-out-quart);
 }
-.contact-department:hover { border-color: var(--color-gray-300); }
-/* Seleccionado: filete y texto en color de Labs. El relleno se queda blanco a
-   propósito — un fondo sólido lo convertiría en un botón de acción y aquí solo
-   marca cuál de los tres está elegido. */
-.contact-department[aria-pressed='true'] {
-  border-color: var(--color-labs);
-  color: var(--color-labs);
-  font-weight: 600;
-}
-/* En pantallas estrechas los tres siguen en línea —es como se leen: tres
-   opciones de lo mismo— pero sin icono: con él, "Comercial" no cabe en su
-   tercio y el rótulo es lo que hay que conservar. */
+.contact-department:hover { color: var(--color-blue); }
+.contact-department[aria-pressed='true'] { color: var(--color-blue); font-weight: 600; }
+.contact-department[aria-pressed='true'] .contact-department-icon { color: var(--color-labs); }
+.contact-department:focus-visible { outline: 2px solid var(--color-labs); outline-offset: 2px; }
 @media (max-width: 480px) {
   .contact-department { padding: 0 0.375rem; }
   .contact-department-icon { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .contact-departments::before { transition: none; }
 }
 
 /* --- Campos ----------------------------------------------------------- */
@@ -523,7 +497,7 @@
   font: inherit;
   font-size: var(--text-body);
   line-height: 1.5;
-  transition: border-color 200ms var(--ease-out-quart), background-color 200ms var(--ease-out-quart);
+  transition: border-color 200ms var(--ease-out-quart), background-color 200ms var(--ease-out-quart), box-shadow 200ms var(--ease-out-quart);
 }
 .contact-field::placeholder { color: var(--color-gray-500); }
 .contact-field:hover { border-color: var(--color-gray-300); }
@@ -531,6 +505,7 @@
   outline: none;
   border-color: var(--color-labs);
   background: #fff;
+  box-shadow: 0 0 0 4px var(--contact-focus);
 }
 textarea.contact-field { min-height: 9.5rem; resize: vertical; }
 

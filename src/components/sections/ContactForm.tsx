@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { buttonStyles } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
-import { useId, useState } from 'react';
+import { useId, useState, type CSSProperties } from 'react';
 import type { ContactDepartment, ContactField } from '@/lib/types';
 import { ContactIcon } from '@/components/ui/ContactIcon';
 import { ContactAttach } from './ContactAttach';
@@ -51,7 +51,7 @@ export function ContactForm({
 
       <fieldset className="mt-8 border-0 p-0">
         <legend className="sr-only">{contactForm.departmentLegend}</legend>
-        <div className="contact-departments">
+        <div className="contact-departments" style={{ '--seg': Math.max(0, departments.findIndex((d) => d.id === department)) } as CSSProperties}>
           {departments.map((d) => (
             <button
               key={d.id}

@@ -12,6 +12,7 @@ export const contactIntro = {
   eyebrow: 'Contact', // [EN]
   title: site.legalName,
   locationHeading: 'Where we are', // [TR]
+  directions: 'Get directions', // [TR]
   note: 'We are located 20 km from Barcelona, in an industrial area, a hub of infrastructures connecting Barcelona with the rest of the world.', // [EN]
 } as const satisfies Loosen<typeof es.contactIntro>;
 
@@ -30,14 +31,21 @@ export const contactDetails: readonly ContactDetail[] = [
     id: 'phone',
     icon: 'phone',
     label: 'Phone', // [EN]
-    lines: [`Phone: ${site.contact.phoneDisplay}`], // [EN]
+    lines: [site.contact.phoneDisplay],
     href: `tel:${site.contact.phone}`,
+  },
+  {
+    id: 'email',
+    icon: 'mail',
+    label: 'Email',
+    lines: [site.contact.email],
+    href: `mailto:${site.contact.email}`,
   },
   {
     id: 'gps',
     icon: 'gps',
     label: 'Coordinates', // [TR]
-    lines: ['GPS: 41°27′28″ N  1°58′9″ E'],
+    lines: ['41°27′28″ N  1°58′9″ E'],
   },
 ] as const;
 
