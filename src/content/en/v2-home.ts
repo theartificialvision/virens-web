@@ -201,12 +201,9 @@ export const v2Laboratory = {
   eyebrow: 'SCIENCE, DEVELOPMENT AND MANUFACTURING',
   serviceSummaries: ['We develop and manufacture food supplements for your brand, with tailored formulas and complete confidentiality.', 'From formulation to manufacturing, quality control, packaging and logistics. An integrated service, from start to finish.'],
   caption: 'FROM DEVELOPMENT TO FINISHED PRODUCT',
-  /** Esquema de proceso (29/09/2026, cliente: «no quiero texto, un diseño de
-   *  la formulación a la logística que destaque las dos opciones»). Un
-   *  pictograma por paso, en el orden de `capabilities`, y cuántos pasos
-   *  abarca cada servicio desde el primero: Private Label desarrolla y
-   *  fabrica; Full service llega hasta la logística. */
-  stageIcons: ['development', 'manufacturing', 'control', 'conditioning', 'logistics'],
+  /** Selector de servicio (29/09/2026, cliente): cuántos pasos de
+   *  `capabilities`, desde el primero, abarca cada servicio. Private Label
+   *  desarrolla y fabrica; Full service llega hasta la logística. */
   serviceScope: [2, 5],
   capabilities: [
     { label: 'R&D and formulation', description: 'We develop tailored formulas in collaboration with your technical and development teams.', image: { src: '/img/laboratory/formulation.webp', alt: 'Pipette and glassware representing formulation' } },

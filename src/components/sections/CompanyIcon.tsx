@@ -2,8 +2,7 @@ import { cn } from '@/lib/utils';
 
 export type CompanyIconName =
   | 'facilities' | 'team' | 'quality' | 'science' | 'international'
-  | 'development' | 'samples' | 'manufacturing' | 'conditioning' | 'control'
-  | 'logistics';
+  | 'development' | 'samples' | 'manufacturing' | 'conditioning' | 'control';
 
 /**
  * Iconos de línea de Compañía (rediseño 27/09/2026, cliente: «que representen
@@ -12,7 +11,7 @@ export type CompanyIconName =
  * disco, y un solo detalle que cuente cada idea. `pathLength="1"` en cada
  * trazo: la entrada los dibuja (`.company-stagger`, globals.css).
  */
-export const companyGlyphs: Record<CompanyIconName, React.ReactNode> = {
+const glyphs: Record<CompanyIconName, React.ReactNode> = {
   // 01 · Fabricación en instalaciones propias — nave con cubierta en diente
   // de sierra, chimenea y puerta: una planta industrial, no una casa.
   facilities: (
@@ -124,26 +123,13 @@ export const companyGlyphs: Record<CompanyIconName, React.ReactNode> = {
       <path pathLength="1" d="m37.3 36.3 4.7 4.7" />
     </>
   ),
-  // Logística (esquema de servicios de la home, 29/09/2026) — camión de
-  // reparto: caja de carga con el producto dentro y cabina.
-  logistics: (
-    <>
-      <path pathLength="1" d="M9.5 32H6V13h22v19" />
-      <path pathLength="1" d="M16.5 32h14" />
-      <path pathLength="1" d="M37.5 32H41v-6l-6-7h-7" />
-      <path pathLength="1" d="M31 22h3.5l3 3.5H31z" />
-      <path pathLength="1" d="M11 19h12M11 24h8" />
-      <circle pathLength="1" cx="13" cy="32" r="3.5" />
-      <circle pathLength="1" cx="34" cy="32" r="3.5" />
-    </>
-  ),
 };
 
 export function CompanyIcon({ name, className }: { name: CompanyIconName; className?: string }) {
   return (
     <span className={cn('company-icon company-glass-disc flex size-[var(--company-icon)] shrink-0 items-center justify-center rounded-full', className)}>
       <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" aria-hidden className="size-[58%]">
-        {companyGlyphs[name]}
+        {glyphs[name]}
       </svg>
     </span>
   );

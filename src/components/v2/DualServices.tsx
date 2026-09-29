@@ -1,25 +1,17 @@
 import { LaboratoryCapabilities } from './LaboratoryCapabilities';
-import { ServiceProcess } from './ServiceProcess';
 import { Button } from '@/components/ui/Button';
 import { homeContent } from '@/content';
 import { pathFor, type Locale } from '@/lib/i18n';
 
 /** Una sola presentación del laboratorio; conserva las anclas de los servicios
- *  (#private-label en la sección, #full-service en su corchete del esquema). */
+ *  (#private-label en la sección, #full-service en su pestaña). */
 export function DualServices({ locale }: { locale: Locale }) {
   const { v2Laboratory: content, v2Services, v2Cta } = homeContent(locale);
   return (
     <section id="private-label" aria-labelledby="laboratory-title" className="laboratory">
       <div className="laboratory__inner">
         <p className="laboratory__eyebrow">{content.eyebrow}</p>
-        <ServiceProcess
-          services={v2Services}
-          summaries={content.serviceSummaries}
-          stages={content.capabilities.map((item) => item.label)}
-          icons={content.stageIcons}
-          scope={content.serviceScope}
-        />
-        <LaboratoryCapabilities content={content} />
+        <LaboratoryCapabilities content={content} services={v2Services} />
         <div className="laboratory__footer">
           <p className="laboratory__closing">{content.closing.map((line) => <span key={line}>{line}</span>)}</p>
           <Button href={pathFor('contact', locale)} variant="labs" className="laboratory__cta">

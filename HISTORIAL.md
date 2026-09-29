@@ -3020,3 +3020,15 @@ atascada en la home, Compañía ni Tech.
   Si Private Label debe incluir más pasos (p. ej. envasado), basta con cambiar
   el 2. Los resúmenes (`serviceSummaries`) quedan solo para lectores de
   pantalla. Anclas `#private-label` y `#full-service` se conservan.
+
+### 2026-09-29 — Claude (nube) — Laboratorio: pestañas Private Label / Full service sobre un solo recorrido
+
+- El cliente descartó el esquema de corchetes («además abajo hay medio lo
+  mismo»): repetía los 5 pasos de la fila 01–05. Se elimina `ServiceProcess`
+  (y el glifo de logística). Ahora arriba solo hay dos pestañas grandes
+  (Private Label / Full service, h2 con botón) y la fila 01–05 hace de
+  recorrido: una línea une los puntos de los pasos y se tiñe, con los puntos y
+  números, en el color del servicio elegido hasta el último paso que abarca
+  (`serviceScope`: PL 2, FS 5); el resto queda en gris pero sigue navegable.
+  Por defecto, Private Label. En móvil (2 columnas) sin línea: punto junto al
+  número. Resúmenes solo para lectores de pantalla; anclas conservadas.
