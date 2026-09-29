@@ -1,4 +1,4 @@
-# Traspaso — cómo retomar el proyecto (actualizado 28/09/2026)
+# Traspaso — cómo retomar el proyecto (actualizado 29/09/2026)
 
 Nota para cualquier asistente (Claude, Codex, otro) que continúe. Léelo antes
 que nada; luego [`CLAUDE.md`](CLAUDE.md) (reglas) y las últimas entradas de
@@ -137,11 +137,15 @@ otra IA dentro). Todo está preparado en el repo:
 
 ## Pendiente / preguntas abiertas
 
-- **Copia del Mac sincronizada el 28/09/2026** con `origin/v2` (reset desde
-  una sesión en la nube; enlace de `node_modules` rehecho). Lo que tenía sin
-  subir —restos de la sincronización a medias del 27/09— quedó guardado en
-  `git stash` («copia Mac antes de sincronizar 28/09») por si hiciera falta.
-  Desde ahora: pull antes de trabajar y publicar solo por push a `v2`.
+- **Copia del Mac sincronizada el 29/09/2026** con `origin/v2` (8 commits
+  nuevos traídos). Un commit local sin subir del 28/09 (`2b2385e`, «Home:
+  Private Label y Full service como progresión 01-02»), superado por el
+  recorrido del laboratorio ya publicado, quedó guardado en la rama local
+  `respaldo-mac-2b2385e`, por si hiciera falta. Sigue también el `git stash`
+  del 28/09. Desde ahora: pull antes de trabajar y publicar solo por push a `v2`.
+- **Noticias: fuera por decisión del cliente (29/09).** El trabajo de Muse está
+  en `aparcado/noticias/`, fuera de la build. `/noticias` y `/en/news` siguen
+  en menú, pie, sitemap y redirecciones: falta decidir si se quitan.
 - **Páginas legales**: no existen aún en ningún idioma (`/legal/*`,
   `/en/legal/*`); pie, formulario y redirecciones ya apuntan ahí.
 - **Revisión del inglés `[TR]`** por el cliente: `docs/i18n-ingles.md`.
