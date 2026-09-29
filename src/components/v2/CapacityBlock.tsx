@@ -5,10 +5,9 @@ import { SectionTitle } from './SectionTitle';
 import { CapacityFormats } from './CapacityFormats';
 
 /**
- * Capacidad productiva: los siete formatos que crecen por tamaños. La escala
- * industrial (magnitudes de planta y capacidad por formato), que vivía debajo
- * en gris, se unió a Formas galénicas el 28/09/2026 a petición del cliente
- * (`GalenicBlock`).
+ * Formatos (antes «Capacidad productiva», renombrada el 29/09/2026): los
+ * siete formatos que crecen por tamaños. La escala de planta es ahora su
+ * propia sección, `ProductionScale`, encima de Formas galénicas.
  */
 export function CapacityBlock({ locale }: { locale: Locale }) {
   const { v2Capacity } = homeContent(locale);

@@ -1,5 +1,6 @@
 import { Hero } from '@/components/v2/Hero';
 import { DualServices } from '@/components/v2/DualServices';
+import { ProductionScale } from '@/components/v2/ProductionScale';
 import { GalenicBlock } from '@/components/v2/GalenicBlock';
 import { CapacityBlock } from '@/components/v2/CapacityBlock';
 import { AreasMarquee } from '@/components/v2/AreasMarquee';
@@ -15,11 +16,12 @@ import type { Locale } from '@/lib/i18n';
  * Orden de bloques y ritmo de fondos, tal cual la maqueta:
  *   01 hero (foto/vídeo a sangre, velo azul)
  *   02 Laboratorio integral / capacidades        blanco
- *   03 Formas galénicas + escala industrial teal + foto → gris (28/09/2026)
- *   04 Capacidad por tamaños               blanco
- *   05 Áreas terapéuticas                  azul
- *   06 Certificaciones                     gris claro
- *   07 CTA                                 gris
+ *   03 Capacidad productiva (escala)       gris claro (29/09/2026)
+ *   04 Formas galénicas                    teal + foto → gris
+ *   05 Formatos (capacidad por tamaños)    blanco
+ *   06 Áreas terapéuticas                  azul
+ *   07 Certificaciones                     gris claro
+ *   08 CTA                                 gris
  * Ningún bloque repite el fondo del anterior (regla 5 del proyecto).
  */
 export function HomeView({ locale }: { locale: Locale }) {
@@ -28,6 +30,7 @@ export function HomeView({ locale }: { locale: Locale }) {
       <div className="v2-page">
         <Hero locale={locale} />
         <DualServices locale={locale} />
+        <ProductionScale locale={locale} />
         <GalenicBlock locale={locale} />
         <CapacityBlock locale={locale} />
         <AreasMarquee locale={locale} />

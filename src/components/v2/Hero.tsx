@@ -44,10 +44,13 @@ export function Hero({ locale }: { locale: Locale }) {
 
       <div className="mx-auto w-full max-w-[var(--container-max)] px-5 pb-[var(--v2-hero-pad)] pt-32 md:px-8 lg:px-12 2xl:px-20">
         <div className="max-w-[var(--measure-max)] text-white">
-          <h1 className="v2-load text-[length:var(--v2-hero-title)] font-normal leading-[1.08] tracking-[-0.02em]">
+          {/* Título y subtítulo van siempre en inglés (29/09/2026, cliente):
+              `lang="en"` para que los lectores de pantalla los pronuncien bien
+              también en la versión española. */}
+          <h1 lang="en" className="v2-load text-[length:var(--v2-hero-title)] font-normal leading-[1.08] tracking-[-0.02em]">
             {v2Hero.title}
           </h1>
-          <p style={stagger(1)} className="v2-load mt-5 text-[length:var(--v2-hero-sub)] font-normal leading-snug text-white/90">{v2Hero.subtitle}</p>
+          <p lang="en" style={stagger(1)} className="v2-load mt-5 text-[length:var(--v2-hero-sub)] font-normal leading-snug text-white/90">{v2Hero.subtitle}</p>
           <p style={stagger(2)} className="v2-load mt-8 max-w-[var(--measure-narrow)] text-[length:var(--text-body)] leading-relaxed text-white/75">
             {v2Hero.lead}
           </p>

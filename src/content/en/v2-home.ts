@@ -15,7 +15,7 @@ import type { Loosen } from '@/lib/i18n';
 export const v2Hero = {
   title: 'Experts in food supplements', // [EN]
   subtitle: 'Contract Manufacturing & Development', // [EN]
-  lead: 'Comprehensive manufacturing and development solutions for food supplements, to the highest quality standards.', // [TR]
+  lead: 'Comprehensive manufacturing and development solutions for food supplements, to the highest quality standards.', // [TR] (ES del cliente 29/09)
   video: {
     av1: '/video/hero-corporativo-sin-texto.webm',
     mp4: '/video/hero-corporativo-sin-texto.mp4',
@@ -79,7 +79,7 @@ export const v2Galenic = {
 } as const satisfies Loosen<typeof es.v2Galenic>;
 
 export const v2Capacity = {
-  title: 'Productive capacity', // [EN]
+  title: 'Formats', // [TR] (29/09: «Formatos»)
   // [EN] literal de /en/virens-labs.
   lead: 'We have more than 2,000 m² of facilities where we carry out manufacturing, both primary and secondary conditioning.',
   hint: {
@@ -90,27 +90,27 @@ export const v2Capacity = {
     { id: 'dropper', label: 'Droppers', range: '30ml to 60ml' }, // [IMG]
     { id: 'vials', label: 'Vials', range: '10ml to 25ml' }, // [IMG]
     { id: 'jar', label: 'Bottled', range: '50ml to 500ml' }, // [IMG]
-    { id: 'syrups', label: 'Syrups', range: '100ml to 1000ml' }, // [IMG]
+    { id: 'syrups', label: 'Syrups', range: '50ml to 1000ml' }, // cliente 29/09
     { id: 'blisters', label: 'Blisters', range: 'PVDC-Pvc/Alu + Alu/Alu' }, // [IMG]
-    { id: 'sticks', label: 'Sticks', range: '5grs to 20grs' }, // [IMG]
+    { id: 'sticks', label: 'Sticks', range: '3grs to 7grs' }, // cliente 29/09
     { id: 'sachets', label: 'Sachets', range: '5grs to 10grs' }, // [IMG]
   ],
-  scaleTitle: 'In-house industrial scale', // [TR]
+  scaleTitle: 'Productive capacity', // [EN]
   stats: [
     { value: '+2,000', unit: 'm²', label: 'In-house facilities' }, // [TR]
     { value: '9', unit: '', label: 'Production formats' }, // [TR]
-    { value: '2', unit: '', label: 'Packaging levels' }, // [TR]
+    { value: '3', unit: '', label: 'Packaging levels' }, // [TR]
   ],
   items: [
     { id: 'capsulas', label: 'Capsules', units: '200M', icon: 'capsule' }, // [IMG]
-    { id: 'comprimidos', label: 'Tablets', units: '150M', icon: 'tablet' }, // [IMG]
+    { id: 'comprimidos', label: 'Tablets', units: '300M', icon: 'tablet' }, // cliente 29/09
     { id: 'viales', label: 'Vials', units: '20M', range: '10 ml to 25 ml', icon: 'vial' }, // [IMG]
     { id: 'blisters', label: 'Blisters', units: '15M', range: 'PVDC-PVC/Alu + Alu/Alu', icon: 'blister' }, // [IMG]
-    { id: 'sticks', label: 'Sticks', units: '10M', range: '5 g to 20 g', icon: 'stick' }, // [IMG]
+    { id: 'sticks', label: 'Sticks', units: '10M', range: '3 g to 7 g', icon: 'stick' }, // cliente 29/09
     { id: 'sobres', label: 'Sachets', units: '10M', range: '5 g to 10 g', icon: 'sachet' }, // [IMG]
     { id: 'frascos', label: 'Bottle filling', units: '10M', range: '50 ml to 500 ml', icon: 'jarfill' }, // [IMG] («Bottled»)
     { id: 'goteros', label: 'Droppers', units: '5M', range: '30 ml to 60 ml', icon: 'dropper' }, // [IMG]
-    { id: 'jarabes', label: 'Syrups', units: '5M', range: '100 ml to 1000 ml', icon: 'syrup' }, // [IMG]
+    { id: 'jarabes', label: 'Syrups', units: '5M', range: '50 ml to 1000 ml', icon: 'syrup' }, // cliente 29/09
   ],
   operationsTitle: 'Packaging', // [TR] (ES: «Acondicionamiento»)
   operations: [
@@ -118,7 +118,6 @@ export const v2Capacity = {
     'Bottling', // [TR]
     'Primary & secondary packaging', // [EN]
   ],
-  note: 'Indicative capacities. Unit and period pending confirmation.', // [TR]
 } as const satisfies Loosen<typeof es.v2Capacity>;
 
 export const v2Areas = {
@@ -205,9 +204,9 @@ export const v2Laboratory = {
   capabilities: [
     { label: 'R&D and formulation', description: 'We develop tailored formulas in collaboration with your technical and development teams.', image: { src: '/img/laboratory/formulation.webp', alt: 'Pipette and glassware representing formulation' } },
     { label: 'Manufacturing', description: 'We manufacture food supplements in solid and liquid forms, adapted to each project.', image: { src: '/img/laboratory/manufacturing.webp', alt: 'Capsules and precision machinery representing manufacturing' } },
-    { label: 'Quality control', description: 'We carry out microbiological and physicochemical checks during manufacturing and on the finished product.', image: { src: '/img/laboratory/quality.webp', alt: 'Samples and analytical equipment representing quality control' } },
-    { label: 'Packaging', description: 'We integrate packaging and primary and secondary product conditioning.', image: { src: '/img/laboratory/packaging.webp', alt: 'Aligned amber bottles representing packaging' } },
-    { label: 'Logistics', description: 'We support you through logistics as part of an integrated service from concept to finished product.', image: { src: '/img/laboratory/logistics.webp', alt: 'Organised cartons and bottles representing logistics' } },
+    { label: 'Quality control', description: 'In our laboratory we carry out analyses to the highest standards.', image: { src: '/img/laboratory/quality.webp', alt: 'Samples and analytical equipment representing quality control' } },
+    { label: 'Packaging', description: 'We carry out the primary and secondary packaging of your product.', image: { src: '/img/laboratory/packaging.webp', alt: 'Aligned amber bottles representing packaging' } },
+    { label: 'Logistics', description: 'We manage shipping all the way to your warehouse.', image: { src: '/img/laboratory/logistics.webp', alt: 'Organised cartons and bottles representing logistics' } },
   ],
   closing: ['A complete laboratory.', 'At the service of your brand.'],
 } as const satisfies Loosen<typeof es.v2Laboratory>;

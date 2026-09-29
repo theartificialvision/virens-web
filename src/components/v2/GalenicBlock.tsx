@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import { Reveal } from '@/components/ui/Reveal';
 import { GalenicRail } from './GalenicRail';
-import { GalenicScale } from './GalenicScale';
 import type { RailItem } from './GalenicRailItem';
 import { SectionTitle } from './SectionTitle';
 import { homeContent } from '@/content';
@@ -18,8 +17,8 @@ import type { Locale } from '@/lib/i18n';
  * - En medio, a todo el ancho, los nueve formatos con filetes compartidos y,
  *   bajo cada forma, su capacidad contando y su rango. Carril deslizable
  *   por debajo de lg.
- * - Abajo (`GalenicScale`), la escala de la planta como fila de totales, el
- *   acondicionamiento y la nota de cifras pendientes.
+ * (La escala de la planta, que iba debajo, es desde el 29/09/2026 su propia
+ * sección encima de esta: `ProductionScale`.)
  *
  * Movimiento: cada glifo se dibuja de abajo arriba al entrar la franja y,
  * con cursor, el formato señalado se adelanta mientras los demás se apagan.
@@ -63,12 +62,11 @@ export function GalenicBlock({ locale }: { locale: Locale }) {
       </div>
 
       {/* Segunda parte en gris (28/09/2026, cliente: «que no sea tan bloque
-          verde grande»): formatos con su capacidad, carril bajo lg, y escala. */}
+          verde grande»): formatos con su capacidad, carril bajo lg. */}
       <div className="bg-gray-100 text-blue">
         <Reveal className="v2-gal">
           <GalenicRail items={items} label={v2Galenic.title} hint={v2Galenic.swipeHint} />
         </Reveal>
-        <GalenicScale content={v2Capacity} />
       </div>
     </section>
   );

@@ -11,16 +11,18 @@ import type { SourceStatus } from '@/lib/types';
  *
  * OJO — erratas que vienen en la maqueta y se han transcrito TAL CUAL,
  * pendientes de que el cliente decida si se corrigen:
- *   1. hero.lead:  "con la más alta estándares de calidad"  (concordancia)
+ *   1. (resuelta el 29/09/2026: el cliente dio el texto nuevo del hero)
  *   2. privateLabel: "Nos adaptamos a las requerimientos"   (concordancia)
  * La web actual dice "a los requerimientos" y "desarrollamos su fórmula";
  * la maqueta tutea ("desarrollaremos tu fórmula"). Ver v2-home.notes.
  */
 
 export const v2Hero = {
-  title: 'Expertos en complementos alimenticios',
-  subtitle: 'Fabricación por contrato y desarrollo',
-  lead: 'Soluciones integrales de fabricación y desarrollo de complementos alimenticios con la más alta estándares de calidad.',
+  /** 29/09/2026 (cliente): título y subtítulo van SIEMPRE en inglés, también
+   *  en la versión española; mismo texto que lvirens.com/en. */
+  title: 'Experts in food supplements',
+  subtitle: 'Contract Manufacturing & Development',
+  lead: 'Soluciones integrales de fabricación y desarrollo de complementos alimenticios con los más altos estándares de calidad.',
   /** Vídeo corporativo del cliente, versión sin textos (24/09/2026), 1920×1080:
    *  empieza después de los logos y la transición de anillos y acaba antes
    *  del cierre (3,6 s → 109 s), sin audio. AV1 primero; H.264 para Safari
@@ -96,7 +98,8 @@ export const v2Galenic = {
 } as const;
 
 export const v2Capacity = {
-  title: 'Capacidad productiva',
+  /** 29/09/2026 (cliente): la sección de las siluetas pasa a llamarse «Formatos». */
+  title: 'Formatos',
   lead: 'Contamos con más de 2000 m² de instalaciones donde llevamos a cabo la fabricación, acondicionamiento primario y secundario.',
   hint: {
     pointer: 'Pasa el cursor para ver cada formato',
@@ -107,28 +110,30 @@ export const v2Capacity = {
     { id: 'dropper', label: 'Dropper bottles', range: '30ml a 60ml' },
     { id: 'vials', label: 'Vials', range: '10ml a 25ml' },
     { id: 'jar', label: 'Jar filling', range: '50ml a 500ml' },
-    { id: 'syrups', label: 'Syrups', range: '100ml a 1000ml' },
+    { id: 'syrups', label: 'Syrups', range: '50ml a 1000ml' },
     { id: 'blisters', label: 'Blisters', range: 'PVDC-Pvc/Alu + Alu/Alu' },
-    { id: 'sticks', label: 'Sticks', range: '5grs a 20grs' },
+    { id: 'sticks', label: 'Sticks', range: '3grs a 7grs' },
     { id: 'sachets', label: 'Sachets', range: '5grs' },
   ],
-  scaleTitle: 'Escala industrial propia',
+  /** 29/09/2026 (cliente): antes «Escala industrial propia»; va ahora como
+   *  sección propia encima de Formas galénicas (`ProductionScale`). */
+  scaleTitle: 'Capacidad productiva',
   /** Cifras literales del material de Labs, ahora integrado en la home. */
   stats: [
     { value: '+2.000', unit: 'm²', label: 'Instalaciones propias' },
     { value: '9', unit: '', label: 'Formatos de producción' },
-    { value: '2', unit: '', label: 'Niveles de acondicionamiento' },
+    { value: '3', unit: '', label: 'Niveles de acondicionamiento' },
   ],
   items: [
     { id: 'capsulas', label: 'Cápsulas', units: '200M', icon: 'capsule' },
-    { id: 'comprimidos', label: 'Comprimidos', units: '150M', icon: 'tablet' },
+    { id: 'comprimidos', label: 'Comprimidos', units: '300M', icon: 'tablet' },
     { id: 'viales', label: 'Viales', units: '20M', range: '10 ml a 25 ml', icon: 'vial' },
     { id: 'blisters', label: 'Blísters', units: '15M', range: 'PVDC-PVC/Alu + Alu/Alu', icon: 'blister' },
-    { id: 'sticks', label: 'Sticks', units: '10M', range: '5 g a 20 g', icon: 'stick' },
+    { id: 'sticks', label: 'Sticks', units: '10M', range: '3 g a 7 g', icon: 'stick' },
     { id: 'sobres', label: 'Sobres', units: '10M', range: '5 g a 10 g', icon: 'sachet' },
     { id: 'frascos', label: 'Llenado de frascos', units: '10M', range: '50 ml a 500 ml', icon: 'jarfill' },
     { id: 'goteros', label: 'Goteros', units: '5M', range: '30 ml a 60 ml', icon: 'dropper' },
-    { id: 'jarabes', label: 'Jarabes', units: '5M', range: '100 ml a 1000 ml', icon: 'syrup' },
+    { id: 'jarabes', label: 'Jarabes', units: '5M', range: '50 ml a 1000 ml', icon: 'syrup' },
   ],
   operationsTitle: 'Acondicionamiento',
   operations: [
@@ -136,7 +141,6 @@ export const v2Capacity = {
     'Envasado en frasco',
     'Acondicionado primario y secundario',
   ],
-  note: 'Capacidades orientativas. Unidad y periodo pendientes de confirmación.',
 } as const;
 
 export const v2Areas = {
@@ -245,9 +249,9 @@ export const v2Laboratory = {
   capabilities: [
     { label: 'I+D y formulación', description: 'Desarrollamos fórmulas a medida en colaboración con tu equipo técnico y de desarrollo.', image: { src: '/img/laboratory/formulation.webp', alt: 'Pipeta y material de vidrio para representar la formulación' } },
     { label: 'Fabricación', description: 'Fabricamos complementos alimenticios en formas sólidas y líquidas, adaptadas a cada proyecto.', image: { src: '/img/laboratory/manufacturing.webp', alt: 'Cápsulas y maquinaria de precisión para representar la fabricación' } },
-    { label: 'Control de calidad', description: 'Realizamos controles microbiológicos y físico-químicos durante la fabricación y en el producto acabado.', image: { src: '/img/laboratory/quality.webp', alt: 'Muestras e instrumental analítico para representar el control de calidad' } },
-    { label: 'Envasado', description: 'Integramos el envasado y el acondicionamiento primario y secundario del producto.', image: { src: '/img/laboratory/packaging.webp', alt: 'Frascos ámbar alineados para representar el envasado' } },
-    { label: 'Logística', description: 'Te acompañamos hasta la logística, como parte de un servicio integral del concepto al producto terminado.', image: { src: '/img/laboratory/logistics.webp', alt: 'Cajas y frascos ordenados para representar la logística' } },
+    { label: 'Control de calidad', description: 'En nuestro laboratorio realizamos analíticas bajo los más altos estándares.', image: { src: '/img/laboratory/quality.webp', alt: 'Muestras e instrumental analítico para representar el control de calidad' } },
+    { label: 'Envasado', description: 'Realizamos el envasado primario y secundario de tu producto.', image: { src: '/img/laboratory/packaging.webp', alt: 'Frascos ámbar alineados para representar el envasado' } },
+    { label: 'Logística', description: 'Gestionamos el envío hasta tu almacén.', image: { src: '/img/laboratory/logistics.webp', alt: 'Cajas y frascos ordenados para representar la logística' } },
   ],
   closing: ['Todo un laboratorio.', 'Al servicio de tu marca.'],
 } as const;

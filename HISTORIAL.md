@@ -3130,3 +3130,22 @@ atascada en la home, Compañía ni Tech.
   `/en/news/*` → `/en`. Comprobado con `next start`.
 - Lo de Muse sigue en `aparcado/noticias/` por si algún día se retoma.
   `typecheck` y `next build` limpios.
+
+### 2026-09-29 — Claude (nube) — Textos de la home y Capacidad productiva encima de Formas galénicas
+
+Cambios pedidos por el cliente, en ES y EN:
+- Hero: título y subtítulo siempre en inglés, también en la versión española
+  («Experts in food supplements» / «Contract Manufacturing & Development»,
+  los de lvirens.com/en, con `lang="en"`). Texto de debajo nuevo: «…con los
+  más altos estándares de calidad» (resuelve la errata de concordancia).
+- Laboratorio: textos nuevos de Control de calidad, Envasado y Logística.
+- «Escala industrial propia» → **Capacidad productiva**, sin la nota
+  «Capacidades orientativas…», con **3** niveles de acondicionamiento, y como
+  sección propia (`ProductionScale`, gris claro) **encima** de Formas
+  galénicas. `GalenicScale` desaparece.
+- Formas galénicas: Comprimidos 150M → **300M**.
+- La sección de las siluetas («Capacidad productiva») pasa a **Formatos**.
+  Syrups 50ml a 1000ml y Sticks 3grs a 7grs; los mismos rangos se cambiaron
+  en Jarabes y Sticks del carril de Formas galénicas para que no se
+  contradigan.
+- EN: Productive capacity / Formats / textos del laboratorio, [TR].
