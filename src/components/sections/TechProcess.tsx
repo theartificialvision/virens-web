@@ -22,7 +22,7 @@ export function TechProcess({ services, label, phase }: { services: ServiceBlock
   const n = services.length;
   const { active, seen } = useProcessProgress(ref, n, reduced);
   return (
-    <section ref={ref} aria-label={label} className="proc" data-header-tone="dark" style={{ '--n': n } as CSSProperties}>
+    <section ref={ref} aria-label={label} className="proc" data-header-tone="light" style={{ '--n': n } as CSSProperties}>
       <div className="proc__inner">
         <div className="proc__aside">
           <ProcessMolecule labels={services.map((s) => s.title)} hrefs={services.map((s) => `#${s.id}`)} active={active} label={label} />

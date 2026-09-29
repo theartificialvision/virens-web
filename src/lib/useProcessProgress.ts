@@ -5,11 +5,11 @@ import { useEffect, useState, type RefObject } from 'react';
 /**
  * Progreso del proceso de Virens Tech (29/09/2026). Lee dónde está cada paso
  * (`[data-step]`) respecto a una línea de lectura en el 55 % de la pantalla y
- * escribe en la sección `--proc-p` (0 … n-1, continuo: 1,4 = entre el paso 2 y
- * el 3) y `--proc-f` (0 … 1). Con eso el CSS dibuja los enlaces de la molécula
- * y la línea de móvil sin re-renderizar en cada fotograma; React solo se entera
- * cuando cambia el paso activo o entra uno nuevo en pantalla.
- * Con movimiento reducido la molécula sale completa y todo visible (regla 8).
+ * escribe en la sección `--proc-p` (0 … n-1, continuo) y `--proc-f` (0 … 1).
+ * 2.ª vuelta (cliente: «más lógica de fluidos»): el valor que se pinta no
+ * salta con el scroll, lo persigue con un muelle amortiguado, así los enlaces
+ * crecen como un líquido que se asienta. React solo se entera cuando cambia el
+ * paso activo o entra uno nuevo. Con movimiento reducido: todo completo.
  */
 export function useProcessProgress(ref: RefObject<HTMLElement | null>, count: number, reduced: boolean) {
   const [active, setActive] = useState(0);
@@ -24,13 +24,20 @@ export function useProcessProgress(ref: RefObject<HTMLElement | null>, count: nu
       setSeen(new Set(Array.from({ length: count }, (_, i) => i)));
       return;
     }
-    // Sin JS todo se ve completo: las entradas (escaneo, regla) solo se
-    // preparan cuando el progreso ya se está midiendo.
     root.dataset.ready = '1';
     const steps = Array.from(root.querySelectorAll<HTMLElement>('[data-step]'));
+    let target = 0;
+    let shown = 0;
     let frame = 0;
-    const measure = () => {
+    const paint = () => {
       frame = 0;
+      shown += (target - shown) * 0.12;
+      if (Math.abs(target - shown) < 0.001) shown = target;
+      root.style.setProperty('--proc-p', shown.toFixed(4));
+      root.style.setProperty('--proc-f', (count > 1 ? shown / (count - 1) : 1).toFixed(4));
+      if (shown !== target) frame = window.requestAnimationFrame(paint);
+    };
+    const measure = () => {
       const line = window.innerHeight * 0.55;
       const tops = steps.map((s) => s.getBoundingClientRect().top);
       let p = 0;
@@ -40,20 +47,18 @@ export function useProcessProgress(ref: RefObject<HTMLElement | null>, count: nu
         const next = tops[i + 1];
         p = next === undefined ? i : i + Math.min(1, (line - top) / Math.max(next - top, 1));
       }
-      p = Math.min(Math.max(p, 0), count - 1);
-      root.style.setProperty('--proc-p', p.toFixed(3));
-      root.style.setProperty('--proc-f', (count > 1 ? p / (count - 1) : 1).toFixed(4));
-      setActive(Math.min(count - 1, Math.floor(p + 0.001)));
+      target = Math.min(Math.max(p, 0), count - 1);
+      setActive(Math.min(count - 1, Math.floor(target + 0.001)));
       const entered = tops.flatMap((t, i) => (t < window.innerHeight * 0.85 ? [i] : []));
       setSeen((old) => (entered.every((i) => old.has(i)) ? old : new Set([...old, ...entered])));
+      if (!frame) frame = window.requestAnimationFrame(paint);
     };
-    const onScroll = () => { if (!frame) frame = window.requestAnimationFrame(measure); };
     measure();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
+    window.addEventListener('scroll', measure, { passive: true });
+    window.addEventListener('resize', measure);
     return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
+      window.removeEventListener('scroll', measure);
+      window.removeEventListener('resize', measure);
       if (frame) window.cancelAnimationFrame(frame);
     };
   }, [ref, count, reduced]);

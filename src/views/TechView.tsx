@@ -13,7 +13,7 @@ import type { Locale } from '@/lib/i18n';
  * ONE PAGE de Virens Tech. 27/09/2026 (cliente: «siento que se repiten
  * cosas»): cada idea se dice una vez. Cinco bloques:
  *   hero (azul) → intro (hueso) → frase puente (magenta) → proceso de los cinco
- *   servicios (proceso molecular, azul profundo) → certificaciones (gris claro) → CTA.
+ *   servicios (proceso molecular, blanco) → certificaciones (gris claro) → CTA.
  * Fuera la lista de servicios de la intro, los pilares genéricos del bloque
  * magenta, la franja de cifras (repetía datos de Home y Compañía) y el
  * puente «Visitar Labs» (Labs es la Home, a un toque desde el menú).

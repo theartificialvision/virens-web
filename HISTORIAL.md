@@ -3313,3 +3313,23 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
   en el color del servicio: misma duración (`--dwell`), mismo reinicio (`key`
   = `tick`) y se congela con la barra. Comprobado: barra y anillo van al
   milisegundo.
+
+### 2026-09-29 — Claude (nube) — Tech, proceso 2.ª vuelta: química, no videojuego
+
+- Cliente: «más lógica de fluidos atómica; se pasó a gamer; queremos ser los
+  expertos en suplementos; química e inteligencia». Fuera el azul profundo, la
+  retícula, el neón y los halos. Blanco de laboratorio con una red hexagonal
+  al 5 % (`--proc-lattice`), textos en azul corporativo y magenta solo como
+  acento (punto de la fase, electrón, subrayado del enlace).
+- La molécula es ahora una **fórmula esquelética** de verdad
+  (`moleculeGeometry.ts`): cadena en zigzag a 120°, diez vértices, servicios en
+  los impares con su rótulo, sustituyentes cortos en los pares y dos enlaces
+  dobles con la notación química. El activo lleva un **electrón en órbita**
+  lenta; los recorridos quedan rellenos en azul.
+- Fluidez: el progreso que se pinta persigue al scroll con un muelle
+  amortiguado (`useProcessProgress`) y los átomos derivan ±2,5 unidades, cada
+  uno a su ritmo, con los enlaces siguiéndolos (solo mientras se ve; nada con
+  movimiento reducido).
+- Fotos: el barrido de neón pasa a un velo de luz blanca suave; siguen el
+  paso de gris a color, las marcas de encuadre y la regla, ahora en tinta.
+- Móvil: la misma línea con nodos, en azul, y el activo con anillo magenta.
