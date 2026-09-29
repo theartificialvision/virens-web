@@ -239,6 +239,13 @@ export const v2Laboratory = {
   eyebrow: 'CIENCIA, DESARROLLO Y FABRICACIÓN',
   serviceSummaries: ['Desarrollamos y fabricamos complementos alimenticios para tu marca, con fórmulas a medida y total confidencialidad.', 'De la formulación a la fabricación, el control de calidad, el envasado y la logística. Un servicio integral, de principio a fin.'],
   caption: 'DEL DESARROLLO AL PRODUCTO TERMINADO',
+  /** Esquema de proceso (29/09/2026, cliente: «no quiero texto, un diseño de
+   *  la formulación a la logística que destaque las dos opciones»). Un
+   *  pictograma por paso, en el orden de `capabilities`, y cuántos pasos
+   *  abarca cada servicio desde el primero: Private Label desarrolla y
+   *  fabrica; Full service llega hasta la logística. */
+  stageIcons: ['development', 'manufacturing', 'control', 'conditioning', 'logistics'],
+  serviceScope: [2, 5],
   capabilities: [
     { label: 'I+D y formulación', description: 'Desarrollamos fórmulas a medida en colaboración con tu equipo técnico y de desarrollo.', image: { src: '/img/laboratory/formulation.webp', alt: 'Pipeta y material de vidrio para representar la formulación' } },
     { label: 'Fabricación', description: 'Fabricamos complementos alimenticios en formas sólidas y líquidas, adaptadas a cada proyecto.', image: { src: '/img/laboratory/manufacturing.webp', alt: 'Cápsulas y maquinaria de precisión para representar la fabricación' } },

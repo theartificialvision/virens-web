@@ -7,6 +7,17 @@
    ============================================================ */
 
 @theme {
+  /* Esquema Private Label / Full service (29/09/2026). */
+  --process-node: clamp(2.5rem, 1.9rem + 2.2vw, 3.75rem);
+  --process-line: 2px;
+  --process-tick: 0.625rem;
+  --process-row-gap: 0.75rem;
+  --process-title: clamp(1.125rem, 0.95rem + 0.9vw, 1.625rem);
+  --process-name: clamp(0.6875rem, 0.62rem + 0.3vw, 0.875rem);
+  --process-dim: 0.35;
+  --process-tint: 8%;
+  --process-draw: 900ms;
+  --process-step: 110ms;
   --lab-arrow-icon: 1.25rem;
   --lab-arrow-surface: rgba(255, 255, 255, 0.88);
 
@@ -1413,3 +1424,127 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
 .laboratory__arrow svg { width: var(--lab-arrow-icon); height: var(--lab-arrow-icon); }
 .laboratory__arrow:hover { color: var(--lab-teal-text); background: var(--color-bone); }
 .laboratory__arrow:focus-visible { outline: var(--lab-active-rule) solid var(--color-blue); outline-offset: var(--lab-active-rule); }
+
+/* Private Label / Full service como tramos de un mismo proceso (29/09/2026).
+   Rejilla de tantas columnas como pasos: nodo centrado en cada una; la línea
+   va del centro del primero al del último y el corchete de cada servicio
+   abarca de centro a centro los pasos que incluye (`--span`). */
+.process { --col: calc(100% / var(--stages)); margin-bottom: var(--lab-gap); }
+.process__rail {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--stages), minmax(0, 1fr));
+  list-style: none;
+  padding: 0;
+}
+.process__rail::before,
+.process__rail::after {
+  content: '';
+  position: absolute;
+  top: calc(var(--process-node) / 2);
+  left: calc(var(--col) / 2);
+  height: var(--process-line);
+  transform: translateY(-50%);
+  transform-origin: left;
+}
+.process__rail::before { right: calc(var(--col) / 2); background: var(--color-gray-200); }
+/* Tramo encendido: del primer paso al último que abarca el servicio señalado. */
+.process__rail::after {
+  width: calc(var(--col) * (var(--covered) - 1));
+  background: var(--process-accent);
+  transition: width var(--motion-control) var(--motion-ease), background-color var(--motion-control) var(--motion-ease);
+}
+.process__stage {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--process-row-gap);
+  text-align: center;
+}
+.process__node {
+  display: grid;
+  place-items: center;
+  width: var(--process-node);
+  height: var(--process-node);
+  border: var(--lab-rule) solid var(--color-gray-200);
+  border-radius: 999px;
+  background: white;
+  color: var(--color-blue);
+  transition: color var(--motion-control) var(--motion-ease), border-color var(--motion-control) var(--motion-ease), background-color var(--motion-control) var(--motion-ease), opacity var(--motion-control) var(--motion-ease);
+}
+.process__node svg { width: 58%; height: 58%; }
+.process__stage[data-on] .process__node {
+  color: var(--process-accent);
+  border-color: var(--process-accent);
+  background: color-mix(in srgb, var(--process-accent) var(--process-tint), white);
+}
+.process__name {
+  max-width: 12ch;
+  font-size: var(--process-name);
+  font-weight: 500;
+  line-height: var(--lab-title-leading);
+  color: var(--color-gray-700);
+  transition: opacity var(--motion-control) var(--motion-ease);
+}
+.process[data-focus] .process__stage:not([data-on]) .process__node,
+.process[data-focus] .process__stage:not([data-on]) .process__name { opacity: var(--process-dim); }
+
+.process__options {
+  display: grid;
+  grid-template-columns: repeat(var(--stages), minmax(0, 1fr));
+  row-gap: var(--process-row-gap);
+  margin-top: var(--lab-gap);
+}
+.process__option {
+  grid-column: 1 / span var(--span);
+  position: relative;
+  padding-inline: calc(100% / var(--span) / 2);
+  cursor: pointer;
+  outline: none;
+  transition: opacity var(--motion-control) var(--motion-ease);
+}
+/* Corchete «└──┘»: marca de centro a centro los pasos que abarca. */
+.process__bracket {
+  display: block;
+  height: var(--process-tick);
+  border: var(--process-line) solid var(--option-accent);
+  border-top: 0;
+  transform-origin: left;
+}
+.process__title {
+  margin-top: var(--lab-compact-gap);
+  font-size: var(--process-title);
+  font-weight: 500;
+  line-height: var(--lab-title-leading);
+  letter-spacing: var(--lab-title-tracking);
+  color: var(--option-accent);
+  white-space: nowrap; /* en móvil el tramo de Private Label es estrecho */
+  scroll-margin-top: var(--anchor-offset);
+}
+.process__option[id] { scroll-margin-top: var(--anchor-offset); }
+.process[data-focus] .process__option:not([data-active]) { opacity: var(--process-dim); }
+.process__option:focus-visible .process__title { outline: var(--lab-active-rule) solid var(--color-blue); outline-offset: var(--lab-active-rule); }
+
+/* Entrada: la línea se dibuja, los pasos aparecen en orden y después los dos
+   corchetes. Solo con JS (`data-ready`) y sin movimiento reducido. */
+@media (prefers-reduced-motion: no-preference) {
+  .process[data-ready]:not([data-inview]) .process__rail::before,
+  .process[data-ready]:not([data-inview]) .process__rail::after,
+  .process[data-ready]:not([data-inview]) .process__bracket { transform: translateY(-50%) scaleX(0); }
+  .process[data-ready]:not([data-inview]) .process__bracket { transform: scaleX(0); }
+  .process[data-ready]:not([data-inview]) .process__node { transform: scale(0.4); opacity: 0; }
+  .process[data-ready]:not([data-inview]) .process__name,
+  .process[data-ready]:not([data-inview]) .process__title { opacity: 0; }
+  .process[data-ready] .process__rail::before { transition: transform var(--process-draw) var(--motion-ease); }
+  .process[data-ready] .process__rail::after {
+    transition: transform var(--process-draw) var(--motion-ease), width var(--motion-control) var(--motion-ease), background-color var(--motion-control) var(--motion-ease);
+  }
+  .process[data-ready] .process__node {
+    transition: transform 600ms var(--motion-ease) calc(var(--i) * var(--process-step)), opacity 600ms var(--motion-ease) calc(var(--i) * var(--process-step)), color var(--motion-control) var(--motion-ease), border-color var(--motion-control) var(--motion-ease), background-color var(--motion-control) var(--motion-ease);
+  }
+  .process[data-ready] .process__name { transition: opacity 600ms var(--motion-ease) calc(var(--i) * var(--process-step) + 150ms); }
+  .process[data-ready] .process__bracket { transition: transform var(--process-draw) var(--motion-ease) calc(500ms + var(--o) * 250ms); }
+  .process[data-ready] .process__title { transition: opacity 600ms var(--motion-ease) calc(800ms + var(--o) * 250ms); }
+}

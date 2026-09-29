@@ -3005,3 +3005,18 @@ atascada en la home, Compañía ni Tech.
   existente y su fundido. Zona táctil de 44 px, foco y etiquetas ES/EN.
 - Sin cambios de composición ni contenido. Typecheck y diff limpios;
   HTTP 200 ES/EN y ambas flechas presentes en el HTML.
+
+### 2026-09-29 — Claude (nube) — Home: Private Label / Full service pasan a esquema de proceso
+
+- Cliente: «no quiero texto; un diseño de la formulación a la logística que se
+  entienda el proceso y destaque las dos opciones». Los dos párrafos de la
+  cabecera de la sección del laboratorio se sustituyen por `ServiceProcess`:
+  línea con los 5 pasos (pictogramas de línea de Compañía + uno nuevo de
+  logística) y debajo un corchete por servicio: Private Label (azul) abarca
+  I+D/formulación y fabricación; Full service (Tech) los 5. Al señalar uno se
+  encienden sus pasos y la línea toma su color. Entrada animada (línea, pasos,
+  corchetes); sin JS o con movimiento reducido, estático y completo.
+- Alcance en contenido: `v2Laboratory.serviceScope` ([2, 5]) y `stageIcons`.
+  Si Private Label debe incluir más pasos (p. ej. envasado), basta con cambiar
+  el 2. Los resúmenes (`serviceSummaries`) quedan solo para lectores de
+  pantalla. Anclas `#private-label` y `#full-service` se conservan.
