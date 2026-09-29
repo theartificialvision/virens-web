@@ -31,6 +31,18 @@ export function LaboratoryCapabilities({ content, services }: {
   const [selected, setSelected] = useState(0);
   const [ready, setReady] = useState<Set<number>>(() => new Set());
   const [active, setActive] = useState(0);
+  // Enlace directo a un servicio (`/#full-service`): además de desplazar hasta el
+  // ancla, abre su pestaña. Solo se lee en el cliente, tras hidratar, para no
+  // desajustar el HTML del servidor.
+  useEffect(() => {
+    const sync = () => {
+      const index = services.findIndex((item) => `#${item.id}` === window.location.hash);
+      if (index >= 0) setService(index);
+    };
+    sync();
+    window.addEventListener('hashchange', sync);
+    return () => window.removeEventListener('hashchange', sync);
+  }, [services]);
   // Foto y texto cambian juntos, conservando la selección anterior durante la carga.
   useEffect(() => {
     if (ready.has(selected)) setActive(selected);

@@ -3074,3 +3074,17 @@ atascada en la home, Compañía ni Tech.
   (`flex-shrink: 0`; la pastilla del stand se aplastaba), pastilla sin salto
   de línea y tarjeta más compacta, con un escalón más para pantallas bajas
   (≤700 px de alto). Cabe entera en iPhone SE y 14 con las barras de Safari.
+
+### 2026-09-29 — Claude (nube) — Auditoría de toda la web y dos correcciones
+
+- Revisadas las 10 páginas (ES y EN) a 1440/1024/768/390/375 px sobre la build de
+  producción: sin desbordes horizontales, un solo `h1`, `alt` en todas las
+  imágenes, sin recursos rotos, anclas y enlaces internos válidos salvo los
+  legales, sin castellano suelto en el inglés, CLS 0 y LCP < 1,2 s en local.
+  `tsc` y `next build` limpios.
+- `/#full-service` ahora abre la pestaña Full service (antes solo desplazaba);
+  también responde a `hashchange` en la misma página.
+- `next.config.mjs`: `images.qualities: [75, 85]` — Next 16 exige declarar la
+  calidad 85 que usa el fondo de Contacto (aviso en consola).
+- PENDIENTE (necesita decisión, ver informe): páginas legales `/legal/*` (404),
+  envío del formulario, página 404 propia, peso del vídeo del hero.

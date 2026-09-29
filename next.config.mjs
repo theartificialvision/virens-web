@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  images: { formats: ['image/avif', 'image/webp'] },
+  // `qualities`: Next 16 exige declarar las calidades que se piden con `quality={…}`
+  // (el fondo de Contacto usa 85). 75 es el valor por defecto de `next/image`.
+  images: { formats: ['image/avif', 'image/webp'], qualities: [75, 85] },
 
   // Redirecciones 301 desde la web actual (WordPress) — ver §14.5 del documento maestro.
   async redirects() {
