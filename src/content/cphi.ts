@@ -22,4 +22,6 @@ export const cphiPopup = {
   units: { d: 'd', h: 'h', m: 'm', s: 's' },
   live: 'Live now · Hall 8',
   cta: 'Book a meeting',
+  /** Cápsula que queda abajo a la izquierda al cerrar el pop-up. */
+  dock: { name: 'CPHI Milan', date: '6–8 Oct 2026', live: 'Live now', aria: 'CPHI Milan, 6–8 October 2026 — open event details' },
 } as const;

@@ -3197,3 +3197,21 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
 - PENDIENTE del cliente: la política de datos dice que los derechos se
   ejercen en «email@laempresa.com» (correo de plantilla, transcrito tal cual);
   no hay texto de cookies, así que `/uso-de-cookies/` sigue sin destino.
+
+### 2026-09-29 — Claude (nube) — Laboratorio: fotos a 16:9 y los dos servicios visibles; cápsula de CPHI
+
+- Laboratorio, cliente: «las fotos se ven fatal». El marco de foto era una
+  franja de ~3,5:1 (altura por `svh`) que recortaba fotos 16:9. Ahora la foto
+  va en su proporción real, 16:9, en escritorio y móvil; fuera el encuadre por
+  foto (`image.position`) y los tokens de altura que ya no se usan.
+- Private Label y Full service siempre visibles (`ServiceTabs`, sustituye a
+  `ServiceMorph`): el activo en su color con filete debajo, el otro en gris
+  que se tiñe al pasar el cursor; clic cambia de servicio. Ambos recorren las
+  cinco fases (fuera `fullServiceFrom`): la barra toma el color del servicio
+  activo y, al terminar un recorrido, empieza el del otro. `#full-service`
+  abre el de Full service desde el principio.
+- Pop-up CPHI: al cerrar, la tarjeta se encoge hacia abajo a la izquierda y
+  queda una cápsula de vidrio claro (`CphiDock`) con punto teal, «CPHI Milan ·
+  6–8 Oct 2026» (y el stand al pasar el cursor) que vuelve a abrir el pop-up.
+  En las páginas siguientes de la visita solo sale la cápsula. Desaparece al
+  cerrar la feria, como el pop-up.

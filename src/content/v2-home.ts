@@ -241,20 +241,16 @@ export const v2FooterNav = [
 /** Reescritura de los servicios existentes según la maqueta aprobada (28/09/2026). */
 export const v2Laboratory = {
   source: 'rewritten',
-  navigation: { previous: 'Capacidad anterior', next: 'Siguiente capacidad', pause: 'Pausar el recorrido', play: 'Reanudar el recorrido' },
+  navigation: { previous: 'Capacidad anterior', next: 'Siguiente capacidad', pause: 'Pausar el recorrido', play: 'Reanudar el recorrido', services: 'Servicio' },
   title: 'Ciencia, desarrollo y fabricación',
   serviceSummaries: ['Desarrollamos y fabricamos complementos alimenticios para tu marca, con fórmulas a medida y total confidencialidad.', 'De la formulación a la fabricación, el control de calidad, el envasado y la logística. Un servicio integral, de principio a fin.'],
   caption: 'DEL DESARROLLO AL PRODUCTO TERMINADO',
-  /** Private Label → Full service (29/09/2026, cliente: «cuando llega a
-   *  Logística se transforma en Full service»): índice de `capabilities`
-   *  desde el que el recorrido pasa a ser Full service (4 = Logística). */
-  fullServiceFrom: 4,
   capabilities: [
-    { label: 'I+D y formulación', description: 'Desarrollamos fórmulas a medida en colaboración con tu equipo técnico y de desarrollo.', image: { src: '/img/laboratorio/pesaje-materias-primas-formulacion-complementos-alimenticios.webp', alt: 'Pesaje de materia prima en polvo en un vaso de precipitados sobre una balanza de laboratorio', position: '50% 75%' } },
-    { label: 'Fabricación', description: 'Fabricamos complementos alimenticios en formas sólidas y líquidas, adaptadas a cada proyecto.', image: { src: '/img/laboratorio/capsulas-blister-fabricacion-complementos-alimenticios.webp', alt: 'Cápsulas blancas en los alveolos de una blistera de acero inoxidable', position: '50% 50%' } },
-    { label: 'Control de calidad', description: 'En nuestro laboratorio realizamos analíticas bajo los más altos estándares.', image: { src: '/img/laboratorio/control-calidad-analisis-laboratorio-complementos-alimenticios.webp', alt: 'Analista con guantes midiendo una muestra con un pHmetro en el laboratorio de control de calidad', position: '50% 60%' } },
-    { label: 'Envasado', description: 'Realizamos el envasado primario y secundario de tu producto.', image: { src: '/img/laboratorio/envasado-botes-linea-complementos-alimenticios.webp', alt: 'Botes blancos avanzando por una línea de envasado automática', position: '50% 60%' } },
-    { label: 'Logística', description: 'Gestionamos el envío hasta tu almacén.', image: { src: '/img/laboratorio/logistica-almacen-complementos-alimenticios.webp', alt: 'Almacén con estanterías de palés y carretilla elevadora', position: '50% 72%' } },
+    { label: 'I+D y formulación', description: 'Desarrollamos fórmulas a medida en colaboración con tu equipo técnico y de desarrollo.', image: { src: '/img/laboratorio/pesaje-materias-primas-formulacion-complementos-alimenticios.webp', alt: 'Pesaje de materia prima en polvo en un vaso de precipitados sobre una balanza de laboratorio' } },
+    { label: 'Fabricación', description: 'Fabricamos complementos alimenticios en formas sólidas y líquidas, adaptadas a cada proyecto.', image: { src: '/img/laboratorio/capsulas-blister-fabricacion-complementos-alimenticios.webp', alt: 'Cápsulas blancas en los alveolos de una blistera de acero inoxidable' } },
+    { label: 'Control de calidad', description: 'En nuestro laboratorio realizamos analíticas bajo los más altos estándares.', image: { src: '/img/laboratorio/control-calidad-analisis-laboratorio-complementos-alimenticios.webp', alt: 'Analista con guantes midiendo una muestra con un pHmetro en el laboratorio de control de calidad' } },
+    { label: 'Envasado', description: 'Realizamos el envasado primario y secundario de tu producto.', image: { src: '/img/laboratorio/envasado-botes-linea-complementos-alimenticios.webp', alt: 'Botes blancos avanzando por una línea de envasado automática' } },
+    { label: 'Logística', description: 'Gestionamos el envío hasta tu almacén.', image: { src: '/img/laboratorio/logistica-almacen-complementos-alimenticios.webp', alt: 'Almacén con estanterías de palés y carretilla elevadora' } },
   ],
   closing: ['Todo un laboratorio.', 'Al servicio de tu marca.'],
 } as const;

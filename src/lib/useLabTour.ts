@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState, type FocusEvent } from 'react
 
 /** Tiempo en cada paso del recorrido: lo que tarda la barra en llegar al siguiente. */
 const DWELL_MS = 5000;
-/** Pausa más larga en el último paso (Full service) antes de volver a empezar. */
+/** Pausa más larga en el último paso antes de pasar al otro servicio. */
 const HOLD_MS = 6500;
 
 /**

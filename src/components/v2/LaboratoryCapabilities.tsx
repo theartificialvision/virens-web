@@ -7,20 +7,18 @@ import type { v2Laboratory } from '@/content/v2-home';
 import { usePrefersReducedMotion } from '@/lib/useReducedMotion';
 import { useLabTour } from '@/lib/useLabTour';
 import { LabRail } from './LabRail';
-import { ServiceMorph } from './ServiceMorph';
+import { ServiceTabs } from './ServiceTabs';
 
 type Service = { id: string; title: string; accent: string };
 
 /**
- * Ciencia, desarrollo y fabricación (29/09/2026, 2.ª vuelta del cliente:
- * «simplificarla; sin línea verde; color avanzando en la barra; al llegar a
- * Logística se transforma en Full service; intuitivo y coordinado»).
- *
- * Un solo paso mueve todo a la vez: foto, texto, barra y nombre del servicio.
- * El recorrido avanza solo mientras se ve; la barra se tiñe hacia el siguiente
- * punto y, al llegar, cambian foto y texto. Desde `fullServiceFrom` el
- * servicio pasa de Private Label a Full service. Las capas de foto y texto
- * siguen montadas para que los cambios rápidos se fundan sin saltos.
+ * Ciencia, desarrollo y fabricación. Un solo paso mueve foto, texto y barra;
+ * el recorrido avanza solo mientras se ve y la barra se tiñe hacia el
+ * siguiente punto. Desde el 29/09/2026 (3.ª vuelta del cliente) Private Label
+ * y Full service están siempre visibles y ambos recorren las cinco fases: la
+ * barra toma el color del servicio activo y, al terminar el recorrido de uno,
+ * sigue el del otro. Las capas de foto y texto siguen montadas para que los
+ * cambios rápidos se fundan sin saltos.
  */
 export function LaboratoryCapabilities({ content, services }: {
   content: Loosen<typeof v2Laboratory>;
@@ -30,28 +28,41 @@ export function LaboratoryCapabilities({ content, services }: {
   const count = content.capabilities.length;
   const tour = useLabTour(count, reduced);
   const { go, step } = tour;
-  const full = step >= content.fullServiceFrom;
-  const accent = `var(--color-${services[full ? 1 : 0]?.accent ?? 'labs'})`;
+  const [service, setService] = useState(0);
+  const accent = `var(--color-${services[service]?.accent ?? 'labs'})`;
+  const choose = (index: number) => {
+    setService(index);
+    go(0);
+  };
+  // Al acabar el recorrido de un servicio empieza el del otro.
+  const advance = () => {
+    if (step === count - 1) setService((s) => (s + 1) % 2);
+    tour.next();
+  };
   // La foto nueva entra cuando ya ha cargado; mientras, la barra espera.
   const [ready, setReady] = useState<Set<number>>(() => new Set());
   const [shown, setShown] = useState(0);
   useEffect(() => {
     if (ready.has(step)) setShown(step);
   }, [ready, step]);
-  // Enlaces directos: `#full-service` abre el recorrido en Logística.
+  // Enlaces directos: `#full-service` abre el recorrido de Full service.
   useEffect(() => {
     const sync = () => {
-      if (window.location.hash === `#${services[1]?.id}`) go(content.fullServiceFrom);
+      if (window.location.hash === `#${services[1]?.id}`) {
+        setService(1);
+        go(0);
+      }
     };
     sync();
     window.addEventListener('hashchange', sync);
     return () => window.removeEventListener('hashchange', sync);
-  }, [services, go, content.fullServiceFrom]);
+  }, [services, go]);
 
   return (
     <>
       <div id={services[1]?.id} className="lab-head">
-        <ServiceMorph services={services} full={full} summaries={content.serviceSummaries} />
+        <ServiceTabs services={services} active={service} label={content.navigation.services}
+          summaries={content.serviceSummaries} onSelect={choose} />
       </div>
       <div ref={tour.ref} {...tour.focusHandlers}>
         <figure className="laboratory__figure laboratory__presentation">
@@ -60,9 +71,6 @@ export function LaboratoryCapabilities({ content, services }: {
               <div key={item.label} className="laboratory__image-layer" data-active={shown === index} aria-hidden={shown !== index}>
                 <Image src={item.image.src} alt={item.image.alt} fill
                   sizes="(max-width: 767px) 100vw, (max-width: 1440px) 65vw, 920px" className="object-cover"
-                  /* Encuadre por foto (29/09/2026): el marco es muy apaisado y
-                     el centro geométrico cortaba el motivo. */
-                  style={{ objectPosition: item.image.position }}
                   onLoad={() => setReady((previous) => new Set(previous).add(index))} />
               </div>
             ))}
@@ -91,7 +99,7 @@ export function LaboratoryCapabilities({ content, services }: {
         </figure>
         <LabRail labels={content.capabilities.map((item) => item.label)} step={step} tick={tour.tick} jump={tour.jump}
           accent={accent} dwell={tour.dwell} autoplay={tour.autoplay} paused={tour.paused || shown !== step}
-          onSelect={go} onDone={tour.next} />
+          onSelect={go} onDone={advance} />
       </div>
     </>
   );

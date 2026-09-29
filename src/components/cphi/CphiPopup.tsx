@@ -4,10 +4,11 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { cphiPopup as c } from '@/content/cphi';
 import { pathFor, type Locale } from '@/lib/i18n';
 import { CphiMark } from './CphiMark';
+import { CphiDock } from './CphiDock';
 
 const SEEN_KEY = 'virens-cphi-popup';
 const OPEN_DELAY = 900;
-const CLOSE_MS = 350;
+const CLOSE_MS = 560;
 const START = Date.parse(c.start);
 const END = Date.parse(c.end);
 const pad = (n: number) => String(n).padStart(2, '0');
@@ -16,19 +17,28 @@ const pad = (n: number) => String(n).padStart(2, '0');
  * Pop-up de entrada de CPHI Milán (29/09/2026, diseño del cliente). Sale una
  * vez por visita (sessionStorage), un poco después de cargar para no tapar la
  * pintura del hero, y deja de montarse al cerrar la feria. Antes de la feria,
- * cuenta atrás; durante, «Live now». Cierra con la X, el fondo o Esc, y
- * devuelve el foco a donde estaba (regla 8).
+ * cuenta atrás; durante, «Live now». Cierra con la X, el fondo o Esc.
+ * Desde el 29/09/2026 al cerrarse se encoge hacia abajo a la izquierda y queda
+ * como cápsula (`CphiDock`) que lo vuelve a abrir; en las páginas siguientes
+ * de la misma visita ya solo aparece la cápsula. El foco vuelve a donde estaba
+ * (a la cápsula, si se abrió desde ella).
  */
 export function CphiPopup({ locale }: { locale: Locale }) {
   const [open, setOpen] = useState(false);
   const [closing, setClosing] = useState(false);
+  const [docked, setDocked] = useState(false);
   const [now, setNow] = useState(() => Date.now());
   const closeRef = useRef<HTMLButtonElement>(null);
   const returnTo = useRef<Element | null>(null);
 
   useEffect(() => {
     if (Date.now() > END) return;
-    try { if (sessionStorage.getItem(SEEN_KEY)) return; } catch { /* sin almacenamiento: se muestra igual */ }
+    try {
+      if (sessionStorage.getItem(SEEN_KEY)) {
+        setDocked(true);
+        return;
+      }
+    } catch { /* sin almacenamiento: se muestra igual */ }
     const t = window.setTimeout(() => {
       returnTo.current = document.activeElement;
       setOpen(true);
@@ -39,11 +49,17 @@ export function CphiPopup({ locale }: { locale: Locale }) {
 
   const close = useCallback(() => {
     setClosing(true);
+    setDocked(true);
     window.setTimeout(() => {
       setOpen(false);
       setClosing(false);
       if (returnTo.current instanceof HTMLElement) returnTo.current.focus();
     }, CLOSE_MS);
+  }, []);
+
+  const reopen = useCallback(() => {
+    returnTo.current = document.activeElement;
+    setOpen(true);
   }, []);
 
   useEffect(() => {
@@ -72,11 +88,19 @@ export function CphiPopup({ locale }: { locale: Locale }) {
     };
   }, [open, close]);
 
-  if (!open) return null;
+  const live = now >= START;
+  const dock = docked && now <= END ? (
+    <div className="cphi-dock-wrap" data-hidden={(open && !closing) || undefined}>
+      <CphiDock live={live} onOpen={reopen} />
+    </div>
+  ) : null;
+  if (!open) return dock;
   const diff = Math.max(0, START - now);
   const countdown = { d: pad(Math.floor(diff / 864e5)), h: pad(Math.floor(diff / 36e5) % 24), m: pad(Math.floor(diff / 6e4) % 60), s: pad(Math.floor(diff / 1e3) % 60) };
 
   return (
+    <>
+    {dock}
     <div className="cphi" role="dialog" aria-modal="true" aria-label={c.dialogLabel} data-closing={closing || undefined} onClick={close}>
       <div className="cphi__backdrop" />
       <div className="cphi__card" onClick={(e) => e.stopPropagation()}>
@@ -126,5 +150,6 @@ export function CphiPopup({ locale }: { locale: Locale }) {
         </div>
       </div>
     </div>
+    </>
   );
 }
