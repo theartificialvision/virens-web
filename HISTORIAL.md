@@ -3345,3 +3345,23 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
 - También aparcado: informe UX/UI de venta al cliente (material: auditoría
   `docs/00-…`, este historial, `claude/auditoria-2026-09-29.md` del proyecto).
   Pase de Wallet a la espera de cuenta Apple Developer y badge oficial.
+
+
+### 2026-09-30 — Codex — Tech: laboratorio editorial
+
+- Cliente eligió «Laboratorio editorial» entre dos direcciones propuestas.
+  Sustituidos franja magenta y proceso molecular por apertura blanca con
+  el mismo texto y pilares, índice conectado sticky y cinco capítulos
+  alternos de fotografía 16:9 y texto. Tipografía/CTA del sistema intactos.
+- Retirados órbitas, escaneo, regla, retícula y opacidad de lectura. Fotos
+  existentes del cliente, sin recorte 16:10. Acentos magenta discretos y
+  motivo de enlaces inspirado en la marca, sin fórmulas químicas inventadas.
+- Navegación con anclas reales, aria-current, foco y seguimiento del scroll.
+  Móvil: foto antes del texto; índice horizontal sigue el servicio activo.
+  Movimiento reducido respetado; sin secuestro de scroll ni bucle RAF.
+- Eliminados ProcessMolecule y geometría obsoleta, reemplazado CSS anterior.
+- Validación: tipos regenerados para retirar caché de Noticias eliminada,
+  typecheck y diff limpios. HTTP 200 ES/EN; 1 h1, 5 capítulos, 5 anclas y
+  enlaces verificados. Sin cambios en los archivos de contenido.
+- Revisión visual 1440/390 pendiente: inventario CUA vacío y apertura del
+  navegador integrado devuelve «Browser is not available: iab».

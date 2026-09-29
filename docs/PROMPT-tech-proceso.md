@@ -1,3 +1,7 @@
+> Estado 30/09/2026: implementada la dirección «Laboratorio editorial», elegida
+> por el cliente en esta sesión. Textos y anclas conservados. Typecheck y rutas
+> ES/EN comprobados. Capturas 1440/390 pendientes por navegador no disponible.
+
 # Prompt — rediseño de «De la idea al producto final» (Virens Tech)
 
 Contexto: repo `theartificialvision/virens-web`, rama `v2` (Next.js 15, TS

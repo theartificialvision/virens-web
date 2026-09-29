@@ -1,6 +1,5 @@
 import { HeroVideo } from '@/components/sections/HeroVideo';
 import { TechProcess } from '@/components/sections/TechProcess';
-import { TypographicBlock } from '@/components/sections/TypographicBlock';
 import { CtaBand } from '@/components/v2/CtaBand';
 import { CertStrip } from '@/components/v2/CertStrip';
 import { Section } from '@/components/ui/Section';
@@ -9,15 +8,7 @@ import { Reveal } from '@/components/ui/Reveal';
 import { techContent } from '@/content';
 import type { Locale } from '@/lib/i18n';
 
-/**
- * ONE PAGE de Virens Tech. 27/09/2026 (cliente: «siento que se repiten
- * cosas»): cada idea se dice una vez. Cinco bloques:
- *   hero (azul) → intro (hueso) → frase puente (magenta) → proceso de los cinco
- *   servicios (proceso molecular, blanco) → certificaciones (gris claro) → CTA.
- * Fuera la lista de servicios de la intro, los pilares genéricos del bloque
- * magenta, la franja de cifras (repetía datos de Home y Compañía) y el
- * puente «Visitar Labs» (Labs es la Home, a un toque desde el menú).
- */
+/** Tech: hero e intro existentes; recorrido editorial con los cinco servicios. */
 export function TechView({ locale }: { locale: Locale }) {
   const { integratedSolutions, techHero, techIntro, techServices, techServicesSlider } = techContent(locale);
   return (
@@ -36,11 +27,8 @@ export function TechView({ locale }: { locale: Locale }) {
         </Container>
       </Section>
 
-      <TypographicBlock {...integratedSolutions} />
-
-      {/* 29/09/2026: los servicios como proceso — una molécula que se
-          construye con el scroll (antes, slide de diapositivas). */}
-      <TechProcess services={techServices} label={techServicesSlider.label} phase={techServicesSlider.phase} />
+      <TechProcess services={techServices} label={techServicesSlider.label}
+        phase={techServicesSlider.phase} introduction={integratedSolutions} />
 
       <CertStrip locale={locale} />
 

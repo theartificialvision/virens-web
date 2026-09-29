@@ -90,13 +90,11 @@ otra IA dentro). Todo está preparado en el repo:
   **Capacidad productiva**: las siete siluetas que crecen por tamaños →
   Áreas terapéuticas (marquee compacto en mayúsculas, blanco/teal/magenta, barras sutiles y movimiento pausado) →
   Certificaciones → CTA. Ver `HISTORIAL.md` (29)–(31).
-- **Virens Tech** (`src/app/virens-tech/page.tsx`), sin repeticiones desde
-  el 27/09: portada con titular propio «Desarrollo y formulación de
-  complementos alimenticios» → intro de una frase → frase puente magenta
-  (sin pilares) → **slide guiado por el scroll** de los seis servicios
-  (`ServicesSlider` + `ServiceSlide` + `useSlideProgress`, inercia y deriva
-  continuas; panel alterno azul #00285C / verde #164E3B; versión móvil propia)
-  → certificaciones → CTA. Fuera cifras, «Visitar Labs» y la barra de anclas.
+- **Virens Tech** (`src/views/TechView.tsx`), 30/09: dirección «laboratorio
+  editorial» elegida por el cliente. Hero e intro existentes → apertura blanca
+  «De la idea al producto final» con cuatro principios → navegación fina sticky
+  → cinco capítulos alternos de foto 16:9 y texto → certificaciones → CTA.
+  Sin órbitas, escaneo ni retícula. Textos ES/EN y cinco anclas conservados.
 - **Virens Labs es la Home:** la página `/virens-labs` se retiró y redirige
   permanentemente a `/`; menú, pie y enlaces cruzados apuntan ya a la Home.
 - **Compañía** (`src/app/compania/page.tsx`): portada nueva con claim
@@ -146,17 +144,14 @@ otra IA dentro). Todo está preparado en el repo:
 - **Noticias: retirada por decisión del cliente (29/09).** Fuera del menú, el
   pie, el sitemap y las rutas; `/noticias/*` redirige a `/` y `/en/news/*` a
   `/en`. El trabajo de Muse está en `aparcado/noticias/`, fuera de la build.
-- **Tech, «De la idea al producto final» + proceso de servicios: rehacer entero**
-  (cliente, 29/09 noche). Encargo en `docs/PROMPT-tech-proceso.md`.
+- **Tech editorial implementado (30/09)** según la dirección elegida. Pendiente
+  revisión visual a 1440/390: esta sesión no dispone de navegador conectado.
 - **Páginas legales**: no existen aún en ningún idioma (`/legal/*`,
   `/en/legal/*`); pie, formulario y redirecciones ya apuntan ahí.
 - **Revisión del inglés `[TR]`** por el cliente: `docs/i18n-ingles.md`.
 
 - Compañía: el hito 2026 de la historia repite literalmente el texto de 2023
   (viene así de la maqueta). Pedir el texto real o quitar el hito.
-- Slide de Tech: empieza en azul por el primer slide del diseño del cliente;
-  confirmar si prefiere empezar en verde. La frase destacada (`highlight`) de
-  cada servicio no se muestra (su diseño no la lleva).
 - Datos que el cliente debe confirmar antes de publicar en `lvirens.com`:
   `site.pendingClientConfirmation` en `src/config/site.ts` y la tabla
   «Casos abiertos» de `HISTORIAL.md`.
