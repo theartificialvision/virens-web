@@ -43,7 +43,7 @@ export const integratedSolutions = {
 
 /**
  * Los servicios (cinco desde el 29/09/2026: fuera Centro de sabores). Desde el 27/09/2026 (cliente) se presentan en un slide
- * que avanza con el scroll (`ServicesSlider`), uno por diapositiva, en lugar
+ * que avanza con el scroll (desde el 29/09/2026, `TechProcess`), en lugar
  * de seis bloques alternos. Los campos `imageSide`/`imageRatio`/`tone` solo
  * los usa la versión anterior (`EditorialSplit`).
  */
@@ -129,6 +129,8 @@ export const techServices: ServiceBlock[] = [
 /** Slide de servicios (27/09/2026). */
 export const techServicesSlider = {
   label: 'Servicios de Virens Tech',
+  /** Rótulo de cada paso del proceso: «Fase 02 / 05» (29/09/2026). */
+  phase: 'Fase',
 } as const;
 
 // 27/09/2026 (cliente): fuera la franja de cifras de Tech. Las tres repetían

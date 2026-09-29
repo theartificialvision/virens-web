@@ -3282,3 +3282,23 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
   el apoyo necesario con la elaboración de dosieres de productos y
   documentación.» (punto final añadido). EN [TR]: «Regulatory». Meta
   description de Tech actualizada. El ancla `#regulatory-consulting` no cambia.
+
+### 2026-09-29 — Claude (nube) — Tech: los servicios pasan a ser un proceso molecular
+
+- Cliente: «tiene que ser más tech; la veo PowerPoint». Fuera el slide de
+  diapositivas (`ServicesSlider`, `ServiceSlide`, `useSlideProgress` y su CSS
+  `svc-*`, borrados). Nuevo `TechProcess` sobre azul profundo con retícula de
+  papel milimetrado:
+  - Escritorio: molécula fija a la izquierda (`ProcessMolecule`, SVG). Cada
+    servicio es un átomo con sus satélites; el scroll dibuja el enlace hacia el
+    siguiente (`--proc-p` continuo, `useProcessProgress`), el activo late en
+    magenta y los átomos son enlaces a su paso. A la derecha los pasos en flujo
+    normal (sin secuestrar el scroll); los no activos se atenúan.
+  - Cada paso (`ProcessStep`): «FASE 0X / 05» en monoespaciada (`--font-mono`,
+    SF Mono en Apple), foto 16:10 que se revela con una línea de escaneo y pasa
+    de gris a color, marcas de encuadre y regla de medición.
+  - Móvil: línea con nodos en el borde izquierdo; cada tramo se rellena con el
+    scroll.
+  - Movimiento reducido: molécula completa y todo visible, sin escaneo.
+- Las anclas (#formulacion, #rd-galenicos…) funcionan solas: cada paso es un
+  elemento real. Rótulo de fase en contenido (`techServicesSlider.phase`).

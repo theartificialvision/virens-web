@@ -97,4 +97,5 @@ export const techServices: ServiceBlock[] = [
 
 export const techServicesSlider = {
   label: 'Virens Tech services', // [TR]
+  phase: 'Phase', // [TR]
 } as const satisfies Loosen<typeof es.techServicesSlider>;
