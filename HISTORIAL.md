@@ -3333,3 +3333,15 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
 - Fotos: el barrido de neón pasa a un velo de luz blanca suave; siguen el
   paso de gris a color, las marcas de encuadre y la regla, ahora en tinta.
 - Móvil: la misma línea con nodos, en azul, y el activo con anillo magenta.
+
+### 2026-09-29 (noche) — Claude (nube) — PENDIENTE: rehacer «De la idea al producto final» en Tech
+
+- Cliente: la franja «De la idea al producto final» y el proceso de servicios
+  de Tech (2.ª vuelta, fórmula esquelética) «hay que cambiar todo, ahora es un
+  desastre». Sin hacer: se pasa a otra IA con el encargo en
+  `docs/PROMPT-tech-proceso.md`. Lo publicado sigue siendo la 2.ª vuelta
+  (commit 3500a81); la versión anterior en slide está en el historial de git
+  (antes de f85236f).
+- También aparcado: informe UX/UI de venta al cliente (material: auditoría
+  `docs/00-…`, este historial, `claude/auditoria-2026-09-29.md` del proyecto).
+  Pase de Wallet a la espera de cuenta Apple Developer y badge oficial.

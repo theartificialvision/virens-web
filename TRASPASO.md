@@ -146,6 +146,8 @@ otra IA dentro). Todo está preparado en el repo:
 - **Noticias: retirada por decisión del cliente (29/09).** Fuera del menú, el
   pie, el sitemap y las rutas; `/noticias/*` redirige a `/` y `/en/news/*` a
   `/en`. El trabajo de Muse está en `aparcado/noticias/`, fuera de la build.
+- **Tech, «De la idea al producto final» + proceso de servicios: rehacer entero**
+  (cliente, 29/09 noche). Encargo en `docs/PROMPT-tech-proceso.md`.
 - **Páginas legales**: no existen aún en ningún idioma (`/legal/*`,
   `/en/legal/*`); pie, formulario y redirecciones ya apuntan ahí.
 - **Revisión del inglés `[TR]`** por el cliente: `docs/i18n-ingles.md`.
