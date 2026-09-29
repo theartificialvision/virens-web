@@ -57,55 +57,41 @@ export const techServices: ServiceBlock[] = [
     link: { label: 'See available galenic forms', href: '/en#formas-galenicas' }, // [TR]
   },
   {
-    id: 'centro-de-sabores',
-    index: '03',
-    title: 'Taste centre', // [EN]
-    body: [
-      'A space where products are tested for taste and flavour.', // [EN]
-      'This way we make sure that the desired product is commercially viable.', // [EN]
-    ],
-    imageSide: 'left',
-    imageRatio: 60,
-    tone: 'white',
-    image: { src: '/img/tech-sabores.jpg', alt: 'Extracts, droppers and botanical ingredients in a sensory test' }, // [TR]
-  },
-  {
     id: 'estabilidad',
-    index: '04',
+    index: '03',
     title: 'Product stability', // [EN]
     body: [
-      'We have a stability chamber that allows us to obtain information on the stability of the product.', // [EN]
-      'This gives us prior knowledge of the shelf life and period of use under certain packaging and storage conditions.', // [EN]
+      'We can carry out stability studies to assess how the product evolves and help determine its shelf life, according to the needs of each project.', // [TR] (cliente 29/09)
     ],
-    imageSide: 'right',
+    imageSide: 'left',
     imageRatio: 55,
-    tone: 'gray',
+    tone: 'white',
     image: { src: '/img/virens-tech/comprimidos-estabilidad-producto-virens-tech.webp', alt: 'White tablets in the hopper of a production line' }, // [TR]
   },
   {
     id: 'garantia-de-calidad',
-    index: '05',
+    index: '04',
     title: 'Quality assurance', // [EN]
     body: [
       // [EN] segunda frase del literal inglés, que es la que corresponde al texto español.
       'We carry out microbiological and physicochemical controls during the manufacturing process as well as on the final product.',
     ],
-    imageSide: 'left',
+    imageSide: 'right',
     imageRatio: 55,
-    tone: 'white',
+    tone: 'gray',
     image: { src: '/img/virens-tech/garantia-calidad-laboratorio-virens-tech.webp', alt: 'Two technicians in hairnets reviewing a sample in a quality laboratory' }, // [TR]
   },
   {
     id: 'regulatory-consulting',
-    index: '06',
+    index: '05',
     title: 'Regulatory consulting', // [EN]
     body: [
       'Our Customer Service department will provide you with the necessary technical and commercial support with the drafting of technical product dossiers and commercial documentation.', // [EN]
       'We also have a regulatory service for product registrations and notifications.', // [EN]
     ],
-    imageSide: 'right',
+    imageSide: 'left',
     imageRatio: 55,
-    tone: 'gray',
+    tone: 'white',
     image: { src: '/img/virens-tech/consultoria-regulatoria-complementos-alimenticios-virens-tech.webp', alt: 'Capsules being reviewed over technical product documentation' }, // [TR]
   },
 ];

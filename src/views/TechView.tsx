@@ -12,7 +12,7 @@ import type { Locale } from '@/lib/i18n';
 /**
  * ONE PAGE de Virens Tech. 27/09/2026 (cliente: «siento que se repiten
  * cosas»): cada idea se dice una vez. Cinco bloques:
- *   hero (azul) → intro (hueso) → frase puente (magenta) → slide de los seis
+ *   hero (azul) → intro (hueso) → frase puente (magenta) → slide de los cinco
  *   servicios (gris + panel) → certificaciones (gris claro) → CTA.
  * Fuera la lista de servicios de la intro, los pilares genéricos del bloque
  * magenta, la franja de cifras (repetía datos de Home y Compañía) y el
@@ -38,7 +38,7 @@ export function TechView({ locale }: { locale: Locale }) {
 
       <TypographicBlock {...integratedSolutions} />
 
-      {/* Los seis servicios en un slide guiado por el scroll (27/09/2026). */}
+      {/* Los servicios en un slide guiado por el scroll (27/09/2026). */}
       <ServicesSlider services={techServices} label={techServicesSlider.label} />
 
       <CertStrip locale={locale} />

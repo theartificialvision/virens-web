@@ -2,7 +2,7 @@ import type { ServiceBlock } from '@/lib/types';
 
 /**
  * VIRENS TECH — contenido extraído de lvirens.com/virens-tech (01/09/2026).
- * La web actual nombra los seis servicios de dos formas distintas en la misma
+ * La web actual nombra los servicios de dos formas distintas en la misma
  * página. Aquí se usa la denominación oficial (la de las pestañas).
  */
 
@@ -42,7 +42,7 @@ export const integratedSolutions = {
 } as const;
 
 /**
- * Los seis servicios. Desde el 27/09/2026 (cliente) se presentan en un slide
+ * Los servicios (cinco desde el 29/09/2026: fuera Centro de sabores). Desde el 27/09/2026 (cliente) se presentan en un slide
  * que avanza con el scroll (`ServicesSlider`), uno por diapositiva, en lugar
  * de seis bloques alternos. Los campos `imageSide`/`imageRatio`/`tone` solo
  * los usa la versión anterior (`EditorialSplit`).
@@ -83,59 +83,44 @@ export const techServices: ServiceBlock[] = [
   },
   {
     // LITERAL (§2.4).
-    id: 'centro-de-sabores',
-    index: '03',
-    title: 'Centro de sabores',
-    body: [
-      'Espacio donde se hacen pruebas de gusto y aromas a los productos.',
-      'De este modo nos aseguramos de que el producto ideado sea viable comercialmente.',
-    ],
-    highlight: 'Validación organoléptica antes de escalar',
-    imageSide: 'left',
-    imageRatio: 60,
-    tone: 'white',
-    image: { src: '/img/tech-sabores.jpg', alt: 'Extractos, goteros y ingredientes botánicos en una prueba organoléptica' },
-  },
-  {
-    // LITERAL (§2.4).
     id: 'estabilidad',
-    index: '04',
+    index: '03',
     title: 'Estabilidad de productos',
+    // 29/09/2026 (cliente): un solo párrafo nuevo.
     body: [
-      'Disponemos de cámara de estabilidad que nos permite obtener información sobre la estabilidad del producto.',
-      'De esta forma disponemos de un conocimiento previo del tiempo de conservación y periodo de utilización en determinadas condiciones de envase y almacenamiento.',
+      'Ofrecemos la posibilidad de realizar estudios de estabilidad para evaluar la evolución del producto y contribuir a la determinación de su vida útil, según las necesidades de cada proyecto.',
     ],
     highlight: 'Cámara de estabilidad propia',
-    imageSide: 'right',
+    imageSide: 'left',
     imageRatio: 55,
-    tone: 'gray',
+    tone: 'white',
     image: { src: '/img/virens-tech/comprimidos-estabilidad-producto-virens-tech.webp', alt: 'Comprimidos blancos en la tolva de una línea de producción' },
   },
   {
     // LITERAL (§2.4).
     id: 'garantia-de-calidad',
-    index: '05',
+    index: '04',
     title: 'Garantía de calidad',
     body: [
       'En nuestros laboratorios realizamos controles microbiológicos y físico-químicos durante el proceso de fabricación así como en el producto acabado.',
     ],
-    imageSide: 'left',
+    imageSide: 'right',
     imageRatio: 55,
-    tone: 'white',
+    tone: 'gray',
     image: { src: '/img/virens-tech/garantia-calidad-laboratorio-virens-tech.webp', alt: 'Dos técnicas con cofia revisando una muestra en un laboratorio de calidad' },
   },
   {
     // LITERAL (§2.4).
     id: 'regulatory-consulting',
-    index: '06',
+    index: '05',
     title: 'Regulatory consulting',
     body: [
       'Nuestro departamento de Atención al Cliente le brindará todo el apoyo técnico comercial necesario con la elaboración de dosieres técnicos de productos y documentación comercial.',
       'También contamos con un servicio de regulatorio para registros y notificaciones de productos.',
     ],
-    imageSide: 'right',
+    imageSide: 'left',
     imageRatio: 55,
-    tone: 'gray',
+    tone: 'white',
     image: { src: '/img/virens-tech/consultoria-regulatoria-complementos-alimenticios-virens-tech.webp', alt: 'Revisión de cápsulas sobre documentación técnica de producto' },
   },
 ];

@@ -3265,3 +3265,13 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
   formulación, formato y características.» (punto final añadido, como el resto
   de servicios). EN [TR]: «Galenics». Actualizada también la meta description
   de Tech. El ancla `#rd-galenicos` no cambia.
+
+### 2026-09-29 — Claude (nube) — Tech: fuera Centro de sabores; Estabilidad con texto nuevo
+
+- Cliente: se elimina **Centro de sabores** (ES y EN). Quedan cinco servicios,
+  renumerados 01–05 (Formulación, Galénica, Estabilidad de productos, Garantía
+  de calidad, Regulatory consulting); lado de foto y tono re-alternados; el
+  contador del slide pasa a «0X — 05» solo (usa `services.length`). Fuera de la
+  meta description y borrada `tech-sabores.jpg`, que ya no usa nadie.
+- Estabilidad de productos: un solo párrafo nuevo del cliente («Ofrecemos la
+  posibilidad de realizar estudios de estabilidad…», punto final añadido). EN [TR].
