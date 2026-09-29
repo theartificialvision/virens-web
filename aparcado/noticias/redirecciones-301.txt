@@ -1,0 +1,23 @@
+      // Noticias: en WP cuelgan de la raíz (/cphi-milan-2026/); en la v2 viven
+      // bajo /noticias con el mismo slug (§14.5). Extracción 29/09/2026.
+      ['/cphi-milan-2026/', '/noticias/cphi-milan-2026'],
+      ['/verano-2026/', '/noticias/verano-2026'],
+      ['/vitafoods-2026-un-exito-gracias-por-formar-parte-de-esta-gran-edicion/', '/noticias/vitafoods-2026-un-exito-gracias-por-formar-parte-de-esta-gran-edicion'],
+      ['/vitafoods-2026/', '/noticias/vitafoods-2026'],
+      ['/nootropicos-y-salud-cognitiva-como-los-suplementos-apoyan-la-salud-cerebral/', '/noticias/nootropicos-y-salud-cognitiva-como-los-suplementos-apoyan-la-salud-cerebral'],
+      ['/cierre-por-vacaciones-de-agosto/', '/noticias/cierre-por-vacaciones-de-agosto'],
+      ['/la-creatina-el-boom-en-los-suplementos-para-la-mujer-2/', '/noticias/la-creatina-el-boom-en-los-suplementos-para-la-mujer-2'],
+      ['/vitafoods-europe-2025/', '/noticias/vitafoods-europe-2025'],
+      ['/nutricion-deportiva-claves-y-tendencias-para-2025/', '/noticias/nutricion-deportiva-claves-y-tendencias-para-2025'],
+      ['/feliz-navidad-y-prospero-ano-nuevo/', '/noticias/feliz-navidad-y-prospero-ano-nuevo'],
+      ['/tendencias-en-los-complementos-alimenticios-en-2025/', '/noticias/tendencias-en-los-complementos-alimenticios-en-2025'],
+      ['/envejecimiento-saludable-bienestar/', '/noticias/envejecimiento-saludable-bienestar'],
+      ['/vitafoods-moves-to-barcelona/', '/noticias/vitafoods-moves-to-barcelona'],
+      ['/laboratorios-virens-amb-accio/', '/noticias/laboratorios-virens-amb-accio'],
+      ['/laboratorios-virens-vuelve-a-vitafoods-2024/', '/noticias/laboratorios-virens-vuelve-a-vitafoods-2024'],
+      ['/virens-crece/', '/noticias/virens-crece'],
+      ['/nuevo-catalogo/', '/noticias/nuevo-catalogo'],
+      ['/vitafoods-2023/', '/noticias/vitafoods-2023'],
+    ];
+    return map.map(([source, destination]) => ({ source, destination, permanent: true }));
+  },

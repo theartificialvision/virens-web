@@ -1,0 +1,91 @@
+/* ============================================================
+   NOTICIAS (2026-09-29) — índice editorial + plantilla de artículo.
+   Sin radio ni sombra (regla 4): el índice es una rejilla de filete
+   compartido y la única "tarjeta" del sistema sigue siendo la noticia
+   suelta, aquí en formato fila. Valores solo de los tokens de arriba.
+   ============================================================ */
+
+/* --- Índice: hover editorial ---------------------------------------
+   La imagen respira dentro de su marco y el titular toma el teal de
+   Labs; el gesto es el mismo que `.text-link`, sin levantar nada. */
+.news-row-title,
+.news-title-link {
+  transition: color var(--motion-control) var(--motion-ease);
+}
+.news-media img {
+  transition: transform var(--motion-enter) var(--motion-ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  .news-row:hover .news-row-title { color: var(--color-labs); }
+  .news-title-link:hover { color: var(--color-labs); }
+  .news-row:hover .news-media img,
+  .news-media:hover img { transform: scale(1.04); }
+  .news-pager:hover .news-row-title { color: var(--color-labs); }
+}
+.news-filter {
+  transition:
+    background-color var(--motion-control) var(--motion-ease),
+    border-color var(--motion-control) var(--motion-ease),
+    color var(--motion-control) var(--motion-ease);
+}
+@media (hover: hover) and (pointer: fine) {
+  .news-filter:not([aria-pressed='true']):hover { border-color: var(--color-blue); color: var(--color-blue); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .news-media img { transform: none !important; }
+}
+
+/* --- Cuerpo del artículo --------------------------------------------
+   Tipografía del sistema sobre el HTML saneado de WP (solo p/h/ul/ol/
+   li/a/img/strong/em). El ritmo lo da el margen entre bloques, en em
+   para que escale con el cuerpo. */
+.article-body {
+  font-size: var(--text-body);
+  line-height: 1.75;
+  color: var(--color-gray-700);
+  overflow-wrap: break-word;
+}
+.article-body > * + * { margin-top: 1.5em; }
+.article-body h2,
+.article-body h3 {
+  color: var(--color-blue);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.article-body h2 { font-size: var(--text-h3); margin-top: 2.5em; }
+.article-body h3 { font-size: var(--text-h4); margin-top: 2em; }
+.article-body h4,
+.article-body h5 {
+  color: var(--color-blue);
+  font-size: var(--text-body);
+  font-weight: 700;
+  margin-top: 2em;
+}
+.article-body strong { color: var(--color-blue); }
+.article-body a {
+  color: var(--color-labs);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .article-body a:hover { color: var(--color-blue); }
+}
+.article-body ul,
+.article-body ol {
+  padding-left: 1.5em;
+  display: grid;
+  gap: 0.75em;
+}
+.article-body ul { list-style: disc; }
+.article-body ol { list-style: decimal; }
+.article-body li::marker { color: var(--color-labs); }
+.article-body img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.article-body p:has(> img:only-child) { margin-top: 2.5em; }

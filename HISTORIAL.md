@@ -3088,3 +3088,10 @@ atascada en la home, Compañía ni Tech.
   calidad 85 que usa el fondo de Contacto (aviso en consola).
 - PENDIENTE (necesita decisión, ver informe): páginas legales `/legal/*` (404),
   envío del formulario, página 404 propia, peso del vídeo del hero.
+
+### 2026-09-29 — Claude (nube) — Noticias de Muse aparcada
+
+- El cliente no quiere la sección de noticias de momento. El trabajo de Muse
+  Code (18 artículos reales, índice, plantilla, imágenes, estilos y 301) queda
+  guardado en `aparcado/noticias/`, fuera de la build (`tsconfig` lo excluye).
+  Ver su README para reactivarlo. La web publicada no cambia.
