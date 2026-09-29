@@ -3257,3 +3257,11 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
 - Cliente: la frase de la intro (fondo hueso) se corta en «productos» y acaba
   en punto: «En Virens Tech ayudamos a nuestros clientes a tener los mejores
   productos.» Mismo recorte en inglés.
+
+### 2026-09-29 — Claude (nube) — Tech: «R+D galénicos» pasa a «Galénica»
+
+- Cliente: título «Galénica» y texto nuevo: «Nuestro equipo técnico te
+  asesorará en la formulación, ofreciendo muestras galénicas para validar
+  formulación, formato y características.» (punto final añadido, como el resto
+  de servicios). EN [TR]: «Galenics». Actualizada también la meta description
+  de Tech. El ancla `#rd-galenicos` no cambia.

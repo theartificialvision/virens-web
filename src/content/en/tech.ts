@@ -46,9 +46,9 @@ export const techServices: ServiceBlock[] = [
   {
     id: 'rd-galenicos',
     index: '02',
-    title: 'Galenic R+D', // [EN]
+    title: 'Galenics', // [TR] (cliente 29/09: «Galénica»)
     body: [
-      "Considering current legislation of use and dosage, we provide the most suitable dosage forms for our customers' projects.", // [EN]
+      'Our technical team will advise you on formulation, providing galenic samples to validate the formula, format and characteristics.', // [TR]
     ],
     imageSide: 'right',
     imageRatio: 55,

@@ -69,9 +69,11 @@ export const techServices: ServiceBlock[] = [
     // LITERAL (§2.4).
     id: 'rd-galenicos',
     index: '02',
-    title: 'R+D galénicos',
+    // 29/09/2026 (cliente): título y texto nuevos (antes «R+D galénicos»).
+    // El ancla `rd-galenicos` se conserva: la enlazan el pie y otras webs.
+    title: 'Galénica',
     body: [
-      'Teniendo en cuenta la legislación vigente, el uso y la dosificación proporcionamos las formas galénicas más adecuadas para los proyectos de nuestros clientes.',
+      'Nuestro equipo técnico te asesorará en la formulación, ofreciendo muestras galénicas para validar formulación, formato y características.',
     ],
     imageSide: 'right',
     imageRatio: 55,
