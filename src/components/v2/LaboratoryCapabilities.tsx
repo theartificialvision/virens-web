@@ -4,6 +4,9 @@ import Image from 'next/image';
 import { useEffect, useState, type CSSProperties } from 'react';
 import type { Loosen } from '@/lib/i18n';
 import type { v2Laboratory } from '@/content/v2-home';
+import { usePrefersReducedMotion } from '@/lib/useReducedMotion';
+import { useStepProgress } from '@/lib/useStepProgress';
+import { ServiceTabs } from './ServiceTabs';
 
 type Service = { id: string; title: string; accent: string };
 
@@ -22,7 +25,8 @@ export function LaboratoryCapabilities({ content, services }: {
   services: readonly Service[];
 }) {
   const [service, setService] = useState(0);
-  const covered = content.serviceScope[service] ?? content.capabilities.length;
+  const reduced = usePrefersReducedMotion();
+  const rail = useStepProgress<HTMLOListElement>(content.serviceScope[service] ?? content.capabilities.length, reduced);
   const accent = `var(--color-${services[service]?.accent ?? 'labs'})`;
   const [selected, setSelected] = useState(0);
   const [ready, setReady] = useState<Set<number>>(() => new Set());
@@ -33,20 +37,7 @@ export function LaboratoryCapabilities({ content, services }: {
   }, [ready, selected]);
   return (
     <>
-      <div className="laboratory__services" role="group">
-        {services.map((item, index) => (
-          <div key={item.id} id={index === 1 ? item.id : undefined} className="laboratory__service"
-            style={{ '--service-accent': `var(--color-${item.accent})` } as CSSProperties}>
-            <h2 id={index === 0 ? 'laboratory-title' : undefined}>
-              <button type="button" className="laboratory__service-tab" aria-pressed={service === index}
-                aria-controls="laboratory-steps" onClick={() => setService(index)}>
-                {item.title}
-              </button>
-            </h2>
-            <p className="sr-only">{content.serviceSummaries[index]}</p>
-          </div>
-        ))}
-      </div>
+      <ServiceTabs services={services} summaries={content.serviceSummaries} active={service} onSelect={setService} />
       <figure className="laboratory__figure laboratory__presentation">
         <div id="laboratory-visual" className="laboratory__image">
           {content.capabilities.map((item, index) => (
@@ -83,16 +74,18 @@ export function LaboratoryCapabilities({ content, services }: {
           </div>
         </figcaption>
       </figure>
-      <ol id="laboratory-steps" className="laboratory__capabilities"
-        style={{ '--covered': covered, '--steps': content.capabilities.length, '--service-accent': accent } as CSSProperties}>
+      <ol ref={rail.ref} id="laboratory-steps" className="laboratory__capabilities" data-lit={rail.covered > 0 || undefined}
+        style={{ '--covered': rail.covered, '--steps': content.capabilities.length, '--service-accent': accent,
+          '--rail-duration': `${rail.duration - rail.lead}ms`, '--rail-lead': `${rail.lead}ms` } as CSSProperties}>
         {content.capabilities.map((item, index) => (
-          <li key={item.label} data-covered={index < covered || undefined}>
+          <li key={item.label} data-covered={index < rail.covered || undefined}
+            style={{ '--d': `${rail.delays[index] ?? 0}ms` } as CSSProperties}>
             <button type="button" className="laboratory__capability" aria-pressed={selected === index}
               aria-controls="laboratory-visual laboratory-detail" onPointerEnter={(event) => { if (event.pointerType !== 'touch') setSelected(index); }}
               onFocus={() => setSelected(index)} onClick={() => setSelected(index)}>
               <span className="laboratory__dot" aria-hidden="true" />
               <span className="laboratory__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-              <span>{item.label}</span>
+              <span className="laboratory__label">{item.label}</span>
             </button>
           </li>
         ))}

@@ -11,7 +11,13 @@
   --lab-tab-gap: clamp(1.5rem, 4vw, 3.5rem);
   --lab-dot: 0.625rem;
   --lab-rail-space: 1.5rem;
-  --lab-rail-transition: 600ms;
+  --lab-rail-ease: cubic-bezier(0.65, 0, 0.35, 1); /* = EASE en useStepProgress */
+  --lab-rail-head: 1.375rem;
+  --lab-tab-transition: 520ms;
+  --lab-tab-ease: cubic-bezier(0.34, 1.3, 0.64, 1);
+  --lab-dot-transition: 260ms;
+  --lab-dot-pop: 520ms;
+  --lab-dot-ping: 900ms;
   --lab-arrow-icon: 1.25rem;
   --lab-arrow-surface: rgba(255, 255, 255, 0.88);
 
@@ -31,10 +37,9 @@
 
   --lab-closing-size: clamp(1.5rem, 1.1rem + 1.5vw, 2.25rem);
   --lab-closing-measure: 26ch;
-  --lab-cta-glow: 0 0 24px rgba(0, 160, 153, 0.3), 0 8px 22px -8px rgba(0, 125, 121, 0.45);
-  --lab-cta-glow-active: 0 0 36px rgba(0, 160, 153, 0.48), 0 10px 28px -8px rgba(0, 125, 121, 0.55);
-  --lab-cta-sheen: rgba(255, 255, 255, 0.72);
-  --lab-cta-pulse: 3.6s;
+  --lab-cta-glow: 0 4px 12px -8px rgba(0, 72, 70, 0.35);
+  --lab-cta-glow-active: 0 8px 18px -10px rgba(0, 72, 70, 0.45);
+  --lab-cta-sheen: rgba(255, 255, 255, 0.4);
 
   --lab-gutter: clamp(1.25rem, 4vw, 5rem);
   --lab-section: clamp(1.25rem, 3.5svh, 2.5rem);
@@ -1357,14 +1362,8 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
 @media (hover: hover) and (pointer: fine) {
   .laboratory__cta:hover { box-shadow: var(--lab-cta-glow-active); }
 }
-@media (prefers-reduced-motion: no-preference) {
-  .laboratory__cta::after { animation: laboratory-cta-light var(--lab-cta-pulse) ease-in-out infinite; }
-  .laboratory__cta:hover::after, .laboratory__cta:focus-visible::after { animation: none; opacity: 1; }
-}
-@keyframes laboratory-cta-light {
-  0%, 100% { opacity: 0.45; }
-  50% { opacity: 1; }
-}
+/* 29/09/2026 (cliente: «menos estridente, tiene mucha sombra»): sombra de
+   contacto corta y sin halo; fuera el destello en bucle. */
 
 .laboratory__closing span { display: block; }
 .laboratory__closing { max-width: none; text-wrap: initial; }
@@ -1422,8 +1421,19 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
 
 /* Pestañas Private Label / Full service y fila 01–05 como recorrido
    (29/09/2026). Escritorio: una línea une los puntos de los cinco pasos y se
-   tiñe hasta el último que abarca el servicio elegido (`--covered`). */
-.laboratory__services { display: flex; flex-wrap: wrap; gap: var(--lab-small-gap) var(--lab-tab-gap); margin-bottom: var(--lab-gap); }
+   tiñe hasta el último que abarca el servicio elegido (`--covered`).
+   Animación (cliente: «progresión chulísima y pro»): la línea avanza o
+   retrocede con `--lab-rail-ease`, una cabeza luminosa la guía y cada punto
+   se enciende —con un pulso— justo cuando la línea lo alcanza (`--d`, lo
+   calcula `useStepProgress`). Las pestañas comparten un indicador que se
+   desliza y cambia de color. */
+.laboratory__services {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--lab-small-gap) var(--lab-tab-gap);
+  margin-bottom: var(--lab-gap);
+}
 .laboratory__service-tab {
   position: relative;
   padding-bottom: var(--lab-compact-gap);
@@ -1433,42 +1443,74 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   letter-spacing: var(--lab-title-tracking);
   color: var(--color-gray-500);
   cursor: pointer;
-  transition: color var(--motion-control) var(--motion-ease);
-}
-.laboratory__service-tab::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: var(--lab-active-rule);
-  background: var(--service-accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform var(--motion-control) var(--motion-ease);
+  transition: color var(--lab-tab-transition) var(--motion-ease);
 }
 .laboratory__service-tab[aria-pressed="true"] { color: var(--service-accent); }
-.laboratory__service-tab[aria-pressed="true"]::after { transform: scaleX(1); }
 .laboratory__service-tab:hover { color: var(--service-accent); }
 .laboratory__service-tab:focus-visible { outline: var(--lab-active-rule) solid var(--color-blue); outline-offset: var(--lab-active-space); }
+/* Sin JS (o antes de medir): subrayado fijo en la activa. */
+.laboratory__services:not([data-measured]) .laboratory__service-tab[aria-pressed="true"] {
+  background: linear-gradient(var(--service-accent), var(--service-accent)) no-repeat bottom / 100% var(--lab-active-rule);
+}
+.laboratory__tab-indicator {
+  position: absolute;
+  top: calc(var(--tab-y, 0px) - var(--lab-active-rule));
+  left: 0;
+  width: var(--tab-w, 0px);
+  height: var(--lab-active-rule);
+  background: var(--tab-accent);
+  transform: translateX(var(--tab-x, 0px));
+  pointer-events: none;
+}
+.laboratory__services:not([data-measured]) .laboratory__tab-indicator { opacity: 0; }
+.laboratory__services[data-measured] .laboratory__tab-indicator {
+  transition:
+    transform var(--lab-tab-transition) var(--lab-tab-ease),
+    width var(--lab-tab-transition) var(--lab-tab-ease),
+    background-color var(--lab-tab-transition) var(--motion-ease);
+}
 
-.laboratory__capabilities { --col: calc(100% / var(--steps)); position: relative; padding-top: var(--lab-rail-space); }
+.laboratory__capabilities {
+  --col: calc(100% / var(--steps));
+  --fill: calc(var(--col) * (var(--covered) - 1) + min(1, var(--covered) - 1) * var(--lab-cell-gap));
+  position: relative;
+  padding-top: var(--lab-rail-space);
+  /* Pista gris: del primer punto al último. */
+  background: linear-gradient(var(--color-gray-200), var(--color-gray-200)) no-repeat
+    0 calc(var(--lab-dot) / 2 - var(--lab-rule) / 2) / calc(100% - var(--col) + var(--lab-cell-gap)) var(--lab-rule);
+}
 .laboratory__capabilities::before,
 .laboratory__capabilities::after {
   content: '';
   position: absolute;
   top: calc(var(--lab-dot) / 2);
   left: 0;
-  height: var(--lab-rule);
-  transform: translateY(-50%);
+  pointer-events: none;
 }
-.laboratory__capabilities::before { right: calc(var(--col) - var(--lab-cell-gap)); background: var(--color-gray-200); }
-.laboratory__capabilities::after {
+/* Tramo del servicio. */
+.laboratory__capabilities::before {
+  width: max(var(--fill), 0px);
   height: var(--lab-active-rule);
-  width: calc(var(--col) * (var(--covered) - 1) + min(1, var(--covered) - 1) * var(--lab-cell-gap));
   background: var(--service-accent);
-  transition: width var(--lab-rail-transition) var(--motion-ease), background-color var(--motion-control) var(--motion-ease);
+  transform: translateY(-50%);
+  transition:
+    width var(--rail-duration, 0ms) var(--lab-rail-ease) var(--rail-lead, 0ms),
+    background-color var(--lab-tab-transition) var(--motion-ease);
 }
+/* Cabeza: halo que guía la punta de la línea (señal de marca, sin sombra). */
+.laboratory__capabilities::after {
+  width: var(--lab-rail-head);
+  height: var(--lab-rail-head);
+  border-radius: 999px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--service-accent) 55%, transparent) 0%, transparent 68%);
+  left: max(var(--fill), 0px);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition:
+    left var(--rail-duration, 0ms) var(--lab-rail-ease) var(--rail-lead, 0ms),
+    opacity var(--lab-tab-transition) var(--motion-ease);
+}
+.laboratory__capabilities[data-lit]::after { opacity: 1; }
 .laboratory__capability { position: relative; }
 .laboratory__dot {
   position: absolute;
@@ -1479,23 +1521,60 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   border: var(--lab-rule) solid var(--color-gray-300);
   border-radius: 999px;
   background: white;
-  transition: background-color var(--motion-control) var(--motion-ease), border-color var(--motion-control) var(--motion-ease);
+  transition:
+    background-color var(--lab-dot-transition) var(--motion-ease) var(--d, 0ms),
+    border-color var(--lab-dot-transition) var(--motion-ease) var(--d, 0ms),
+    transform var(--lab-dot-transition) var(--lab-tab-ease) var(--d, 0ms);
 }
-.laboratory__capabilities li[data-covered] .laboratory__dot { background: var(--service-accent); border-color: var(--service-accent); }
+/* Pulso al encenderse: un aro que se abre y se desvanece. */
+.laboratory__dot::after {
+  content: '';
+  position: absolute;
+  inset: calc(-1 * var(--lab-rule));
+  border: var(--lab-rule) solid var(--service-accent);
+  border-radius: 999px;
+  opacity: 0;
+}
+.laboratory__capabilities li[data-covered] .laboratory__dot {
+  background: var(--service-accent);
+  border-color: var(--service-accent);
+}
+.laboratory__number,
+.laboratory__label {
+  transition: color var(--lab-dot-transition) var(--motion-ease) var(--d, 0ms);
+}
 .laboratory__capabilities li[data-covered] .laboratory__number { color: var(--service-accent); }
-.laboratory__capabilities li:not([data-covered]) .laboratory__capability,
-.laboratory__capabilities li:not([data-covered]) .laboratory__number { color: var(--color-gray-500); }
-.laboratory__capabilities li:not([data-covered]) .laboratory__capability:hover { color: var(--lab-teal-text); }
+.laboratory__capabilities li:not([data-covered]) .laboratory__number,
+.laboratory__capabilities li:not([data-covered]) .laboratory__label { color: var(--color-gray-500); }
+.laboratory__capabilities li .laboratory__capability:hover .laboratory__label { color: var(--lab-teal-text); transition-delay: 0ms; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .laboratory__capabilities li[data-covered] .laboratory__dot { animation: lab-dot-pop var(--lab-dot-pop) var(--lab-tab-ease) var(--d, 0ms) both; }
+  .laboratory__capabilities li[data-covered] .laboratory__dot::after { animation: lab-dot-ping var(--lab-dot-ping) var(--motion-ease) var(--d, 0ms) forwards; }
+}
+@keyframes lab-dot-pop {
+  0%   { transform: scale(1); }
+  45%  { transform: scale(1.55); }
+  100% { transform: scale(1); }
+}
+@keyframes lab-dot-ping {
+  0%   { opacity: 0.7; transform: scale(1); }
+  100% { opacity: 0;   transform: scale(3.2); }
+}
 
 /* Móvil: la fila pasa a rejilla de 2 columnas; sin línea, el punto va junto
-   al número. */
+   al número y se enciende igual, en cadena. */
 @media (max-width: 767px) {
-  .laboratory__capabilities { padding-top: 0; }
+  .laboratory__capabilities { padding-top: 0; background: none; }
   .laboratory__capabilities::before,
   .laboratory__capabilities::after { display: none; }
   .laboratory__dot { position: static; flex-shrink: 0; align-self: center; }
 }
 @media (prefers-reduced-motion: reduce) {
+  .laboratory__capabilities::before,
   .laboratory__capabilities::after,
-  .laboratory__service-tab::after { transition: none; }
+  .laboratory__tab-indicator,
+  .laboratory__dot,
+  .laboratory__number,
+  .laboratory__label { transition: none; }
 }

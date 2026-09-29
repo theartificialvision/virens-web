@@ -3032,3 +3032,17 @@ atascada en la home, Compañía ni Tech.
   (`serviceScope`: PL 2, FS 5); el resto queda en gris pero sigue navegable.
   Por defecto, Private Label. En móvil (2 columnas) sin línea: punto junto al
   número. Resúmenes solo para lectores de pantalla; anclas conservadas.
+
+### 2026-09-29 — Claude (nube) — Laboratorio: animación de progreso del recorrido y CTA más discreto
+
+- Cliente: «animaciones de progresión chulísimas y pro». `useStepProgress`
+  (src/lib) calcula la pasada: la línea avanza o retrocede con
+  `--lab-rail-ease` (≈340 ms por tramo), un halo del color del servicio guía
+  la punta y cada punto se enciende —crece un instante y lanza un pulso— justo
+  cuando la línea lo alcanza (retardo `--d` por paso, sincronizado con la
+  curva). Número y rótulo cambian de color con ese mismo retardo. Si la fila
+  no se ve al cargar, se llena al entrar en pantalla. Pestañas separadas en
+  `ServiceTabs`: un indicador único se desliza de una a otra con un leve
+  rebote y cambia de color. Movimiento reducido: todo inmediato.
+- CTA «Contactar ahora» del laboratorio: fuera el halo turquesa y el destello
+  en bucle; sombra de contacto corta y sutil (`--lab-cta-glow*`).
