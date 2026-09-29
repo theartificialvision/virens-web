@@ -23,9 +23,9 @@ export const techHero = {
 // frase principal. Fuera el segundo párrafo (estabilidad y controles: ya son
 // los servicios 04 y 05) y la lista de los seis servicios, que el slide
 // presenta justo debajo.
+// 29/09/2026 (cliente): la frase se corta en «productos» y acaba en punto.
 export const techIntro = {
-  title:
-    'En Virens Tech ayudamos a nuestros clientes a tener los mejores productos, con exclusividad en los desarrollos, asegurando que sus fórmulas son industrialmente factibles.',
+  title: 'En Virens Tech ayudamos a nuestros clientes a tener los mejores productos.',
 } as const;
 
 /** Franja sobre #A2195B (texto facilitado por el cliente). 27/09/2026: sin

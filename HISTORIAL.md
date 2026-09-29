@@ -3251,3 +3251,9 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
   comprobado en build). Hoy no existen: el pop-up sigue igual.
 - `wallet/build-pass.sh` genera también el QR (SITE_URL, por defecto
   lvirens.com) y avisa si falta el badge.
+
+### 2026-09-29 — Claude (nube) — Tech: intro más corta
+
+- Cliente: la frase de la intro (fondo hueso) se corta en «productos» y acaba
+  en punto: «En Virens Tech ayudamos a nuestros clientes a tener los mejores
+  productos.» Mismo recorte en inglés.

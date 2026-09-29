@@ -16,7 +16,7 @@ export const techHero = {
 
 export const techIntro = {
   title:
-    'At Virens Tech we help our clients to have the best products, with exclusive development, ensuring that their formulas are industrially feasible.', // [EN]
+    'At Virens Tech we help our clients to have the best products.', // [EN] (recortada como la española, 29/09/2026)
 } as const satisfies Loosen<typeof es.techIntro>;
 
 export const integratedSolutions = {
