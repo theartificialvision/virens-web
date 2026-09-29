@@ -196,7 +196,8 @@ export const v2Certifications: V2Cert[] = [
 
 export const v2Cta = {
   title: '¿Hablamos de tu proyecto?',
-  lead: 'Nuestro equipo está listo para ayudarte.',
+  /** 29/09/2026, texto del cliente. */
+  lead: '¿Quieres formar parte de Laboratorios Virens?',
   button: 'Contactar ahora',
   href: '/contacto',
 } as const;
@@ -239,7 +240,7 @@ export const v2FooterNav = [
 export const v2Laboratory = {
   source: 'rewritten',
   navigation: { previous: 'Capacidad anterior', next: 'Siguiente capacidad', pause: 'Pausar el recorrido', play: 'Reanudar el recorrido' },
-  eyebrow: 'CIENCIA, DESARROLLO Y FABRICACIÓN',
+  title: 'Ciencia, desarrollo y fabricación',
   serviceSummaries: ['Desarrollamos y fabricamos complementos alimenticios para tu marca, con fórmulas a medida y total confidencialidad.', 'De la formulación a la fabricación, el control de calidad, el envasado y la logística. Un servicio integral, de principio a fin.'],
   caption: 'DEL DESARROLLO AL PRODUCTO TERMINADO',
   /** Private Label → Full service (29/09/2026, cliente: «cuando llega a

@@ -1,5 +1,6 @@
 import { LaboratoryCapabilities } from './LaboratoryCapabilities';
 import { Button } from '@/components/ui/Button';
+import { SectionTitle } from './SectionTitle';
 import { homeContent } from '@/content';
 import { pathFor, type Locale } from '@/lib/i18n';
 
@@ -10,7 +11,8 @@ export function DualServices({ locale }: { locale: Locale }) {
   return (
     <section id="private-label" aria-labelledby="laboratory-title" className="laboratory">
       <div className="laboratory__inner">
-        <p className="laboratory__eyebrow">{content.eyebrow}</p>
+        {/* 29/09/2026: el antiguo rótulo pasa a título de sección, como el resto. */}
+        <SectionTitle id="laboratory-title" className="laboratory__heading">{content.title}</SectionTitle>
         <LaboratoryCapabilities content={content} services={v2Services} />
         <div className="laboratory__footer">
           <p className="laboratory__closing">{content.closing.map((line) => <span key={line}>{line}</span>)}</p>

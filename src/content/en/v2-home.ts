@@ -153,7 +153,7 @@ export const v2Certifications: V2Cert[] = [
 
 export const v2Cta = {
   title: "Let's talk about your project", // [TR]
-  lead: 'Our team is ready to help you.', // [TR]
+  lead: 'Would you like to be part of Laboratorios Virens?', // [TR] (ES del cliente 29/09)
   button: 'Contact us now', // [TR]
   href: '/en/contact',
 } as const satisfies Loosen<typeof es.v2Cta>;
@@ -196,7 +196,7 @@ export const v2FooterNav = [
 export const v2Laboratory = {
   source: 'rewritten',
   navigation: { previous: 'Previous capability', next: 'Next capability', pause: 'Pause the tour', play: 'Resume the tour' }, // [TR]
-  eyebrow: 'SCIENCE, DEVELOPMENT AND MANUFACTURING',
+  title: 'Science, development and manufacturing',
   serviceSummaries: ['We develop and manufacture food supplements for your brand, with tailored formulas and complete confidentiality.', 'From formulation to manufacturing, quality control, packaging and logistics. An integrated service, from start to finish.'],
   caption: 'FROM DEVELOPMENT TO FINISHED PRODUCT',
   /** Ver el español: del paso 4 (Logistics) en adelante, Full service. */

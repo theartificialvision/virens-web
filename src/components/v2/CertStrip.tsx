@@ -37,7 +37,7 @@ export function CertStrip({ locale, showPending = false }: { locale: Locale; sho
   return (
     <section id="calidad" className="border-y border-gray-200 bg-gray-50 text-blue">
       <div className="mx-auto w-full max-w-[var(--container-max)] px-5 py-[var(--v2-section-tight)] md:px-8 lg:px-12 2xl:px-20">
-        <SectionTitle accent>{v2CertificationsTitle}</SectionTitle>
+        <SectionTitle>{v2CertificationsTitle}</SectionTitle>
         <ul className="mt-14 flex flex-wrap items-center justify-center gap-y-10 sm:grid sm:grid-cols-4 sm:justify-items-center sm:gap-x-6 sm:gap-y-12 lg:flex lg:justify-between lg:gap-8">
           {visible.map((c, i) => (
             <li key={c.id} className="flex w-1/3 justify-center px-1.5 sm:w-auto sm:px-0">

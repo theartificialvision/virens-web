@@ -18,10 +18,9 @@ export function V2Footer({ locale }: { locale: Locale }) {
       <div className="mx-auto w-full max-w-[var(--container-max)] px-5 py-16 md:px-8 lg:px-12 lg:py-20 2xl:px-20">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-3">
+            {/* 29/09/2026 (cliente): solo el logo de Labs; fuera el de Tech. */}
             <div className="flex items-end gap-5">
               <Lockup division="labs" />
-              <span aria-hidden className="mb-1 h-8 w-px bg-white/25" />
-              <Lockup division="tech" />
             </div>
             <address className="mt-8 not-italic text-[length:var(--text-note)] leading-relaxed text-white/60">
               {site.contact.street}

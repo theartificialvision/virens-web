@@ -3149,3 +3149,17 @@ Cambios pedidos por el cliente, en ES y EN:
   en Jarabes y Sticks del carril de Formas galénicas para que no se
   contradigan.
 - EN: Productive capacity / Formats / textos del laboratorio, [TR].
+
+### 2026-09-29 — Claude (nube) — Títulos de sección unificados, CTA y pie sin Tech
+
+- Cliente: «los títulos de sección todos con el mismo tamaño y formato, con
+  línea arriba». `SectionTitle` lleva ahora siempre el filete (teal; blanco
+  sobre fondo teal con `rule="white"`); desaparece la prop `accent`.
+- Home: Formas galénicas, Áreas terapéuticas y el CTA ganan el filete.
+  «Ciencia, desarrollo y fabricación» deja de ser rótulo pequeño y pasa a
+  título (`h2`); «Private Label / Full service» baja a `h3`. «Capacidad
+  productiva» también pasa de rótulo lateral a título, con las cifras debajo.
+  Como `CtaBand` es común, Tech y Compañía heredan el filete en el CTA.
+- CTA: frase de debajo «¿Quieres formar parte de Laboratorios Virens?»
+  (EN [TR]: «Would you like to be part of Laboratorios Virens?»).
+- Pie: fuera el logo de Virens Tech; queda solo el de Labs.

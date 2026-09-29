@@ -8,26 +8,28 @@ import { Reveal } from '@/components/ui/Reveal';
  * CTA, y cuerpo pequeño en áreas terapéuticas—. Cualquier bloque nuevo usa
  * este componente en lugar de repetir clases.
  *
- * `accent` antepone el filete teal de la maqueta; al entrar en pantalla crece
- * de izquierda a derecha justo después del título (`.v2-accent`).
+ * Desde el 29/09/2026 (cliente: «los títulos de sección todos con el mismo
+ * tamaño y formato, con línea arriba del texto») el filete teal va SIEMPRE;
+ * al entrar en pantalla crece de izquierda a derecha (`.v2-accent`). Sobre
+ * fondo teal el filete va en blanco (`rule="white"`) para que se vea.
  */
 export function SectionTitle({
   children,
-  accent = false,
+  rule = 'labs',
+  id,
   className,
 }: {
   children: React.ReactNode;
-  accent?: boolean;
+  rule?: 'labs' | 'white';
+  id?: string;
   className?: string;
 }) {
   return (
     <Reveal className={className}>
-      {accent ? <span aria-hidden className="v2-accent block h-[3px] w-14 bg-labs" /> : null}
+      <span aria-hidden className={cn('v2-accent block h-[3px] w-14', rule === 'white' ? 'bg-white' : 'bg-labs')} />
       <h2
-        className={cn(
-          'text-[length:var(--text-h2)] font-medium leading-tight tracking-[-0.015em]',
-          accent && 'mt-6',
-        )}
+        id={id}
+        className="mt-6 text-[length:var(--text-h2)] font-medium leading-tight tracking-[-0.015em]"
       >
         {children}
       </h2>

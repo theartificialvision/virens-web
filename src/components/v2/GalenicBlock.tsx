@@ -37,7 +37,7 @@ export function GalenicBlock({ locale }: { locale: Locale }) {
       <div className="relative bg-labs text-white">
         <div className="mx-auto w-full max-w-[var(--container-max)] px-5 md:px-8 lg:px-12 2xl:px-20">
           <div className="pb-[var(--gal-top-pb)] pt-[var(--v2-section)] lg:w-1/2 lg:pr-16">
-            <SectionTitle>{v2Galenic.title}</SectionTitle>
+            <SectionTitle rule="white">{v2Galenic.title}</SectionTitle>
             <Reveal>
               <p className="mt-6 max-w-[var(--measure-max)] text-[length:var(--text-small)] leading-[1.85]">
                 {v2Galenic.lead}

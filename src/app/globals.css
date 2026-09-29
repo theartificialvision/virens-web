@@ -1336,6 +1336,7 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
 .laboratory { background: white; color: var(--color-blue); scroll-margin-top: var(--anchor-offset); }
 .laboratory__inner { max-width: var(--container-max); margin-inline: auto; padding: var(--lab-section) var(--lab-gutter); }
 .laboratory__intro { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--lab-gap); align-items: start; margin-bottom: var(--lab-gap); }
+.laboratory__heading { margin-bottom: var(--lab-gap); }
 .laboratory__eyebrow, .laboratory__caption { font-size: var(--text-eyebrow); letter-spacing: var(--tracking-label); line-height: var(--lab-body-leading); }
 .laboratory__eyebrow { color: var(--lab-teal-text); margin-bottom: var(--lab-cell-gap); }
 .laboratory__title { font-size: var(--text-h2); font-weight: 500; line-height: var(--lab-title-leading); letter-spacing: var(--lab-title-tracking); }

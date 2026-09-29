@@ -17,14 +17,14 @@ export function ServiceMorph({ services, full, summaries }: {
   const active = full ? 1 : 0;
   return (
     <>
-      <h2 id="laboratory-title" className="lab-service">
+      <h3 className="lab-service">
         {services.slice(0, 2).map((item, index) => (
           <span key={item.id} className="lab-service__name" data-active={index === active || undefined}
             aria-hidden={index !== active} style={{ '--service-accent': `var(--color-${item.accent})` } as CSSProperties}>
             {item.title}
           </span>
         ))}
-      </h2>
+      </h3>
       <p className="sr-only">{summaries.join(' ')}</p>
     </>
   );
