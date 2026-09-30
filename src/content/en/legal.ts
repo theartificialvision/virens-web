@@ -146,7 +146,7 @@ export const legalDocs: readonly LegalDoc[] = [
   {
     key: 'sales',
     title: "General Sales Conditions",
-    nav: "Sales conditions",
+    nav: "Commercial policy",
     description: "General sales conditions for products manufactured and marketed by Laboratorios Virens.",
     sections: [
       {

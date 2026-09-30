@@ -34,7 +34,7 @@ export const v2Menu = {
 export const v2Services = [
   {
     id: 'full-service',
-    title: 'Full service',
+    title: 'Full Service',
     accent: 'tech',
     // [TR] del texto de la maqueta.
     body: 'We support you throughout the whole process: from development and formulation to manufacturing, quality control, packaging and logistics. A comprehensive, flexible solution to take your product from concept to the end consumer.',
@@ -87,13 +87,13 @@ export const v2Capacity = {
     touch: 'Tap a format to see its sizes', // [TR] (no se muestra)
   },
   formats: [
-    { id: 'dropper', label: 'Droppers', range: '30ml to 60ml' }, // [IMG]
-    { id: 'vials', label: 'Vials', range: '10ml to 25ml' }, // [IMG]
-    { id: 'jar', label: 'Bottled', range: '50ml to 500ml' }, // [IMG]
-    { id: 'syrups', label: 'Syrups', range: '50ml to 1000ml' }, // cliente 29/09
-    { id: 'blisters', label: 'Blisters', range: 'PVDC-Pvc/Alu + Alu/Alu' }, // [IMG]
-    { id: 'sticks', label: 'Sticks', range: '3grs to 7grs' }, // cliente 29/09
-    { id: 'sachets', label: 'Sachets', range: '5grs to 10grs' }, // [IMG]
+    { id: 'dropper', label: 'Droppers', range: '30 ml to 60 ml' }, // [IMG]
+    { id: 'vials', label: 'Vials', range: '10 ml to 25 ml' }, // [IMG]
+    { id: 'jar', label: 'Bottled', range: '50 ml to 500 ml' }, // [IMG]
+    { id: 'syrups', label: 'Syrups', range: '50 ml to 1000 ml' }, // cliente 29/09
+    { id: 'blisters', label: 'Blisters', range: 'PVDC-PVC/Alu + Alu/Alu' }, // [IMG]
+    { id: 'sticks', label: 'Sticks', range: '3 g to 7 g' }, // cliente 29/09
+    { id: 'sachets', label: 'Sachets', range: '5 g to 10 g' }, // [IMG]
   ],
   scaleTitle: 'Productive capacity', // [EN]
   stats: [

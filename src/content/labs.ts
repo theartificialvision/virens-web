@@ -31,7 +31,7 @@ export const labsIntro = {
   points: [
     { index: '01', label: 'Servicio integral de producción' },
     { index: '02', label: 'Acondicionado primario y secundario' },
-    { index: '03', label: 'Private label' },
+    { index: '03', label: 'Private Label' },
   ],
 } as const;
 

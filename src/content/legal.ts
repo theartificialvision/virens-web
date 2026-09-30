@@ -166,7 +166,7 @@ export const legalDocs: readonly LegalDoc[] = [
   {
     key: 'sales',
     title: "Condiciones Generales de Venta",
-    nav: "Condiciones de venta",
+    nav: "Política comercial",
     description: "Condiciones generales de venta de los productos fabricados y comercializados por Laboratorios Virens.",
     sections: [
       {

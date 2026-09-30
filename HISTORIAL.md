@@ -3498,3 +3498,25 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
   del proyecto es ease-in-out y arrancaba perezosa.
 - Filetes delante de cada página: opacidad en reposo de 30 % a 60 %.
 - Sin comprobar en pantalla (solo typecheck).
+
+## 2026-09-30 · Revisión de textos, tamaños y coherencias
+Escaneo de tamaños tipográficos y desbordes en Home, Compañía, Tech, Contacto,
+Legal y EN a 390 y 1440 px: sin scroll horizontal, sin texto roto; los únicos
+valores «raros» (12,5 · 22,3 · 29,8 · 32,4 px) salen de los `clamp()` de los
+tokens. Corregido:
+- «Full service» → «Full Service» (título, ES y EN), igual que «Private Label»
+  (y «Private label» en `labs.ts`).
+- Unidades con espacio y símbolo: «30ml» → «30 ml», «3grs» → «3 g»,
+  «PVDC-Pvc» → «PVDC-PVC» (ES y EN), como ya estaba en la tabla de capacidad.
+- «más de 2000 m²» → «2.000 m²», igual que la cifra «+2.000 m²».
+- Menú lateral de Documentación y pie: «Política comercial» / «Commercial policy»
+  también en el índice de la página legal (el título del documento sigue siendo
+  «Condiciones Generales de Venta»).
+- Sobres en Formatos (ES): «5grs» → «5 g a 10 g», como en Capacidad productiva y
+  en la versión EN. Confirmar con el cliente.
+Pendiente de decidir con el cliente (no se toca sin su visto bueno):
+- Las etiquetas de la sección Formatos (Dropper bottles, Vials, Jar filling,
+  Syrups, Blisters, Sticks, Sachets) están en inglés en la web en español.
+- Áreas terapéuticas: «Sist. Nervioso», «Salud Mujer» y «Sport nutrition»
+  mezclan capitalización (textos verificados, marcados como no modificables).
+- Formas galénicas: «líquidas (pequeños en distintos formatos…)» no concuerda.

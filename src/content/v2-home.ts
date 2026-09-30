@@ -55,7 +55,7 @@ export const v2Menu = {
 export const v2Services = [
   {
     id: 'full-service',
-    title: 'Full service',
+    title: 'Full Service',
     accent: 'tech',
     body: 'Te acompañamos en todo el proceso: desde el desarrollo y la formulación, hasta la fabricación, el control de calidad, el envasado y la logística. Una solución integral y flexible para llevar tu producto del concepto al consumidor final.',
     image: {
@@ -102,20 +102,20 @@ export const v2Galenic = {
 export const v2Capacity = {
   /** 29/09/2026 (cliente): la sección de las siluetas pasa a llamarse «Formatos». */
   title: 'Formatos',
-  lead: 'Contamos con más de 2000 m² de instalaciones donde llevamos a cabo la fabricación, acondicionamiento primario y secundario.',
+  lead: 'Contamos con más de 2.000 m² de instalaciones donde llevamos a cabo la fabricación, acondicionamiento primario y secundario.',
   hint: {
     pointer: 'Pasa el cursor para ver cada formato',
     touch: 'Toca un formato para ver sus tamaños',
   },
   /** Siete formatos del diseño interactivo del cliente (27/09/2026). */
   formats: [
-    { id: 'dropper', label: 'Dropper bottles', range: '30ml a 60ml' },
-    { id: 'vials', label: 'Vials', range: '10ml a 25ml' },
-    { id: 'jar', label: 'Jar filling', range: '50ml a 500ml' },
-    { id: 'syrups', label: 'Syrups', range: '50ml a 1000ml' },
-    { id: 'blisters', label: 'Blisters', range: 'PVDC-Pvc/Alu + Alu/Alu' },
-    { id: 'sticks', label: 'Sticks', range: '3grs a 7grs' },
-    { id: 'sachets', label: 'Sachets', range: '5grs' },
+    { id: 'dropper', label: 'Dropper bottles', range: '30 ml a 60 ml' },
+    { id: 'vials', label: 'Vials', range: '10 ml a 25 ml' },
+    { id: 'jar', label: 'Jar filling', range: '50 ml a 500 ml' },
+    { id: 'syrups', label: 'Syrups', range: '50 ml a 1000 ml' },
+    { id: 'blisters', label: 'Blisters', range: 'PVDC-PVC/Alu + Alu/Alu' },
+    { id: 'sticks', label: 'Sticks', range: '3 g a 7 g' },
+    { id: 'sachets', label: 'Sachets', range: '5 g a 10 g' },
   ],
   /** 29/09/2026 (cliente): antes «Escala industrial propia»; va ahora como
    *  sección propia encima de Formas galénicas (`ProductionScale`). */
