@@ -188,7 +188,7 @@ export const v2FooterNav = [
     items: [
       { label: 'Legal notice', href: '/en/legal/legal-notice' },
       { label: 'Data protection', href: '/en/legal/privacy-policy' },
-      { label: 'Sales conditions', href: '/en/legal/sales-terms-and-conditions' },
+      { label: 'Commercial policy', href: '/en/legal/sales-terms-and-conditions' },
     ],
   },
 ] as const satisfies Loosen<typeof es.v2FooterNav>;

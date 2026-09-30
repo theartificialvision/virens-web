@@ -34,6 +34,9 @@ export const cphiPopup = {
     scanTitle: 'Scan with your iPhone',
     scanHint: 'The pass opens in Wallet',
   },
+  /** Tarjeta de contacto descargable (30/09/2026); la genera `app/virens-labs.vcf`.
+   *  Alternativa a Wallet, que exige cuenta Apple Developer de pago. */
+  contactCard: { href: '/virens-labs.vcf', label: 'Save contact card' },
   /** Cápsula que queda abajo a la izquierda al cerrar el pop-up. */
   dock: { name: 'CPHI Milan', date: '6–8 Oct 2026', live: 'Live now', aria: 'CPHI Milan, 6–8 October 2026 — open event details' },
 } as const;

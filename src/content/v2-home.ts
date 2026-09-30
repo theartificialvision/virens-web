@@ -241,7 +241,7 @@ export const v2FooterNav = [
     items: [
       { label: 'Aviso legal', href: '/legal/aviso-legal' },
       { label: 'Protección de datos', href: '/legal/politica-de-privacidad' },
-      { label: 'Condiciones de venta', href: '/legal/condiciones-generales-de-venta' },
+      { label: 'Política comercial', href: '/legal/condiciones-generales-de-venta' },
     ],
   },
 ] as const;

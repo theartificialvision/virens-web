@@ -52,7 +52,7 @@ export const ui: Record<Locale, Ui> = {
     },
     nav: {
       backTo: 'Volver a',
-      pages: { home: 'Inicio', company: 'Compañía', tech: 'Virens Tech', contact: 'Contacto', legalNotice: 'Aviso legal', privacy: 'Protección de datos', sales: 'Condiciones de venta' },
+      pages: { home: 'Inicio', company: 'Compañía', tech: 'Virens Tech', contact: 'Contacto', legalNotice: 'Aviso legal', privacy: 'Protección de datos', sales: 'Política comercial' },
     },
     meta: {
       defaultTitle: 'Laboratorios Virens · Fabricación de complementos alimenticios',
@@ -95,7 +95,7 @@ export const ui: Record<Locale, Ui> = {
     },
     nav: {
       backTo: 'Back to', // [TR]
-      pages: { home: 'Home', company: 'Company', tech: 'Virens Tech', contact: 'Contact', legalNotice: 'Legal notice', privacy: 'Data protection', sales: 'Sales conditions' },
+      pages: { home: 'Home', company: 'Company', tech: 'Virens Tech', contact: 'Contact', legalNotice: 'Legal notice', privacy: 'Data protection', sales: 'Commercial policy' },
     },
     meta: {
       defaultTitle: 'Laboratorios Virens · Food supplement manufacturing', // [TR]

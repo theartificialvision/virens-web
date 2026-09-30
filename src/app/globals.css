@@ -1750,7 +1750,7 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
 .cphi__in { animation: cphi-up 0.7s var(--cphi-ease) var(--delay, 0s) both; }
 
 /* Haces de luz que derivan y viñeta, como en el diseño. */
-.cphi__light { position: absolute; inset: 0; pointer-events: none; }
+.cphi__light { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
 .cphi__light span { position: absolute; top: -20%; height: 140%; animation: cphi-drift 9s ease-in-out infinite alternate; }
 .cphi__light span:nth-child(1) { left: 22%; width: 3.2cqw; background: linear-gradient(180deg, transparent, rgba(190, 215, 245, 0.16) 45%, transparent); filter: blur(1.4cqw); }
 .cphi__light span:nth-child(2) { left: 47%; width: 1.6cqw; background: linear-gradient(180deg, transparent, rgba(220, 235, 255, 0.22) 40%, transparent); filter: blur(0.8cqw); animation-duration: 11s; animation-delay: -3s; }
@@ -1845,7 +1845,8 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
    oficial de Apple a todo el ancho. */
 .cphi__buttons { display: flex; align-items: center; justify-content: flex-end; gap: 1.2cqw; }
 .cphi__wallet { position: relative; }
-.cphi__wallet-toggle {
+.cphi__wallet-toggle,
+.cphi__save {
   display: inline-flex;
   align-items: center;
   gap: 0.7cqw;
@@ -1860,9 +1861,9 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   cursor: pointer;
   transition: background-color 0.2s, transform 0.2s;
 }
-.cphi__wallet-toggle svg { width: 1.8cqw; height: 1.8cqw; }
-.cphi__wallet-toggle:hover, .cphi__wallet-toggle[aria-expanded="true"] { background: rgba(255, 255, 255, 0.18); }
-.cphi__wallet-toggle:focus-visible, .cphi__wallet-badge:focus-visible { outline: 2px solid var(--cphi-teal-hi); outline-offset: 3px; }
+.cphi__wallet-toggle svg, .cphi__save svg { width: 1.8cqw; height: 1.8cqw; }
+.cphi__wallet-toggle:hover, .cphi__save:hover, .cphi__wallet-toggle[aria-expanded="true"] { background: rgba(255, 255, 255, 0.18); }
+.cphi__wallet-toggle:focus-visible, .cphi__save:focus-visible, .cphi__wallet-badge:focus-visible { outline: 2px solid var(--cphi-teal-hi); outline-offset: 3px; }
 .cphi__wallet-qr {
   position: absolute;
   right: 0;
@@ -1899,6 +1900,7 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
     max-height: calc(100% - 8px);
     aspect-ratio: auto;
     overflow-y: auto;
+    overscroll-behavior: contain;
     display: flex;
     flex-direction: column;
     gap: 4cqw;
@@ -1929,6 +1931,8 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   .cphi__cta { justify-content: center; gap: 2cqw; min-height: 48px; font-size: 4.2cqw; }
   .cphi__buttons { flex-direction: column; align-items: stretch; gap: 3cqw; }
   .cphi__wallet-badge { min-height: 48px; align-items: center; }
+  .cphi__save { justify-content: center; gap: 2cqw; min-height: 48px; padding: 0 4cqw; font-size: 4cqw; }
+  .cphi__save svg { width: 5cqw; height: 5cqw; }
 }
 /* Móviles bajos (Safari con barras, iPhone SE): aún más compacta. */
 @media (max-width: 759px) and (max-height: 700px) {

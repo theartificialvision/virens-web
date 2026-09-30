@@ -3472,3 +3472,17 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
   está en la misma posición que en el resto de páginas (`--nav-tech-bar`
   eliminado). En su lugar, la lectura «02 / 05 · título» de la barra fija de
   Tech se sangra a la derecha de la flecha.
+
+## 2026-09-30 · Pop-up móvil, tarjeta de contacto y pie
+- Pie, Documentación: «Condiciones de venta» → «Política comercial» (ES) /
+  «Commercial policy» (EN, [TR]). El título de la propia página legal no cambia.
+- Bug del pop-up de CPHI en móvil: los haces de luz (`.cphi__light`, 140 % de
+  alto) sobresalían de la tarjeta y alargaban su scroll interno, dejando un
+  vacío al final. Ahora se recortan (`overflow: hidden`) y la tarjeta ya no
+  scrollea si cabe (iPhone 14, SE, Pro Max). `overscroll-behavior: contain`
+  para que el scroll no se «escape» a la página.
+- Tarjeta de contacto descargable (.vcf) en el pop-up, «Save contact card»,
+  en lugar de Apple Wallet (exige cuenta Apple Developer de pago). Ruta
+  `/virens-labs.vcf` (`app/virens-labs.vcf/route.ts`), generada desde
+  `site.contact` (teléfono, email, dirección, web, coordenadas) + nota con
+  stand 8J28. Wallet queda latente (`walletReady()` sigue en falso).

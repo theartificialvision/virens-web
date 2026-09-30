@@ -147,6 +147,12 @@ export function CphiPopup({ locale, wallet = false }: { locale: Locale; wallet?:
           )}
           <div className="cphi__buttons">
             {wallet ? <CphiWallet /> : null}
+            <a href={c.contactCard.href} download data-focusable className="cphi__save">
+              <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true">
+                <path d="M10 3v9m0 0-3.5-3.5M10 12l3.5-3.5M4 15.5h12" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              {c.contactCard.label}
+            </a>
             <a href={pathFor('contact', locale)} data-focusable className="cphi__cta" onClick={() => setOpen(false)}>
               {c.cta}<span aria-hidden>&rarr;</span>
             </a>
