@@ -3412,3 +3412,10 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
 - Nota técnica: una `transition` sobre un `transform` que depende de una
   variable CSS se quedaba congelada en Chromium; el relleno del raíl va sin
   transición (ya sigue al scroll frame a frame).
+
+### 2026-09-30 — Claude — Tech: numerales calados en magenta
+
+- Cliente: «necesito más magenta». Los números grandes en contorno (01–05) de
+  cada capítulo pasan de blanco translúcido a trazo magenta
+  (`--tech-lab-accent`, `--tech-index-stroke` 1,25 px) y ahora también se ven
+  en móvil, sobre el título de cada fase.
