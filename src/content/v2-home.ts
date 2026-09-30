@@ -171,6 +171,10 @@ export interface V2Cert {
   /** Aumento lineal sobre la superficie común. Iraq y Emiratos llevan texto
    *  dentro del sello y a tamaño normal no se leía (24/09/2026, cliente). */
   scale?: number;
+  /** Rótulo visible bajo el sello. 30/09/2026 (cliente): los tres de SGS se
+   *  parecen demasiado y su norma va pequeña en el arco; se rotulan debajo
+   *  con el mismo nombre que ya lleva el sello dibujado. */
+  caption?: string;
 }
 
 /**
@@ -183,9 +187,9 @@ export interface V2Cert {
 export const v2CertificationsTitle = 'Nuestras certificaciones';
 
 export const v2Certifications: V2Cert[] = [
-  { id: 'iso22000', name: 'ISO 22000', issuer: 'SGS', status: 'image-only', ratio: 1.027 },
-  { id: 'gmp', name: 'GMP', issuer: 'SGS', status: 'image-only', ratio: 1.027 },
-  { id: 'haccp', name: 'HACCP', issuer: 'SGS', status: 'image-only', ratio: 1.025 },
+  { id: 'iso22000', name: 'ISO 22000', caption: 'ISO 22000', issuer: 'SGS', status: 'image-only', ratio: 1.027 },
+  { id: 'gmp', name: 'GMP', caption: 'GMP', issuer: 'SGS', status: 'image-only', ratio: 1.027 },
+  { id: 'haccp', name: 'HACCP', caption: 'HACCP', issuer: 'SGS', status: 'image-only', ratio: 1.025 },
   { id: 'eu', name: 'European Manufactured', status: 'image-only', ratio: 0.955 },
   { id: 'organic', name: 'Organic Certified', status: 'image-only', ratio: 1.295 },
   { id: 'vet', name: 'Veterinary Products', status: 'image-only', ratio: 0.767 },

@@ -140,9 +140,9 @@ export const v2CertificationsTitle = 'Our certifications'; // [TR] (web actual: 
 
 /** Los sellos son los mismos; solo cambian los nombres accesibles que lo necesitan (ninguno). */
 export const v2Certifications: V2Cert[] = [
-  { id: 'iso22000', name: 'ISO 22000', issuer: 'SGS', status: 'image-only', ratio: 1.027 },
-  { id: 'gmp', name: 'GMP', issuer: 'SGS', status: 'image-only', ratio: 1.027 },
-  { id: 'haccp', name: 'HACCP', issuer: 'SGS', status: 'image-only', ratio: 1.025 },
+  { id: 'iso22000', name: 'ISO 22000', caption: 'ISO 22000', issuer: 'SGS', status: 'image-only', ratio: 1.027 },
+  { id: 'gmp', name: 'GMP', caption: 'GMP', issuer: 'SGS', status: 'image-only', ratio: 1.027 },
+  { id: 'haccp', name: 'HACCP', caption: 'HACCP', issuer: 'SGS', status: 'image-only', ratio: 1.025 },
   { id: 'eu', name: 'European Manufactured', status: 'image-only', ratio: 0.955 },
   { id: 'organic', name: 'Organic Certified', status: 'image-only', ratio: 1.295 },
   { id: 'vet', name: 'Veterinary Products', status: 'image-only', ratio: 0.767 },

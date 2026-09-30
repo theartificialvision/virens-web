@@ -3380,3 +3380,13 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
   productos»); cada elemento toma su ancho natural dentro del carril con
   desplazamiento horizontal.
 - typecheck limpio · build limpio · textos y anclas sin cambios.
+
+### 2026-09-30 — Claude — Certificaciones: rótulo en los sellos SGS
+
+- Petición del cliente: los tres primeros sellos (ISO 22000, GMP, HACCP, de
+  SGS) se parecían demasiado. Ahora llevan su nombre rotulado debajo, en
+  versalitas espaciadas (`text-micro`, `tracking-label`). Campo nuevo
+  `caption` en `V2Cert` (ES/EN), con el mismo nombre que ya trae el sello.
+- El rótulo va en absoluto para que la fila siga alineada por el centro de los
+  sellos; en móvil esa fila gana `mb-6` para no pegarse a la siguiente. Aplica
+  en Home y en Tech (mismo `CertStrip`).

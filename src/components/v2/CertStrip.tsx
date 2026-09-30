@@ -40,7 +40,12 @@ export function CertStrip({ locale, showPending = false }: { locale: Locale; sho
         <SectionTitle>{v2CertificationsTitle}</SectionTitle>
         <ul className="mt-14 flex flex-wrap items-center justify-center gap-y-10 sm:grid sm:grid-cols-4 sm:justify-items-center sm:gap-x-6 sm:gap-y-12 lg:flex lg:justify-between lg:gap-8">
           {visible.map((c, i) => (
-            <li key={c.id} className="flex w-1/3 justify-center px-1.5 sm:w-auto sm:px-0">
+            <li
+              key={c.id}
+              // En móvil la fila de los sellos rotulados necesita el aire del
+              // rótulo (que va en absoluto) para no pegarse a la siguiente.
+              className={`flex w-1/3 justify-center px-1.5 sm:w-auto sm:px-0 ${c.caption ? 'mb-6 sm:mb-0' : ''}`}
+            >
               <Reveal delay={(i % 4) * 0.03}>
                 <Seal cert={c} />
               </Reveal>
@@ -63,5 +68,21 @@ function Seal({ cert }: { cert: V2Cert }) {
     WebkitMask: mask,
   };
   const label = cert.issuer ? `${cert.name} — ${cert.issuer}` : cert.name;
-  return <span role="img" aria-label={label} className="block bg-current" style={style} />;
+  const seal = <span role="img" aria-label={label} className="block bg-current" style={style} />;
+  if (!cert.caption) return seal;
+  // El rótulo cuelga en absoluto bajo el sello para que la fila siga
+  // alineada por el centro de los sellos y no por el conjunto sello + texto.
+  // Cabe en el `gap-y` de la rejilla móvil. El lector de pantalla ya oye el
+  // nombre en el sello: el rótulo se oculta para no leerlo dos veces.
+  return (
+    <span className="relative block">
+      {seal}
+      <span
+        aria-hidden="true"
+        className="absolute inset-x-0 top-full mt-2 whitespace-nowrap text-center text-micro font-semibold tracking-label"
+      >
+        {cert.caption}
+      </span>
+    </span>
+  );
 }
