@@ -3462,3 +3462,5 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
   a un ancla, navega a la ruta anterior o a la Home (`useBackTarget`).
 - En móvil, en Virens Tech baja bajo su barra fija (`--nav-tech-bar`).
 - `ui.nav` reducido a `backTo` y `pages` (ES/EN; inglés [TR]).
+- Ajuste posterior (cliente): flecha atrás más pequeña (36 px) y más
+  transparente (cuerpo de vidrio 38 %); tokens `--nav-target` y `--nav-glass`.

@@ -2011,16 +2011,16 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
 /* ============================================================
    VOLVER ATRÁS (30/09/2026) — una sola flecha, mínima, en vidrio, bajo la
    cabecera. Cliente: descartados el índice de página y el botón de subir.
-   Mismo material que las flechas de la Home; objetivo táctil de 44 px.
+   Mismo material que las flechas de la Home; círculo de 36 px.
    ============================================================ */
 @theme {
-  --nav-target:  2.75rem;   /* 44 — objetivo táctil mínimo */
+  --nav-target:  2.25rem;   /* 36 — círculo más pequeño (30/09, cliente) */
   --nav-gap:     0.75rem;   /* aire bajo la cabecera */
   --nav-side:    1.25rem;   /* gutter móvil, como el de la cabecera */
   --nav-stroke:  1.5px;
-  --nav-chevron: 0.5rem;
-  --nav-glass:   rgba(255, 255, 255, 0.72);
-  --nav-glass-strong: rgba(255, 255, 255, 0.88);
+  --nav-chevron: 0.4375rem;
+  --nav-glass:   rgba(255, 255, 255, 0.38);   /* más transparente (30/09, cliente) */
+  --nav-glass-strong: rgba(255, 255, 255, 0.6);
   --nav-shift:   0.125rem;
   --nav-z:       65;        /* bajo la cabecera (70), sobre el contenido */
   --nav-tech-bar: 5.5rem;   /* barra fija del recorrido de Tech en móvil */
@@ -2032,7 +2032,7 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
 /* En móvil, Tech tiene su barra fija bajo la cabecera: la flecha baja por debajo. */
 @media (max-width: 900px) { html:has(.tech-visor) .nav-back { top: calc(var(--v2-header) + var(--nav-tech-bar) + var(--nav-gap)); } }
 .nav-back:focus-visible { outline: 2px solid var(--color-labs); outline-offset: 3px; }
-.nav-back__chevron { width: var(--nav-chevron); height: 0.875rem; fill: none; stroke: currentColor; stroke-width: var(--nav-stroke); stroke-linecap: round; stroke-linejoin: round; transition: transform var(--motion-control) var(--motion-ease); }
+.nav-back__chevron { width: var(--nav-chevron); height: 0.75rem; fill: none; stroke: currentColor; stroke-width: var(--nav-stroke); stroke-linecap: round; stroke-linejoin: round; transition: transform var(--motion-control) var(--motion-ease); }
 @media (hover: hover) and (pointer: fine) { .nav-back:hover .nav-back__chevron { transform: translateX(calc(-1 * var(--nav-shift))); } }
 @media (prefers-reduced-motion: no-preference) { .nav-back { animation: nav-back-in 360ms var(--motion-ease) both; } }
 @keyframes nav-back-in { from { opacity: 0; transform: translateX(calc(-1 * var(--nav-shift))); } }
