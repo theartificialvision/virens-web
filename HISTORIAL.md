@@ -3365,3 +3365,18 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
   enlaces verificados. Sin cambios en los archivos de contenido.
 - Revisión visual 1440/390 pendiente: inventario CUA vacío y apertura del
   navegador integrado devuelve «Browser is not available: iab».
+
+### 2026-09-30 — Claude — Tech dirección A: revisión visual y remate
+
+- Revisada en navegador (Playwright) a 1440 y 390 la implementación de Codex
+  de la dirección A. Encaja con lo pedido: apertura blanca y serena, pilares en
+  línea de filete, índice 01–05 sticky con subrayado magenta, cinco capítulos
+  16:9 alternos.
+- Añadido el revelado de foto «gota que se extiende en agua»: máscara circular
+  (`clip-path: circle`) que se abre en 1,6 s desde abajo-izquierda (abajo-derecha
+  en capítulos pares) con un zoom de salida 1,06→1. Tokens `--tech-drop-*` en
+  `@theme`; solo con `prefers-reduced-motion: no-preference`, estático si no.
+- Índice móvil: los títulos ya no se parten ni se montan («Estabilidad de
+  productos»); cada elemento toma su ancho natural dentro del carril con
+  desplazamiento horizontal.
+- typecheck limpio · build limpio · textos y anclas sin cambios.

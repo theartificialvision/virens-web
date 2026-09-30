@@ -144,10 +144,11 @@ otra IA dentro). Todo está preparado en el repo:
 - **Noticias: retirada por decisión del cliente (29/09).** Fuera del menú, el
   pie, el sitemap y las rutas; `/noticias/*` redirige a `/` y `/en/news/*` a
   `/en`. El trabajo de Muse está en `aparcado/noticias/`, fuera de la build.
-- **Tech editorial implementado (30/09)** según la dirección elegida. Pendiente
-  revisión visual a 1440/390: esta sesión no dispone de navegador conectado.
-- **Páginas legales**: no existen aún en ningún idioma (`/legal/*`,
-  `/en/legal/*`); pie, formulario y redirecciones ya apuntan ahí.
+- **Tech editorial (dirección A) cerrado (30/09)**: revisado a 1440/390, con
+  revelado de foto en gota e índice móvil sin cortes.
+- **Páginas legales**: publicadas en ES/EN (`/legal/*`, `/en/legal/*`).
+  Falta el email real para derechos RGPD (el texto trae «email@laempresa.com»)
+  y no hay texto de política de cookies.
 - **Revisión del inglés `[TR]`** por el cliente: `docs/i18n-ingles.md`.
 
 - Compañía: el hito 2026 de la historia repite literalmente el texto de 2023
