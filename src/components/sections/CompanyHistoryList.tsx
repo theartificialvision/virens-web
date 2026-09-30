@@ -103,7 +103,7 @@ export function CompanyHistoryList({ entries }: { entries: TimelineEntry[] }) {
       <ol className="company-history-list">
       {entries.map((entry, index) => (
         <li key={`${entry.year}-${index}`} className="company-history-item" style={{ '--i': index } as CSSProperties}>
-          <p className="company-history-copy text-[length:var(--text-small)] font-medium leading-snug xl:text-[length:var(--text-note)] xl:font-semibold xl:leading-[1.35]">{entry.text}</p>
+          <p className="company-history-copy text-[length:var(--text-small)] font-medium leading-snug xl:text-[length:var(--text-label)] xl:font-semibold xl:leading-[1.35]">{entry.text}</p>
           <span className="company-history-node text-[length:var(--text-small)] font-semibold">
             <svg aria-hidden viewBox="0 0 100 100" className="company-history-ring">
               <circle cx="50" cy="50" r="48.5" pathLength={1} />

@@ -3520,3 +3520,15 @@ Pendiente de decidir con el cliente (no se toca sin su visto bueno):
 - Áreas terapéuticas: «Sist. Nervioso», «Salud Mujer» y «Sport nutrition»
   mezclan capitalización (textos verificados, marcados como no modificables).
 - Formas galénicas: «líquidas (pequeños en distintos formatos…)» no concuerda.
+
+## 2026-09-30 · Compañía: legibilidad y cristal
+- «Qué hacemos»: el panel claro semitransparente quedaba turbio sobre la foto
+  azul oscura y el desenfoque no se notaba. Ahora es cristal oscuro
+  (`.company-liquid-panel--dark`, tokens `--company-glass-dark*`), texto blanco,
+  y el velo de la foto es más ligero (0,92/0,35 → 0,78/0,22) para que se vea la
+  planta a través. Textos de 12 px → 15 px (descripciones) y 14 px (numeración).
+- «Nuestra historia» (escritorio): textos de hito de 12 → 14 px; columna de
+  texto 8,5 → 10 rem.
+- Pendiente con el cliente: los hitos 2026 y 2023 llevan exactamente el mismo
+  texto («Creación de Virens Tech, ampliación de I+D y nuevo laboratorio de
+  calidad»).

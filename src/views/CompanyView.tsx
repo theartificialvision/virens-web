@@ -58,8 +58,9 @@ export function CompanyView({ locale }: { locale: Locale }) {
 
       <section id="que-hacemos" className="company-process relative isolate overflow-hidden bg-blue text-white" data-header-tone="dark">
         <Image src="/img/labs-planta.jpg" alt={companyImages.process} fill sizes="100vw" className="-z-30 object-cover grayscale" />
-        <span aria-hidden className="absolute inset-0 -z-20 bg-blue/[0.92] mix-blend-multiply" />
-        <span aria-hidden className="absolute inset-0 -z-10 bg-blue/[0.35]" />
+        {/* 30/09/2026: velo más ligero (0,92/0,35 → 0,78/0,22) para que la foto viva detrás del cristal y el desenfoque se note. */}
+        <span aria-hidden className="absolute inset-0 -z-20 bg-blue/[0.78] mix-blend-multiply" />
+        <span aria-hidden className="absolute inset-0 -z-10 bg-blue/[0.22]" />
         <Container className="py-[var(--v2-section)]">
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
             <Reveal className="lg:col-span-5">
@@ -74,15 +75,15 @@ export function CompanyView({ locale }: { locale: Locale }) {
           </div>
 
           <Reveal className="company-stagger mt-14 lg:mt-20">
-            <ol className="company-liquid-panel grid overflow-hidden text-blue md:grid-cols-5 md:divide-x md:divide-blue/12">
+            <ol className="company-liquid-panel company-liquid-panel--dark grid overflow-hidden text-white md:grid-cols-5 md:divide-x md:divide-white/15">
               {valueChain.map((step, index) => (
-                <li key={step.index} className="company-stagger-item relative z-10 flex flex-col border-b border-blue/12 p-6 last:border-b-0 md:min-h-[var(--company-process-h)] md:border-b-0 lg:p-8" style={{ '--i': index } as CSSProperties}>
+                <li key={step.index} className="company-stagger-item relative z-10 flex flex-col border-b border-white/15 p-6 last:border-b-0 md:min-h-[var(--company-process-h)] md:border-b-0 lg:p-8" style={{ '--i': index } as CSSProperties}>
                   <div className="flex items-start justify-between gap-4">
                     <CompanyIcon name={step.icon as CompanyIconName} className="text-labs" />
-                    <span className="text-[length:var(--text-note)] font-semibold tracking-label text-blue/35">{step.index}</span>
+                    <span className="text-[length:var(--text-label)] font-semibold tracking-label text-white/60">{step.index}</span>
                   </div>
                   <h3 className="mt-7 text-[length:var(--text-h4)] font-medium leading-tight tracking-[-0.015em]">{step.title}</h3>
-                  <p className="mt-4 text-[length:var(--text-note)] leading-[1.65] text-gray-700">{step.body}</p>
+                  <p className="mt-4 text-[length:var(--text-small)] leading-[1.6] text-white/85">{step.body}</p>
                 </li>
               ))}
             </ol>
