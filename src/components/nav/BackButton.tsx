@@ -15,9 +15,10 @@ function pageOf(path: string, locale: Locale): PageKey | undefined {
 }
 
 /**
- * Botón «volver» de la cabecera (30/09/2026). Chevron fino en una píldora de
- * vidrio, como el atrás de iOS; en escritorio lleva el nombre de la página a
- * la que vuelve, en móvil solo el círculo de 44 px. No aparece en la home.
+ * Botón «volver» (30/09/2026, cliente: «solo flecha atrás mínima, glass, bajo
+ * el header»). Chevron fino en un círculo de vidrio fijo bajo la cabecera,
+ * como el atrás de iOS; el nombre de la página va solo en el `aria-label`.
+ * No aparece en la home.
  * Entrando por la vía natural usa el historial del navegador (recupera el
  * scroll donde se dejó); si se entró directo, lleva a la home.
  */
@@ -36,14 +37,13 @@ export function BackButton({ locale, nav }: { locale: Locale; nav: Nav }) {
   return (
     <button
       type="button"
-      className="nav-back glass glass-ink relative"
+      className="nav-back glass"
       aria-label={`${nav.backTo} ${label}`}
       onClick={() => (useHistory ? router.back() : router.push(target))}
     >
       <svg viewBox="0 0 12 20" aria-hidden="true" focusable="false" className="nav-back__chevron">
         <path d="M10 2 2 10l8 8" />
       </svg>
-      <span className="nav-back__label" aria-hidden="true">{label}</span>
     </button>
   );
 }

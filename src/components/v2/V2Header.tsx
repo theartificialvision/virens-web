@@ -5,9 +5,8 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { MenuOverlay } from '@/components/layout/MenuOverlay';
 import { Logo } from './Logo';
-import { BackButton } from '@/components/nav/BackButton';
 import { MenuGlyph3D } from './MenuGlyph3D';
-import { homeContent, ui } from '@/content';
+import { homeContent } from '@/content';
 import type { Locale } from '@/lib/i18n';
 
 /**
@@ -38,11 +37,7 @@ export function V2Header({ locale }: { locale: Locale }) {
     <>
       <header className="v2-fade header-glass sticky top-0 z-[70]">
         <div className="mx-auto flex h-[var(--v2-header)] w-full max-w-[var(--container-max)] items-center justify-between px-5 md:px-8 lg:px-12 2xl:px-20">
-          {/* 30/09/2026: el botón «volver» va tras el logo para que este no cambie de sitio entre páginas. */}
-          <div className="flex items-center gap-4">
-            <Logo locale={locale} />
-            <BackButton locale={locale} nav={ui[locale].nav} />
-          </div>
+          <Logo locale={locale} />
 
           <button
             ref={triggerRef}

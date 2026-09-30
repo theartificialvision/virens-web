@@ -3451,22 +3451,14 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
   defecto); en Virens Tech el botón «Contactar ahora» usa la variante magenta
   y el filete del título también. Home y Compañía siguen en teal.
 
-### 2026-09-30 — Claude — Ayudas de navegación (volver, subir, índice)
+### 2026-09-30 — Claude — Navegación: solo flecha atrás, en vidrio, bajo la cabecera
 
-- Petición del cliente: facilitar la navegación con estilo Apple minimalista.
-  Tres piezas en vidrio, mismo material que flechas y pausa de la Home:
-  1. **Volver** (`nav/BackButton`): píldora con chevron fino tras el logo, en
-     todas las páginas menos la Home. Nombra la página anterior («‹ Inicio»);
-     en móvil, círculo de 44 px. Usa el historial del navegador (recupera el
-     scroll); si se entró directo o se saltó a un ancla, navega a la ruta
-     anterior o a la Home. Estado en `sessionStorage` (`useBackTarget`).
-  2. **Subir** (`nav/ScrollTop`): círculo abajo a la derecha tras dos pantallas,
-     con anillo que se completa con la lectura de la página. Scroll suave, o
-     inmediato con movimiento reducido.
-  3. **Índice de página** (`nav/PageIndex`): barra fina de vidrio bajo la
-     cabecera, tras pasar el hero, en Home (Full service · Capacidad
-     productiva · Formas galénicas · Formatos · Calidad) y Compañía (Quiénes
-     somos · Qué hacemos · I+D). Marca la sección en curso; `--anchor-offset`
-     sube mientras existe. Tech conserva su propio índice.
-- Textos en `ui.nav` (ES/EN). El inglés, [TR] pendiente de revisión.
-- Los botones flotantes usan vidrio claro para leerse sobre el pie azul.
+- Cliente: «no me gusta nada; solo flecha atrás mínima, glass, bajo el header».
+  Descartados el índice de página y el botón de subir (borrados `PageIndex` y
+  `ScrollTop`). Queda `nav/BackButton`: círculo de vidrio de 44 px con chevron
+  fino, fijo bajo la cabecera y alineado con el gutter; sin rótulo (el nombre
+  de la página anterior va en el `aria-label`). No aparece en la Home.
+- Vuelve por el historial (recupera el scroll); si se entró directo o se saltó
+  a un ancla, navega a la ruta anterior o a la Home (`useBackTarget`).
+- En móvil, en Virens Tech baja bajo su barra fija (`--nav-tech-bar`).
+- `ui.nav` reducido a `backTo` y `pages` (ES/EN; inglés [TR]).
