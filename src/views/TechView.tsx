@@ -32,7 +32,7 @@ export function TechView({ locale }: { locale: Locale }) {
 
       <CertStrip locale={locale} />
 
-      <CtaBand locale={locale} />
+      <CtaBand locale={locale} division="tech" />
     </>
   );
 }

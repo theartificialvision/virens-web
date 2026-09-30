@@ -3444,3 +3444,9 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
   Label (orden de `v2Services` y de `serviceSummaries`). `LaboratoryCapabilities`
   busca el servicio por id en vez de por posición: `#full-service` y
   `#private-label` abren el recorrido de su servicio.
+
+### 2026-09-30 — Claude — CTA de Tech en magenta
+
+- Cliente: «el CTA de Tech, magenta». `CtaBand` gana `division` (`labs` por
+  defecto); en Virens Tech el botón «Contactar ahora» usa la variante magenta
+  y el filete del título también. Home y Compañía siguen en teal.

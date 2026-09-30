@@ -6,8 +6,9 @@ import type { Locale } from '@/lib/i18n';
 import { SectionTitle } from './SectionTitle';
 
 /** Cierre de página (§ maqueta, bloque 07): icono, dos líneas y un botón.
- *  En móvil el botón va centrado (27/09/2026, cliente). */
-export function CtaBand({ locale }: { locale: Locale }) {
+ *  En móvil el botón va centrado (27/09/2026, cliente). En Virens Tech el
+ *  botón y el filete del título van en magenta (30/09/2026, cliente). */
+export function CtaBand({ locale, division = 'labs' }: { locale: Locale; division?: 'labs' | 'tech' }) {
   const { v2Cta } = homeContent(locale);
   return (
     <section className="bg-gray-100 text-blue">
@@ -15,7 +16,7 @@ export function CtaBand({ locale }: { locale: Locale }) {
         <div className="flex items-center gap-7">
           <CircleIcon name="chat" className="text-blue/70" />
           <div>
-            <SectionTitle>{v2Cta.title}</SectionTitle>
+            <SectionTitle rule={division}>{v2Cta.title}</SectionTitle>
             <Reveal delay={0.06}>
               <p className="mt-2 text-[length:var(--text-small)] text-gray-700">{v2Cta.lead}</p>
             </Reveal>
@@ -23,7 +24,7 @@ export function CtaBand({ locale }: { locale: Locale }) {
         </div>
 
         <Reveal delay={0.12} className="self-center md:self-auto">
-          <Button href={v2Cta.href} variant="labs">
+          <Button href={v2Cta.href} variant={division === 'tech' ? 'primary' : 'labs'}>
             {v2Cta.button} <span aria-hidden>&rarr;</span>
           </Button>
         </Reveal>
