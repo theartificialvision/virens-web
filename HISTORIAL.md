@@ -3542,3 +3542,8 @@ Pendiente de decidir con el cliente (no se toca sin su visto bueno):
 - Origen `image-only`. «Industria 54 Nave 13» es un dato nuevo y la dirección
   definitiva (48-A / 48-B) sigue pendiente de confirmar con el cliente. El
   teléfono es el mismo de siempre (936 828 972), solo cambia cómo se agrupa.
+
+## 2026-09-30 · Formatos (home): blíster sin troquelado
+- El blíster solo tiene un tamaño: pierde los contornos punteados de referencia
+  («troquelado») y el crecimiento al pasar el cursor; queda solo la silueta
+  (`capacityShapes.ts`, `stages: [[1, 1]]`).

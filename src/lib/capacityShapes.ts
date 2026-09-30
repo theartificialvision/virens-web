@@ -31,7 +31,8 @@ export const CAPACITY_SHAPES: Record<string, CapacityShape> = {
     stages: [[1, 1], [1.12, 1.45], [1.26, 1.95]],
     d: 'M40 236 H80 Q86 236 86 230 V196 Q86 180 72 172 V164 H48 V172 Q34 180 34 196 V230 Q34 236 40 236 Z M46 164 V158 H74 V164 M44 158 V144 Q44 140 48 140 H72 Q76 140 76 144 V158 Z',
   },
-  blisters: { stages: [[1, 1], [1.16, 1.16]], d: blister },
+  // Un solo tamaño (30/09/2026, cliente): sin contorno punteado («troquelado») de referencia ni crecimiento.
+  blisters: { stages: [[1, 1]], d: blister },
   sticks: {
     stages: [[1, 1], [1.12, 1.55]],
     d: 'M50 236 H70 V120 H50 Z M50 128 H70 M50 228 H70 M52 128 A8 8 0 0 0 68 128 M52 228 A8 8 0 0 1 68 228',
