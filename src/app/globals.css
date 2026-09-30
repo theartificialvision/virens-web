@@ -913,7 +913,13 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
 @theme {
   --font-mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
   --tech-lab-bg:      var(--color-blue-deep);
-  --tech-lab-halo:    radial-gradient(56rem 36rem at 88% 0%, rgba(162, 25, 91, 0.26), transparent 70%);
+  /* 30/09 (cliente): «degradá un poco el azul», sin estética PowerPoint:
+     base en diagonal del azul profundo al corporativo, y dos halos magenta
+     amplios y difusos (arriba a la derecha, abajo a la izquierda). Nada de
+     brillos, reflejos ni bandas. */
+  --tech-lab-base:    linear-gradient(165deg, var(--color-blue-deep) 0%, var(--color-blue) 55%, var(--color-blue-deep) 100%);
+  --tech-lab-halo:    radial-gradient(60rem 40rem at 90% 0%, rgba(162, 25, 91, 0.38), transparent 70%);
+  --tech-lab-halo-2:  radial-gradient(50rem 44rem at 0% 78%, rgba(162, 25, 91, 0.22), transparent 70%);
   --tech-lab-text:    #FFFFFF;
   --tech-lab-muted:   rgba(255, 255, 255, 0.68);
   --tech-lab-faint:   rgba(255, 255, 255, 0.16);
@@ -935,7 +941,8 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   --tech-small-gap:   0.75rem;
   --tech-micro-gap:   0.375rem;
   --tech-index-tracking: -0.03em;
-  --tech-index-stroke: 1.25px; /* 30/09 (cliente): numerales calados en magenta */
+  --tech-pillar-index: clamp(2.25rem, 1.6rem + 2vw, 3.5rem);
+  --tech-rail:        2px;
   --tech-node-halo:   rgba(224, 64, 154, 0.22);
   --tech-copy-gap:    1.5rem;
   --tech-rule:        1px;
@@ -952,7 +959,7 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   --tech-tint:        rgba(162, 25, 91, 0.45);
   --tech-bar-blur:    16px;
 }
-.tech-lab { position: relative; isolation: isolate; color: var(--tech-lab-text); background: var(--tech-lab-halo), var(--tech-lab-bg); }
+.tech-lab { position: relative; isolation: isolate; color: var(--tech-lab-text); background: var(--tech-lab-halo), var(--tech-lab-halo-2), var(--tech-lab-base), var(--tech-lab-bg); }
 .tech-lab__container { width: 100%; max-width: var(--container-max); margin-inline: auto; padding-inline: var(--tech-gutter); }
 .tech-lab__intro { padding-top: var(--tech-section-space); }
 .tech-lab__intro-copy { display: grid; grid-template-columns: 1.15fr 1fr; gap: var(--tech-layout-gap); align-items: end; }
@@ -960,7 +967,8 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
 .tech-lab__pillars { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: var(--tech-layout-gap); border-top: var(--tech-rule) solid var(--tech-lab-faint); list-style: none; }
 .tech-lab__pillars li { display: flex; flex-direction: column; gap: var(--tech-small-gap); padding: var(--tech-copy-gap) var(--tech-copy-gap) 0 0; font-size: var(--text-small); color: var(--tech-lab-text); }
 .tech-lab__pillars li + li { padding-left: var(--tech-copy-gap); border-left: var(--tech-rule) solid var(--tech-lab-faint); }
-.tech-lab__pillar-index { font-family: var(--font-mono); font-size: var(--text-note); letter-spacing: var(--tech-caption-spacing); color: var(--tech-lab-accent); }
+/* 30/09 (cliente): números de los pilares más grandes, macizos y en magenta. */
+.tech-lab__pillar-index { font-size: var(--tech-pillar-index); font-weight: 400; line-height: 1; letter-spacing: var(--tech-index-tracking); color: var(--tech-lab-accent); font-variant-numeric: tabular-nums; }
 
 .tech-lab__stage { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: var(--tech-layout-gap); padding-bottom: var(--tech-section-space); }
 
@@ -994,16 +1002,18 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
 .tech-step::before { content: ""; position: absolute; left: 0; top: calc(var(--tech-step-pad) + var(--tech-anchor-y)); width: var(--tech-node); height: var(--tech-node); border-radius: 999px; border: var(--tech-rule) solid var(--tech-lab-muted); background: var(--tech-lab-bg); z-index: 1; transition: background-color var(--motion-enter), border-color var(--motion-enter), outline-color var(--motion-enter); outline: var(--tech-node-ring) solid transparent; }
 .tech-step[data-state='past']::before, .tech-step[data-state='active']::before { background: var(--color-tech); border-color: var(--tech-lab-accent); }
 .tech-step[data-state='active']::before { outline-color: var(--tech-node-halo); }
-.tech-step__bond { position: absolute; left: calc(var(--tech-node) / 2 - var(--tech-rule) / 2); top: calc(var(--tech-step-pad) + var(--tech-anchor-y) + var(--tech-node) / 2); height: 100%; width: var(--tech-rule); background: var(--tech-lab-faint); }
+.tech-step__bond { position: absolute; left: calc(var(--tech-node) / 2 - var(--tech-rail) / 2); top: calc(var(--tech-step-pad) + var(--tech-anchor-y) + var(--tech-node) / 2); height: 100%; width: var(--tech-rail); background: var(--tech-lab-faint); }
 .tech-step__bond span { display: block; height: 100%; background: var(--tech-lab-accent); transform-origin: top; transform: scaleY(clamp(0, calc(var(--tech-progress, 0) * var(--tech-bonds) - var(--i)), 1)); }
 .tech-step__copy { max-width: var(--tech-copy-measure); transition: opacity var(--motion-enter) var(--motion-ease); }
 .tech-step:not([data-state='active']) .tech-step__copy { opacity: var(--tech-lab-dim); }
 .tech-step__meta { display: flex; align-items: center; gap: var(--tech-copy-gap); font-family: var(--font-mono); font-size: var(--text-note); letter-spacing: var(--tech-caption-spacing); text-transform: uppercase; color: var(--tech-lab-accent); }
-.tech-step__index { display: block; margin-top: var(--tech-copy-gap); font-size: var(--tech-index-size); font-weight: 300; line-height: 1; letter-spacing: var(--tech-index-tracking); color: transparent; -webkit-text-stroke: var(--tech-index-stroke) var(--tech-lab-accent); font-variant-numeric: tabular-nums; }
+.tech-step__index { display: block; margin-top: var(--tech-copy-gap); font-size: var(--tech-index-size); font-weight: 400; line-height: 1; letter-spacing: var(--tech-index-tracking); color: var(--tech-lab-accent); font-variant-numeric: tabular-nums; }
 .tech-step__title { margin-top: var(--tech-small-gap); font-size: var(--text-h2); font-weight: 500; line-height: var(--tech-title-leading); text-wrap: balance; }
 .tech-step__body { margin-top: var(--tech-copy-gap); font-size: var(--text-body); line-height: var(--tech-line-height); color: var(--tech-lab-muted); }
 .tech-step__body p + p { margin-top: var(--tech-small-gap); }
 .tech-step__link { margin-top: var(--tech-copy-gap); color: var(--tech-lab-text); }
+.tech-step__link span:first-child { text-decoration-color: var(--tech-lab-accent); }
+.tech-step__link .text-link-arrow { color: var(--tech-lab-accent); }
 .tech-step__photo { display: none; }
 .tech-step__media { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--color-blue); }
 .tech-step__media img { object-fit: cover; }

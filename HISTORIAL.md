@@ -3419,3 +3419,16 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
   cada capítulo pasan de blanco translúcido a trazo magenta
   (`--tech-lab-accent`, `--tech-index-stroke` 1,25 px) y ahora también se ven
   en móvil, sobre el título de cada fase.
+
+### 2026-09-30 — Claude — Tech: más magenta, números macizos y azul degradado
+
+- Cliente: números de los cuatro pilares más grandes; numerales de fase
+  macizos (no calados); más presencia de magenta; «degradá un poco el azul
+  pero sin que parezca PowerPoint 2008».
+- Pilares: número Montserrat 400 en magenta a `--tech-pillar-index`
+  (36 → 56 px). Numerales 01–05 de cada fase, macizos en magenta.
+- Fondo: diagonal suave azul profundo → corporativo → profundo
+  (`--tech-lab-base`) y dos halos magenta amplios y difusos (arriba derecha,
+  abajo izquierda). Sin brillos, reflejos ni bandas.
+- Magenta extra: raíl molecular a 2 px, subrayado y flecha de los enlaces de
+  cada fase en magenta.
