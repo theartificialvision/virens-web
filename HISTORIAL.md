@@ -3468,3 +3468,7 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
   en la Home (`/#formas-galenicas`) y no había flecha para volver. Ahora la
   flecha también sale en la Home cuando se llega desde otra página («Volver a
   Virens Tech»); en la Home abierta directamente sigue sin aparecer.
+- Corrección (cliente, «TOC»): la flecha atrás ya no baja en Virens Tech móvil;
+  está en la misma posición que en el resto de páginas (`--nav-tech-bar`
+  eliminado). En su lugar, la lectura «02 / 05 · título» de la barra fija de
+  Tech se sangra a la derecha de la flecha.

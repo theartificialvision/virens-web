@@ -2023,14 +2023,15 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   --nav-glass-strong: rgba(255, 255, 255, 0.6);
   --nav-shift:   0.125rem;
   --nav-z:       65;        /* bajo la cabecera (70), sobre el contenido */
-  --nav-tech-bar: 5.5rem;   /* barra fija del recorrido de Tech en móvil */
 }
 .nav-back { --glass-body: var(--nav-glass); --glass-body-strong: var(--nav-glass-strong); position: fixed; top: calc(var(--v2-header) + var(--nav-gap)); left: var(--nav-side); z-index: var(--nav-z); display: grid; place-items: center; width: var(--nav-target); height: var(--nav-target); border-radius: 999px; color: var(--color-blue); cursor: pointer; touch-action: manipulation; }
 @media (min-width: 768px) { .nav-back { left: 2rem; } }
 @media (min-width: 1024px) { .nav-back { left: 3rem; } }
 @media (min-width: 1536px) { .nav-back { left: 5rem; } }
-/* En móvil, Tech tiene su barra fija bajo la cabecera: la flecha baja por debajo. */
-@media (max-width: 900px) { html:has(.tech-visor) .nav-back { top: calc(var(--v2-header) + var(--nav-tech-bar) + var(--nav-gap)); } }
+/* En móvil, Tech tiene su barra fija bajo la cabecera: la flecha queda en el
+   mismo sitio que en el resto de páginas y la lectura «02 / 05» se sangra para
+   dejarle hueco (30/09/2026, cliente: la flecha no debe bajar). */
+@media (max-width: 900px) { html:has(.tech-visor) .tech-visor__readout { padding-left: calc(var(--nav-target) + var(--nav-gap)); } }
 .nav-back:focus-visible { outline: 2px solid var(--color-labs); outline-offset: 3px; }
 .nav-back__chevron { width: var(--nav-chevron); height: 0.75rem; fill: none; stroke: currentColor; stroke-width: var(--nav-stroke); stroke-linecap: round; stroke-linejoin: round; transition: transform var(--motion-control) var(--motion-ease); }
 @media (hover: hover) and (pointer: fine) { .nav-back:hover .nav-back__chevron { transform: translateX(calc(-1 * var(--nav-shift))); } }
