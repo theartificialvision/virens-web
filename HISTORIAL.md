@@ -3532,3 +3532,13 @@ Pendiente de decidir con el cliente (no se toca sin su visto bueno):
 - Pendiente con el cliente: los hitos 2026 y 2023 llevan exactamente el mismo
   texto («Creación de Virens Tech, ampliación de I+D y nuevo laboratorio de
   calidad»).
+
+## 2026-09-30 · Pie: dirección de la firma corporativa
+- Bajo el logo del pie, la dirección pasa a la de la firma del cliente (imagen):
+  Producción (Industria 48-B) | Almacén / Oficina (Industria 54 Nave 13),
+  «Pol. Ind. Nord-Est», localidad y «Telf. +34 93 682 89 72 / www.lvirens.com»
+  (teléfono y web enlazados). Mismo cuerpo y color que el resto del pie; los
+  rótulos en negrita. `v2FooterAddress` en `content/v2-home.ts` (+EN, [TR]).
+- Origen `image-only`. «Industria 54 Nave 13» es un dato nuevo y la dirección
+  definitiva (48-A / 48-B) sigue pendiente de confirmar con el cliente. El
+  teléfono es el mismo de siempre (936 828 972), solo cambia cómo se agrupa.

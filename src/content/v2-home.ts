@@ -246,6 +246,21 @@ export const v2FooterNav = [
   },
 ] as const;
 
+/** Dirección del pie (30/09/2026, imagen de la firma corporativa del cliente).
+ *  image-only: transcrita de la imagen; «48-B» coincide con /contacto, pero la
+ *  dirección definitiva sigue pendiente (48-A / 48-B, `site.pendingClientConfirmation`). */
+export const v2FooterAddress = {
+  source: 'image-only',
+  sites: [
+    { label: 'Producción', lines: ['Industria 48-B', 'Pol. Ind. Nord-Est'] },
+    { label: 'Almacén / Oficina', lines: ['Industria 54 Nave 13', 'Pol. Ind. Nord-Est'] },
+  ],
+  locality: '08740 Sant Andreu de la Barca (Barcelona) SPAIN',
+  phoneLabel: 'Telf.',
+  phone: '+34 93 682 89 72',
+  web: 'www.lvirens.com',
+} as const;
+
 /** Reescritura de los servicios existentes según la maqueta aprobada (28/09/2026). */
 export const v2Laboratory = {
   source: 'rewritten',

@@ -11,7 +11,7 @@ import { Isotipo3D } from './Isotipo3D';
  * dos años sin actualizarlo.
  */
 export function V2Footer({ locale }: { locale: Locale }) {
-  const { v2FooterNav } = homeContent(locale);
+  const { v2FooterNav, v2FooterAddress: address } = homeContent(locale);
   const t = ui[locale];
   return (
     <footer className="bg-blue text-white">
@@ -22,10 +22,26 @@ export function V2Footer({ locale }: { locale: Locale }) {
             <div className="flex items-end gap-5">
               <Lockup division="labs" />
             </div>
-            <address className="mt-8 not-italic text-[length:var(--text-note)] leading-relaxed text-white/60">
-              {site.contact.street}
-              <br />
-              {site.contact.postalCode} {site.contact.city}
+            {/* 30/09/2026 (cliente): dirección de la firma corporativa —
+                producción y almacén/oficina en dos bloques, localidad y teléfono/web debajo. */}
+            <address className="mt-8 flex flex-col gap-2 not-italic text-[length:var(--text-note)] leading-relaxed text-white/60">
+              <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                {address.sites.map((place, index) => (
+                  <p key={place.label} className={index > 0 ? 'border-l border-white/15 pl-4' : undefined}>
+                    <strong className="block font-bold text-white/85">{place.label}</strong>
+                    {place.lines.map((line) => (
+                      <span key={line} className="block">{line}</span>
+                    ))}
+                  </p>
+                ))}
+              </div>
+              <p>{address.locality}</p>
+              <p>
+                {address.phoneLabel}{' '}
+                <a href={`tel:${site.contact.phone}`} className="transition-colors duration-200 hover:text-white">{address.phone}</a>
+                {' / '}
+                <a href={site.url} className="font-semibold text-white/85 transition-colors duration-200 hover:text-white">{address.web}</a>
+              </p>
             </address>
           </div>
 
