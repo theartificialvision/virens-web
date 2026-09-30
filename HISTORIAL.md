@@ -3464,3 +3464,7 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
 - `ui.nav` reducido a `backTo` y `pages` (ES/EN; inglés [TR]).
 - Ajuste posterior (cliente): flecha atrás más pequeña (36 px) y más
   transparente (cuerpo de vidrio 38 %); tokens `--nav-target` y `--nav-glass`.
+- Corrección (cliente): desde Tech, «Ver formas galénicas disponibles» aterriza
+  en la Home (`/#formas-galenicas`) y no había flecha para volver. Ahora la
+  flecha también sale en la Home cuando se llega desde otra página («Volver a
+  Virens Tech»); en la Home abierta directamente sigue sin aparecer.

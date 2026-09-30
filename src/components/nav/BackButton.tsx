@@ -18,7 +18,7 @@ function pageOf(path: string, locale: Locale): PageKey | undefined {
  * Botón «volver» (30/09/2026, cliente: «solo flecha atrás mínima, glass, bajo
  * el header»). Chevron fino en un círculo de vidrio fijo bajo la cabecera,
  * como el atrás de iOS; el nombre de la página va solo en el `aria-label`.
- * No aparece en la home.
+ * No aparece en la home salvo que se llegue a ella desde otra página.
  * Entrando por la vía natural usa el historial del navegador (recupera el
  * scroll donde se dejó); si se entró directo, lleva a la home.
  */
@@ -27,7 +27,9 @@ export function BackButton({ locale, nav }: { locale: Locale; nav: Nav }) {
   const router = useRouter();
   const { previous, jumped } = useBackTarget();
   const home = pathFor('home', locale);
-  if (pathname === home) return null;
+  // En la Home solo se oculta si no se viene de otra página: desde Tech, «Ver
+  // formas galénicas disponibles» aterriza en la Home y hay que poder volver.
+  if (pathname === home && previous === null) return null;
 
   const target = previous ?? home;
   const page = pageOf(target, locale) ?? 'home';
