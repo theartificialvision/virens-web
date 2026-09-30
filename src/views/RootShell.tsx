@@ -2,6 +2,7 @@ import { Montserrat } from 'next/font/google';
 import { V2Header } from '@/components/v2/V2Header';
 import { V2Footer } from '@/components/v2/V2Footer';
 import { Grain } from '@/components/ui/Grain';
+import { PageChrome } from '@/components/nav/PageChrome';
 import { CphiPopup } from '@/components/cphi/CphiPopup';
 import { walletReady } from '@/lib/walletReady';
 import { site } from '@/config/site';
@@ -39,6 +40,7 @@ export function RootShell({ locale, children }: { locale: Locale; children: Reac
         <main id="contenido">{children}</main>
         <V2Footer locale={locale} />
         <Grain />
+        <PageChrome locale={locale} />
         {/* 29/09/2026: pop-up de CPHI Milán; se desmonta solo tras la feria. */}
         <CphiPopup locale={locale} wallet={walletReady()} />
         <OrganizationSchema />

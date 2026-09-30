@@ -17,6 +17,17 @@ interface Ui {
   menuAria: string;
   logoAria: { labs: string; tech: string };
   footer: { rights: string };
+  /** Ayudas de navegación (30/09/2026): volver atrás, volver arriba e índice de página. */
+  nav: {
+    back: string;
+    backTo: string;
+    toTop: string;
+    indexAria: string;
+    /** Rótulo de cada página tal como se nombra en «Volver a …». */
+    pages: Record<'home' | 'company' | 'tech' | 'contact' | 'legalNotice' | 'privacy' | 'sales', string>;
+    /** Índice por página: `id` es el destino del enlace; `track` la sección que marca como activa. */
+    index: Partial<Record<'home' | 'company', { title: string; items: readonly { id: string; label: string; track?: string }[] }>>;
+  };
   meta: {
     defaultTitle: string;
     description: string;
@@ -43,6 +54,33 @@ export const ui: Record<Locale, Ui> = {
     logoAria: { labs: 'Virens Labs — inicio', tech: 'Virens Tech — inicio' },
     footer: {
       rights: 'Todos los derechos reservados.',
+    },
+    nav: {
+      back: 'Volver',
+      backTo: 'Volver a',
+      toTop: 'Volver arriba',
+      indexAria: 'En esta página',
+      pages: { home: 'Inicio', company: 'Compañía', tech: 'Virens Tech', contact: 'Contacto', legalNotice: 'Aviso legal', privacy: 'Protección de datos', sales: 'Condiciones de venta' },
+      index: {
+        home: {
+          title: 'Virens Labs',
+          items: [
+            { id: 'full-service', label: 'Full service', track: 'private-label' },
+            { id: 'escala', label: 'Capacidad productiva' },
+            { id: 'formas-galenicas', label: 'Formas galénicas' },
+            { id: 'capacidad-productiva', label: 'Formatos' },
+            { id: 'calidad', label: 'Calidad' },
+          ],
+        },
+        company: {
+          title: 'Compañía',
+          items: [
+            { id: 'quienes-somos', label: 'Quiénes somos' },
+            { id: 'que-hacemos', label: 'Qué hacemos' },
+            { id: 'investigacion', label: 'I+D y control de calidad' },
+          ],
+        },
+      },
     },
     meta: {
       defaultTitle: 'Laboratorios Virens · Fabricación de complementos alimenticios',
@@ -82,6 +120,33 @@ export const ui: Record<Locale, Ui> = {
     logoAria: { labs: 'Virens Labs — home', tech: 'Virens Tech — home' }, // [TR]
     footer: {
       rights: 'All rights reserved.', // [TR]
+    },
+    nav: {
+      back: 'Back', // [TR]
+      backTo: 'Back to', // [TR]
+      toTop: 'Back to top', // [TR]
+      indexAria: 'On this page', // [TR]
+      pages: { home: 'Home', company: 'Company', tech: 'Virens Tech', contact: 'Contact', legalNotice: 'Legal notice', privacy: 'Data protection', sales: 'Sales conditions' }, // [TR]
+      index: {
+        home: {
+          title: 'Virens Labs',
+          items: [
+            { id: 'full-service', label: 'Full service', track: 'private-label' },
+            { id: 'escala', label: 'Productive capacity' },
+            { id: 'formas-galenicas', label: 'Galenic forms' },
+            { id: 'capacidad-productiva', label: 'Formats' },
+            { id: 'calidad', label: 'Quality' },
+          ],
+        },
+        company: {
+          title: 'Company',
+          items: [
+            { id: 'quienes-somos', label: 'Who are we?' },
+            { id: 'que-hacemos', label: 'What do we do?' },
+            { id: 'investigacion', label: 'R&D and quality control' },
+          ],
+        },
+      },
     },
     meta: {
       defaultTitle: 'Laboratorios Virens · Food supplement manufacturing', // [TR]

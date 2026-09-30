@@ -2007,3 +2007,66 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   .cphi-dock__dot { animation: none; }
   .cphi-dock, .cphi-dock__more { transition: none; }
 }
+
+/* ============================================================
+   NAVEGACIÓN (30/09/2026) — volver atrás, volver arriba e índice de página.
+   Mismo material de vidrio que las flechas y la pausa de la Home; minimalismo
+   de iOS: trazos finos, sin rótulos superfluos y objetivos táctiles de 44 px.
+   ============================================================ */
+@theme {
+  --nav-target:       2.75rem;   /* 44 — objetivo táctil mínimo */
+  --nav-inset:        max(1rem, env(safe-area-inset-right));
+  --nav-inset-bottom: max(1rem, env(safe-area-inset-bottom));
+  --nav-stroke:       1.5px;
+  --nav-ring:         2px;
+  --nav-chevron:      0.5rem;
+  --nav-arrow:        1rem;
+  --nav-index-h:      3rem;
+  --nav-index-glass:  rgba(255, 255, 255, 0.86);
+  --nav-top-glass-strong: rgba(255, 255, 255, 0.94);
+  --nav-top-glass:    rgba(255, 255, 255, 0.82); /* claro: legible también sobre el pie azul */
+  --nav-index-line:   rgba(0, 40, 92, 0.1);
+  --nav-index-gap:    1.75rem;
+  --nav-underline:    2px;
+  --nav-shift:        0.5rem;
+  --nav-enter:        360ms;
+  --nav-z-index:      65;   /* bajo la cabecera (70), sobre el contenido */
+  --nav-z-top:        55;   /* bajo la cápsula del evento (60) */
+}
+html:has([data-page-index]) { --anchor-offset: calc(var(--v2-header) + var(--nav-index-h) + 1rem); }
+
+/* Volver atrás: píldora de vidrio tras el logo. */
+.nav-back { display: inline-flex; align-items: center; justify-content: center; gap: 0.375rem; height: var(--nav-target); min-width: var(--nav-target); padding-inline: 0.875rem 1rem; border-radius: 999px; color: var(--color-blue); font-size: var(--text-micro); font-weight: 500; touch-action: manipulation; cursor: pointer; }
+.nav-back:focus-visible, .nav-top:focus-visible, .nav-index a:focus-visible { outline: 2px solid var(--color-labs); outline-offset: 3px; }
+.nav-back__chevron { width: var(--nav-chevron); height: 0.875rem; fill: none; stroke: currentColor; stroke-width: var(--nav-stroke); stroke-linecap: round; stroke-linejoin: round; transition: transform var(--motion-control) var(--motion-ease); }
+@media (hover: hover) and (pointer: fine) { .nav-back:hover .nav-back__chevron { transform: translateX(calc(-1 * var(--nav-shift) / 4)); } }
+.nav-back__label { display: none; }
+@media (min-width: 768px) { .nav-back__label { display: inline; } }
+@media (max-width: 767px) { .nav-back { padding-inline: 0; width: var(--nav-target); } }
+
+/* Volver arriba: círculo de vidrio con el anillo de lectura. */
+.nav-top { --glass-body: var(--nav-top-glass); --glass-body-strong: var(--nav-top-glass-strong); position: fixed; right: var(--nav-inset); bottom: var(--nav-inset-bottom); z-index: var(--nav-z-top); display: grid; place-items: center; width: var(--nav-target); height: var(--nav-target); border-radius: 999px; color: var(--color-blue); cursor: pointer; opacity: 0; transform: translateY(var(--nav-shift)) scale(0.92); pointer-events: none; touch-action: manipulation; }
+.nav-top[data-visible] { opacity: 1; transform: none; pointer-events: auto; }
+.nav-top__ring { position: absolute; inset: 0; width: 100%; height: 100%; transform: rotate(-90deg); fill: none; stroke-width: var(--nav-ring); }
+.nav-top__track { stroke: var(--nav-index-line); }
+.nav-top__bar { stroke: var(--color-labs); stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: calc(1 - var(--nav-progress, 0)); }
+.nav-top__arrow { position: relative; width: var(--nav-arrow); height: 0.75rem; fill: none; stroke: currentColor; stroke-width: var(--nav-stroke); stroke-linecap: round; stroke-linejoin: round; }
+@media (prefers-reduced-motion: no-preference) { .nav-top { transition: opacity var(--nav-enter) var(--motion-ease), transform var(--nav-enter) var(--motion-ease), background-color 320ms var(--ease-out-quart), box-shadow 320ms var(--ease-out-quart); } }
+
+/* Índice de página: barra fina de vidrio bajo la cabecera. */
+.nav-index { position: fixed; top: var(--v2-header); left: 0; right: 0; z-index: var(--nav-z-index); height: var(--nav-index-h); background: var(--nav-index-glass); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px); border-bottom: 0.5px solid var(--nav-index-line); opacity: 0; transform: translateY(calc(-1 * var(--nav-shift))); pointer-events: none; }
+.nav-index[data-visible] { opacity: 1; transform: none; pointer-events: auto; }
+.nav-index__inner { display: flex; align-items: center; justify-content: space-between; gap: var(--nav-index-gap); height: 100%; max-width: var(--container-max); margin-inline: auto; padding-inline: 1.25rem; }
+@media (min-width: 768px) { .nav-index__inner { padding-inline: 2rem; } }
+@media (min-width: 1024px) { .nav-index__inner { padding-inline: 3rem; } }
+@media (min-width: 1536px) { .nav-index__inner { padding-inline: 5rem; } }
+.nav-index__title { flex-shrink: 0; font-size: var(--text-micro); font-weight: 600; color: var(--color-blue); }
+.nav-index__list { display: flex; align-items: stretch; gap: var(--nav-index-gap); height: 100%; margin-left: auto; list-style: none; overflow-x: auto; scrollbar-width: none; overscroll-behavior-inline: contain; }
+.nav-index__list::-webkit-scrollbar { display: none; }
+.nav-index__list a { position: relative; display: flex; align-items: center; height: 100%; white-space: nowrap; font-size: var(--text-micro); color: var(--color-gray-500); transition: color var(--motion-control); }
+.nav-index__list a::after { content: ""; position: absolute; inset-inline: 0; bottom: 0; height: var(--nav-underline); background: var(--color-labs); transform: scaleX(0); transform-origin: left; transition: transform var(--nav-enter) var(--motion-ease); }
+.nav-index__list a:hover { color: var(--color-blue); }
+.nav-index__list a[aria-current] { color: var(--color-blue); }
+.nav-index__list a[aria-current]::after { transform: scaleX(1); }
+@media (max-width: 767px) { .nav-index__title { display: none; } .nav-index__list { margin-left: 0; } }
+@media (prefers-reduced-motion: no-preference) { .nav-index { transition: opacity var(--nav-enter) var(--motion-ease), transform var(--nav-enter) var(--motion-ease); } }
