@@ -3552,3 +3552,6 @@ Pendiente de decidir con el cliente (no se toca sin su visto bueno):
 - El velo azul sobre el vídeo baja un 15 % (izquierda 92→78 %, centro 55→47 %,
   derecha 10→9 %, inferior 60→51 %) para que el vídeo gane contraste. Es una
   prueba del cliente; para revertir, volver a `/92 /55 /10 /60` en `v2/Hero.tsx`.
+- Pie (alineación): la dirección arranca a la altura de la segunda fila de
+  enlaces de las columnas y usa su mismo interlineado (12 px × 1,7) y la misma
+  separación entre bloques (12 px).

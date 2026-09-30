@@ -24,8 +24,12 @@ export function V2Footer({ locale }: { locale: Locale }) {
             </div>
             {/* 30/09/2026 (cliente): dirección de la firma corporativa —
                 producción y almacén/oficina en dos bloques, localidad y teléfono/web debajo. */}
-            <address className="mt-8 flex flex-col gap-2 not-italic text-[length:var(--text-note)] leading-relaxed text-white/60">
-              <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+            {/* Alineación con las columnas (30/09/2026): mismo interlineado que los enlaces
+                (12 px × 1,7) y arranque a la altura de su segunda fila (rótulo + margen
+                + fila 1 + separación = 40 px bajo el logo); bloques separados 12 px
+                como los ítems de las listas. */}
+            <address className="mt-8 flex flex-col gap-3 not-italic text-[length:var(--text-note)] leading-[1.7] text-white/60 lg:mt-10">
+              <div className="grid grid-cols-2 gap-x-4">
                 {address.sites.map((place, index) => (
                   <p key={place.label} className={index > 0 ? 'border-l border-white/15 pl-4' : undefined}>
                     <strong className="block font-bold text-white/85">{place.label}</strong>
