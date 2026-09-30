@@ -50,17 +50,9 @@ export const v2Menu = {
  * bloque. El filete bajo el título va en azul corporativo en Private Label y
  * en el color de Tech en Full service, como en la maqueta.
  */
+/** 30/09/2026 (cliente): Full service va primero, antes que Private Label.
+ *  El orden de `v2Laboratory.serviceSummaries` sigue a este. */
 export const v2Services = [
-  {
-    id: 'private-label',
-    title: 'Private Label',
-    accent: 'blue',
-    body: 'Desarrollamos y fabricamos complementos alimenticios para tu marca, con fórmulas a medida, calidad certificada y total confidencialidad. Convertimos tus ideas en productos listos para el mercado, cuidando cada detalle.',
-    image: {
-      src: '/img/v2/private-label-16x9.jpg',
-      alt: 'Técnica de laboratorio con un agitador de varilla en un vaso de precipitados con una mezcla blanca',
-    },
-  },
   {
     id: 'full-service',
     title: 'Full service',
@@ -71,6 +63,16 @@ export const v2Services = [
       alt: 'Taponadora automática cerrando frascos de vidrio ámbar en una línea de envasado',
     },
   },
+  {
+    id: 'private-label',
+    title: 'Private Label',
+    accent: 'blue',
+    body: 'Desarrollamos y fabricamos complementos alimenticios para tu marca, con fórmulas a medida, calidad certificada y total confidencialidad. Convertimos tus ideas en productos listos para el mercado, cuidando cada detalle.',
+    image: {
+      src: '/img/v2/private-label-16x9.jpg',
+      alt: 'Técnica de laboratorio con un agitador de varilla en un vaso de precipitados con una mezcla blanca',
+    },
+  }
 ] as const;
 
 export const v2Galenic = {
@@ -209,10 +211,11 @@ export const v2Cta = {
 export const v2FooterNav = [
   {
     title: 'Virens Labs',
+    /** 30/09/2026 (cliente): Private Label, Capacidad productiva y Formatos. */
     items: [
-      { label: 'Fórmulas sólidas', href: '/#formas-galenicas' },
-      { label: 'Fórmulas líquidas', href: '/#formas-galenicas' },
-      { label: 'Fabricación por contrato', href: '/#private-label' },
+      { label: 'Private Label', href: '/#private-label' },
+      { label: 'Capacidad productiva', href: '/#escala' },
+      { label: 'Formatos', href: '/#capacidad-productiva' },
     ],
   },
   {
@@ -225,10 +228,11 @@ export const v2FooterNav = [
   },
   {
     title: 'Empresa',
+    /** 30/09/2026 (cliente): Quiénes somos, Qué hacemos y Contacto. */
     items: [
-      { label: 'Quiénes somos', href: '/compania' },
-      { label: 'Calidad', href: '/#calidad' },
-      { label: 'Instalaciones', href: '/compania' },
+      { label: 'Quiénes somos', href: '/compania#quienes-somos' },
+      { label: 'Qué hacemos', href: '/compania#que-hacemos' },
+      { label: 'Contacto', href: '/contacto' },
     ],
   },
   {
@@ -247,7 +251,7 @@ export const v2Laboratory = {
   source: 'rewritten',
   navigation: { previous: 'Capacidad anterior', next: 'Siguiente capacidad', pause: 'Pausar el recorrido', play: 'Reanudar el recorrido', services: 'Servicio' },
   title: 'Ciencia, desarrollo y fabricación',
-  serviceSummaries: ['Desarrollamos y fabricamos complementos alimenticios para tu marca, con fórmulas a medida y total confidencialidad.', 'De la formulación a la fabricación, el control de calidad, el envasado y la logística. Un servicio integral, de principio a fin.'],
+  serviceSummaries: ['De la formulación a la fabricación, el control de calidad, el envasado y la logística. Un servicio integral, de principio a fin.', 'Desarrollamos y fabricamos complementos alimenticios para tu marca, con fórmulas a medida y total confidencialidad.'],
   caption: 'DEL DESARROLLO AL PRODUCTO TERMINADO',
   capabilities: [
     { label: 'I+D y formulación', description: 'Desarrollamos fórmulas a medida en colaboración con tu equipo técnico y de desarrollo.', image: { src: '/img/laboratorio/pesaje-materias-primas-formulacion-complementos-alimenticios.webp', alt: 'Pesaje de materia prima en polvo en un vaso de precipitados sobre una balanza de laboratorio' } },

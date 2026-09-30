@@ -3432,3 +3432,15 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
   abajo izquierda). Sin brillos, reflejos ni bandas.
 - Magenta extra: raíl molecular a 2 px, subrayado y flecha de los enlaces de
   cada fase en magenta.
+
+### 2026-09-30 — Claude — Pie reordenado y Full service primero
+
+- Pie (ES/EN), según nota del cliente: **Virens Labs** → Private Label
+  (`/#private-label`), Capacidad productiva (`/#escala`), Formatos
+  (`/#capacidad-productiva`). **Empresa** → Quiénes somos
+  (`/compania#quienes-somos`), Qué hacemos (`/compania#que-hacemos`),
+  Contacto. Virens Tech y Documentación sin cambios (ya estaban OK).
+- «Ciencia, desarrollo y fabricación»: Full service va ahora antes que Private
+  Label (orden de `v2Services` y de `serviceSummaries`). `LaboratoryCapabilities`
+  busca el servicio por id en vez de por posición: `#full-service` y
+  `#private-label` abren el recorrido de su servicio.

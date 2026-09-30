@@ -45,11 +45,14 @@ export function LaboratoryCapabilities({ content, services }: {
   useEffect(() => {
     if (ready.has(step)) setShown(step);
   }, [ready, step]);
-  // Enlaces directos: `#full-service` abre el recorrido de Full service.
+  // Enlaces directos: `#full-service` o `#private-label` abren el recorrido
+  // de ese servicio. Se busca por id, no por posición: desde el 30/09/2026
+  // (cliente) Full service va primero.
   useEffect(() => {
     const sync = () => {
-      if (window.location.hash === `#${services[1]?.id}`) {
-        setService(1);
+      const index = services.findIndex((item) => window.location.hash === `#${item.id}`);
+      if (index >= 0) {
+        setService(index);
         go(0);
       }
     };
@@ -60,7 +63,7 @@ export function LaboratoryCapabilities({ content, services }: {
 
   return (
     <>
-      <div id={services[1]?.id} className="lab-head">
+      <div id="full-service" className="lab-head">
         <ServiceTabs services={services} active={service} label={content.navigation.services}
           summaries={content.serviceSummaries} onSelect={choose} />
       </div>

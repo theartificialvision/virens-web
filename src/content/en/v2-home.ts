@@ -33,17 +33,6 @@ export const v2Menu = {
 
 export const v2Services = [
   {
-    id: 'private-label',
-    title: 'Private Label',
-    accent: 'blue',
-    // [TR] del texto de la maqueta (la web actual tiene otro texto en este bloque).
-    body: 'We develop and manufacture food supplements for your brand, with tailor-made formulas, certified quality and complete confidentiality. We turn your ideas into market-ready products, taking care of every detail.',
-    image: {
-      src: '/img/v2/private-label-16x9.jpg',
-      alt: 'Laboratory technician stirring a white mixture in a beaker', // [TR]
-    },
-  },
-  {
     id: 'full-service',
     title: 'Full service',
     accent: 'tech',
@@ -54,6 +43,17 @@ export const v2Services = [
       alt: 'Automatic capping machine sealing amber glass bottles on a packaging line', // [TR]
     },
   },
+  {
+    id: 'private-label',
+    title: 'Private Label',
+    accent: 'blue',
+    // [TR] del texto de la maqueta (la web actual tiene otro texto en este bloque).
+    body: 'We develop and manufacture food supplements for your brand, with tailor-made formulas, certified quality and complete confidentiality. We turn your ideas into market-ready products, taking care of every detail.',
+    image: {
+      src: '/img/v2/private-label-16x9.jpg',
+      alt: 'Laboratory technician stirring a white mixture in a beaker', // [TR]
+    },
+  }
 ] as const satisfies Loosen<typeof es.v2Services>;
 
 export const v2Galenic = {
@@ -162,9 +162,9 @@ export const v2FooterNav = [
   {
     title: 'Virens Labs',
     items: [
-      { label: 'Solid formulas', href: '/en#formas-galenicas' }, // [TR]
-      { label: 'Liquid formulas', href: '/en#formas-galenicas' }, // [TR]
-      { label: 'Contract manufacturing', href: '/en#private-label' }, // [EN]
+      { label: 'Private Label', href: '/en#private-label' },
+      { label: 'Productive capacity', href: '/en#escala' }, // [EN] (mismo título que la sección)
+      { label: 'Formats', href: '/en#capacidad-productiva' }, // [TR]
     ],
   },
   {
@@ -178,9 +178,9 @@ export const v2FooterNav = [
   {
     title: 'Company',
     items: [
-      { label: 'About us', href: '/en/company' }, // [TR] («Who are we?»)
-      { label: 'Quality', href: '/en#calidad' }, // [EN]
-      { label: 'Facilities', href: '/en/company' }, // [TR]
+      { label: 'About us', href: '/en/company#quienes-somos' }, // [TR] («Who are we?»)
+      { label: 'What we do', href: '/en/company#que-hacemos' }, // [TR]
+      { label: 'Contact', href: '/en/contact' }, // [EN]
     ],
   },
   {
@@ -198,7 +198,7 @@ export const v2Laboratory = {
   source: 'rewritten',
   navigation: { previous: 'Previous capability', next: 'Next capability', pause: 'Pause the tour', play: 'Resume the tour', services: 'Service' }, // [TR]
   title: 'Science, development and manufacturing',
-  serviceSummaries: ['We develop and manufacture food supplements for your brand, with tailored formulas and complete confidentiality.', 'From formulation to manufacturing, quality control, packaging and logistics. An integrated service, from start to finish.'],
+  serviceSummaries: ['From formulation to manufacturing, quality control, packaging and logistics. An integrated service, from start to finish.', 'We develop and manufacture food supplements for your brand, with tailored formulas and complete confidentiality.'],
   caption: 'FROM DEVELOPMENT TO FINISHED PRODUCT',
   /** Ver el español: del paso 4 (Logistics) en adelante, Full service. */
   capabilities: [
