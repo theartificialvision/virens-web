@@ -15,8 +15,8 @@
   --lab-rail-space: 1.75rem;
   --lab-fill: 560ms;
   --lab-morph: 640ms;
-  --lab-toggle-icon: 1rem;
-  --lab-arrow-icon: 1.25rem;
+  --lab-toggle-icon: 0.875rem;
+  --lab-arrow-icon: 1rem;
   --lab-glass:        rgba(255, 255, 255, 0.34);
   --lab-glass-hover:  rgba(255, 255, 255, 0.5);
   --lab-glass-edge:   inset 0 0 0 0.5px rgba(255, 255, 255, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.6);
@@ -1449,8 +1449,10 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   z-index: 1;
   display: grid;
   place-items: center;
-  width: var(--lab-control-min);
-  height: var(--lab-control-min);
+  /* 30/09/2026 (cliente: «muy grandes en móvil»): mismo tamaño que la flecha
+     atrás (`--nav-target`); el área táctil de 44 px la mantiene el ::after. */
+  width: var(--nav-target);
+  height: var(--nav-target);
   border-radius: 999px;
   color: var(--color-blue);
   background: var(--lab-glass);
@@ -1468,6 +1470,15 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   border-radius: inherit;
   background: var(--lab-glass-sheen);
   pointer-events: none;
+}
+.laboratory__arrow::after, .lab-toggle::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--lab-control-min);
+  height: var(--lab-control-min);
+  transform: translate(-50%, -50%);
 }
 .laboratory__arrow { top: 50%; transform: translateY(-50%); }
 @media (hover: hover) and (pointer: fine) {

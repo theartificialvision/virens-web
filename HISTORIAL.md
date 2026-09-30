@@ -3486,3 +3486,6 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
   `/virens-labs.vcf` (`app/virens-labs.vcf/route.ts`), generada desde
   `site.contact` (teléfono, email, dirección, web, coordenadas) + nota con
   stand 8J28. Wallet queda latente (`walletReady()` sigue en falso).
+- Flechas y pausa del carrusel Full service / Private Label: de 44 a 36 px
+  (`--nav-target`, mismo tamaño que la flecha atrás), iconos algo menores; el
+  área táctil de 44 px se mantiene con un `::after`. Sin comprobar en pantalla.
