@@ -3555,3 +3555,18 @@ Pendiente de decidir con el cliente (no se toca sin su visto bueno):
 - Pie (alineación): la dirección arranca a la altura de la segunda fila de
   enlaces de las columnas y usa su mismo interlineado (12 px × 1,7) y la misma
   separación entre bloques (12 px).
+
+## 2026-09-30 · Home: clips del vídeo corporativo en el recorrido del laboratorio
+- Muse/Helicon no entregó los vídeos; en su lugar, cada una de las cinco fases
+  de «Ciencia, desarrollo y fabricación» (pesaje, cápsulas, control de calidad,
+  envasado, logística) lleva un clip corto del vídeo corporativo del cliente
+  (`source: literal`, sin audio). Cortes de `hero-corporativo-sin-texto` a
+  1280×720, en bucle con fundido; pesaje, cápsulas, calidad y envasado a
+  cámara lenta ×0,5 porque el plano original dura menos de 2 s.
+- Archivos en `public/video/lab/` (WebM VP9 + MP4 H.264, 0,5 MB de media por
+  fase; logística, el más largo, 0,9 MB). Rutas en `v2Laboratory.capabilities[].video`
+  (ES y EN). Componente nuevo `v2/LabClip.tsx`.
+- Comportamiento: la foto actual es el póster y el clip entra fundido cuando ya
+  reproduce. Solo ≥768 px (en móvil no se pide ni se reproduce nada),
+  `preload="none"`, `prefers-reduced-motion` comprobado en JS, y se pausa con el
+  recorrido (botón, foco de teclado, pestaña oculta, fuera de pantalla).

@@ -268,12 +268,15 @@ export const v2Laboratory = {
   title: 'Ciencia, desarrollo y fabricación',
   serviceSummaries: ['De la formulación a la fabricación, el control de calidad, el envasado y la logística. Un servicio integral, de principio a fin.', 'Desarrollamos y fabricamos complementos alimenticios para tu marca, con fórmulas a medida y total confidencialidad.'],
   caption: 'DEL DESARROLLO AL PRODUCTO TERMINADO',
+  /** 30/09/2026: cada fase lleva, además de la foto, un clip corto del vídeo
+   *  corporativo del cliente (source: literal, sin audio). La foto es el póster:
+   *  se ve en móvil, con movimiento reducido y mientras carga el clip. */
   capabilities: [
-    { label: 'I+D y formulación', description: 'Desarrollamos fórmulas a medida en colaboración con tu equipo técnico y de desarrollo.', image: { src: '/img/laboratorio/pesaje-materias-primas-formulacion-complementos-alimenticios.webp', alt: 'Pesaje de materia prima en polvo en un vaso de precipitados sobre una balanza de laboratorio' } },
-    { label: 'Fabricación', description: 'Fabricamos complementos alimenticios en formas sólidas y líquidas, adaptadas a cada proyecto.', image: { src: '/img/laboratorio/capsulas-blister-fabricacion-complementos-alimenticios.webp', alt: 'Cápsulas blancas en los alveolos de una blistera de acero inoxidable' } },
-    { label: 'Control de calidad', description: 'En nuestro laboratorio realizamos analíticas bajo los más altos estándares.', image: { src: '/img/laboratorio/control-calidad-analisis-laboratorio-complementos-alimenticios.webp', alt: 'Analista con guantes midiendo una muestra con un pHmetro en el laboratorio de control de calidad' } },
-    { label: 'Envasado', description: 'Realizamos el envasado primario y secundario de tu producto.', image: { src: '/img/laboratorio/envasado-botes-linea-complementos-alimenticios.webp', alt: 'Botes blancos avanzando por una línea de envasado automática' } },
-    { label: 'Logística', description: 'Gestionamos el envío hasta tu almacén.', image: { src: '/img/laboratorio/logistica-almacen-complementos-alimenticios.webp', alt: 'Almacén con estanterías de palés y carretilla elevadora' } },
+    { label: 'I+D y formulación', description: 'Desarrollamos fórmulas a medida en colaboración con tu equipo técnico y de desarrollo.', image: { src: '/img/laboratorio/pesaje-materias-primas-formulacion-complementos-alimenticios.webp', alt: 'Pesaje de materia prima en polvo en un vaso de precipitados sobre una balanza de laboratorio' }, video: { webm: '/video/lab/pesaje.webm', mp4: '/video/lab/pesaje.mp4' } },
+    { label: 'Fabricación', description: 'Fabricamos complementos alimenticios en formas sólidas y líquidas, adaptadas a cada proyecto.', image: { src: '/img/laboratorio/capsulas-blister-fabricacion-complementos-alimenticios.webp', alt: 'Cápsulas blancas en los alveolos de una blistera de acero inoxidable' }, video: { webm: '/video/lab/fabricacion.webm', mp4: '/video/lab/fabricacion.mp4' } },
+    { label: 'Control de calidad', description: 'En nuestro laboratorio realizamos analíticas bajo los más altos estándares.', image: { src: '/img/laboratorio/control-calidad-analisis-laboratorio-complementos-alimenticios.webp', alt: 'Analista con guantes midiendo una muestra con un pHmetro en el laboratorio de control de calidad' }, video: { webm: '/video/lab/calidad.webm', mp4: '/video/lab/calidad.mp4' } },
+    { label: 'Envasado', description: 'Realizamos el envasado primario y secundario de tu producto.', image: { src: '/img/laboratorio/envasado-botes-linea-complementos-alimenticios.webp', alt: 'Botes blancos avanzando por una línea de envasado automática' }, video: { webm: '/video/lab/envasado.webm', mp4: '/video/lab/envasado.mp4' } },
+    { label: 'Logística', description: 'Gestionamos el envío hasta tu almacén.', image: { src: '/img/laboratorio/logistica-almacen-complementos-alimenticios.webp', alt: 'Almacén con estanterías de palés y carretilla elevadora' }, video: { webm: '/video/lab/logistica.webm', mp4: '/video/lab/logistica.mp4' } },
   ],
   closing: ['Todo un laboratorio.', 'Al servicio de tu marca.'],
 } as const;

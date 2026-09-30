@@ -6,6 +6,7 @@ import type { Loosen } from '@/lib/i18n';
 import type { v2Laboratory } from '@/content/v2-home';
 import { usePrefersReducedMotion } from '@/lib/useReducedMotion';
 import { useLabTour } from '@/lib/useLabTour';
+import { LabClip } from './LabClip';
 import { LabRail } from './LabRail';
 import { ServiceTabs } from './ServiceTabs';
 
@@ -75,6 +76,7 @@ export function LaboratoryCapabilities({ content, services }: {
                 <Image src={item.image.src} alt={item.image.alt} fill
                   sizes="(max-width: 767px) 100vw, (max-width: 1440px) 65vw, 920px" className="object-cover"
                   onLoad={() => setReady((previous) => new Set(previous).add(index))} />
+                <LabClip clip={item.video} active={shown === index} paused={tour.paused} reduced={reduced} />
               </div>
             ))}
             <Arrow direction="previous" label={content.navigation.previous} onClick={() => go(step - 1)} />
