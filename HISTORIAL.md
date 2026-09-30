@@ -3390,3 +3390,25 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
 - El rótulo va en absoluto para que la fila siga alineada por el centro de los
   sellos; en móvil esa fila gana `mb-6` para no pegarse a la siguiente. Aplica
   en Home y en Tech (mismo `CertStrip`).
+
+### 2026-09-30 — Claude — Tech: «laboratorio de vanguardia» (magenta + azul oscuro)
+
+- Cliente: la versión editorial blanca perdió el magenta y seguía pareciendo
+  un PowerPoint; pide volver a los colores de Tech (magenta + azul oscuro, sin
+  exagerar) y una presentación de «alta tecnología web».
+- «De la idea al producto final» pasa a escenario `--color-blue-deep` con halo
+  magenta ambiental. Intro en blanco sobre azul; pilares numerados en mono.
+- Escritorio: visor fijo (`TechVisor`) con las cinco fotos apiladas; al
+  avanzar, la nueva entra como gota magenta que se expande (clip-path circular
+  desde esquinas alternas) y se aclara. Debajo, lectura «03 / 05 · título» y
+  cinco tramos-enlace que se llenan en continuo con la lectura.
+- Capítulos a la derecha unidos por un raíl molecular (nodo + enlace) que se
+  llena con `--tech-progress`, escrito por `useProcessProgress` sin re-render.
+  Numeral grande en contorno; los capítulos no activos quedan atenuados.
+- Móvil: el visor queda como barra fija bajo la cabecera (lectura + tramos);
+  cada capítulo lleva su foto 16:9 con el revelado en gota; sin atenuado.
+- `SectionTitle` gana `rule="tech"` (filete magenta). Textos y anclas sin
+  cambios; 1 h1; ES/EN 200. Movimiento reducido: cambios de foto instantáneos.
+- Nota técnica: una `transition` sobre un `transform` que depende de una
+  variable CSS se quedaba congelada en Chromium; el relleno del raíl va sin
+  transición (ya sigue al scroll frame a frame).
