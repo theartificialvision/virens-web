@@ -7,7 +7,12 @@ import { useEffect, useRef } from 'react';
 import { ui } from '@/content';
 import { locales, switchLocale, type Locale } from '@/lib/i18n';
 import { site } from '@/config/site';
-import { cn, EASE_OUT_QUART } from '@/lib/utils';
+import { cn } from '@/lib/utils';
+
+// Curva de frenada real (ease-out): arranca ya rápida y se asienta suave. La
+// EASE_OUT_QUART del proyecto es en realidad ease-in-out y en un panel que
+// entra se sentía perezosa al principio.
+const EASE_MENU = [0.22, 1, 0.36, 1] as const;
 import { usePrefersReducedMotion } from '@/lib/useReducedMotion';
 
 function getFocusable(container: HTMLElement): HTMLElement[] {
@@ -104,12 +109,12 @@ export function MenuOverlay({ open, onClose, locale }: { open: boolean; onClose:
           // cuerpo en azul profundo. Desenfoque, saturación, filo especular y
           // sombra salen de ahí — antes estaban escritos a mano aquí y eran un
           // vidrio distinto al de los botones del hero.
-          className="glass menu-glass fixed inset-y-0 right-0 z-[60] flex flex-col overflow-hidden text-white outline-none"
+          className="glass menu-glass will-change-transform fixed inset-y-0 right-0 z-[60] flex flex-col overflow-hidden text-white outline-none"
           style={{ width: 'var(--menu-rail)' }}
           initial={reduced ? { opacity: 0 } : { x: '100%' }}
           animate={reduced ? { opacity: 1 } : { x: 0 }}
-          exit={reduced ? { opacity: 0 } : { x: '100%' }}
-          transition={{ duration: reduced ? 0 : 0.32, ease: EASE_OUT_QUART }}
+          exit={reduced ? { opacity: 0 } : { x: '100%', transition: { duration: 0.24, ease: EASE_MENU } }}
+          transition={{ duration: reduced ? 0 : 0.38, ease: EASE_MENU }}
         >
           {/* Filete de marca en el canto: teal arriba, magenta abajo — las dos
               divisiones cruzándose, mismo recurso que `DivisionSwitch` (matiz
@@ -142,14 +147,16 @@ export function MenuOverlay({ open, onClose, locale }: { open: boolean; onClose:
                       : undefined;
 
                 return (
-                  // La franja ya entra en bloque: los ítems solo se funden,
-                  // escalonados. Un segundo desplazamiento por ítem sobre el
-                  // deslizamiento del panel se leía como movimiento doble.
+                  // 30/09/2026 («se despliega en dos tiempos»): antes la franja
+                  // entraba vacía y los ítems se fundían después, con retardo.
+                  // Ahora arrancan a la vez que ella, desplazados un poco hacia
+                  // fuera y con el mismo frenado, así que viajan con el panel
+                  // en un solo gesto; el escalonado (15 ms) solo da relieve.
                   <motion.li
                     key={item.href}
-                    initial={reduced ? false : { opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: reduced ? 0 : 0.08 + i * 0.025, duration: reduced ? 0 : 0.22, ease: EASE_OUT_QUART }}
+                    initial={reduced ? false : { opacity: 0, x: 28 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: reduced ? 0 : i * 0.015, duration: reduced ? 0 : 0.38, ease: EASE_MENU }}
                   >
                     <Link
                       href={item.href}
@@ -168,7 +175,7 @@ export function MenuOverlay({ open, onClose, locale }: { open: boolean; onClose:
                           'block h-px shrink-0 transition-[width,opacity] duration-500 ease-[var(--ease-out-quart)]',
                           active
                             ? 'w-8 opacity-90'
-                            : 'w-3 opacity-30 group-hover/item:w-8 group-hover/item:opacity-90',
+                            : 'w-3 opacity-60 group-hover/item:w-8 group-hover/item:opacity-90',
                         )}
                         style={{ background: accent ?? 'currentColor' }}
                       />

@@ -3489,3 +3489,12 @@ Pasadas a WebP (≤2400 px) con nombre SEO y `alt` nuevo en ES/EN:
 - Flechas y pausa del carrusel Full service / Private Label: de 44 a 36 px
   (`--nav-target`, mismo tamaño que la flecha atrás), iconos algo menores; el
   área táctil de 44 px se mantiene con un `::after`. Sin comprobar en pantalla.
+
+## 2026-09-30 · Menú más fluido
+- Apertura del menú «en dos tiempos»: la franja entraba vacía y los ítems se
+  fundían después. Ahora los ítems arrancan con ella (desplazados 28 px y con
+  la misma curva), escalonado de 15 ms, todo en 0,38 s. Cierre en 0,24 s.
+- Curva propia de frenado (`EASE_MENU`, ease-out real); la `EASE_OUT_QUART`
+  del proyecto es ease-in-out y arrancaba perezosa.
+- Filetes delante de cada página: opacidad en reposo de 30 % a 60 %.
+- Sin comprobar en pantalla (solo typecheck).
