@@ -38,9 +38,11 @@ export function Hero({ locale }: { locale: Locale }) {
         <source src={v2Hero.video.mp4} type="video/mp4" media="(min-width: 768px)" />
       </video>
       {/* Velo: opaco a la izquierda para que el texto asiente, transparente a
-          la derecha para no matar la fotografía. */}
-      <span aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-r from-blue/92 via-blue/55 to-blue/10" />
-      <span aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-blue/60 to-transparent" />
+          la derecha para no matar la fotografía. 30/09/2026 (cliente, prueba):
+          un 15 % más suave que antes (92/55/10/60 → 78/47/9/51) para que el
+          vídeo gane contraste; si el texto pierde lectura, volver a esos valores. */}
+      <span aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-r from-blue/[0.78] via-blue/[0.47] to-blue/[0.09]" />
+      <span aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-blue/[0.51] to-transparent" />
 
       <div className="mx-auto w-full max-w-[var(--container-max)] px-5 pb-[var(--v2-hero-pad)] pt-32 md:px-8 lg:px-12 2xl:px-20">
         <div className="max-w-[var(--measure-max)] text-white">

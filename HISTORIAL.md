@@ -3547,3 +3547,8 @@ Pendiente de decidir con el cliente (no se toca sin su visto bueno):
 - El blíster solo tiene un tamaño: pierde los contornos punteados de referencia
   («troquelado») y el crecimiento al pasar el cursor; queda solo la silueta
   (`capacityShapes.ts`, `stages: [[1, 1]]`).
+
+## 2026-09-30 · Hero de la home: velo un 15 % más suave (prueba)
+- El velo azul sobre el vídeo baja un 15 % (izquierda 92→78 %, centro 55→47 %,
+  derecha 10→9 %, inferior 60→51 %) para que el vídeo gane contraste. Es una
+  prueba del cliente; para revertir, volver a `/92 /55 /10 /60` en `v2/Hero.tsx`.
