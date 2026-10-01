@@ -3674,3 +3674,12 @@ Pendiente de decidir con el cliente (no se toca sin su visto bueno):
   general csp@lvirens.com). Puesto en `TO` de `static-host/api/contacto.php` y
   retirado de `site.pendingClientConfirmation`. `FROM` vacío: el correo sale
   como adg@lvirens.com con Reply-To de quien escribe.
+
+## 2026-10-01 · Zip de cdmon definitivo: sustituye a la web actual
+- El cliente confirma que la web estática sustituye a la actual (WordPress en
+  `web/` de cdmon). `npm run build:static` sale ahora indexable por defecto
+  (`robots.txt` Allow + sitemap, meta `index, follow`) y el `.htaccess` fuerza
+  `https://lvirens.com` (www y http → 301), con guarda de `X-Forwarded-Proto`
+  contra bucles. Probado en Apache: redirecciones, páginas, 404 y formulario.
+- Siguen abiertos los datos de `site.pendingClientConfirmation` (dirección
+  48-A/48B, «FDA APPROVED», países), ahora en la web pública.

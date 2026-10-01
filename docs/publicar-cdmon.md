@@ -32,11 +32,13 @@ Deja `virens-web-estatica.zip` en la raíz del repo (no se sube a GitHub). Lleva
   `static-host/api/contacto.php`). Si cdmon exige que el remitente sea un buzón del dominio,
   poner ese buzón en `FROM` (si se deja vacío se usa el mismo `TO`). Sin `TO`
   el formulario responde error y la web invita a escribir a csp@lvirens.com.
-- **Indexación:** por defecto `robots.txt` bloquea buscadores (`site.ts`,
-  `isIndexable`). El día que esto sustituya a la web real:
-  `NEXT_PUBLIC_INDEXABLE=true npm run build:static`.
-- **HTTPS:** cuando el certificado esté activo, descomentar las dos líneas
-  «Forzar HTTPS» del `.htaccess` (en `scripts/build-static.mjs`).
+- **Indexación:** el zip sale indexable (sustituye a la web actual, cliente
+  01/10/2026). Para un zip de pruebas: `NEXT_PUBLIC_INDEXABLE=false npm run build:static`.
+- **HTTPS y dominio:** el `.htaccess` manda http y www a `https://lvirens.com`
+  (sin bucle si el TLS lo termina un proxy).
+- **Sustituir WordPress:** copia de `web/` (Comprimir → Descargar), mover su
+  contenido (incluido su `.htaccess`) a una carpeta fuera de `web/`, subir el
+  zip a `web/` y descomprimirlo ahí. Si net2ftp no admite 26 MB, usar FileZilla.
 - **Adjuntos de 10 MB:** depende de `upload_max_filesize` / `post_max_size` del
   PHP de cdmon (se cambian en su panel). Si son menores, el envío con un
   adjunto grande falla y la web muestra el aviso de error.

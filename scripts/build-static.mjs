@@ -18,8 +18,13 @@ const OUT = 'out';
 const ZIP = 'virens-web-estatica.zip';
 const run = (cmd, env = {}) => execSync(cmd, { stdio: 'inherit', env: { ...process.env, ...env } });
 
+// La build estática es la de lvirens.com en producción (cliente, 01/10/2026:
+// sustituye a la web actual), así que sale indexable. Para un zip de pruebas
+// que no deba indexarse: `NEXT_PUBLIC_INDEXABLE=false npm run build:static`.
+const indexable = process.env.NEXT_PUBLIC_INDEXABLE ?? 'true';
+
 rmSync(OUT, { recursive: true, force: true });
-run('npx next build', { STATIC_EXPORT: '1' });
+run('npx next build', { STATIC_EXPORT: '1', NEXT_PUBLIC_INDEXABLE: indexable });
 cpSync('static-host', OUT, { recursive: true });
 
 /** `/noticias/:path*` → `^noticias(?:/.*)?$`; `/compania/` → `^compania/$`. */
@@ -72,9 +77,15 @@ AddCharset utf-8 .html .txt .xml .vcf
 
 RewriteEngine On
 
-# Forzar HTTPS: activar cuando el certificado del dominio esté en marcha.
-# RewriteCond %{HTTPS} off
-# RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+# Dominio canónico con HTTPS y sin www (site.url = https://lvirens.com).
+# Se mira también X-Forwarded-Proto por si el hosting termina el TLS en un
+# proxy: sin eso, la regla redirigiría en bucle.
+RewriteCond %{HTTP_HOST} ^www\\.(.+)$ [NC]
+RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+RewriteCond %{HTTPS} off
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteCond %{HTTP_HOST} !^(localhost|127\\.0\\.0\\.1)(:\\d+)?$
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
 # Redirecciones 301 de la web anterior (redirects.mjs, §14.5).
 ${redirects}
