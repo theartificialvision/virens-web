@@ -8,10 +8,11 @@ import { Isotipo3D } from './Isotipo3D';
  * Pie de la home V2 (§ maqueta): lockup de las dos divisiones a la izquierda y
  * cuatro columnas de enlaces. La línea inferior lleva el año en curso, no el
  * "© 2024" fijo de la maqueta — ese venía heredado de la web actual, que lleva
- * dos años sin actualizarlo.
+ * dos años sin actualizarlo. Entre las columnas y la línea inferior va el claim
+ * a todo el ancho (`.footer-claim`).
  */
 export function V2Footer({ locale }: { locale: Locale }) {
-  const { v2FooterNav, v2FooterAddress: address } = homeContent(locale);
+  const { v2FooterNav, v2FooterAddress: address, v2Hero } = homeContent(locale);
   const t = ui[locale];
   return (
     <footer className="bg-blue text-white">
@@ -66,6 +67,14 @@ export function V2Footer({ locale }: { locale: Locale }) {
               </ul>
             </nav>
           ))}
+        </div>
+
+        {/* 01/10/2026 (cliente): el claim de la marca a todo el ancho, como cristal
+            esmerilado con un destello que lo cruza cada pocos segundos. Es el mismo
+            texto del hero (siempre en inglés, §29/09/2026); decorativo para lectores
+            de pantalla, que ya lo leen en el hero. */}
+        <div aria-hidden="true" className="footer-claim-wrap mt-16 lg:mt-20">
+          <p className="footer-claim">{v2Hero.title}</p>
         </div>
 
         <div className="mt-14 flex flex-col gap-4 border-t border-white/15 pt-7 text-[length:var(--text-note)] text-white/55 md:flex-row md:items-center md:justify-between">

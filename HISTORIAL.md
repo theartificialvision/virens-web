@@ -3586,3 +3586,19 @@ Pendiente de decidir con el cliente (no se toca sin su visto bueno):
   primeras columnas y localidad + teléfono en la tercera, sobre las mismas
   columnas que los enlaces. Antes la dirección iba comprimida bajo el logo y
   partía líneas. Móvil sin cambios (solo desaparece la web).
+
+## 2026-10-01 · Pie: claim «EXPERTS IN FOOD SUPPLEMENTS» en cristal con destello
+- Nuevo claim a todo el ancho del pie, entre la fila de dirección y el copyright
+  (decorativo: `aria-hidden`). El texto sale de `v2Hero.title` —el mismo claim
+  del hero—, así que no se duplica contenido en el JSX.
+- Efecto «glass»: letras de cristal esmerilado (relleno blanco translúcido que
+  se apaga hacia abajo, filete de luz arriba y abajo de la caja de mayúsculas) y
+  un halo teal tenue detrás para que el cristal tenga algo que refractar. Sin
+  `-webkit-text-stroke`: Montserrat lleva contornos solapados (X, P, R, M, N) y
+  el trazo dibujaba costuras dentro de las letras.
+- Destello: una pasada de luz diagonal, izquierda a derecha, cada 9 s (~1,8 s de
+  recorrido, resto en reposo). Con `prefers-reduced-motion` queda estático.
+- Tamaño por ancho de contenedor (`cqw`) calibrado con las métricas reales de
+  Montserrat 700: una línea en escritorio (llena el ancho sin desbordar a 1280,
+  1440 y 1920) y dos líneas en móvil («EXPERTS IN FOOD / SUPPLEMENTS»). Todos los
+  valores son tokens `--claim-*` en `globals.css`.

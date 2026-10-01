@@ -2085,3 +2085,85 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
 @media (hover: hover) and (pointer: fine) { .nav-back:hover .nav-back__chevron { transform: translateX(calc(-1 * var(--nav-shift))); } }
 @media (prefers-reduced-motion: no-preference) { .nav-back { animation: nav-back-in 360ms var(--motion-ease) both; } }
 @keyframes nav-back-in { from { opacity: 0; transform: translateX(calc(-1 * var(--nav-shift))); } }
+
+
+/* ============================================================
+   PIE · CLAIM «EXPERTS IN FOOD SUPPLEMENTS» (01/10/2026, cliente)
+   Letras de cristal esmerilado: relleno blanco translúcido que se apaga hacia
+   abajo, filete de luz en el borde superior e inferior de la caja de
+   mayúsculas y un destello diagonal que las cruza una vez por ciclo. Sobre el
+   fondo azul del pie, un halo teal tenue le da al cristal algo que refractar
+   (halo ambiental permitido, no degradado ornamental).
+   El borde NO se hace con -webkit-text-stroke: Montserrat lleva contornos
+   solapados (X, P, R, M, N) y el trazo dibuja las costuras por dentro.
+   El tamaño sale del ancho del contenedor (cqw) y de lo que mide el texto en
+   Montserrat 700: así llena la línea con la fuente real sin desbordar.
+   ============================================================ */
+@theme {
+  /* Ancho del texto en em (Montserrat 700, versalitas, -0,015 em), con ~1 % de holgura. */
+  --claim-fit-wide:    17.5;  /* una línea: «EXPERTS IN FOOD SUPPLEMENTS» */
+  --claim-fit-narrow:  9.5;   /* dos líneas: la más larga es «EXPERTS IN FOOD» */
+  --claim-tracking:    -0.015em;
+  --claim-leading:     0.98;
+  /* Caja de mayúsculas dentro de cada línea (métricas de Montserrat con interlineado 0,98). */
+  --claim-cap-top:     15%;
+  --claim-cap-bottom:  86.5%;
+  --claim-rim-depth:   7%;
+  --claim-rim-top:     rgb(255 255 255 / 0.6);
+  --claim-fill-top:    rgb(255 255 255 / 0.3);
+  --claim-fill-bottom: rgb(255 255 255 / 0.06);
+  --claim-rim-bottom:  rgb(255 255 255 / 0.2);
+  --claim-shine:       rgb(255 255 255 / 0.6);
+  --claim-halo:        color-mix(in srgb, var(--color-labs-glow) 16%, transparent);
+  --claim-cycle:       9s;
+  --claim-sweep-ease:  cubic-bezier(0.45, 0, 0.25, 1);
+}
+
+.footer-claim-wrap { position: relative; isolation: isolate; container-type: inline-size; }
+.footer-claim-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -70% 0 -60%;
+  z-index: -1;
+  /* closest-side: el halo se apaga antes de tocar el borde de su caja, sin cortes rectos. */
+  background: radial-gradient(ellipse closest-side at 20% 50%, var(--claim-halo), transparent);
+  pointer-events: none;
+}
+.footer-claim {
+  margin: 0;
+  font-size: calc(100cqw / var(--claim-fit-narrow));
+  font-weight: 700;
+  line-height: var(--claim-leading);
+  letter-spacing: var(--claim-tracking);
+  text-transform: uppercase;
+  text-wrap: balance;
+  color: transparent;
+  user-select: none;
+  /* Capa 1: destello (3× el ancho, se desplaza). Capa 2: cristal, una baldosa por línea. */
+  background-image:
+    linear-gradient(100deg, transparent 46.5%, var(--claim-shine) 50%, transparent 53.5%),
+    linear-gradient(180deg,
+      transparent var(--claim-cap-top),
+      var(--claim-rim-top) var(--claim-cap-top),
+      var(--claim-fill-top) calc(var(--claim-cap-top) + var(--claim-rim-depth)),
+      var(--claim-fill-bottom) calc(var(--claim-cap-bottom) - var(--claim-rim-depth)),
+      var(--claim-rim-bottom) var(--claim-cap-bottom),
+      transparent var(--claim-cap-bottom));
+  background-size: 300% 100%, 100% calc(var(--claim-leading) * 1em);
+  background-position: 100% 0, 0 0;
+  background-repeat: no-repeat, repeat-y;
+  -webkit-background-clip: text;
+          background-clip: text;
+  animation: footer-claim-shine var(--claim-cycle) var(--claim-sweep-ease) infinite;
+}
+@media (min-width: 1024px) {
+  .footer-claim { font-size: calc(100cqw / var(--claim-fit-wide)); white-space: nowrap; text-wrap: nowrap; }
+}
+/* Reposo el 80 % del ciclo; el destello cruza de izquierda a derecha en el último tramo (~1,8 s). */
+@keyframes footer-claim-shine {
+  0%, 80% { background-position: 100% 0, 0 0; }
+  100%    { background-position: 0% 0, 0 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .footer-claim { animation: none; }
+}
