@@ -12,3 +12,6 @@ next-env.d.ts
 
 # Carpetas de trabajo fuera de iCloud (ver LEEME del proyecto)
 *.nosync
+
+# Exportación estática para Apache/cdmon (npm run build:static)
+virens-web-estatica.zip

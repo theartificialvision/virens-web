@@ -1,64 +1,27 @@
+import { redirectRules } from './redirects.mjs';
+
+/**
+ * `STATIC_EXPORT=1` (lo pone `npm run build:static`) genera la web como HTML
+ * estático en `out/` para subirla a un hosting Apache (cdmon). Sin servidor
+ * Node no hay optimizador de imágenes ni redirecciones de Next: las imágenes
+ * se sirven tal cual y las 301 pasan al `.htaccess` (scripts/build-static.mjs).
+ * Sin la variable, la build es la de siempre (Netlify).
+ */
+const isStaticExport = process.env.STATIC_EXPORT === '1';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   // `qualities`: Next 16 exige declarar las calidades que se piden con `quality={…}`
   // (el fondo de Contacto usa 85). 75 es el valor por defecto de `next/image`.
-  images: { formats: ['image/avif', 'image/webp'], qualities: [75, 85] },
-
-  // Redirecciones 301 desde la web actual (WordPress) — ver §14.5 del documento maestro.
-  async redirects() {
-    const map = [
-      // La home V2 vivió en /v2 unos días (22/09/2026): por si quedó enlazada.
-      ['/v2', '/'],
-      ['/compania/', '/compania'],
-      // Labs ya es la home: se conserva la URL histórica como redirección.
-      ['/virens-labs', '/'],
-      ['/virens-tech/', '/virens-tech'],
-      // Noticias retirada (29/09/2026, decisión del cliente; el trabajo está en
-      // aparcado/noticias). Sus URLs van a la home del idioma.
-      ['/noticias', '/'],
-      ['/noticias/:path*', '/'],
-      ['/en/news', '/en'],
-      ['/en/news/:path*', '/en'],
-      ['/contacto/', '/contacto'],
-      ['/aviso-legal/', '/legal/aviso-legal'],
-      ['/politica-de-proteccion-de-datos/', '/legal/politica-de-privacidad'],
-      ['/uso-de-cookies/', '/legal/politica-de-cookies'],
-      ['/condiciones-generales-de-venta/', '/legal/condiciones-generales-de-venta'],
-
-      // Inglés (27/09/2026). /en/company/, /en/contact/… ya coinciden con las
-      // rutas nuevas (Next quita la barra final solo). Labs es la home.
-      ['/en/virens-labs', '/en'],
-      ['/en/virens-labs/', '/en'],
-      ['/en/legal-notice/', '/en/legal/legal-notice'],
-      ['/en/data-protection-policy/', '/en/legal/privacy-policy'],
-      ['/en/use-of-cookies/', '/en/legal/cookie-policy'],
-      ['/en/sales-terms-and-conditions/', '/en/legal/sales-terms-and-conditions'],
-
-      // Idiomas que la web actual publica y la nueva no tiene en esta fase
-      // (§14.5: nunca dejarlos en 404). Catalán → español; francés, italiano
-      // y chino → inglés.
-      ['/ca', '/'],
-      ['/ca/:path*', '/'],
-      ['/fr', '/en'],
-      ['/fr/:path*', '/en'],
-      ['/it', '/en'],
-      ['/it/:path*', '/en'],
-      ['/zh-hans', '/en'],
-      ['/zh-hans/:path*', '/en'],
-    ];
-    // Next quita la barra final antes de mirar estas reglas (308 a la ruta sin
-    // barra), así que cada origen con barra se registra también sin ella.
-    // Nunca una regla que apunte a sí misma (/compania/ → /compania daría
-    // /compania → /compania: bucle infinito).
-    const both = map
-      .flatMap(([source, destination]) =>
-        source.length > 1 && source.endsWith('/') ? [[source, destination], [source.slice(0, -1), destination]] : [[source, destination]],
-      )
-      .filter(([source, destination]) => source !== destination);
-    const unique = [...new Map(both.map((r) => [r[0], r])).values()];
-    return unique.map(([source, destination]) => ({ source, destination, permanent: true }));
-  },
+  images: { formats: ['image/avif', 'image/webp'], qualities: [75, 85], unoptimized: isStaticExport },
+  ...(isStaticExport
+    ? { output: 'export' }
+    : {
+        async redirects() {
+          return redirectRules().map(([source, destination]) => ({ source, destination, permanent: true }));
+        },
+      }),
 };
 
 export default nextConfig;

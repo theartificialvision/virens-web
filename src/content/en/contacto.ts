@@ -81,4 +81,10 @@ export const contactForm = {
     href: '/en/legal/privacy-policy',
   },
   submit: 'Send', // [TR]
+  status: {
+    sending: 'Sending…', // [TR]
+    sent: 'Thank you. We have received your message.', // [TR]
+    error: 'The message could not be sent. Please try again or write to us at ', // [TR]
+    invalid: 'Please check the required fields and accept the data protection policy.', // [TR]
+  },
 } as const satisfies Loosen<typeof es.contactForm>;

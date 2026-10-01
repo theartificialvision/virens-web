@@ -35,6 +35,13 @@ export const site = {
     distanceNote: 'A 20 km de Barcelona',
   },
 
+  /**
+   * Envío del formulario de Contacto (01/10/2026). Lo atiende un PHP en el
+   * hosting Apache (cdmon), copiado a `out/` por `npm run build:static`. El
+   * email de destino vive solo en ese PHP, nunca en el navegador.
+   */
+  contactForm: { endpoint: '/api/contacto.php' },
+
   pendingClientConfirmation: [
     'Unidad y periodo de las capacidades productivas ("M" = millones/año)',
     'Año de referencia de la trayectoria (2000 instalaciones / 2006 fundación)',
@@ -42,6 +49,7 @@ export const site = {
     'Revisión del claim "FDA APPROVED"',
     'Número de países de exportación actualizado (el dato "+20" es de 2015)',
     'Dirección postal definitiva (48-A / 48B)',
+    'Email que recibe el formulario de Contacto (distinto de csp@lvirens.com); se pone en static-host/api/contacto.php',
   ],
 } as const;
 

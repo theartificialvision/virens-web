@@ -1,4 +1,4 @@
-# Traspaso — cómo retomar el proyecto (actualizado 29/09/2026)
+# Traspaso — cómo retomar el proyecto (actualizado 01/10/2026)
 
 Nota para cualquier asistente (Claude, Codex, otro) que continúe. Léelo antes
 que nada; luego [`CLAUDE.md`](CLAUDE.md) (reglas) y las últimas entradas de
@@ -133,7 +133,23 @@ otra IA dentro). Todo está preparado en el repo:
 - `next build` local: sin red a Google Fonts falla; se puede compilar con
   `NEXT_FONT_GOOGLE_MOCKED_RESPONSES=<archivo>` (ver HISTORIAL 19).
 
+## Web estática para cdmon (desde el 01/10/2026)
+
+- `npm run build:static` genera `virens-web-estatica.zip` (HTML estático +
+  `.htaccess` + PHP del formulario) para subir a cdmon (Apache). Guía completa:
+  [`docs/publicar-cdmon.md`](docs/publicar-cdmon.md). Netlify no cambia.
+- Las 301 viven en `redirects.mjs` (una sola lista para Next y para el `.htaccess`).
+- El formulario de Contacto ya envía (`src/lib/useContactSubmit.ts` →
+  `static-host/api/contacto.php`). **Falta el email de destino** (constante
+  `TO` del PHP), que el cliente tiene que dar y es distinto de csp@lvirens.com.
+- Favicon: `src/app/icon.svg`, `apple-icon.png` y `favicon.ico`, sacados del
+  isotipo de color (`public/img/v2/logo/virens-isotipo.svg`).
+
 ## Pendiente / preguntas abiertas
+
+- **Email de destino del formulario** (cliente) → `static-host/api/contacto.php`.
+- **`/uso-de-cookies` redirige a `/legal/politica-de-cookies`, que no existe**
+  (no hay texto de cookies): hoy acaba en la 404, también en Netlify.
 
 - **Copia del Mac sincronizada el 29/09/2026** con `origin/v2` (8 commits
   nuevos traídos). Un commit local sin subir del 28/09 (`2b2385e`, «Home:

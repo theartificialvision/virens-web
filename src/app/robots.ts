@@ -2,6 +2,9 @@ import type { MetadataRoute } from 'next';
 import { site } from '@/config/site';
 import { isIndexable } from '@/config/site';
 
+// Se genera en build: necesario para la exportación estática (Apache/cdmon).
+export const dynamic = 'force-static';
+
 /**
  * Mientras esto sea un prototipo NO debe indexarse. No es una precaución
  * teórica: es el rediseño de una web que está en producción (lvirens.com) y

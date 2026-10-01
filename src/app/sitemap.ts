@@ -2,6 +2,9 @@ import type { MetadataRoute } from 'next';
 import { site } from '@/config/site';
 import { locales, routes, type PageKey } from '@/lib/i18n';
 
+// Se genera en build: necesario para la exportación estática (Apache/cdmon).
+export const dynamic = 'force-static';
+
 /**
  * Sitemap generado en build. Sustituye al de Yoast, que publica 60 entradas
  * para 10 URLs. Desde el 27/09/2026 incluye el inglés, con cada página

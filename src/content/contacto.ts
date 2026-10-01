@@ -122,4 +122,11 @@ export const contactForm = {
     href: '/legal/politica-de-privacidad',
   },
   submit: 'Enviar',
+  // NO LITERAL (01/10/2026): avisos del envío, sin equivalente en el mockup.
+  status: {
+    sending: 'Enviando…',
+    sent: 'Gracias. Hemos recibido tu mensaje.',
+    error: 'No se ha podido enviar el mensaje. Inténtalo de nuevo o escríbenos a ',
+    invalid: 'Revisa los campos obligatorios y la aceptación de la política de datos.',
+  },
 } as const;

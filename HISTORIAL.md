@@ -3636,3 +3636,23 @@ Pendiente de decidir con el cliente (no se toca sin su visto bueno):
   la altura). Nueva elipse `ellipse(75% 95% at 78% 50%)`: su punto más a la
   izquierda queda al 3 % dentro de la caja, así que el borde es curvo de arriba
   abajo. La forma de las esquinas apenas cambia.
+
+## 2026-10-01 · Web estática para cdmon (Apache), favicon y envío del formulario
+- `npm run build:static` (`scripts/build-static.mjs`): `next build` con
+  `STATIC_EXPORT=1` (`output: 'export'`, imágenes sin optimizador), copia el PHP
+  de `static-host/`, genera `.htaccess` (URLs limpias, 301, 404, MIME, caché,
+  gzip) y empaqueta `virens-web-estatica.zip`. Las 301 salen a `redirects.mjs`
+  para que Next y Apache compartan la lista. `robots.ts` y `sitemap.ts` pasan a
+  `force-static` (lo exige la exportación). Guía: `docs/publicar-cdmon.md`.
+- Favicon: `icon.svg` (isotipo de color en lienzo cuadrado), `apple-icon.png`
+  180 px sobre blanco y `favicon.ico` 16/32/48.
+- Formulario de Contacto: envía por `fetch` a `/api/contacto.php` (campos,
+  departamento y adjunto ≤ 10 MB) con trampa anti-bots, avisos de enviando /
+  enviado / error / campos pendientes (ES + EN `[TR]`) y vaciado tras enviar. El
+  email de destino está **pendiente del cliente** (constante `TO` del PHP;
+  añadido a `site.pendingClientConfirmation`). Sin él responde error y la web
+  ofrece csp@lvirens.com.
+- Probado con el zip en Apache 2.4 + PHP 8.3: páginas ES/EN 200, 301 antiguas,
+  404, favicon, vCard, caché, navegación sin errores y envío real con adjunto
+  (correo capturado: asunto, Reply-To del visitante, adjunto). La build de
+  Netlify sigue pasando con las mismas 35 redirecciones.
