@@ -31,11 +31,15 @@ export function Hero({ locale }: { locale: Locale }) {
         playsInline
         aria-label={v2Hero.alt}
       >
-        {/* Solo desde 768 px: en móvil se queda el póster y no se descarga
-            el vídeo (regla 9). El navegador toma la primera fuente que sabe
-            reproducir: AV1 (≈ mitad de peso) y, si no, H.264. */}
+        {/* 01/10/2026 (cliente): corte horizontal desde 768 px y corte
+            vertical en móvil. El póster sigue siendo la imagen LCP y el vídeo
+            no bloquea la carga (regla 9). El navegador toma la primera fuente
+            que sabe reproducir y cuyo `media` encaja: AV1 (≈ mitad de peso) y,
+            si no, H.264. */}
         <source src={v2Hero.video.av1} type='video/webm; codecs="av01.0.08M.10"' media="(min-width: 768px)" />
         <source src={v2Hero.video.mp4} type="video/mp4" media="(min-width: 768px)" />
+        <source src={v2Hero.video.av1Mobile} type='video/webm; codecs="av01.0.05M.10"' media="(max-width: 767.98px)" />
+        <source src={v2Hero.video.mp4Mobile} type="video/mp4" media="(max-width: 767.98px)" />
       </video>
       {/* Velo: opaco a la izquierda para que el texto asiente, transparente a
           la derecha para no matar la fotografía. 30/09/2026 (cliente, prueba):

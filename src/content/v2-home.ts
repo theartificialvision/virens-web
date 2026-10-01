@@ -23,15 +23,16 @@ export const v2Hero = {
   title: 'Experts in food supplements',
   subtitle: 'Contract Manufacturing & Development',
   lead: 'Soluciones integrales de fabricación y desarrollo de complementos alimenticios con los más altos estándares de calidad.',
-  /** Vídeo corporativo del cliente, versión sin textos (24/09/2026), 1920×1080:
-   *  empieza después de los logos y la transición de anillos y acaba antes
-   *  del cierre (3,6 s → 109 s), sin audio. AV1 primero; H.264 para Safari
-   *  antiguo y el resto. Nombre nuevo para no servir la versión anterior
-   *  desde caché. */
+  /** Vídeo corporativo del cliente, versión de 40 s (01/10/2026), sin audio.
+   *  Dos cortes: horizontal 1920×1080 para ≥ 768 px y vertical 720×1280 para
+   *  móvil. AV1 primero; H.264 para Safari antiguo y el resto. Nombres nuevos
+   *  para no servir la versión anterior desde caché. */
   video: {
-    av1: '/video/hero-corporativo-sin-texto.webm',
-    mp4: '/video/hero-corporativo-sin-texto.mp4',
-    poster: '/img/v2/hero-poster.jpg',
+    av1: '/video/hero-corporativo-40s.webm',
+    mp4: '/video/hero-corporativo-40s.mp4',
+    av1Mobile: '/video/hero-corporativo-40s-vertical.webm',
+    mp4Mobile: '/video/hero-corporativo-40s-vertical.mp4',
+    poster: '/img/v2/hero-poster-40s.jpg',
   },
   alt: 'Vídeo corporativo de Laboratorios Virens: producción, laboratorio de control y almacén',
 } as const;

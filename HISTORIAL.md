@@ -3602,3 +3602,15 @@ Pendiente de decidir con el cliente (no se toca sin su visto bueno):
   Montserrat 700: una línea en escritorio (llena el ancho sin desbordar a 1280,
   1440 y 1920) y dos líneas en móvil («EXPERTS IN FOOD / SUPPLEMENTS»). Todos los
   valores son tokens `--claim-*` en `globals.css`.
+
+## 2026-10-01 · Hero de la home: vídeos nuevos de 40 s (horizontal + vertical móvil)
+- El cliente entrega dos cortes de 40 s del corporativo (sin textos ni logos):
+  horizontal 1920×1080 y vertical 1080×1920. Sustituyen al corte largo anterior
+  (`hero-corporativo-sin-texto.*`, borrado).
+- Formato: sin audio y sin metadatos; horizontal a 1920×1080, vertical bajado a
+  720×1280. Cada uno en AV1 10 bits (`.webm`, SVT-AV1 CRF 38) y H.264
+  (`.mp4`, CRF 28, `faststart`). Pesos: horizontal 4,8 MB AV1 / 8,2 MB H.264;
+  vertical 2,3 MB / 4,0 MB.
+- Hasta ahora el móvil se quedaba solo con el póster; ahora reproduce el corte
+  vertical (`media="(max-width: 767.98px)"`). El póster (`hero-poster-40s.jpg`,
+  primer fotograma del horizontal) sigue siendo la imagen LCP.

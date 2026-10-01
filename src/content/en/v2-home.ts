@@ -17,9 +17,11 @@ export const v2Hero = {
   subtitle: 'Contract Manufacturing & Development', // [EN]
   lead: 'Comprehensive manufacturing and development solutions for food supplements, to the highest quality standards.', // [TR] (ES del cliente 29/09)
   video: {
-    av1: '/video/hero-corporativo-sin-texto.webm',
-    mp4: '/video/hero-corporativo-sin-texto.mp4',
-    poster: '/img/v2/hero-poster.jpg',
+    av1: '/video/hero-corporativo-40s.webm',
+    mp4: '/video/hero-corporativo-40s.mp4',
+    av1Mobile: '/video/hero-corporativo-40s-vertical.webm',
+    mp4Mobile: '/video/hero-corporativo-40s-vertical.mp4',
+    poster: '/img/v2/hero-poster-40s.jpg',
   },
   alt: 'Laboratorios Virens corporate video: production, quality control laboratory and warehouse', // [TR]
 } as const satisfies Loosen<typeof es.v2Hero>;
