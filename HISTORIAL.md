@@ -3628,3 +3628,11 @@ Pendiente de decidir con el cliente (no se toca sin su visto bueno):
   `ellipse(76% 92% at 75% 50%)`) en lugar del borde recto con banda azul. Se
   mantiene el ancho del 46 % del cambio de esta mañana, así que la curva no
   vuelve a rozar el titular. Móvil sin cambios.
+
+## 2026-10-01 · Compañía: curva del hero sin tramo recto
+- Cliente: la curva tenía una parte recta a la izquierda pegada a la banda azul.
+  Causa: la elipse (`ellipse(76% 92% at 75% 50%)`) se salía 1 % por la izquierda
+  de la caja de la foto y el borde de la caja la cortaba en vertical (≈ 30 % de
+  la altura). Nueva elipse `ellipse(75% 95% at 78% 50%)`: su punto más a la
+  izquierda queda al 3 % dentro de la caja, así que el borde es curvo de arriba
+  abajo. La forma de las esquinas apenas cambia.
