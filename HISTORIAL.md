@@ -3614,3 +3614,10 @@ Pendiente de decidir con el cliente (no se toca sin su visto bueno):
 - Hasta ahora el móvil se quedaba solo con el póster; ahora reproduce el corte
   vertical (`media="(max-width: 767.98px)"`). El póster (`hero-poster-40s.jpg`,
   primer fotograma del horizontal) sigue siendo la imagen LCP.
+
+## 2026-10-01 · Pie: claim plano, según referencia del cliente
+- El cliente pide el claim «más sencillo, más plano», sin halo ni efectos, y
+  manda una captura de referencia. Fuera el cristal esmerilado, los filetes de
+  luz, el halo teal y el destello cada 9 s: ahora es texto plano en blanco al
+  30 % (`--claim-color`, medido sobre la referencia) en Montserrat 700. El
+  tamaño y la partición en móvil no cambian.

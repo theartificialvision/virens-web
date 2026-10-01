@@ -69,8 +69,8 @@ export function V2Footer({ locale }: { locale: Locale }) {
           ))}
         </div>
 
-        {/* 01/10/2026 (cliente): el claim de la marca a todo el ancho, como cristal
-            esmerilado con un destello que lo cruza cada pocos segundos. Es el mismo
+        {/* 01/10/2026 (cliente): el claim de la marca a todo el ancho, plano y en
+            blanco translúcido (referencia del cliente, sin efectos). Es el mismo
             texto del hero (siempre en inglés, §29/09/2026); decorativo para lectores
             de pantalla, que ya lo leen en el hero. */}
         <div aria-hidden="true" className="footer-claim-wrap mt-16 lg:mt-20">
