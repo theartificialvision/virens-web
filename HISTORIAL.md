@@ -3656,3 +3656,15 @@ Pendiente de decidir con el cliente (no se toca sin su visto bueno):
   404, favicon, vCard, caché, navegación sin errores y envío real con adjunto
   (correo capturado: asunto, Reply-To del visitante, adjunto). La build de
   Netlify sigue pasando con las mismas 35 redirecciones.
+
+## 2026-10-01 · Tech: las fotos entran con un barrido tipo escáner
+- Cliente: fuera el círculo («gota») con el que entraban las fotos del recorrido
+  de Tech; quiere algo horizontal, como un escáner, sutil y elegante. Ahora la
+  foto se descubre de izquierda a derecha (`clip-path: inset`) y en su filo va
+  una línea de luz blanca de 2 px con una estela magenta corta (4,5 rem) que se
+  apaga al llegar. Tinte magenta inicial rebajado (0,45 → 0,2) y zoom de
+  entrada más leve (1,08 → 1,04). Mismo efecto en el visor de escritorio y en
+  las fotos de cada capítulo en móvil. Tokens `--tech-scan-*` en `globals.css`.
+- La línea se mueve con `left` y no con `transform`: el transform va por el
+  compositor, se adelanta un fotograma al `clip-path` y la línea quedaba
+  recortada (invisible). Con `prefers-reduced-motion` no hay barrido ni línea.

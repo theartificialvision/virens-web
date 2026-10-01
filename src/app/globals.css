@@ -919,7 +919,7 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
 /* Tech — «laboratorio de vanguardia», 30/09/2026 (segunda vuelta).
    Cliente: volver al magenta + azul oscuro de Tech, «alta tecnología web»,
    nada de diapositivas. Escenario azul profundo; a la izquierda un visor fijo
-   donde cada foto entra como una gota magenta que se expande y se aclara; a
+   donde cada foto entra con un barrido horizontal tipo escáner (01/10); a
    la derecha los cinco capítulos, unidos por un raíl molecular (nodos +
    enlaces) que se llena con la lectura. Sin secuestro de scroll: el visor solo
    acompaña. Rejillas y fotos sin radio ni sombra (reglas 4 y 7). */
@@ -964,12 +964,19 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   --tech-title-leading: 1.1;
   --tech-caption-spacing: 0.14em;
   --tech-index-size:  clamp(2.75rem, 2rem + 2.4vw, 4.5rem);
-  --tech-drop-time:   1400ms;
-  --tech-tint-time:   1800ms;
-  --tech-drop-end:    150%;
-  --tech-drop-ease:   cubic-bezier(0.22, 1, 0.36, 1);
-  --tech-drop-zoom:   1.08;
-  --tech-tint:        rgba(162, 25, 91, 0.45);
+  /* 01/10 (cliente): la foto entra con un barrido horizontal tipo escáner
+     (antes, gota circular). Una línea de luz fina con estela magenta corta
+     recorre la foto de izquierda a derecha y se apaga al llegar. */
+  --tech-scan-time:   1300ms;
+  --tech-tint-time:   1600ms;
+  --tech-scan-ease:   cubic-bezier(0.65, 0, 0.35, 1);
+  --tech-scan-zoom:   1.04;
+  --tech-tint:        rgba(162, 25, 91, 0.2);
+  --tech-scan-core:   rgba(255, 255, 255, 0.95);
+  --tech-scan-glow:   rgba(224, 64, 154, 0.32);
+  --tech-scan-line:   2px;
+  --tech-scan-trail:  4.5rem;
+  --tech-scan-fade:   500ms;
   --tech-bar-blur:    16px;
 }
 .tech-lab { position: relative; isolation: isolate; color: var(--tech-lab-text); background: var(--tech-lab-halo), var(--tech-lab-halo-2), var(--tech-lab-base), var(--tech-lab-bg); }
@@ -989,12 +996,11 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
    sobre la anterior; al subir, se recoge y deja ver la de debajo. */
 .tech-visor { position: sticky; top: calc(var(--v2-header) + var(--tech-visor-gap)); align-self: start; display: flex; flex-direction: column; gap: var(--tech-copy-gap); margin-top: var(--tech-step-pad); }
 .tech-visor__frame { position: relative; aspect-ratio: 4 / 3; max-height: calc(100svh - var(--v2-header) - var(--tech-visor-chrome)); overflow: hidden; background: var(--color-blue); }
-.tech-visor__layer { position: absolute; inset: 0; --tech-drop-origin: 18% 82%; }
-.tech-visor__layer:nth-child(even) { --tech-drop-origin: 82% 18%; }
+.tech-visor__layer { position: absolute; inset: 0; }
 .tech-visor__image { object-fit: cover; }
 .tech-visor__layer::after { content: ""; position: absolute; inset: 0; background: var(--tech-tint); opacity: 0; pointer-events: none; }
-.tech-visor__layer:not([data-open]) { clip-path: circle(0% at var(--tech-drop-origin)); }
-.tech-visor__layer[data-open] { clip-path: circle(var(--tech-drop-end) at var(--tech-drop-origin)); }
+.tech-visor__layer:not([data-open]) { clip-path: inset(0 100% 0 0); }
+.tech-visor__layer[data-open] { clip-path: inset(0); }
 .tech-visor__index { display: flex; flex-direction: column; gap: var(--tech-small-gap); }
 .tech-visor__readout { display: flex; align-items: baseline; gap: var(--tech-copy-gap); }
 .tech-visor__count { font-family: var(--font-mono); font-size: var(--text-micro); letter-spacing: var(--tech-caption-spacing); color: var(--tech-lab-accent); font-variant-numeric: tabular-nums; }
@@ -1032,13 +1038,27 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
 .tech-step__media img { object-fit: cover; }
 
 @media (prefers-reduced-motion: no-preference) {
-  .tech-visor__layer { transition: clip-path var(--tech-drop-time) var(--tech-drop-ease); }
-  .tech-visor__image { transform: scale(var(--tech-drop-zoom)); transition: transform var(--tech-tint-time) var(--tech-drop-ease); }
+  .tech-visor__layer { transition: clip-path var(--tech-scan-time) var(--tech-scan-ease); }
+  .tech-visor__image { transform: scale(var(--tech-scan-zoom)); transition: transform var(--tech-tint-time) var(--tech-scan-ease); }
   .tech-visor__layer[data-open] .tech-visor__image { transform: none; }
-  .tech-visor__layer::after { transition: opacity var(--tech-tint-time) var(--tech-drop-ease); }
+  .tech-visor__layer::after { transition: opacity var(--tech-tint-time) var(--tech-scan-ease); }
   .tech-visor__layer:not([data-open])::after { opacity: 1; transition-duration: 0s; }
-  .tech-step__media { clip-path: circle(var(--tech-drop-end) at 18% 82%); transition: clip-path var(--tech-drop-time) var(--tech-drop-ease); }
-  .reveal[data-visible='false'] .tech-step__media { clip-path: circle(0% at 18% 82%); }
+  .tech-step__media { clip-path: inset(0); transition: clip-path var(--tech-scan-time) var(--tech-scan-ease); }
+  .reveal[data-visible='false'] .tech-step__media { clip-path: inset(0 100% 0 0); }
+
+  /* Línea del escáner: una capa del ancho de la foto con la luz en su borde
+     derecho. Se desplaza con la misma curva y duración que el recorte, así
+     que la línea va siempre en el filo de la foto que entra; al llegar se
+     apaga. Se mueve con `left` y no con `transform` a propósito: el
+     transform va por el compositor y se adelanta un fotograma al clip-path,
+     que entonces recorta la línea. */
+  .tech-visor__layer::before, .tech-step__media::before {
+    content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 100%; z-index: 1; pointer-events: none;
+    background: linear-gradient(to left, var(--tech-scan-core) 0 var(--tech-scan-line), var(--tech-scan-glow) var(--tech-scan-line), transparent var(--tech-scan-trail));
+    transition: left var(--tech-scan-time) var(--tech-scan-ease), opacity var(--tech-scan-fade) ease var(--tech-scan-time);
+  }
+  .tech-visor__layer[data-open]::before, .tech-step__media::before { opacity: 0; }
+  .tech-visor__layer:not([data-open])::before, .reveal[data-visible='false'] .tech-step__media::before { left: -100%; opacity: 1; transition-duration: var(--tech-scan-time), 0s; transition-delay: 0s; }
 }
 
 @media (max-width: 900px) {

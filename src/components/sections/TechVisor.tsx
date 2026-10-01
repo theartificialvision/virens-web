@@ -8,9 +8,9 @@ const pad = (n: number) => String(n).padStart(2, '0');
  * Visor fijo del recorrido de Tech (30/09/2026, «laboratorio de vanguardia»).
  *
  * Escritorio: las cinco fotos apiladas; la del capítulo en curso y las
- * anteriores están abiertas, así que al avanzar la nueva se derrama sobre la
- * previa como una gota magenta que se expande y se aclara (CSS, §globals
- * «Tech»). Debajo, lectura «02 / 05 · Galénica» y cinco tramos que son el
+ * anteriores están abiertas, así que al avanzar la nueva entra sobre la
+ * previa con un barrido horizontal tipo escáner: una línea de luz fina la
+ * descubre de izquierda a derecha (CSS, §globals «Tech», 01/10/2026). Debajo, lectura «02 / 05 · Galénica» y cinco tramos que son el
  * índice navegable (enlaces a las anclas de siempre); cada tramo se llena
  * en continuo con la lectura (`--tech-progress`), como un instrumento.
  *

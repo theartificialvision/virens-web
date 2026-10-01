@@ -161,7 +161,7 @@ otra IA dentro). Todo está preparado en el repo:
   pie, el sitemap y las rutas; `/noticias/*` redirige a `/` y `/en/news/*` a
   `/en`. El trabajo de Muse está en `aparcado/noticias/`, fuera de la build.
 - **Tech editorial (dirección A) cerrado (30/09)**: revisado a 1440/390, con
-  revelado de foto en gota e índice móvil sin cortes.
+  revelado de foto en barrido horizontal tipo escáner (01/10) e índice móvil sin cortes.
 - **Páginas legales**: publicadas en ES/EN (`/legal/*`, `/en/legal/*`).
   Falta el email real para derechos RGPD (el texto trae «email@laempresa.com»)
   y no hay texto de política de cookies.
