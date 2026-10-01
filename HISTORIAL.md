@@ -3621,3 +3621,10 @@ Pendiente de decidir con el cliente (no se toca sin su visto bueno):
   luz, el halo teal y el destello cada 9 s: ahora es texto plano en blanco al
   30 % (`--claim-color`, medido sobre la referencia) en Montserrat 700. El
   tamaño y la partición en móvil no cambian.
+
+## 2026-10-01 · Compañía: vuelve el corte curvo de la foto del hero
+- Cliente: «antes era curvo el corte, quedaba mucho mejor». En escritorio la foto
+  vuelve a recortarse con la elipse de antes (`--company-hero-media-curve`,
+  `ellipse(76% 92% at 75% 50%)`) en lugar del borde recto con banda azul. Se
+  mantiene el ancho del 46 % del cambio de esta mañana, así que la curva no
+  vuelve a rozar el titular. Móvil sin cambios.
