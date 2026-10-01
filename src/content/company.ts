@@ -60,13 +60,13 @@ export const valueChain = [
     index: '02',
     icon: 'samples',
     title: 'Elaboración de muestras',
-    body: 'Realización de tests para conseguir el producto deseado por el cliente',
+    body: 'Realización de muestras para conseguir el producto deseado por el cliente',
   },
   {
     index: '03',
     icon: 'manufacturing',
     title: 'Fabricación y envasado',
-    body: 'Transformación de la idea inicial en producto',
+    body: 'Transformación de la idea en producto acabado',
   },
   {
     index: '04',
@@ -115,6 +115,8 @@ export const timeline: TimelineEntry[] = [
   { year: '2015', text: 'Certificación ECO y Veterinaria. Expansión internacional en más de 20 países' },
   { year: '2021', text: 'Ampliación de las instalaciones, aumento de capacidad productiva y almacén' },
   { year: '2023', text: 'Creación de Virens Tech, ampliación de I+D y nuevo laboratorio de calidad' },
-  // La maqueta entregada repite literalmente el hito de 2023 en 2026.
-  { year: '2026', text: 'Creación de Virens Tech, ampliación de I+D y nuevo laboratorio de calidad' },
+  // 01/10/2026 (cliente): último hito «FDA-GMP Elevando la excelencia.» y su
+  // año es siempre el año en curso (en 2027 pondrá 2027). `year` es solo el
+  // valor de reserva al compilar; el navegador lo sustituye por el año real.
+  { year: String(new Date().getFullYear()), currentYear: true, text: 'FDA-GMP Elevando la excelencia.' },
 ];

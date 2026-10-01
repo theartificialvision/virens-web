@@ -49,8 +49,11 @@ export interface Certification {
 }
 
 export interface TimelineEntry {
+  /** Con `currentYear`, solo es el valor de reserva (año de compilación). */
   year: string;
   text: string;
+  /** El año mostrado es siempre el año en curso, se calcula en el navegador. */
+  currentYear?: boolean;
 }
 
 /** Modelo del isotipo 3D: A es azul->magenta (Tech), B azul->turquesa (Labs). */

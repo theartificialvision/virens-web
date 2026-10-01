@@ -3561,3 +3561,18 @@ Pendiente de decidir con el cliente (no se toca sin su visto bueno):
   30/09/2026 en «Ciencia, desarrollo y fabricación» y vuelven las cinco fotos
   fijas de cada fase (revierte `ace2759`: `LabClip.tsx`, `public/video/lab/` y
   las rutas `video` de `v2Laboratory`). El vídeo del hero no se toca.
+
+## 2026-10-01 · Compañía: hero sin recorte, textos del proceso y último hito de la historia
+- Hero (escritorio): la foto de los frascos ya no se recorta con una elipse (que
+  «mordía» el frasco de la izquierda y rozaba el titular); ocupa el 46 % de la
+  derecha con borde recto (`--company-hero-media-w`). En móvil no cambia.
+- «Qué hacemos» (cliente, texto nuevo): 02 «Realización de muestras para
+  conseguir el producto deseado por el cliente»; 03 «Transformación de la idea
+  en producto acabado» (los títulos no cambian). EN ajustado en consecuencia
+  (`[EN]`, pendiente de revisión).
+- Línea del tiempo: el último hito deja de repetir el texto de 2023 y dice
+  «FDA-GMP Elevando la excelencia.» (EN: «FDA-GMP Elevating excellence.»). Su
+  año es siempre el año en curso (`currentYear` en `TimelineEntry`): se calcula en
+  el navegador con `useSyncExternalStore`, así que el 01/01/2027 mostrará 2027
+  sin tocar nada. El HTML estático lleva el año de la última compilación como
+  valor de reserva. Probado adelantando el reloj a 2027.

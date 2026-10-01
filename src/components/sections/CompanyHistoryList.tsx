@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, type CSSProperties } from 'react';
+import { useEffect, useRef, useSyncExternalStore, type CSSProperties } from 'react';
 import type { TimelineEntry } from '@/lib/types';
 import { usePrefersReducedMotion } from '@/lib/useReducedMotion';
 
@@ -14,6 +14,12 @@ const DESKTOP_START = 0.85;
 const DESKTOP_DURATION = 2800;
 
 const clamp = (v: number) => Math.min(1, Math.max(0, v));
+
+/** El año en curso no cambia mientras la página está abierta: sin suscripción. */
+const subscribeNever = () => () => {};
+const readYear = () => String(new Date().getFullYear());
+/** En el servidor no hay año de navegador: se usa el de reserva de cada hito. */
+const serverYear = () => '';
 
 /**
  * Hitos de la historia (27/09/2026, cliente: «que con el desplazamiento se
@@ -31,6 +37,9 @@ const clamp = (v: number) => Math.min(1, Math.max(0, v));
 export function CompanyHistoryList({ entries }: { entries: TimelineEntry[] }) {
   const listRef = useRef<HTMLDivElement>(null);
   const reduced = usePrefersReducedMotion();
+  // 01/10/2026 (cliente): el último hito muestra siempre el año actual. Con
+  // `useSyncExternalStore` la hidratación no choca con el HTML del servidor.
+  const thisYear = useSyncExternalStore(subscribeNever, readYear, serverYear);
 
   useEffect(() => {
     const list = listRef.current;
@@ -102,13 +111,13 @@ export function CompanyHistoryList({ entries }: { entries: TimelineEntry[] }) {
       </span>
       <ol className="company-history-list">
       {entries.map((entry, index) => (
-        <li key={`${entry.year}-${index}`} className="company-history-item" style={{ '--i': index } as CSSProperties}>
+        <li key={entry.currentYear ? 'current-year' : `${entry.year}-${index}`} className="company-history-item" style={{ '--i': index } as CSSProperties}>
           <p className="company-history-copy text-[length:var(--text-small)] font-medium leading-snug xl:text-[length:var(--text-label)] xl:font-semibold xl:leading-[1.35]">{entry.text}</p>
           <span className="company-history-node text-[length:var(--text-small)] font-semibold">
             <svg aria-hidden viewBox="0 0 100 100" className="company-history-ring">
               <circle cx="50" cy="50" r="48.5" pathLength={1} />
             </svg>
-            <span className="company-history-year">{entry.year}</span>
+            <span className="company-history-year">{entry.currentYear && thisYear ? thisYear : entry.year}</span>
           </span>
         </li>
       ))}

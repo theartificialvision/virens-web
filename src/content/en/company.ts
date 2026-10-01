@@ -49,8 +49,8 @@ export const companySections = {
 
 export const valueChain = [
   { index: '01', icon: 'development', title: 'Development and formulation', body: 'Preparation of the formula according to established guidelines' }, // [EN]
-  { index: '02', icon: 'samples', title: 'Preparation of samples', body: 'Carrying out tests to achieve the product desired' }, // [EN]
-  { index: '03', icon: 'manufacturing', title: 'Manufacturing and packaging', body: 'Transformation of the initial idea into product' }, // [EN]
+  { index: '02', icon: 'samples', title: 'Preparation of samples', body: 'Making samples to achieve the product desired by the client' }, // [EN]
+  { index: '03', icon: 'manufacturing', title: 'Manufacturing and packaging', body: 'Transformation of the idea into a finished product' }, // [EN]
   { index: '04', icon: 'conditioning', title: 'Conditioning', body: 'Primary and secondary conditioning' }, // [EN]
   { index: '05', icon: 'control', title: 'Quality control', body: 'Definition and monitoring of protocols to ensure product quality and processes' }, // [EN]
 ] as const satisfies Loosen<typeof es.valueChain>;
@@ -85,6 +85,6 @@ export const timeline: TimelineEntry[] = [
   { year: '2015', text: 'Eco and Veterinary Certification. International expansion in more than 20 countries' },
   { year: '2021', text: 'Enlargement of facilities, increase in production and warehouse capacity' },
   { year: '2023', text: 'Creation of Virens Tech, expansion of R&D and new quality laboratory' },
-  // Igual que en español: la maqueta repite el hito de 2023 en 2026 (pendiente del cliente).
-  { year: '2026', text: 'Creation of Virens Tech, expansion of R&D and new quality laboratory' },
+  // Igual que en español: el año es siempre el año en curso.
+  { year: String(new Date().getFullYear()), currentYear: true, text: 'FDA-GMP Elevating excellence.' }, // [EN]
 ];
