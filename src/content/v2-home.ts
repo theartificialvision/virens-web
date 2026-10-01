@@ -258,7 +258,6 @@ export const v2FooterAddress = {
   locality: '08740 Sant Andreu de la Barca (Barcelona) SPAIN',
   phoneLabel: 'Telf.',
   phone: '+34 93 682 89 72',
-  web: 'www.lvirens.com',
 } as const;
 
 /** Reescritura de los servicios existentes según la maqueta aprobada (28/09/2026). */

@@ -3576,3 +3576,13 @@ Pendiente de decidir con el cliente (no se toca sin su visto bueno):
   el navegador con `useSyncExternalStore`, así que el 01/01/2027 mostrará 2027
   sin tocar nada. El HTML estático lleva el año de la última compilación como
   valor de reserva. Probado adelantando el reloj a 2027.
+
+## 2026-10-01 · Pie: nuevo layout de escritorio y fuera la web
+- Se quita «www.lvirens.com» de la dirección (ya se está en la web): sale del
+  pie y del contenido (`v2FooterAddress.web`, ES y EN). Queda «Telf. +34 93 682 89 72».
+- Layout de escritorio rehecho sobre cinco columnas iguales: fila 1, logo +
+  Virens Labs / Virens Tech / Empresa / Documentación (el logo a la altura de
+  los rótulos); fila 2, bajo un filete, Producción y Almacén / Oficina en las dos
+  primeras columnas y localidad + teléfono en la tercera, sobre las mismas
+  columnas que los enlaces. Antes la dirección iba comprimida bajo el logo y
+  partía líneas. Móvil sin cambios (solo desaparece la web).

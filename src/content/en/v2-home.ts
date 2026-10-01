@@ -202,7 +202,6 @@ export const v2FooterAddress = {
   locality: '08740 Sant Andreu de la Barca (Barcelona) SPAIN',
   phoneLabel: 'Tel.', // [TR]
   phone: '+34 93 682 89 72',
-  web: 'www.lvirens.com',
 } as const satisfies Loosen<typeof es.v2FooterAddress>;
 
 /** [TR] Traducción de la maqueta aprobada; pendiente de revisión editorial. */

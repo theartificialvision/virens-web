@@ -16,22 +16,25 @@ export function V2Footer({ locale }: { locale: Locale }) {
   return (
     <footer className="bg-blue text-white">
       <div className="mx-auto w-full max-w-[var(--container-max)] px-5 py-16 md:px-8 lg:px-12 lg:py-20 2xl:px-20">
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-3">
+        {/* Escritorio (01/10/2026, cliente: «cambia todo el layout»): cinco columnas
+            iguales. Fila 1: logo + las cuatro listas de enlaces, con el logo en la
+            primera columna. Fila 2, bajo un filete: la dirección, con producción y
+            almacén en las dos primeras columnas y localidad/teléfono en la tercera,
+            todo sobre las mismas columnas que los enlaces. En móvil no cambia: logo,
+            dirección y listas apilados (`lg:contents` suelta a los hijos en la rejilla). */}
+        <div className="grid gap-12 lg:grid-cols-5 lg:gap-x-10 lg:gap-y-14">
+          <div className="lg:contents">
             {/* 29/09/2026 (cliente): solo el logo de Labs; fuera el de Tech. */}
-            <div className="flex items-end gap-5">
+            <div className="flex items-end gap-5 lg:col-start-1 lg:row-start-1 lg:items-start">
               <Lockup division="labs" />
             </div>
-            {/* 30/09/2026 (cliente): dirección de la firma corporativa —
-                producción y almacén/oficina en dos bloques, localidad y teléfono/web debajo. */}
-            {/* Alineación con las columnas (30/09/2026): mismo interlineado que los enlaces
-                (12 px × 1,7) y arranque a la altura de su segunda fila (rótulo + margen
-                + fila 1 + separación = 40 px bajo el logo); bloques separados 12 px
-                como los ítems de las listas. */}
-            <address className="mt-8 flex flex-col gap-3 not-italic text-[length:var(--text-note)] leading-[1.7] text-white/60 lg:mt-10">
-              <div className="grid grid-cols-2 gap-x-4">
+            {/* 30/09/2026 (cliente): dirección de la firma corporativa — producción y
+                almacén/oficina, localidad y teléfono. 01/10/2026: fuera la web
+                (ya se está en ella). */}
+            <address className="mt-8 flex flex-col gap-3 not-italic text-[length:var(--text-note)] leading-[1.7] text-white/60 lg:col-span-5 lg:row-start-2 lg:mt-0 lg:grid lg:grid-cols-5 lg:gap-x-10 lg:gap-y-0 lg:border-t lg:border-white/15 lg:pt-10">
+              <div className="grid grid-cols-2 gap-x-4 lg:contents">
                 {address.sites.map((place, index) => (
-                  <p key={place.label} className={index > 0 ? 'border-l border-white/15 pl-4' : undefined}>
+                  <p key={place.label} className={index > 0 ? 'border-l border-white/15 pl-4 lg:border-l-0 lg:pl-0' : undefined}>
                     <strong className="block font-bold text-white/85">{place.label}</strong>
                     {place.lines.map((line) => (
                       <span key={line} className="block">{line}</span>
@@ -39,18 +42,18 @@ export function V2Footer({ locale }: { locale: Locale }) {
                   </p>
                 ))}
               </div>
-              <p>{address.locality}</p>
-              <p>
-                {address.phoneLabel}{' '}
-                <a href={`tel:${site.contact.phone}`} className="transition-colors duration-200 hover:text-white">{address.phone}</a>
-                {' / '}
-                <a href={site.url} className="font-semibold text-white/85 transition-colors duration-200 hover:text-white">{address.web}</a>
-              </p>
+              <div className="flex flex-col gap-3">
+                <p>{address.locality}</p>
+                <p>
+                  {address.phoneLabel}{' '}
+                  <a href={`tel:${site.contact.phone}`} className="transition-colors duration-200 hover:text-white">{address.phone}</a>
+                </p>
+              </div>
             </address>
           </div>
 
           {v2FooterNav.map((col) => (
-            <nav key={col.title} className="lg:col-span-2" aria-label={col.title}>
+            <nav key={col.title} className="lg:row-start-1" aria-label={col.title}>
               <p className="text-[length:var(--text-note)] font-bold uppercase tracking-[0.2em]">{col.title}</p>
               <ul className="mt-5 space-y-3 text-[length:var(--text-note)] text-white/70">
                 {col.items.map((item) => (
