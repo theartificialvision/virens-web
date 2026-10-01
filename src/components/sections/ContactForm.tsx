@@ -17,8 +17,7 @@ import type { Locale } from '@/lib/i18n';
  *
  * Envío (01/10/2026): `useContactSubmit` manda el formulario al PHP del
  * hosting Apache (`static-host/api/contacto.php`), que lo reenvía por email.
- * El email de destino está pendiente del cliente (ver `site.ts`); mientras
- * falte, el PHP responde error y aquí se muestra el aviso con el email general.
+ * Si el envío falla, aquí se muestra el aviso con el email general.
  *
  * Las etiquetas van ocultas visualmente, no ausentes: el mockup solo dibuja el
  * placeholder, pero un placeholder no es una etiqueta —desaparece al escribir

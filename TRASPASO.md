@@ -140,14 +140,13 @@ otra IA dentro). Todo está preparado en el repo:
   [`docs/publicar-cdmon.md`](docs/publicar-cdmon.md). Netlify no cambia.
 - Las 301 viven en `redirects.mjs` (una sola lista para Next y para el `.htaccess`).
 - El formulario de Contacto ya envía (`src/lib/useContactSubmit.ts` →
-  `static-host/api/contacto.php`). **Falta el email de destino** (constante
-  `TO` del PHP), que el cliente tiene que dar y es distinto de csp@lvirens.com.
+  `static-host/api/contacto.php`). Destino: **adg@lvirens.com** (constante
+  `TO` del PHP; cliente, 01/10/2026), distinto del general csp@lvirens.com.
 - Favicon: `src/app/icon.svg`, `apple-icon.png` y `favicon.ico`, sacados del
   isotipo de color (`public/img/v2/logo/virens-isotipo.svg`).
 
 ## Pendiente / preguntas abiertas
 
-- **Email de destino del formulario** (cliente) → `static-host/api/contacto.php`.
 - **`/uso-de-cookies` redirige a `/legal/politica-de-cookies`, que no existe**
   (no hay texto de cookies): hoy acaba en la 404, también en Netlify.
 

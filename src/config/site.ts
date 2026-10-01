@@ -49,7 +49,6 @@ export const site = {
     'Revisión del claim "FDA APPROVED"',
     'Número de países de exportación actualizado (el dato "+20" es de 2015)',
     'Dirección postal definitiva (48-A / 48B)',
-    'Email que recibe el formulario de Contacto (distinto de csp@lvirens.com); se pone en static-host/api/contacto.php',
   ],
 } as const;
 

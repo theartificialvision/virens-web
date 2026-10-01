@@ -7,14 +7,14 @@
  * Responde JSON: 200 si se ha enviado, 4xx/5xx si no; la web muestra el aviso.
  *
  * ─── CONFIGURACIÓN ───────────────────────────────────────────────────────
- * TO:   email que recibe los mensajes. PENDIENTE DEL CLIENTE (distinto de
- *       csp@lvirens.com). Mientras esté vacío, el formulario responde error
- *       y la web invita a escribir a csp@lvirens.com.
+ * TO:   email que recibe los mensajes: adg@lvirens.com (cliente, 01/10/2026;
+ *       distinto del general csp@lvirens.com del pie y Contacto). Si se
+ *       vacía, el formulario responde error e invita a escribir a csp@.
  * FROM: remitente técnico. cdmon solo entrega correo cuyo remitente es un
  *       buzón real del dominio; si se deja vacío se usa el mismo TO. La
  *       respuesta va siempre al email de quien escribe (Reply-To).
  */
-const TO = '';
+const TO = 'adg@lvirens.com';
 const FROM = '';
 const MAX_BYTES = 10 * 1024 * 1024; // el mismo tope que promete el formulario
 

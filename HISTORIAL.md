@@ -3668,3 +3668,9 @@ Pendiente de decidir con el cliente (no se toca sin su visto bueno):
 - La línea se mueve con `left` y no con `transform`: el transform va por el
   compositor, se adelanta un fotograma al `clip-path` y la línea quedaba
   recortada (invisible). Con `prefers-reduced-motion` no hay barrido ni línea.
+
+## 2026-10-01 · Formulario de Contacto: destino adg@lvirens.com
+- El cliente da el email que recibe el formulario: adg@lvirens.com (distinto del
+  general csp@lvirens.com). Puesto en `TO` de `static-host/api/contacto.php` y
+  retirado de `site.pendingClientConfirmation`. `FROM` vacío: el correo sale
+  como adg@lvirens.com con Reply-To de quien escribe.

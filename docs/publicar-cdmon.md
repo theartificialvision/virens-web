@@ -28,8 +28,8 @@ Deja `virens-web-estatica.zip` en la raíz del repo (no se sube a GitHub). Lleva
 
 ## Antes de publicar en lvirens.com
 
-- **Email del formulario** (pendiente del cliente): editar `static-host/api/contacto.php`,
-  constante `TO`. Si cdmon exige que el remitente sea un buzón del dominio,
+- **Email del formulario:** adg@lvirens.com (constante `TO` de
+  `static-host/api/contacto.php`). Si cdmon exige que el remitente sea un buzón del dominio,
   poner ese buzón en `FROM` (si se deja vacío se usa el mismo `TO`). Sin `TO`
   el formulario responde error y la web invita a escribir a csp@lvirens.com.
 - **Indexación:** por defecto `robots.txt` bloquea buscadores (`site.ts`,
