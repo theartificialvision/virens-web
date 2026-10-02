@@ -24,7 +24,7 @@ mal. Esta página es el resumen rápido.
 ## Preparar el Mac (una sola vez)
 
 Se trabaja con la **app de Claude para Mac** (pestaña **Code**, sesión local).
-Paso a paso, con capturas mentales, en [`GUIA-PRINCIPIANTES.md`](GUIA-PRINCIPIANTES.md) §3:
+Paso a paso en [`GUIA-PRINCIPIANTES.md`](GUIA-PRINCIPIANTES.md) §3:
 
 1. Instalar **Node.js** (LTS), **GitHub Desktop** y la **app de Claude**.
 2. Aceptar la invitación de GitHub a `theartificialvision/virens-web`.
