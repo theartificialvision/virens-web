@@ -34,71 +34,71 @@ Webs:
 1. **GitHub**: crea una cuenta gratis en https://github.com/signup.
    Pásale tu usuario a Ignacio: te invitará al proyecto y te llegará un correo
    → **Accept invitation**.
-2. **Claude**: tu cuenta (con plan que incluya Claude Code).
+2. **Claude**: tu cuenta (con un plan que incluya Claude Code).
 
 No necesitas cuentas de cdmon, Netlify ni FTP: eso ya está conectado y
 funciona solo.
 
 ---
 
-## 3. Dos formas de trabajar — elige una
+## 3. Preparar el Mac (una sola vez, ~20 minutos)
 
-### Opción A · En el Mac del laboratorio con VS Code (recomendada)
+Se trabaja desde la **app de Claude para Mac**, en su pestaña **Code**: ahí
+Claude trabaja sobre la carpeta del proyecto en tu Mac y te enseña la web
+mientras la cambia. Necesitas tres programas:
 
-Ves la web en tu Mac mientras cambias cosas, al instante.
+1. **Node.js** — el motor que hace funcionar la web en tu Mac.
+   https://nodejs.org → botón «LTS» → instalar como cualquier app.
+2. **GitHub Desktop** — la forma visual de conectar tu Mac con GitHub.
+   https://desktop.github.com → descargar → arrastrar a Aplicaciones.
+3. **App de Claude** — https://claude.ai/download, inicia sesión con tu cuenta.
 
-**Instalar (una vez):**
-1. **Node.js**: https://nodejs.org → botón «LTS» → instalar como cualquier app.
-2. **VS Code**: https://code.visualstudio.com → descargar → arrastrar a Aplicaciones.
-3. Abre VS Code. En la barra izquierda, icono de ramas (**Control de código**)
-   → **Clonar repositorio** → **Clonar desde GitHub**.
-4. Te pide **iniciar sesión en GitHub**: se abre el navegador → **Authorize**.
-   *Esta es «la conexión con GitHub» en esta opción: no hay que configurar
-   conectores; VS Code guarda el permiso y ya está.*
-5. Elige `theartificialvision/virens-web` y una carpeta donde guardarlo
-   (por ejemplo Documentos). Cuando pregunte, **Abrir**.
-6. Abajo a la izquierda pone el nombre de la rama. Haz clic y elige **`v2`**
-   (si sale `origin/v2`, esa).
-7. Aparece un aviso de **extensiones recomendadas** → **Instalar todas**.
-   Una es **Claude Code**: ábrela (icono de Claude en la barra) e inicia sesión
-   con tu cuenta de Claude.
+### Conectar con GitHub y traer el proyecto (GitHub Desktop)
 
-**Comprobar que todo va:** menú **Terminal → Ejecutar tarea… → «Arrancar web
-(localhost:3000)»**. La primera vez tarda un poco. Abre http://localhost:3000
-en el navegador: es la web, en tu Mac.
+*Esto es «conectar GitHub»: se hace una vez y queda guardado.*
 
-### Opción B · Desde el navegador (claude.ai/code), sin instalar nada
+1. Abre **GitHub Desktop** → **Sign in to GitHub.com** → se abre el navegador
+   → **Authorize**. Si pregunta nombre y email para «Git», pon los tuyos.
+2. **File → Clone Repository…** → pestaña **GitHub.com** → elige
+   `theartificialvision/virens-web` (aparece cuando hayas aceptado la
+   invitación) → como carpeta, por ejemplo `Documentos/virens-web` → **Clone**.
+3. Arriba, en **Current Branch**, elige **`v2`**. Es la rama de trabajo.
 
-Útil desde cualquier ordenador. No ves la web en local: ves los cambios en la
-web de pruebas (Netlify) 1-2 minutos después.
+### Abrir el proyecto en Claude
 
-1. Entra en https://claude.ai/code con tu cuenta.
-2. **Conectar GitHub**: ve a https://claude.ai/connect-github y autoriza con tu
-   cuenta de GitHub. *Esta es «la conexión de conectores» en esta opción.*
-   La app de Claude ya está instalada en el repositorio por Ignacio; si al
-   empezar no te aparece `virens-web`, pídele que revise el acceso.
-3. Nueva sesión → elige el repositorio `theartificialvision/virens-web` y la
-   rama **`v2`**.
+1. App de Claude → pestaña **Code**.
+2. Elige trabajar en **tu Mac** (sesión local) y selecciona la carpeta
+   `Documentos/virens-web`.
+3. Claude lee solo las reglas del proyecto (`CLAUDE.md`). Para comprobar que
+   todo va, pídele: **«arranca la web y enséñamela»**. La primera vez instala
+   lo necesario (tarda unos minutos) y te la muestra en localhost:3000.
+
+Si en algún paso pide permiso para ejecutar algo («Allow»), es normal: Claude
+pide permiso antes de hacer cosas en tu Mac. Si dudas, pregúntale qué hace ese
+comando antes de aceptarlo.
 
 ---
 
 ## 4. El día a día (5 pasos)
 
-1. **Traer lo último** (por si alguien cambió algo):
-   *Terminal → Ejecutar tarea → «Traer lo último de GitHub (v2)»*.
-   O dile a Claude: «trae lo último de v2».
-2. **Pedir el cambio a Claude.** Sé concreto y visual, como con un desarrollador:
+Todo se pide a Claude en la pestaña Code, en lenguaje normal.
+
+1. **Traer lo último** (por si alguien cambió algo): «trae lo último de v2».
+2. **Pedir el cambio.** Sé concreto y visual, como con un desarrollador:
    - «En la home, el titular del bloque de capacidades: súbelo un tamaño.»
    - «Cambia esta foto (la arrastras al chat) por la de Galénica en Tech.»
    - «El espacio entre certificaciones y el CTA me parece excesivo en móvil.»
    - Puedes mandarle **capturas** con flechas o notas: las entiende.
-3. **Mirarlo** en http://localhost:3000 (opción A) o en Netlify (opción B).
-   Revisa escritorio y móvil (en el navegador: ⌥⌘I → icono de móvil).
-4. **Guardar en pruebas:** dile «guarda y sube a v2». En 1-2 minutos está en
+3. **Mirarlo:** «enséñame cómo queda en escritorio y en móvil». También puedes
+   abrir http://localhost:3000 en tu navegador mientras la web está arrancada.
+4. **Guardar en pruebas:** «guarda y sube a v2». En 1-2 minutos está en
    https://virenslab.netlify.app — enséñaselo a quien tenga que aprobarlo.
-5. **Publicar en lvirens.com** (solo cuando esté aprobado): dile
+5. **Publicar en lvirens.com** (solo cuando esté aprobado):
    **«publica en lvirens.com»**. Claude lo publica y te confirma cuando esté.
-   (También: *Terminal → Ejecutar tarea → «Publicar en lvirens.com»*.)
+
+> Si alguna vez Claude dice que no puede subir a GitHub (permiso o
+> contraseña), abre **GitHub Desktop**: verás los cambios guardados y un botón
+> **Push origin** arriba. Púlsalo y listo.
 
 ---
 
@@ -110,8 +110,8 @@ web de pruebas (Netlify) 1-2 minutos después.
   Mientras no publiques, lvirens.com no se entera.
 - **Ya publicaste y está mal:** «vuelve lvirens.com a la versión anterior
   y publica».
-- **VS Code muestra textos raros en rojo en la terminal:** cópialos y pégaselos
-  a Claude tal cual. Casi siempre es un paso que falta y él te lo dice.
+- **Ves mensajes raros en rojo:** pídele a Claude que te explique qué pasa
+  en palabras sencillas. Casi siempre es un paso que falta y él te lo dice.
 - **Duda de diseño o de datos** (cifras, certificados, años): Claude no se los
   inventa; te preguntará. Es a propósito.
 
@@ -148,6 +148,6 @@ Pídele a Claude, literalmente:
 Y después un cambio pequeño de práctica, sin publicar:
 
 > Cambia el color del botón «Contactar ahora» a otro azul de la paleta,
-> enséñamelo en localhost y luego deshazlo.
+> enséñamelo y luego deshazlo.
 
 Con eso ya has hecho el ciclo completo.

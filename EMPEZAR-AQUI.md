@@ -23,37 +23,29 @@ mal. Esta página es el resumen rápido.
 
 ## Preparar el Mac (una sola vez)
 
-1. Instalar **Node.js** (versión LTS) desde https://nodejs.org.
-2. Instalar **VS Code** desde https://code.visualstudio.com.
-3. Pedir a Ignacio acceso al repositorio en GitHub (te invita como
-   colaborador a `theartificialvision/virens-web`; acepta el correo).
-4. VS Code → pestaña «Control de código» → **Clonar repositorio** →
-   `https://github.com/theartificialvision/virens-web` → elige dónde guardarla.
-   La primera vez pedirá iniciar sesión en GitHub en el navegador: acepta.
-5. Abajo a la izquierda, cambia a la rama **`v2`** (no `main`).
-6. VS Code propone extensiones recomendadas: acepta (incluye **Claude Code**).
-   Inicia sesión en Claude Code con tu cuenta.
+Se trabaja con la **app de Claude para Mac** (pestaña **Code**, sesión local).
+Paso a paso, con capturas mentales, en [`GUIA-PRINCIPIANTES.md`](GUIA-PRINCIPIANTES.md) §3:
+
+1. Instalar **Node.js** (LTS), **GitHub Desktop** y la **app de Claude**.
+2. Aceptar la invitación de GitHub a `theartificialvision/virens-web`.
+3. GitHub Desktop → iniciar sesión → **Clone Repository** → rama **`v2`**.
+4. App de Claude → **Code** → carpeta del proyecto → «arranca la web y enséñamela».
+
+(VS Code también sirve: el repo trae tareas en `.vscode/tasks.json`, incluida
+«Publicar en lvirens.com». No es necesario.)
 
 ## El día a día
 
-1. **Antes de nada, traer lo último:** menú Terminal → Ejecutar tarea →
-   «Traer lo último de GitHub (v2)».
-2. **Ver la web en el Mac:** Terminal → Ejecutar tarea → «Arrancar web
-   (localhost:3000)» y abre http://localhost:3000. Se recarga sola al cambiar
-   algo.
-3. **Pedir cambios a Claude Code** (panel de Claude en VS Code). Ejemplos:
-   - «Cambia el titular de la home por …»
-   - «Sustituye la foto de Galénica por este archivo» (arrástralo al chat)
-   - «Haz el espacio entre secciones un poco más grande»
-   Claude conoce las reglas (colores, tipografía, textos fuera del código,
-   accesibilidad) porque las lee de `CLAUDE.md` al empezar.
-4. **Guardar y ver en pruebas:** dile a Claude «guarda y sube a v2», o en
-   «Control de código» escribe un mensaje → Commit → Sync. En 1-2 min está en
-   https://virenslab.netlify.app.
-5. **Publicar en lvirens.com** (solo cuando lo de pruebas esté bien): dile a
-   Claude «publica en lvirens.com», o Terminal → Ejecutar tarea → «Publicar en
-   lvirens.com». Se ve el progreso en GitHub → pestaña **Actions** →
-   «Publicar en cdmon» (✅ = publicado).
+Todo se pide a Claude en la pestaña Code:
+
+1. «Trae lo último de v2».
+2. Pedir el cambio (texto, foto, espacio, color…), mejor con capturas.
+3. «Enséñame cómo queda en escritorio y en móvil».
+4. «Guarda y sube a v2» → en 1-2 min en https://virenslab.netlify.app.
+5. «Publica en lvirens.com» (solo cuando esté aprobado) → GitHub lo sube a
+   cdmon en ~1 min; se ve en GitHub → **Actions** → «Publicar en cdmon».
+
+Si Claude no puede subir a GitHub, GitHub Desktop → **Push origin**.
 
 ## Dónde se cambia cada cosa (para orientarte, Claude ya lo sabe)
 

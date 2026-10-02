@@ -3736,3 +3736,6 @@ Pendiente de decidir con el cliente (no se toca sin su visto bueno):
   formas de conectar GitHub (VS Code en el Mac o claude.ai/code + connect-github),
   día a día, qué hacer si algo sale mal y ejercicio del primer día. Enlazada
   desde `EMPEZAR-AQUI.md` y `CLAUDE.md`.
+- Ajuste: el diseñador trabaja con la app de Claude para Mac (pestaña Code,
+  sesión local) + GitHub Desktop para iniciar sesión y clonar; VS Code queda
+  como opción. Guías reescritas en ese sentido.
