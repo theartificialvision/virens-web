@@ -3704,3 +3704,9 @@ Pendiente de decidir con el cliente (no se toca sin su visto bueno):
   estática y subida FTP incremental a `web/` (SamKirkland/FTP-Deploy-Action).
   `v2` sigue siendo Netlify. Pendiente: que el cliente cargue los tres secretos
   FTP y crear la rama `produccion`.
+
+## 2026-10-02 · Workflow de cdmon: FTPS
+- Primera ejecución (rama `produccion` creada por el cliente): login y build
+  bien, pero cdmon cortó el canal de datos (`ECONNRESET`) al crear `_next/`.
+  Se pasa a FTPS explícito (`protocol: ftps`, `security: loose` por conectar
+  por IP). La web de cdmon no se tocó: sigue la subida manual del 01-02/10.

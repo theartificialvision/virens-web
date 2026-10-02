@@ -135,6 +135,14 @@ otra IA dentro). Todo está preparado en el repo:
 
 ## Web estática para cdmon (desde el 01/10/2026)
 
+- **PUBLICADA: lvirens.com ya es esta web** (estática en cdmon, carpeta `web/`,
+  subida a mano el 01-02/10/2026). El WordPress anterior está guardado en
+  cdmon en `backup_db/oldvirens`.
+- **Publicación automática:** push a la rama `produccion` → workflow
+  `.github/workflows/publicar-cdmon.yml` (FTPS incremental; secretos
+  `CDMON_FTP_*` ya cargados en GitHub). `v2` → Netlify (pruebas). Llevar
+  `v2` a `produccion` es publicar en la web real: solo cuando el cliente lo pida.
+
 - `npm run build:static` genera `virens-web-estatica.zip` (HTML estático +
   `.htaccess` + PHP del formulario) para subir a cdmon (Apache). Guía completa:
   [`docs/publicar-cdmon.md`](docs/publicar-cdmon.md). Netlify no cambia.

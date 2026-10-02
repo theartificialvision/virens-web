@@ -38,5 +38,11 @@ jobs:
           server: ${{ secrets.CDMON_FTP_SERVER }}
           username: ${{ secrets.CDMON_FTP_USER }}
           password: ${{ secrets.CDMON_FTP_PASSWORD }}
+          # 02/10/2026: con FTP plano cdmon cortaba el canal de datos
+          # (ECONNRESET al crear la primera carpeta). FTPS explícito;
+          # `loose` porque se conecta por IP y el certificado es del dominio.
+          protocol: ftps
+          security: loose
+          timeout: 120000
           local-dir: ./out/
           server-dir: ./web/
