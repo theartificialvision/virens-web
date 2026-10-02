@@ -5,7 +5,12 @@
  * 2. Copia `static-host/` (el PHP del formulario) dentro de `out/`.
  * 3. Escribe `out/.htaccess`: URLs limpias, las 301 de `redirects.mjs`, 404,
  *    tipos MIME, caché y compresión.
- * 4. Empaqueta `out/` en `virens-web-estatica.zip` (con el `.htaccess`).
+ * 4. Empaqueta `out/` en `virens-web-estatica.zip` (con el `.htaccess`) y en
+ *    `virens-web-actualizacion.zip`, igual pero sin `img/` ni `video/` (≈1 MB
+ *    frente a ≈26): para actualizar una web ya publicada cuando no han
+ *    cambiado fotos ni vídeos. No se puede subir solo «la página cambiada»:
+ *    cada build regenera los JS de `_next/` con otro hash, y el HTML nuevo
+ *    apunta a ellos, así que páginas y `_next/` van siempre juntos.
  *
  * Lo que se sube al hosting es el CONTENIDO del zip, en la raíz pública del
  * dominio (en cdmon, la carpeta `web/`).
@@ -16,6 +21,7 @@ import { redirectRules } from '../redirects.mjs';
 
 const OUT = 'out';
 const ZIP = 'virens-web-estatica.zip';
+const UPDATE_ZIP = 'virens-web-actualizacion.zip';
 const run = (cmd, env = {}) => execSync(cmd, { stdio: 'inherit', env: { ...process.env, ...env } });
 
 // La build estática es la de lvirens.com en producción (cliente, 01/10/2026:
@@ -101,6 +107,7 @@ RewriteRule ^(.+)$ $1.html [L]
 `;
 writeFileSync(`${OUT}/.htaccess`, htaccess);
 
-if (existsSync(ZIP)) rmSync(ZIP);
+for (const z of [ZIP, UPDATE_ZIP]) if (existsSync(z)) rmSync(z);
 run(`cd ${OUT} && zip -rqX ../${ZIP} .`);
-console.log(`\n✓ ${ZIP} listo: subir su contenido a la raíz pública del dominio.`);
+run(`cd ${OUT} && zip -rqX ../${UPDATE_ZIP} . -x 'img/*' -x 'video/*'`);
+console.log(`\n✓ ${ZIP} (web completa) y ${UPDATE_ZIP} (sin fotos ni vídeos) listos.`);

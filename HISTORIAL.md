@@ -3691,3 +3691,10 @@ Pendiente de decidir con el cliente (no se toca sin su visto bueno):
   nueve sellos: una fila en escritorio, 3 + 3 + 3 en móvil.
 - Para actualizar cdmon basta con subir de nuevo el zip y `descomprimir.php`
   (script de un solo uso con clave, fuera del repo): sobrescribe sin borrar.
+
+## 2026-10-02 · cdmon: zip de actualización ligero (sin fotos ni vídeos)
+- `npm run build:static` genera además `virens-web-actualizacion.zip` (≈1 MB):
+  la web sin `img/` ni `video/`, para actualizar cdmon cuando solo cambian
+  textos o código. No vale subir solo el HTML de la página tocada: cada build
+  regenera los JS de `_next/` con hashes nuevos. Probado sobre la build del
+  01/10: tras descomprimir el ligero, todo carga y sale el sello FDA.

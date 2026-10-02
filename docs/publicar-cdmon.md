@@ -49,3 +49,16 @@ Apache 2.4 + PHP 8.3 en local con el zip tal cual: todas las páginas 200, 301
 de la web antigua, 404, favicon, vCard con su tipo, caché inmutable de
 `/_next/static`, navegación y formulario (validación, envío con adjunto, correo
 recibido con Reply-To del visitante).
+
+## Actualizar la web ya publicada (02/10/2026)
+
+net2ftp no sabe descomprimir zips con carpetas; se usa un `descomprimir.php` de
+un solo uso con clave (se genera aparte, no está en el repo): se sube a `web/`
+junto al zip, se abre `https://lvirens.com/descomprimir.php?clave=…` y
+descomprime, sobrescribe y se borra junto con el zip.
+
+- Si no han cambiado fotos ni vídeos: `virens-web-actualizacion.zip` (≈1 MB).
+- Si han cambiado: `virens-web-estatica.zip` (completo).
+
+No se puede subir solo el HTML de la página tocada: cada build regenera los JS
+de `_next/` con hashes nuevos y el HTML apunta a ellos.

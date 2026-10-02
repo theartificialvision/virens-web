@@ -15,3 +15,4 @@ next-env.d.ts
 
 # Exportación estática para Apache/cdmon (npm run build:static)
 virens-web-estatica.zip
+virens-web-actualizacion.zip
