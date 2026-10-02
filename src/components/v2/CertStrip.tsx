@@ -32,12 +32,18 @@ export function CertStrip({ locale, showPending = false }: { locale: Locale; sho
   const visible = showPending
     ? v2Certifications
     : v2Certifications.filter((c) => c.status !== 'unverified');
+  // Ancho total de la fila en «lados de sello»: el CSS lo usa en escritorio
+  // para que todos quepan en una sola línea (`.cert-row`).
+  const row = {
+    '--seal-units': visible.reduce((sum, c) => sum + Math.sqrt(c.ratio) * (c.scale ?? 1), 0).toFixed(3),
+    '--seal-count': visible.length,
+  } as CSSProperties;
 
   return (
     <section id="calidad" className="border-y border-gray-200 bg-gray-50 text-blue">
       <div className="mx-auto w-full max-w-[var(--container-max)] px-5 py-[var(--v2-section-tight)] md:px-8 lg:px-12 2xl:px-20">
         <SectionTitle>{v2CertificationsTitle}</SectionTitle>
-        <ul className="mt-14 flex flex-wrap items-center justify-center gap-y-10 sm:grid sm:grid-cols-4 sm:justify-items-center sm:gap-x-6 sm:gap-y-12 lg:flex lg:justify-between lg:gap-8">
+        <ul style={row} className="cert-row mt-14 flex flex-wrap items-center justify-center gap-y-10 sm:grid sm:grid-cols-4 sm:justify-items-center sm:gap-x-6 sm:gap-y-12 lg:flex lg:justify-between">
           {visible.map((c, i) => (
             <li
               key={c.id}
@@ -61,13 +67,15 @@ function Seal({ cert }: { cert: V2Cert }) {
   const z = cert.scale ?? 1;
   const mask = `url(/img/v2/sellos/${cert.id}.svg) center / contain no-repeat`;
   const style: CSSProperties = {
-    width: `calc(var(--v2-seal) * ${(k * z).toFixed(3)})`,
-    height: `calc(var(--v2-seal) * ${(z / k).toFixed(3)})`,
+    // `--v2-seal-fit` solo existe en la fila de escritorio; fuera de ella
+    // manda `--v2-seal` tal cual.
+    width: `calc(min(var(--v2-seal), var(--v2-seal-fit, var(--v2-seal))) * ${(k * z).toFixed(3)})`,
+    height: `calc(min(var(--v2-seal), var(--v2-seal-fit, var(--v2-seal))) * ${(z / k).toFixed(3)})`,
     mask,
     WebkitMask: mask,
   };
   const label = cert.issuer ? `${cert.name} — ${cert.issuer}` : cert.name;
-  const seal = <span role="img" aria-label={label} className="block bg-current" style={style} />;
+  const seal = <span role="img" aria-label={label} className="cert-seal block bg-current" style={style} />;
   if (!cert.caption) return seal;
   // El rótulo cuelga en absoluto bajo el sello para que la fila siga
   // alineada por el centro de los sellos y no por el conjunto sello + texto.

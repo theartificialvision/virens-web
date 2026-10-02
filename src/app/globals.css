@@ -630,6 +630,7 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   --v2-galenic-icon:  clamp(4rem, 2.8rem + 2.4vw, 5.5rem);      /* 64 -> 88, home */
   --v2-block-icon:    4.5rem;   /* 72 — círculo de Private Label / Full service */
   --v2-seal:          clamp(3.75rem, 2.4rem + 3.2vw, 6.5rem);   /* 60 -> 104 — lado del cuadrado de superficie de cada sello */
+  --v2-seal-row-gap:  2rem;   /* 32 — hueco mínimo entre sellos en la fila de escritorio */
 
   /* Altura de la banda de siluetas: todas comparten caja y se alinean por la
      base, así que la escala relativa entre envases es la del original. */
@@ -2078,3 +2079,20 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
 @media (min-width: 1024px) {
   .footer-claim { font-size: calc(100cqw / var(--claim-fit-wide)); white-space: nowrap; text-wrap: nowrap; }
 }
+
+/* Certificaciones en escritorio: siempre una sola fila (02/10/2026, cliente).
+   El lado de cada sello se ajusta al ancho de la fila: nunca mayor que
+   `--v2-seal` y nunca tanto como para saltar de línea. `--seal-units` (suma de
+   anchos relativos de los sellos) y `--seal-count` los pone `CertStrip` según
+   los sellos visibles, así que sigue valiendo si se añade o quita alguno. */
+.cert-row { container-type: inline-size; }
+@media (min-width: 1024px) {
+  .cert-row {
+    flex-wrap: nowrap;
+    gap: var(--v2-seal-row-gap);
+  }
+  .cert-row .cert-seal {
+    --v2-seal-fit: calc((100cqw - (var(--seal-count) - 1) * var(--v2-seal-row-gap)) / var(--seal-units));
+  }
+}
+

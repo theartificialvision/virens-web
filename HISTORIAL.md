@@ -206,3 +206,10 @@ buscar ahí solo si hace falta saber el porqué de una decisión antigua.
 - El pop-up de CPHI no se retira: se oculta solo tras `end` y queda como plantilla
   de futuros eventos (cliente: habrá más). Cómo reutilizarlo en `TRASPASO.md`,
   `src/content/cphi.ts` y `EMPEZAR-AQUI.md`.
+
+## 2026-10-02 · Certificaciones: una sola fila en todo escritorio
+- Antes solo cabían en una fila entre ~1280 y 1680 px; en 1024-1152 y 1920 se
+  partían. Ahora, desde 1024 px, el lado de los sellos se ajusta al ancho de la
+  fila (`.cert-row`, container query) sin pasar de `--v2-seal`; `CertStrip`
+  calcula `--seal-units`/`--seal-count` con los sellos visibles. Tablet y móvil
+  sin cambios. Verificado a 1024, 1152, 1280, 1366, 1440, 1680 y 1920.
