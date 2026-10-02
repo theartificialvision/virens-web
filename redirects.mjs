@@ -12,7 +12,7 @@ export const redirectMap = [
   ['/virens-labs', '/'],
   ['/virens-tech/', '/virens-tech'],
   // Noticias retirada (29/09/2026, decisión del cliente; el trabajo está en
-  // aparcado/noticias). Sus URLs van a la home del idioma.
+  // está en el historial de git). Sus URLs van a la home del idioma.
   ['/noticias', '/'],
   ['/noticias/:path*', '/'],
   ['/en/news', '/en'],

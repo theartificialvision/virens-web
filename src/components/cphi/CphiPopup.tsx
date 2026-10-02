@@ -5,7 +5,6 @@ import { cphiPopup as c } from '@/content/cphi';
 import { pathFor, type Locale } from '@/lib/i18n';
 import { CphiMark } from './CphiMark';
 import { CphiDock } from './CphiDock';
-import { CphiWallet } from './CphiWallet';
 
 const SEEN_KEY = 'virens-cphi-popup';
 const OPEN_DELAY = 900;
@@ -24,7 +23,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
  * de la misma visita ya solo aparece la cápsula. El foco vuelve a donde estaba
  * (a la cápsula, si se abrió desde ella).
  */
-export function CphiPopup({ locale, wallet = false }: { locale: Locale; wallet?: boolean }) {
+export function CphiPopup({ locale }: { locale: Locale }) {
   const [open, setOpen] = useState(false);
   const [closing, setClosing] = useState(false);
   const [docked, setDocked] = useState(false);
@@ -146,7 +145,6 @@ export function CphiPopup({ locale, wallet = false }: { locale: Locale; wallet?:
             <p className="cphi__live"><span aria-hidden />{c.live}</p>
           )}
           <div className="cphi__buttons">
-            {wallet ? <CphiWallet /> : null}
             <a href={c.contactCard.href} download data-focusable className="cphi__save">
               <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.4" aria-hidden="true">
                 <path d="M10 3v9m0 0-3.5-3.5M10 12l3.5-3.5M4 15.5h12" strokeLinecap="round" strokeLinejoin="round" />

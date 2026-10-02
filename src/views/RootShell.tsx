@@ -4,7 +4,6 @@ import { V2Footer } from '@/components/v2/V2Footer';
 import { Grain } from '@/components/ui/Grain';
 import { PageChrome } from '@/components/nav/PageChrome';
 import { CphiPopup } from '@/components/cphi/CphiPopup';
-import { walletReady } from '@/lib/walletReady';
 import { site } from '@/config/site';
 import { ui } from '@/content';
 import type { Locale } from '@/lib/i18n';
@@ -42,7 +41,7 @@ export function RootShell({ locale, children }: { locale: Locale; children: Reac
         <Grain />
         <PageChrome locale={locale} />
         {/* 29/09/2026: pop-up de CPHI Milán; se desmonta solo tras la feria. */}
-        <CphiPopup locale={locale} wallet={walletReady()} />
+        <CphiPopup locale={locale} />
         <OrganizationSchema />
       </body>
     </html>

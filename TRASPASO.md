@@ -1,189 +1,47 @@
-# Traspaso — cómo retomar el proyecto (actualizado 02/10/2026)
+# Traspaso — estado del proyecto (02/10/2026)
 
-> **Octubre 2026:** el proyecto pasa a un diseñador gráfico que trabaja desde el Mac del
-> laboratorio con su propia cuenta de Claude. Guía para personas: [`EMPEZAR-AQUI.md`](EMPEZAR-AQUI.md).
-
-Nota para cualquier asistente (Claude, Codex, otro) que continúe. Léelo antes
-que nada; luego [`CLAUDE.md`](CLAUDE.md) (reglas) y las últimas entradas de
-[`HISTORIAL.md`](HISTORIAL.md) (qué se hizo y por qué). Al terminar una sesión
-con cambios, añade una entrada al final de `HISTORIAL.md` y actualiza este
-archivo si cambió algo de lo de abajo.
+Resumen vigente para quien retome. Reglas en `CLAUDE.md`; guías para personas en
+`EMPEZAR-AQUI.md` y `GUIA-PRINCIPIANTES.md`; cambios recientes al final de `HISTORIAL.md`.
 
 ## Dónde está cada cosa
 
 | Qué | Dónde |
 |---|---|
-| Código (este repo) | GitHub `theartificialvision/virens-web`, **rama `v2`** (la buena). `main` = V1 antigua, no tocar. |
-| Web real | **https://lvirens.com** (cdmon, carpeta `web/`). Se publica con push a la rama `produccion` (GitHub Actions, ~1 min). |
-| Web de pruebas | Netlify, proyecto **`virenslab`** → https://virenslab.netlify.app. Se publica solo con cada push a `v2` (~1-2 min). |
-| Carpeta del cliente en su Mac | `~/Documents/Claude/Projects/WEB VIRENS` (en iCloud): `web/` = este repo; `material/` = vídeos, logos, iconos, fotos IA, referencias, prototipos 3D; `LEEME.md`; `ARRANCAR WEB.command` y `GUARDAR Y PUBLICAR.command`. |
-| Repo duplicado | `theartificialvision/VIrensLab` es una copia vieja parada el 22/09. No usar. |
-| Otros proyectos de Netlify | `virens-v2`, `virenslabv2`, `virens-web` son pruebas antiguas. El bueno es `virenslab`. |
+| Código | GitHub `theartificialvision/virens-web`. Rama **`v2`** = trabajo. `produccion` = lo publicado. `main` = V1 antigua, no tocar. |
+| Web real | **https://lvirens.com** — hosting cdmon, carpeta `web/`. Se actualiza con push a `produccion` (GitHub Actions «Publicar en cdmon», ~1 min). |
+| Web de pruebas | https://virenslab.netlify.app (Netlify `virenslab`), se actualiza sola con cada push a `v2`. |
+| WordPress anterior | Guardado en cdmon en `backup_db/oldvirens`. |
+| Material original (vídeos, logos, referencias) | Fuera del repo: carpeta `material/` en iCloud de Ignacio. |
+| Restos antiguos | Repo `theartificialvision/VIrensLab` y proyectos Netlify `virens-v2`, `virenslabv2`, `virens-web`: pruebas viejas, no usar. |
 
-## Trabajar desde VS Code (Mac) — desde el 28/09/2026
+## Cómo se publica (técnico)
 
-El cliente sigue el proyecto en **VS Code** en su Mac (con Claude Code, Codex u
-otra IA dentro). Todo está preparado en el repo:
+- `npm run build:static` → `out/` (HTML estático, `output: 'export'`) + `.htaccess` generado
+  (URLs limpias, 301 de `redirects.mjs`, HTTPS sin www, 404, caché) + `api/contacto.php`.
+- El workflow sube el zip por FTP con `curl` y lo descomprime llamando a
+  `scripts/descomprimir.php` (clave aleatoria por ejecución). cdmon no admite FTPS. Detalles:
+  `docs/publicar-cdmon.md`. Secretos `CDMON_FTP_SERVER/USER/PASSWORD` en GitHub.
+- Formulario de Contacto → `static-host/api/contacto.php` (`mail()`), destino **adg@lvirens.com**.
+- Las redirecciones viven en `redirects.mjs` (una lista para Next/Netlify y para el `.htaccess`).
 
-- **Abrir:** VS Code → Archivo → Abrir carpeta →
-  `~/Documents/Claude/Projects/WEB VIRENS/web` (la carpeta `web`, no la de
-  arriba). VS Code propondrá las extensiones recomendadas
-  (`.vscode/extensions.json`: Claude Code, Tailwind CSS IntelliSense, ESLint):
-  aceptar.
-- **Reglas para la IA:** Claude Code lee `CLAUDE.md` solo; Codex y Copilot leen
-  `AGENTS.md`, que remite a este archivo y a `CLAUDE.md`. Mismas reglas para
-  todas.
-- **Antes de tocar nada:** traer lo último de GitHub. Panel Control de código
-  → «…» → Pull, o Terminal → Ejecutar tarea → «Traer lo último de GitHub (v2)».
-  Hay sesiones en la nube que suben a `v2`; trabajar sobre una copia vieja es
-  lo que rompió la Compañía el 27/09.
-- **Ver la web:** Terminal → Ejecutar tarea → «Arrancar web (localhost:3000)»
-  (o doble clic en `ARRANCAR WEB.command`). La primera vez instala
-  dependencias si faltan.
-- **Comprobar:** tarea «Comprobar tipos (typecheck)»: tiene que salir limpio.
-- **Publicar:** panel Control de código → escribir mensaje → Commit → Sync
-  (push a `v2`; Netlify publica en 1-2 min). La primera vez VS Code pide
-  «Iniciar sesión con GitHub» en el navegador: así el Mac queda con
-  credenciales y el push funciona (también el de `GUARDAR Y PUBLICAR.command`
-  si usa las mismas). Nunca commit en `main` (VS Code avisa: está protegida
-  en `.vscode/settings.json`).
-- **iCloud:** `node_modules` y `.next` son **enlaces** a `node_modules.nosync` y
-  `.next.nosync` (iCloud no sube `*.nosync`). No convertirlos en carpetas. Si
-  alguna vez `node_modules` apunta a otro sitio (p. ej. `/tmp/...`), rehacer
-  el enlace: `ln -sfn node_modules.nosync node_modules` dentro de `web/`.
-  `.vscode/settings.json` los saca del buscador y del vigilante de archivos.
-- Si aparecen carpetas «nombre 2», «nombre 3» vacías: son duplicados de iCloud,
-  se pueden borrar.
+## Estructura de la web
 
-## Cómo se trabaja (flujo acordado con el cliente)
+- **Páginas:** Home (= Virens Labs; `/virens-labs` redirige a `/`), Virens Tech, Compañía,
+  Contacto y legales, en ES (raíz) y EN (`/en/...`). Rutas en `src/lib/i18n.ts`.
+- **Vistas** en `src/views/*View.tsx`; componentes en `src/components/` (`v2/` = home y comunes,
+  `sections/` = Tech, Compañía, Contacto).
+- **Textos** en `src/content/*` (ES) y `src/content/en/*` (EN, obligado por tipo a tener las
+  mismas claves). Inglés marcado `[TR]` = traducción pendiente de revisar (`docs/i18n-ingles.md`).
+- **Diseño:** tokens en el `@theme` de `src/app/globals.css`. La tipografía de la home es la
+  norma para todas las páginas. Isotipos 3D de color en cabecera y pie (el blanco, no).
 
-- **El cliente quiere que lo hagas todo tú**, incluido guardar y publicar: no le
-  dejes comandos para que los ejecute él. Escribe en español, directo y breve.
-- **Publicar:** commit en `v2` y push a GitHub; Netlify despliega solo.
-  **Nunca publicar directo a Netlify** (`netlify deploy` desde el Mac): el
-  siguiente push a `v2` lo pisa. Pasó el 27/09 con la Compañía de Codex, que
-  hubo que rescatar de la copia del Mac.
-  - Desde una sesión en la nube de Claude: añadir el repo con acceso `push`
-    (herramienta `add_repo`), clonar la rama `v2`, trabajar, commit y push.
-    Después sincronizar la copia del Mac: en la carpeta `web/` del Mac,
-    `git fetch origin v2 && git reset --hard origin/v2` (hace falta permiso
-    de borrado en esa carpeta para que git reescriba archivos).
-  - Desde el Mac: `GUARDAR Y PUBLICAR.command` (mensaje en
-    `mensaje-commit.txt` junto al script). El repo del Mac usa SSH con la clave `~/.ssh/id_ed25519_github`,
-    verificada con GitHub; no necesita usuario y token por HTTPS.
-- **Ver en local (Mac):** `ARRANCAR WEB.command` → http://localhost:3000.
-  La carpeta está en iCloud, así que `node_modules` y `.next` son enlaces a
-  `node_modules.nosync` / `.next.nosync` (iCloud no sincroniza `*.nosync`).
-  El script lo mantiene; no los conviertas en carpetas normales.
-- **Comprobar antes de subir:** `npm run typecheck` en limpio (regla 10) y
-  revisar en navegador (Playwright) escritorio 1440 y móvil 390. Las capturas
-  de página completa (`fullPage`) salen vacías por las entradas `Reveal`:
-  verifica con scroll real.
-- **Commits:** autor «Ignacio Pisano <pisanoignacio@gmail.com>».
+## Pendiente
 
-## Estado a 28/09/2026
-
-- **Home** (`src/views/HomeView.tsx`, componentes en `src/components/v2/`):
-  Hero (vídeo corporativo) → presentación integral del laboratorio (titular,
-  panorámica y cinco capacidades; maqueta aprobada 28/09) → **Formas
-  galénicas + escala industrial** en un solo bloque (`GalenicBlock`): cabecera
-  teal con texto y foto; debajo, en gris, las **nueve** formas (fuera
-  «Encapsulado automático») con su capacidad contando y su rango bajo cada
-  una (`GalenicRailItem`, `GalenicFigure`; carril deslizable en móvil) y la
-  fila de totales +2.000 m² · 9 · 2, sin la fila de acondicionamiento (`GalenicScale`) →
-  **Capacidad productiva**: las siete siluetas que crecen por tamaños →
-  Áreas terapéuticas (marquee compacto en mayúsculas, blanco/teal/magenta, barras sutiles y movimiento pausado) →
-  Certificaciones → CTA. Ver `HISTORIAL.md` (29)–(31).
-- **Virens Tech** (`src/views/TechView.tsx`), 30/09: dirección «laboratorio
-  editorial» elegida por el cliente. Hero e intro existentes → apertura blanca
-  «De la idea al producto final» con cuatro principios → navegación fina sticky
-  → cinco capítulos alternos de foto 16:9 y texto → certificaciones → CTA.
-  Sin órbitas, escaneo ni retícula. Textos ES/EN y cinco anclas conservados.
-- **Virens Labs es la Home:** la página `/virens-labs` se retiró y redirige
-  permanentemente a `/`; menú, pie y enlaces cruzados apuntan ya a la Home.
-- **Compañía** (`src/app/compania/page.tsx`): portada nueva con claim
-  «Expertos en complementos alimenticios», bloque «Quiénes somos» con cinco
-  pilares iconográficos, «Qué hacemos» con cadena de valor en panel continuo,
-  bloque I+D/control de calidad y timeline rediseñada en vidrio sobre foto.
-- **CTA «¿Hablamos de tu proyecto?»:** el mismo componente (`CtaBand`) en Home, Tech y Compañía.
-- **Tipografía (27/09):** la home es la norma para todas las páginas (H1
-  `--v2-hero-title` peso normal, H2 `--text-h2` peso medio, cuerpo
-  `--text-small`/1,85, ritmo `--v2-section`). Ver `HISTORIAL.md` (12).
-- El isotipo 3D **blanco** no va en ninguna parte (cliente). Los isotipos de
-  color de cabecera y pie sí se quedan.
-
-## Idiomas (desde el 27/09/2026)
-
-- **ES + EN.** Español en la raíz (`/`, `/compania`, `/virens-tech`,
-  `/contacto`); inglés con rutas traducidas, las mismas que ya
-  publica lvirens.com (`/en`, `/en/company`, `/en/virens-tech`,
-  `/en/contact`). Mapa de rutas y utilidades en `src/lib/i18n.ts`.
-- **Estructura:** cada idioma tiene su layout raíz (`src/app/(es)/layout.tsx`,
-  `src/app/en/layout.tsx`, con `<html lang>` correcto). Las páginas son
-  «vistas» en `src/views/*View.tsx` que reciben `locale`; las rutas solo las
-  montan. Los componentes reciben `locale` y piden el texto a
-  `src/content/index.ts` (`homeContent(locale)`, etc.). Textos de interfaz
-  (menú, pie, metadatos) en `src/content/ui.ts`.
-- **Contenido inglés:** `src/content/en/*.ts`, obligado por tipo a tener las
-  mismas claves que el español (si falta un texto, no compila). Origen de cada
-  texto (`[EN]` literal web actual, `[IMG]` literal de imagen, `[TR]` traducción
-  de Claude **pendiente de revisión**) y lista de pendientes en
-  `docs/i18n-ingles.md`.
-- **Añadir un idioma:** columna en `routes` (`src/lib/i18n.ts`) + `src/content/<xx>/`
-  + entrada en `ui.ts` + carpeta `src/app/<xx>/`.
-- Selector ES / EN dentro del menú: lleva a la misma página en el otro idioma.
-- Redirecciones: `/en/virens-labs` → `/en`; `/ca/*` → `/`; `/fr/*`, `/it/*`,
-  `/zh-hans/*` → `/en` (`next.config.mjs`).
-- `next build` local: sin red a Google Fonts falla; se puede compilar con
-  `NEXT_FONT_GOOGLE_MOCKED_RESPONSES=<archivo>` (ver HISTORIAL 19).
-
-## Web estática para cdmon (desde el 01/10/2026)
-
-- **PUBLICADA: lvirens.com ya es esta web** (estática en cdmon, carpeta `web/`,
-  subida a mano el 01-02/10/2026). El WordPress anterior está guardado en
-  cdmon en `backup_db/oldvirens`.
-- **Publicación automática:** push a la rama `produccion` → workflow
-  `.github/workflows/publicar-cdmon.yml` (zip por FTP + `descomprimir.php`, ~1 min; secretos
-  `CDMON_FTP_*` ya cargados en GitHub). `v2` → Netlify (pruebas). Llevar
-  `v2` a `produccion` es publicar en la web real: solo cuando el cliente lo pida.
-
-- `npm run build:static` genera `virens-web-estatica.zip` (HTML estático +
-  `.htaccess` + PHP del formulario) para subir a cdmon (Apache). Guía completa:
-  [`docs/publicar-cdmon.md`](docs/publicar-cdmon.md). Netlify no cambia.
-- Las 301 viven en `redirects.mjs` (una sola lista para Next y para el `.htaccess`).
-- El formulario de Contacto ya envía (`src/lib/useContactSubmit.ts` →
-  `static-host/api/contacto.php`). Destino: **adg@lvirens.com** (constante
-  `TO` del PHP; cliente, 01/10/2026), distinto del general csp@lvirens.com.
-- Favicon: `src/app/icon.svg`, `apple-icon.png` y `favicon.ico`, sacados del
-  isotipo de color (`public/img/v2/logo/virens-isotipo.svg`).
-
-## Pendiente / preguntas abiertas
-
-- **`/uso-de-cookies` redirige a `/legal/politica-de-cookies`, que no existe**
-  (no hay texto de cookies): hoy acaba en la 404, también en Netlify.
-
-- **Copia del Mac sincronizada el 29/09/2026** con `origin/v2` (8 commits
-  nuevos traídos). Un commit local sin subir del 28/09 (`2b2385e`, «Home:
-  Private Label y Full service como progresión 01-02»), superado por el
-  recorrido del laboratorio ya publicado, quedó guardado en la rama local
-  `respaldo-mac-2b2385e`, por si hiciera falta. Sigue también el `git stash`
-  del 28/09. Desde ahora: pull antes de trabajar y publicar solo por push a `v2`.
-- **Noticias: retirada por decisión del cliente (29/09).** Fuera del menú, el
-  pie, el sitemap y las rutas; `/noticias/*` redirige a `/` y `/en/news/*` a
-  `/en`. El trabajo de Muse está en `aparcado/noticias/`, fuera de la build.
-- **Tech editorial (dirección A) cerrado (30/09)**: revisado a 1440/390, con
-  revelado de foto en barrido horizontal tipo escáner (01/10) e índice móvil sin cortes.
-- **Páginas legales**: publicadas en ES/EN (`/legal/*`, `/en/legal/*`).
-  Falta el email real para derechos RGPD (el texto trae «email@laempresa.com»)
-  y no hay texto de política de cookies.
-- **Revisión del inglés `[TR]`** por el cliente: `docs/i18n-ingles.md`.
-
-- Compañía: el hito 2026 de la historia repite literalmente el texto de 2023
-  (viene así de la maqueta). Pedir el texto real o quitar el hito.
-- Datos que el cliente debe confirmar antes de publicar en `lvirens.com`:
-  `site.pendingClientConfirmation` en `src/config/site.ts` y la tabla
-  «Casos abiertos» de `HISTORIAL.md`.
-- Pendientes de fase (contacto con formulario, noticias/CMS, SEO, `/en`,
-  legales): la sección «Estado actual» de `HISTORIAL.md` es del 02/09 y no se
-  ha vuelto a revisar entera; compruébalo en el código y el registro de
-  sesiones antes de dar nada por hecho.
+- **Pop-up de CPHI Milán** (`src/components/cphi/`, `src/content/cphi.ts`): la feria es el
+  6-8/10/2026. **Retirarlo después** (y la ruta `src/app/virens-labs.vcf/`).
+- **Política de cookies:** no hay texto; `/uso-de-cookies` redirige a una página inexistente (404).
+- **Legales:** falta el email real para derechos RGPD (el texto trae «email@laempresa.com»).
+- **Datos sin confirmar por el cliente:** `site.pendingClientConfirmation` en `src/config/site.ts`.
+- **Inglés `[TR]`** pendiente de revisión por el cliente.
+- **Sello «FDA Approved»** publicado por decisión del cliente (02/10); la FDA no «aprueba»
+  complementos: si tienen registro FDA o FDA-GMP, conviene usar esa denominación.

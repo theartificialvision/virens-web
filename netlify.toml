@@ -18,11 +18,3 @@
   for = "/_next/static/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
-
-# Pase de Apple Wallet (CPHI Milán, 29/09/2026): Safari solo lo abre en Wallet
-# si llega con su tipo MIME. Ver wallet/README.md.
-[[headers]]
-  for = "/wallet/*.pkpass"
-  [headers.values]
-    Content-Type = "application/vnd.apple.pkpass"
-    Content-Disposition = "attachment; filename=virens-cphi-milan-2026.pkpass"
