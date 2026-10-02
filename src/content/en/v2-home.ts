@@ -150,7 +150,8 @@ export const v2Certifications: V2Cert[] = [
   { id: 'vet', name: 'Veterinary Products', status: 'image-only', ratio: 0.767 },
   { id: 'iraq', name: 'Republic of Iraq', issuer: 'Manufacturing Site Registration', status: 'image-only', ratio: 1.338, scale: 1.3 },
   { id: 'uae', name: 'United Arab Emirates', issuer: 'Manufacturing Site Registration', status: 'image-only', ratio: 2.911, scale: 1.3 },
-  { id: 'fda', name: 'FDA Approved', status: 'unverified', ratio: 1.636 },
+  // 02/10/2026: el cliente pide mostrarlo (antes `unverified`, oculto).
+  { id: 'fda', name: 'FDA Approved', status: 'image-only', ratio: 1.636 },
 ];
 
 export const v2Cta = {

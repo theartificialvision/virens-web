@@ -3683,3 +3683,11 @@ Pendiente de decidir con el cliente (no se toca sin su visto bueno):
   contra bucles. Probado en Apache: redirecciones, páginas, 404 y formulario.
 - Siguen abiertos los datos de `site.pendingClientConfirmation` (dirección
   48-A/48B, «FDA APPROVED», países), ahora en la web pública.
+
+## 2026-10-02 · Certificaciones: se muestra el sello FDA Approved
+- El cliente pide mostrar el sello «FDA APPROVED» (estaba vectorizado en
+  `/img/v2/sellos/fda.svg` pero oculto como `unverified`). Pasa a `image-only`
+  en ES y EN y sale de `site.pendingClientConfirmation`. La franja queda con
+  nueve sellos: una fila en escritorio, 3 + 3 + 3 en móvil.
+- Para actualizar cdmon basta con subir de nuevo el zip y `descomprimir.php`
+  (script de un solo uso con clave, fuera del repo): sobrescribe sin borrar.

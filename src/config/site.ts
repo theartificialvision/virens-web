@@ -46,7 +46,6 @@ export const site = {
     'Unidad y periodo de las capacidades productivas ("M" = millones/año)',
     'Año de referencia de la trayectoria (2000 instalaciones / 2006 fundación)',
     'Denominación, entidad y alcance exactos de cada certificado',
-    'Revisión del claim "FDA APPROVED"',
     'Número de países de exportación actualizado (el dato "+20" es de 2015)',
     'Dirección postal definitiva (48-A / 48B)',
   ],

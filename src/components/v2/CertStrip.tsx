@@ -24,9 +24,8 @@ import { SectionTitle } from './SectionTitle';
  * Móvil (27/09/2026, cliente): filas de 3, 3 y 2, la última centrada — de
  * ahí `flex-wrap` con celdas de un tercio en vez de rejilla de dos columnas.
  *
- * `showPending` saca además los marcados `unverified` (hoy: "FDA Approved",
- * claim de riesgo — la FDA no aprueba complementos alimenticios). Su sello
- * está vectorizado y listo, pero no se muestra hasta que el cliente confirme.
+ * `showPending` saca además los marcados `unverified` (hoy ninguno: el sello
+ * «FDA Approved» se muestra desde el 02/10/2026 por decisión del cliente).
  */
 export function CertStrip({ locale, showPending = false }: { locale: Locale; showPending?: boolean }) {
   const { v2Certifications, v2CertificationsTitle } = homeContent(locale);
