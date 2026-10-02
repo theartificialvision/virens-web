@@ -3698,3 +3698,9 @@ Pendiente de decidir con el cliente (no se toca sin su visto bueno):
   textos o código. No vale subir solo el HTML de la página tocada: cada build
   regenera los JS de `_next/` con hashes nuevos. Probado sobre la build del
   01/10: tras descomprimir el ligero, todo carga y sale el sello FDA.
+
+## 2026-10-02 · Publicación automática en cdmon desde GitHub
+- Workflow `publicar-cdmon.yml`: push a `produccion` → typecheck, build
+  estática y subida FTP incremental a `web/` (SamKirkland/FTP-Deploy-Action).
+  `v2` sigue siendo Netlify. Pendiente: que el cliente cargue los tres secretos
+  FTP y crear la rama `produccion`.

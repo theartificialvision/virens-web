@@ -62,3 +62,11 @@ descomprime, sobrescribe y se borra junto con el zip.
 
 No se puede subir solo el HTML de la página tocada: cada build regenera los JS
 de `_next/` con hashes nuevos y el HTML apunta a ellos.
+
+## Publicación automática desde GitHub (02/10/2026)
+
+`.github/workflows/publicar-cdmon.yml`: cada push a la rama `produccion` compila
+la web y la sube por FTP a `web/` en cdmon, solo los archivos que cambian.
+`v2` sigue yendo a Netlify. Para publicar en lvirens.com: llevar `v2` a
+`produccion` (merge + push). Requiere los secretos `CDMON_FTP_SERVER`,
+`CDMON_FTP_USER` y `CDMON_FTP_PASSWORD` en el repositorio.

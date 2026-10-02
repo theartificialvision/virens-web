@@ -1,0 +1,42 @@
+# Publica la web estática en cdmon (lvirens.com) por FTP — 02/10/2026.
+#
+# Se dispara con cada push a la rama `produccion` (o a mano desde la pestaña
+# Actions). `v2` sigue publicando solo en Netlify: lo que llega a `produccion`
+# es lo que se da por bueno para la web real.
+#
+# Sube solo lo que ha cambiado desde la última publicación (el action guarda
+# un `.ftp-deploy-sync-state.json` en el servidor). La primera vez lo sube todo.
+#
+# Datos FTP en Settings → Secrets and variables → Actions:
+#   CDMON_FTP_SERVER, CDMON_FTP_USER, CDMON_FTP_PASSWORD
+name: Publicar en cdmon
+
+on:
+  push:
+    branches: [produccion]
+  workflow_dispatch:
+
+concurrency:
+  group: cdmon
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run typecheck
+      - run: npm run build:static
+      - name: Subir a cdmon (web/)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.CDMON_FTP_SERVER }}
+          username: ${{ secrets.CDMON_FTP_USER }}
+          password: ${{ secrets.CDMON_FTP_PASSWORD }}
+          local-dir: ./out/
+          server-dir: ./web/
