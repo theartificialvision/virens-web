@@ -139,7 +139,7 @@ otra IA dentro). Todo está preparado en el repo:
   subida a mano el 01-02/10/2026). El WordPress anterior está guardado en
   cdmon en `backup_db/oldvirens`.
 - **Publicación automática:** push a la rama `produccion` → workflow
-  `.github/workflows/publicar-cdmon.yml` (FTPS incremental; secretos
+  `.github/workflows/publicar-cdmon.yml` (zip por FTP + `descomprimir.php`, ~1 min; secretos
   `CDMON_FTP_*` ya cargados en GitHub). `v2` → Netlify (pruebas). Llevar
   `v2` a `produccion` es publicar en la web real: solo cuando el cliente lo pida.
 

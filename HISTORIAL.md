@@ -3718,3 +3718,6 @@ Pendiente de decidir con el cliente (no se toca sin su visto bueno):
   zip completo y `scripts/descomprimir.php` (clave aleatoria por ejecución,
   enmascarada en el log) con PASV clásico, y luego se abre el script por HTTPS
   y se exige «LISTO».
+
+- Primera publicación automática correcta (02/10/2026, ~1 min): compila, sube el
+  zip y descomprime con «LISTO». Publicar = «publica» → push de `v2` a `produccion`.
