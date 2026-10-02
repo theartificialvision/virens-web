@@ -3730,3 +3730,9 @@ Pendiente de decidir con el cliente (no se toca sin su visto bueno):
   lvirens.com solo cuando se pida) y «Orden de trabajo» pasa de fases a
   mantenimiento por un no programador. `AGENTS.md` y `TRASPASO.md` al día.
 - Tarea de VS Code «Publicar en lvirens.com» (push de `v2` a `produccion`).
+
+## 2026-10-02 · Guía para principiantes
+- `GUIA-PRINCIPIANTES.md` para el diseñador: vocabulario básico, cuentas, dos
+  formas de conectar GitHub (VS Code en el Mac o claude.ai/code + connect-github),
+  día a día, qué hacer si algo sale mal y ejercicio del primer día. Enlazada
+  desde `EMPEZAR-AQUI.md` y `CLAUDE.md`.

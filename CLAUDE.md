@@ -4,8 +4,9 @@ Rediseño completo de `lvirens.com`. Documento maestro (fuente de verdad de cont
 arquitectura, copy y sistema visual): [`docs/00-auditoria-y-rediseno-virens.md`](docs/00-auditoria-y-rediseno-virens.md).
 Ante cualquier duda de color, espaciado, texto u orden de bloque, la respuesta está ahí — no improvisar.
 
-**Para retomar el trabajo:** lee primero [`EMPEZAR-AQUI.md`](EMPEZAR-AQUI.md) (guía para
-personas: cómo se trabaja y se publica), [`TRASPASO.md`](TRASPASO.md) (dónde está todo, estado y
+**Para retomar el trabajo:** lee primero [`EMPEZAR-AQUI.md`](EMPEZAR-AQUI.md) y
+[`GUIA-PRINCIPIANTES.md`](GUIA-PRINCIPIANTES.md) (guías para personas: cómo se trabaja y se
+publica; adapta tus explicaciones a ese nivel), [`TRASPASO.md`](TRASPASO.md) (dónde está todo, estado y
 preguntas abiertas) y las últimas entradas de [`HISTORIAL.md`](HISTORIAL.md).
 
 **Estado (02/10/2026): la web está publicada en lvirens.com** (cdmon). Se trabaja en la rama

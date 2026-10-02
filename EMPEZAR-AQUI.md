@@ -4,6 +4,11 @@ Guía para quien coge el proyecto a partir de octubre de 2026. No hace falta
 saber programar: los cambios se piden a Claude Code en lenguaje normal y él
 sigue las reglas del proyecto, que ya están escritas en esta carpeta.
 
+**¿Primera vez con código, GitHub o VS Code?** Empieza por
+[`GUIA-PRINCIPIANTES.md`](GUIA-PRINCIPIANTES.md): vocabulario, cuentas,
+conexión con GitHub (en el Mac o desde el navegador) y qué hacer si algo sale
+mal. Esta página es el resumen rápido.
+
 ## Cómo está montado (en una frase cada cosa)
 
 - **Esta carpeta** es la web entera: código, textos, fotos, vídeos y reglas.
