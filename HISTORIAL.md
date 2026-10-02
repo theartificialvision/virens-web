@@ -213,3 +213,8 @@ buscar ahí solo si hace falta saber el porqué de una decisión antigua.
   fila (`.cert-row`, container query) sin pasar de `--v2-seal`; `CertStrip`
   calcula `--seal-units`/`--seal-count` con los sellos visibles. Tablet y móvil
   sin cambios. Verificado a 1024, 1152, 1280, 1366, 1440, 1680 y 1920.
+
+## 2026-10-02 · Certificaciones: fuera «Organic Certified»
+- Cliente: el sello ecológico ya no va. Quitado de ES y EN y borrado su SVG.
+  Quedan 8 sellos (una fila en escritorio; 3 + 3 + 2 en móvil). El hito de 2015
+  «Certificación ECO y Veterinaria» de la historia de Compañía no se toca.

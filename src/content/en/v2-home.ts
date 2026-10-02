@@ -146,7 +146,6 @@ export const v2Certifications: V2Cert[] = [
   { id: 'gmp', name: 'GMP', caption: 'GMP', issuer: 'SGS', status: 'image-only', ratio: 1.027 },
   { id: 'haccp', name: 'HACCP', caption: 'HACCP', issuer: 'SGS', status: 'image-only', ratio: 1.025 },
   { id: 'eu', name: 'European Manufactured', status: 'image-only', ratio: 0.955 },
-  { id: 'organic', name: 'Organic Certified', status: 'image-only', ratio: 1.295 },
   { id: 'vet', name: 'Veterinary Products', status: 'image-only', ratio: 0.767 },
   { id: 'iraq', name: 'Republic of Iraq', issuer: 'Manufacturing Site Registration', status: 'image-only', ratio: 1.338, scale: 1.3 },
   { id: 'uae', name: 'United Arab Emirates', issuer: 'Manufacturing Site Registration', status: 'image-only', ratio: 2.911, scale: 1.3 },
