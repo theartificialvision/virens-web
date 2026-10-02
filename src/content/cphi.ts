@@ -3,6 +3,10 @@
  * envió el cliente («Pop-ups_CPHI_evento.zip»), en inglés en los dos idiomas
  * como en la pieza original. Se muestra desde que se publica hasta el cierre
  * de la feria; a partir de `end` no se monta.
+ *
+ * Es la PLANTILLA de los pop-ups de eventos: para el siguiente, cambiar aquí
+ * fechas, textos e imágenes (y `SEEN_KEY` en `CphiPopup.tsx`), sin tocar el
+ * diseño. Ver TRASPASO.md → «Pop-up de eventos».
  */
 export const cphiPopup = {
   source: 'literal',

@@ -56,6 +56,7 @@ Si Claude no puede subir a GitHub, GitHub Desktop → **Push origin**.
 | Colores, tamaños, espacios, tipografía | bloque `@theme` de `src/app/globals.css` (tokens) |
 | Fotos y vídeos | `public/img/…` y `public/video/…` |
 | Datos de empresa (teléfono, emails, dirección) | `src/config/site.ts` |
+| Pop-up de eventos (ferias) | `src/content/cphi.ts` — se reutiliza: «haz el pop-up del próximo evento con estos datos» |
 | Email que recibe el formulario | `static-host/api/contacto.php` (`TO`, hoy adg@lvirens.com) |
 
 ## Para la IA y para profundizar

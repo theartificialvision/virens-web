@@ -37,8 +37,12 @@ Resumen vigente para quien retome. Reglas en `CLAUDE.md`; guías para personas e
 
 ## Pendiente
 
-- **Pop-up de CPHI Milán** (`src/components/cphi/`, `src/content/cphi.ts`): la feria es el
-  6-8/10/2026. **Retirarlo después** (y la ruta `src/app/virens-labs.vcf/`).
+- **Pop-up de eventos** (`src/components/cphi/`, `src/content/cphi.ts`, estilos `.cphi__*` en
+  `globals.css`): **no borrar, es la plantilla para futuros eventos.** Se oculta solo pasada la
+  fecha `end` (CPHI: 8/10/2026 17:00). Para un evento nuevo: cambiar en `cphi.ts` fechas, textos,
+  stand e imágenes (`public/img/cphi/`), y cambiar `SEEN_KEY` en `CphiPopup.tsx` para que vuelva a
+  salir a quien ya vio el anterior. La nota de la tarjeta `.vcf` (`src/app/virens-labs.vcf/`)
+  menciona CPHI: actualizarla o quitarla.
 - **Política de cookies:** no hay texto; `/uso-de-cookies` redirige a una página inexistente (404).
 - **Legales:** falta el email real para derechos RGPD (el texto trae «email@laempresa.com»).
 - **Datos sin confirmar por el cliente:** `site.pendingClientConfirmation` en `src/config/site.ts`.

@@ -201,3 +201,8 @@ buscar ahí solo si hace falta saber el porqué de una decisión antigua.
   `docs/archivo/`. Regla de copy literal conservada en `CLAUDE.md`.
 - Verificado: typecheck, build estática y de Netlify, 9 páginas × escritorio y
   móvil sin 404 ni errores ni imágenes rotas, formulario enviando.
+
+## 2026-10-02 · Pop-up de eventos como plantilla
+- El pop-up de CPHI no se retira: se oculta solo tras `end` y queda como plantilla
+  de futuros eventos (cliente: habrá más). Cómo reutilizarlo en `TRASPASO.md`,
+  `src/content/cphi.ts` y `EMPEZAR-AQUI.md`.
