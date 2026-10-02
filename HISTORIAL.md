@@ -3721,3 +3721,12 @@ Pendiente de decidir con el cliente (no se toca sin su visto bueno):
 
 - Primera publicación automática correcta (02/10/2026, ~1 min): compila, sube el
   zip y descomprime con «LISTO». Publicar = «publica» → push de `v2` a `produccion`.
+
+## 2026-10-02 · Traspaso al diseñador gráfico
+- Nuevo `EMPEZAR-AQUI.md` (guía para personas: preparar el Mac, día a día,
+  pruebas en Netlify, publicar en lvirens.com, dónde se cambia cada cosa y
+  primer mensaje para Claude en una cuenta nueva).
+- `CLAUDE.md`: estado actual (web publicada, `v2` → pruebas, `produccion` →
+  lvirens.com solo cuando se pida) y «Orden de trabajo» pasa de fases a
+  mantenimiento por un no programador. `AGENTS.md` y `TRASPASO.md` al día.
+- Tarea de VS Code «Publicar en lvirens.com» (push de `v2` a `produccion`).

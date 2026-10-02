@@ -4,8 +4,15 @@ Rediseño completo de `lvirens.com`. Documento maestro (fuente de verdad de cont
 arquitectura, copy y sistema visual): [`docs/00-auditoria-y-rediseno-virens.md`](docs/00-auditoria-y-rediseno-virens.md).
 Ante cualquier duda de color, espaciado, texto u orden de bloque, la respuesta está ahí — no improvisar.
 
-**Para retomar el trabajo:** lee primero [`TRASPASO.md`](TRASPASO.md) (dónde está todo, cómo se
-publica, estado actual y preguntas abiertas) y las últimas entradas de [`HISTORIAL.md`](HISTORIAL.md).
+**Para retomar el trabajo:** lee primero [`EMPEZAR-AQUI.md`](EMPEZAR-AQUI.md) (guía para
+personas: cómo se trabaja y se publica), [`TRASPASO.md`](TRASPASO.md) (dónde está todo, estado y
+preguntas abiertas) y las últimas entradas de [`HISTORIAL.md`](HISTORIAL.md).
+
+**Estado (02/10/2026): la web está publicada en lvirens.com** (cdmon). Se trabaja en la rama
+`v2` (pruebas en Netlify). Publicar en lvirens.com = llevar `v2` a la rama `produccion`
+(`git push origin origin/v2:refs/heads/produccion`); GitHub Actions la sube sola a cdmon. Hacerlo
+**solo cuando la persona lo pida explícitamente** («publica»), nunca por iniciativa propia, y
+comprobar después en Actions que «Publicar en cdmon» termina en verde.
 
 ## Stack — cerrado
 
@@ -100,7 +107,14 @@ magenta (`--color-tech-glow`) en Tech. Referencia de implementación:
 
 ## Orden de trabajo
 
-El proyecto avanza por fases (ver el prompt de encargo / historial de conversación para el
-detalle de cada una: A Base sólida · B Virens Labs · C Virens Tech · D Home y Compañía ·
-E Contacto y formulario · F Noticias y CMS · G SEO y cierre). Al terminar una fase: parar,
-resumir en tres líneas lo hecho, y esperar el visto bueno antes de encadenar la siguiente.
+Las fases de construcción (A–G) están cerradas; desde octubre de 2026 el proyecto está en
+mantenimiento y lo lleva un diseñador gráfico, no un programador. Por eso:
+
+- Explicar en español llano, breve, sin jerga; guiar paso a paso cuando haya que hacer algo
+  fuera del editor.
+- Hacer los cambios uno a uno, enseñar el resultado (localhost o Netlify) y esperar el visto
+  bueno antes de publicar.
+- Después de cada cambio: `npm run typecheck` en limpio, entrada al final de `HISTORIAL.md`,
+  commit y push a `v2`.
+- Las peticiones de diseño se resuelven con los tokens y reglas de arriba; si una petición choca
+  con una regla, decirlo y proponer la alternativa antes de saltársela.

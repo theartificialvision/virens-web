@@ -25,6 +25,15 @@
       "command": "git pull --ff-only origin v2",
       "problemMatcher": [],
       "presentation": { "reveal": "always", "panel": "shared" }
+    },
+    {
+      // Publica en lvirens.com: lleva v2 a la rama produccion y GitHub sube la
+      // web a cdmon (~1 min; ver pestaña Actions). Solo lo ya subido a v2.
+      "label": "Publicar en lvirens.com",
+      "type": "shell",
+      "command": "git fetch origin v2 && git push origin origin/v2:refs/heads/produccion && echo 'Publicando: mira GitHub → Actions → Publicar en cdmon'",
+      "problemMatcher": [],
+      "presentation": { "reveal": "always", "panel": "shared" }
     }
   ]
 }

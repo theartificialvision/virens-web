@@ -1,4 +1,7 @@
-# Traspaso — cómo retomar el proyecto (actualizado 01/10/2026)
+# Traspaso — cómo retomar el proyecto (actualizado 02/10/2026)
+
+> **Octubre 2026:** el proyecto pasa a un diseñador gráfico que trabaja desde el Mac del
+> laboratorio con su propia cuenta de Claude. Guía para personas: [`EMPEZAR-AQUI.md`](EMPEZAR-AQUI.md).
 
 Nota para cualquier asistente (Claude, Codex, otro) que continúe. Léelo antes
 que nada; luego [`CLAUDE.md`](CLAUDE.md) (reglas) y las últimas entradas de
@@ -11,7 +14,8 @@ archivo si cambió algo de lo de abajo.
 | Qué | Dónde |
 |---|---|
 | Código (este repo) | GitHub `theartificialvision/virens-web`, **rama `v2`** (la buena). `main` = V1 antigua, no tocar. |
-| Web publicada | Netlify, proyecto **`virenslab`** → https://virenslab.netlify.app. Se publica solo con cada push a `v2` (~1-2 min). |
+| Web real | **https://lvirens.com** (cdmon, carpeta `web/`). Se publica con push a la rama `produccion` (GitHub Actions, ~1 min). |
+| Web de pruebas | Netlify, proyecto **`virenslab`** → https://virenslab.netlify.app. Se publica solo con cada push a `v2` (~1-2 min). |
 | Carpeta del cliente en su Mac | `~/Documents/Claude/Projects/WEB VIRENS` (en iCloud): `web/` = este repo; `material/` = vídeos, logos, iconos, fotos IA, referencias, prototipos 3D; `LEEME.md`; `ARRANCAR WEB.command` y `GUARDAR Y PUBLICAR.command`. |
 | Repo duplicado | `theartificialvision/VIrensLab` es una copia vieja parada el 22/09. No usar. |
 | Otros proyectos de Netlify | `virens-v2`, `virenslabv2`, `virens-web` son pruebas antiguas. El bueno es `virenslab`. |

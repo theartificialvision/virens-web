@@ -11,7 +11,8 @@ viven en un solo sitio:
 
 Lo imprescindible, por si solo lees esto:
 
-- Rama **`v2`**. Publicar = commit + push a `v2`; Netlify (`virenslab`) despliega solo.
+- Rama **`v2`** = pruebas (Netlify `virenslab` despliega solo). **lvirens.com** se publica
+  llevando `v2` a la rama `produccion` (GitHub Actions → cdmon), solo cuando la persona lo pida.
   **Nunca** `netlify deploy` directo: el siguiente push lo pisa.
 - Antes de empezar, `git pull --ff-only origin v2`: otras sesiones suben cambios.
 - `npm run typecheck` en limpio antes de cada commit. Añade una entrada al final
