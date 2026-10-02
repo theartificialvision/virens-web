@@ -3710,3 +3710,11 @@ Pendiente de decidir con el cliente (no se toca sin su visto bueno):
   bien, pero cdmon cortó el canal de datos (`ECONNRESET`) al crear `_next/`.
   Se pasa a FTPS explícito (`protocol: ftps`, `security: loose` por conectar
   por IP). La web de cdmon no se tocó: sigue la subida manual del 01-02/10.
+
+## 2026-10-02 · Workflow de cdmon: un zip + descomprimir.php
+- FTPS tampoco: cdmon responde «500 AUTH not understood». Se abandona
+  FTP-Deploy-Action (subida archivo a archivo; moría al listar carpetas por
+  FTP plano) y se automatiza el método manual que sí funcionó: `curl` sube el
+  zip completo y `scripts/descomprimir.php` (clave aleatoria por ejecución,
+  enmascarada en el log) con PASV clásico, y luego se abre el script por HTTPS
+  y se exige «LISTO».

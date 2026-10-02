@@ -1,13 +1,17 @@
-# Publica la web estática en cdmon (lvirens.com) por FTP — 02/10/2026.
+# Publica la web estática en cdmon (lvirens.com) — 02/10/2026.
 #
-# Se dispara con cada push a la rama `produccion` (o a mano desde la pestaña
-# Actions). `v2` sigue publicando solo en Netlify: lo que llega a `produccion`
-# es lo que se da por bueno para la web real.
+# Push a `produccion` (o a mano desde Actions) → compila la web, sube UN zip
+# por FTP a `web/` junto con `descomprimir.php` (clave nueva en cada
+# ejecución) y abre ese script por HTTPS: descomprime encima, sobrescribe y se
+# borra junto con el zip. Es el mismo método que se probó a mano el 02/10.
 #
-# Sube solo lo que ha cambiado desde la última publicación (el action guarda
-# un `.ftp-deploy-sync-state.json` en el servidor). La primera vez lo sube todo.
+# Por qué así: cdmon no admite FTPS («500 AUTH not understood») y con FTP
+# plano la subida archivo a archivo (FTP-Deploy-Action) moría al listar
+# carpetas (ECONNRESET en el canal de datos). Un zip = dos transferencias.
+# `--disable-epsv` fuerza PASV clásico, que es lo que suelen aceptar los
+# servidores FTP detrás de NAT.
 #
-# Datos FTP en Settings → Secrets and variables → Actions:
+# Secretos (Settings → Secrets and variables → Actions):
 #   CDMON_FTP_SERVER, CDMON_FTP_USER, CDMON_FTP_PASSWORD
 name: Publicar en cdmon
 
@@ -32,17 +36,26 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - run: npm run typecheck
       - run: npm run build:static
-      - name: Subir a cdmon (web/)
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        with:
-          server: ${{ secrets.CDMON_FTP_SERVER }}
-          username: ${{ secrets.CDMON_FTP_USER }}
-          password: ${{ secrets.CDMON_FTP_PASSWORD }}
-          # 02/10/2026: con FTP plano cdmon cortaba el canal de datos
-          # (ECONNRESET al crear la primera carpeta). FTPS explícito;
-          # `loose` porque se conecta por IP y el certificado es del dominio.
-          protocol: ftps
-          security: loose
-          timeout: 120000
-          local-dir: ./out/
-          server-dir: ./web/
+
+      - name: Subir zip y script a cdmon
+        env:
+          FTP_SERVER: ${{ secrets.CDMON_FTP_SERVER }}
+          FTP_USER: ${{ secrets.CDMON_FTP_USER }}
+          FTP_PASSWORD: ${{ secrets.CDMON_FTP_PASSWORD }}
+        run: |
+          clave=$(openssl rand -hex 16)
+          echo "::add-mask::$clave"
+          echo "CLAVE=$clave" >> "$GITHUB_ENV"
+          sed "s/__CLAVE__/$clave/g" scripts/descomprimir.php > descomprimir.php
+          for f in virens-web-estatica.zip descomprimir.php; do
+            curl --fail --silent --show-error --disable-epsv --retry 3 \
+              --user "$FTP_USER:$FTP_PASSWORD" -T "$f" "ftp://$FTP_SERVER/web/"
+            echo "Subido: $f"
+          done
+
+      - name: Descomprimir en el servidor
+        run: |
+          respuesta=$(curl --fail --silent --show-error --max-time 300 \
+            "https://lvirens.com/descomprimir.php?clave=$CLAVE")
+          echo "$respuesta"
+          grep -q '^LISTO' <<<"$respuesta"
