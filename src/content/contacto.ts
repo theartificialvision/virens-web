@@ -115,18 +115,34 @@ export const contactForm = {
     maxBytes: 10 * 1024 * 1024,
     tooLarge: 'El archivo supera los 10MB.',
   },
+  /**
+   * LITERAL (07/10/2026): documento del cliente «Formularios web», versión del
+   * 05/10/2026. Hay un texto por formulario: «Comercial - Compras» y «Trabaja
+   * con nosotros», que aquí es el departamento RRHH. «Información básica en
+   * protección de datos.-» se separa como título sin cambiar palabras.
+   */
+  privacyInfo: {
+    title: 'Información básica en protección de datos',
+    general: 'Conforme al RGPD y la LOPDGDD, LABORATORIOS VIRENS, S.L tratará los datos facilitados con la finalidad de gestionar y atender su solicitud. Para obtener más información acerca del tratamiento de sus datos y ejercer sus derechos, visite nuestra ',
+    jobs: 'De conformidad con el RGPD y la LOPDGDD, LABORATORIOS VIRENS, S.L tratará los datos facilitados con la finalidad de gestionar los procesos de selección abiertos y su participación en los mismos. Para obtener más información acerca del tratamiento de sus datos y ejercer sus derechos, visite nuestra ',
+    link: 'política de privacidad',
+    after: '.',
+  },
+  /** Casillas, nunca premarcadas. Solo la primera es obligatoria. */
   consent: {
-    before: 'He leído y acepto la ',
-    link: 'política de protección de datos',
+    before: 'ENTIENDO Y ACEPTO el tratamiento de mis datos tal y como se describe anteriormente y se explica con mayor detalle en la ',
+    link: 'Política de Privacidad',
     after: '.',
     href: '/legal/politica-de-privacidad',
   },
+  marketing: 'AUTORIZO el envío de comunicaciones comerciales.',
+  newsletter: 'AUTORIZO el envío de Newsletter.',
   submit: 'Enviar',
   // NO LITERAL (01/10/2026): avisos del envío, sin equivalente en el mockup.
   status: {
     sending: 'Enviando…',
     sent: 'Gracias. Hemos recibido tu mensaje.',
     error: 'No se ha podido enviar el mensaje. Inténtalo de nuevo o escríbenos a ',
-    invalid: 'Revisa los campos obligatorios y la aceptación de la política de datos.',
+    invalid: 'Revisa los campos obligatorios y la aceptación de la política de privacidad.',
   },
 } as const;

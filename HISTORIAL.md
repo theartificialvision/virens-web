@@ -234,3 +234,16 @@ buscar ahí solo si hace falta saber el porqué de una decisión antigua.
   todo listo (Node, identidad git, `npm install`, conexión con GitHub vía GitHub Desktop).
 - Corrección: sin zip (46 MB, y de todas formas hacía falta GitHub Desktop para subir).
   Se trae el proyecto clonando con GitHub Desktop, que deja la conexión hecha.
+
+## 2026-10-07 · Textos legales nuevos (versión del cliente del 05/10/2026)
+- Aviso legal y Política de privacidad sustituidos por los textos nuevos del cliente.
+  «Protección de datos» pasa a llamarse «Política de privacidad» en pie y pestañas.
+- Nueva **Política de cookies** (`/legal/politica-de-cookies`, `/en/legal/cookie-policy`),
+  enlazada en el pie. Sin aviso emergente: la web no instala cookies. La tabla de cookies del
+  documento llega vacía; en su lugar, una frase que dice que no hay ninguna.
+- Formulario de contacto: información básica de protección de datos + tres casillas sin marcar
+  (acepto —obligatoria—, comunicaciones comerciales, newsletter). Con RRHH sale el texto de
+  «Trabaja con nosotros». El PHP incluye las dos autorizaciones en el email.
+- No publicado (pendiente del cliente, en `site.pendingClientConfirmation`): Tomo/Folio/Sección/
+  Hoja del Registro Mercantil (en blanco) y el apartado de notificaciones push (de plantilla).
+- Inglés: traducción nuestra, pendiente de revisión. Condiciones de venta sin cambios.

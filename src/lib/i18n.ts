@@ -22,6 +22,8 @@ export const routes = {
   // de la web WordPress, el formulario y el pie.
   legalNotice: { es: '/legal/aviso-legal', en: '/en/legal/legal-notice' },
   privacy: { es: '/legal/politica-de-privacidad', en: '/en/legal/privacy-policy' },
+  // 07/10/2026: las rutas a las que ya apuntaba `redirects.mjs` (/uso-de-cookies/).
+  cookies: { es: '/legal/politica-de-cookies', en: '/en/legal/cookie-policy' },
   sales: { es: '/legal/condiciones-generales-de-venta', en: '/en/legal/sales-terms-and-conditions' },
 } as const satisfies Record<string, Record<Locale, string>>;
 

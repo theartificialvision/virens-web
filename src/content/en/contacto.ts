@@ -74,17 +74,26 @@ export const contactForm = {
     maxBytes: 10 * 1024 * 1024,
     tooLarge: 'The file exceeds 10MB.', // [TR]
   },
+  privacyInfo: {
+    title: 'Basic data protection information', // [TR]
+    general: 'In accordance with the GDPR and the Spanish LOPDGDD, LABORATORIOS VIRENS, S.L will process the data provided in order to manage and respond to your request. For more information on the processing of your data and to exercise your rights, please see our ', // [TR]
+    jobs: 'In accordance with the GDPR and the Spanish LOPDGDD, LABORATORIOS VIRENS, S.L will process the data provided in order to manage open selection processes and your participation in them. For more information on the processing of your data and to exercise your rights, please see our ', // [TR]
+    link: 'privacy policy', // [TR]
+    after: '.',
+  },
   consent: {
-    before: 'I have read and accept the ', // [EN]
-    link: 'data protection policy', // [EN]
+    before: 'I UNDERSTAND AND ACCEPT the processing of my data as described above and explained in more detail in the ', // [TR]
+    link: 'Privacy Policy', // [TR]
     after: '.',
     href: '/en/legal/privacy-policy',
   },
+  marketing: 'I AUTHORISE the sending of commercial communications.', // [TR]
+  newsletter: 'I AUTHORISE the sending of the Newsletter.', // [TR]
   submit: 'Send', // [TR]
   status: {
     sending: 'Sending…', // [TR]
     sent: 'Thank you. We have received your message.', // [TR]
     error: 'The message could not be sent. Please try again or write to us at ', // [TR]
-    invalid: 'Please check the required fields and accept the data protection policy.', // [TR]
+    invalid: 'Please check the required fields and accept the privacy policy.', // [TR]
   },
 } as const satisfies Loosen<typeof es.contactForm>;

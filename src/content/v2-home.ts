@@ -241,7 +241,8 @@ export const v2FooterNav = [
     title: 'Documentación',
     items: [
       { label: 'Aviso legal', href: '/legal/aviso-legal' },
-      { label: 'Protección de datos', href: '/legal/politica-de-privacidad' },
+      { label: 'Política de privacidad', href: '/legal/politica-de-privacidad' },
+      { label: 'Política de cookies', href: '/legal/politica-de-cookies' },
       { label: 'Política comercial', href: '/legal/condiciones-generales-de-venta' },
     ],
   },

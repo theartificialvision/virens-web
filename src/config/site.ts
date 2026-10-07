@@ -48,6 +48,11 @@ export const site = {
     'Denominación, entidad y alcance exactos de cada certificado',
     'Número de países de exportación actualizado (el dato "+20" es de 2015)',
     'Dirección postal definitiva (48-A / 48B)',
+    // 07/10/2026, textos legales del 05/10/2026 (ver `src/content/legal.ts`):
+    'Aviso legal: Tomo, Folio, Sección y Hoja del Registro Mercantil (llegan en blanco)',
+    'Privacidad: ¿hay notificaciones push? (apartado de plantilla, no publicado)',
+    'Revisión de la traducción inglesa de aviso legal, privacidad, cookies y formulario',
+    'Email de contacto legal: cgestion@ (textos legales) frente a csp@ (pie y Contacto)',
   ],
 } as const;
 

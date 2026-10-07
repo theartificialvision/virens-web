@@ -1,6 +1,13 @@
 import type { LegalDoc } from '../legal';
 
-/** Legal texts — literal from the client's English Word documents (29/09/2026). */
+/**
+ * Legal texts.
+ * - Legal notice, Privacy policy and Cookie policy: OUR translation (07/10/2026)
+ *   of the client's Spanish documents dated 05/10/2026 — the client has not sent
+ *   English versions. Pending client review. Same omissions as the Spanish
+ *   file (see the note at the top of `../legal.ts`).
+ * - Sales terms: literal from the client's English Word documents (29/09/2026).
+ */
 export const legalUi = {
   eyebrow: 'Documentation', // [TR]
   toc: 'Contents', // [TR]
@@ -8,140 +15,304 @@ export const legalUi = {
   company: 'Laboratorios Virens S.L.',
 } as const;
 
+const PRIVACY = '/en/legal/privacy-policy';
+
 export const legalDocs: readonly LegalDoc[] = [
   {
     key: 'legalNotice',
     title: "Legal notice",
     nav: "Legal notice",
-    description: "Legal notice of Laboratorios Virens S.L.: corporate information and website terms of use.",
+    description: "Legal notice of Laboratorios Virens S.L.: identification details and website terms of use.",
+    intro: [
+      "In accordance with Spanish Law 34/2002, of 11 July, on Information Society Services and Electronic Commerce, the following information is provided:",
+    ],
     sections: [
       {
-        heading: "Corporate information",
+        heading: "Identification details",
         body: [
-        "In accordance with the obligations established by Spanish Law 34/2002 on Information Society Services and Electronic Commerce, we inform you that this website is owned by LABORATORIOS VIRENS S.L., hereinafter VIRENS, with registered office at C/Industria 48-B Polígono Industrial Nord-Est 08740 Sant Andreu de la Barca - Barcelona (Spain); holder of Tax ID (C.I.F.) B64294473; and email address csp@lvirens.com",
-        "The company is registered in the Companies Register (Registro Mercantil) of Barcelona under registration number 146322.",
-        ],
-      },
-      {
-        heading: "Protection of content",
-        body: [
-        "The user acknowledges and accepts that all industrial and intellectual property rights over the content and/or any other element placed by VIRENS on this website (including, by way of example only and without limitation, all elements that make up the visual appearance, graphic image and other sensory stimuli of the website, or \"look and feel\": trademarks, logos, trade names, texts, images, graphics, designs, sounds, databases, software, flowcharts, presentation, navigation architecture, as well as the source code of the web pages) belong to VIRENS and/or to third parties who have assigned their rights to it.",
-        "Under no circumstances does access to the Website imply any kind of permission, waiver, transfer, licence or total or partial assignment of such rights by their holders, unless expressly stated otherwise. These terms and conditions of use of the Website do not grant users any right to use, alter, exploit, reproduce, distribute or publicly communicate the Website and/or its content other than those expressly provided for herein.",
-        "The use of these elements, their total or partial reproduction, communication and/or distribution for commercial or profit-making purposes, as well as their modification, alteration, decompilation and/or any other act of exploitation of the Website, is strictly prohibited.",
-        "Without prejudice to the foregoing, if the user or a third party considers that any content on the Website may infringe intellectual or industrial property rights, please let us know as soon as possible.",
-        ],
-      },
-      {
-        heading: "Access to and use of the website",
-        body: [
-        "Both access to the Website and any unauthorised use that may be made of the information contained on it are the sole responsibility of the person who carries them out.",
-        "The user undertakes to use the content, information and data of the Website in accordance with the conditions, terms and policies in force, with the applicable legislation, with generally accepted good practice and with public order.",
-        "The user shall refrain from using the content of the Website for unlawful purposes or with unlawful effects, for purposes that are prohibited by or contrary to those set out herein, that are harmful to the rights and interests of VIRENS, of other users or of third parties, or that may in any way damage, disable, overload or impair this Website or prevent its normal use or enjoyment by users. VIRENS shall not be liable for any consequence, damage or loss that may arise from such access or use or from failure to comply with these conditions, terms and policies, nor shall it be liable for any security failures that may occur or for any damage that may be caused to the user's computer system (hardware and software) or to the files or documents stored on it as a result of:",
-        { ordered: true, list: [
-            "The presence of a virus on the user's computer used to connect to the services and/or products offered by VIRENS through its Website;",
-            "A malfunction of the browser;",
-            "The use of outdated versions of the system.",
-          ] },
-        ],
-      },
-      {
-        heading: "Links to third parties",
-        body: [
-        "This Website may contain links to other websites. VIRENS accepts no responsibility for the content or the security measures of any other website that can be accessed from this Website; the user accesses such pages at their own sole risk.",
-        "Likewise, no guarantee is given that the content linked from the VIRENS Website is free of viruses or other elements that may cause alterations to the computer system (hardware and software) and/or to the user's documents or files, and VIRENS is likewise exempt from all liability for damage of any kind caused by any of the above.",
-        ],
-      },
-      {
-        heading: "Social media",
-        body: [
-        "Please note that VIRENS may have a presence on social media. The processing of the data of persons who become followers of the official VIRENS pages on social media (and/or who make any link or connection through social media) shall be governed by this section, as well as by the terms of use, privacy policies and access rules of the relevant social network in each case, previously accepted by the user. VIRENS will process your data for the purpose of properly managing its presence on the social network, informing you of VIRENS activities, products or services, and for any other purpose permitted by the rules of the social networks.",
-        "The publication of the following content is prohibited:",
+        "You are visiting the website www.lvirens.com, owned by LABORATORIOS VIRENS, S.L, with registered office at C/ Industria 48, Polig. Ind. Nord-Est (08740 Sant Andreu De La Barca) Barcelona (Spain), with Tax ID (NIF) B64294473, registered in the Companies Register (Registro Mercantil) of Barcelona. Hereinafter, the OWNER.",
+        "You may contact the Owner by any of the following means:",
         { ordered: false, list: [
-            "Content that is allegedly unlawful under national, EU or international law, or that involves allegedly unlawful activities or breaches the principles of good faith.",
-            "Content that violates the fundamental rights of individuals, breaches online etiquette, is offensive or may generate negative opinions among our users or third parties and, in general, any content considered inappropriate.",
-            "And, in general, content that breaches the principles of legality, honour, responsibility, protection of human dignity, protection of minors, protection of public order, protection of privacy, consumer protection and intellectual and industrial property rights.",
+            "Telephone: +34 936828972",
+            "Contact email: cgestion@lvirens.com",
           ] },
-        "Furthermore, VIRENS reserves the right to remove from the website or the corporate social network, without prior notice, any content deemed inappropriate.",
         ],
       },
       {
-        heading: "Amendment of the legal notice",
+        heading: "Users",
         body: [
-        "VIRENS reserves the right to amend this legal notice at any time and without prior notice in order to adapt it to new legislation or case law, as well as to changes or practices in the industry. The user is obliged to consult these conditions, terms and policies periodically in order to check for any changes, taking the date of the last update as a reference.",
+        "This document sets out the terms and conditions governing the use of the Owner's website and/or app, as well as the associated services and content. Such use implies acquiring the status of “user” and, with that status, a series of rights and obligations.",
+        "For the purposes described above, we inform you that it is your responsibility to access the legal conditions included on this website, as well as the privacy and cookie policies or, where applicable, the terms of sale, and to read them carefully. We recommend:",
+        { ordered: false, list: [
+            "That you visit them each time you intend to access or use the services and content of the site, and",
+            "That you print or store a copy on your system.",
+          ] },
+        ],
+      },
+      {
+        heading: "Use of the website",
+        body: [
+        "This website provides access to a wide range of information, services, programs or data (hereinafter, “the content”) on the Internet belonging to the Owner or its licensors, to which the User may have access.",
+        "The User assumes responsibility for the use of the website under the terms set out herein. This responsibility extends to any registration that may be required to access certain services or content. In such registration, the User shall be responsible for providing truthful and lawful information. As a result of this registration, the User may be provided with a password, for which they shall also be responsible, undertaking to use it diligently and confidentially.",
+        "The User undertakes to make appropriate use of the content and services (for example, chat services, discussion forums or newsgroups) offered by the Owner through its website and, by way of example but not limitation, not to use them to:",
+        { ordered: false, list: [
+            "Engage in unlawful or illegal activities or activities contrary to good faith and public order.",
+            "Disseminate racist, xenophobic, illegal pornographic content or propaganda, content that advocates terrorism or that violates human rights.",
+            "Cause damage to the physical and logical systems of the Owner, its suppliers or third parties, or introduce or spread computer viruses or any other physical or logical systems capable of causing the aforementioned damage.",
+            "Attempt to access and, where applicable, use the email accounts of other users and modify or manipulate their messages.",
+            "Use the website or the information it contains for commercial, political or advertising purposes or for any commercial use, especially the sending of unsolicited emails.",
+          ] },
+        "The Owner reserves the right to remove any comments and contributions that violate respect for the dignity of the person, that are discriminatory, xenophobic, racist or pornographic, that threaten young people or children, public order or safety, or that, in its opinion, are not suitable for publication. In any case, the Owner shall not be responsible for the opinions expressed by users through forums, chats or other participation tools.",
+        ],
+      },
+      {
+        heading: "Data protection",
+        body: [
+        `Everything relating to the processing of your personal data is set out in the [Privacy policy](${PRIVACY}).`,
+        ],
+      },
+      {
+        heading: "Content. Intellectual and industrial property",
+        body: [
+        "The Owner holds all intellectual and industrial property rights to its website, as well as to the elements contained therein (by way of example: images, photographs, sound, audio, video, software or texts, trademarks or logos, colour combinations, structure and design, selection of materials used, computer programs necessary for its operation, access and use, etc.), owned by the Owner or by its licensors.",
+        "All rights reserved. Under the provisions of articles 8 and 32.1, second paragraph, of the Spanish Intellectual Property Law, the reproduction, distribution and public communication, including making available, of all or part of the content of this website for commercial purposes, in any medium and by any technical means, without the Owner's authorisation, are expressly prohibited.",
+        ],
+      },
+      {
+        heading: "Disclaimer of warranties and liability",
+        body: [
+        "The User acknowledges that the use of the website and its content and services is carried out under their sole responsibility. Specifically, and merely by way of example, the Owner accepts no liability in the following areas:",
+        { ordered: false, list: [
+            "The availability of the website, its services and content, and their quality or interoperability.",
+            "Whether the website serves the User's purposes.",
+            "Any breach of current legislation by the User or third parties and, in particular, of intellectual and industrial property rights held by other persons or entities.",
+            "The existence of malicious code or any other harmful computer element that could affect the computer system of the User or third parties. The entity takes measures to protect the website against cyberattacks. However, it cannot guarantee that unauthorised access by third parties will not occur. It is therefore the User's responsibility to have suitable tools for detecting and removing such elements.",
+            "Fraudulent access to the content or services by unauthorised third parties or, where applicable, the capture, deletion, alteration, modification or manipulation of messages and communications of any kind that such third parties may carry out.",
+            "Damage caused to computer equipment while accessing the website and damage caused to Users when it originates from failures or disconnections in telecommunications networks that interrupt the service.",
+            "Damage or loss arising from unforeseeable circumstances or force majeure.",
+            "Where forums or other similar spaces exist, it should be borne in mind that messages reflect only the opinion of the User who sends them, who is solely responsible for them. Consequently, the Owner is not responsible for the content of messages sent by the User.",
+          ] },
+        ],
+      },
+      {
+        heading: "Changes to this legal notice and duration",
+        body: [
+        "The Owner reserves the right to make, without prior notice, any changes it deems appropriate to its website, and may change, delete or add content and services provided through it, as well as the way in which they are presented or located on its website.",
+        "These conditions shall remain in force for as long as they are displayed, until they are amended by others duly published.",
+        ],
+      },
+      {
+        heading: "Links",
+        body: [
+        "If www.lvirens.com includes links or hyperlinks to other Internet sites, the Owner shall not exercise any control over those sites and their content, nor shall it assume any responsibility for the content of any link belonging to a third-party website, nor guarantee the technical availability, quality, reliability, accuracy, completeness, truthfulness, validity or constitutionality of any material or information contained in any such hyperlinks or other Internet sites. Likewise, the inclusion of these external connections shall not imply any kind of association, merger or participation with the connected entities. Notwithstanding the above, if LABORATORIOS VIRENS, S.L becomes aware that the activity or information referred to or recommended is unlawful, or that it harms property or rights of a third party liable for compensation, such data will be removed or the corresponding link disabled.",
+        ],
+      },
+      {
+        heading: "Right of exclusion",
+        body: [
+        "The Owner reserves the right to deny or withdraw access to the website and/or the services offered, without prior notice, on its own initiative or at the request of a third party, to users who breach the content of this Legal Notice.",
+        ],
+      },
+      {
+        heading: "General provisions",
+        body: [
+        "The Owner will pursue any breach of these conditions, as well as any improper use of its website, exercising all civil and criminal actions to which it may be legally entitled.",
+        ],
+      },
+      {
+        heading: "Applicable law and jurisdiction",
+        body: [
+        "The relationship between the Owner and the User shall be governed by current Spanish law. All disputes and claims arising from this legal notice shall be settled by the competent Spanish consumer and user courts and tribunals.",
+        ],
+      },
+      {
+        heading: "Minors",
+        body: [
+        "This website addresses its services to users over 18 years of age. Minors are not authorised to use our services and must not, therefore, send us their personal data. We inform you that, should this occur, the Owner shall not be responsible for any consequences that may arise from failure to comply with the notice set out in this clause.",
+        ],
+      },
+      {
+        heading: "Security measures - SSL",
+        body: [
+        "The Owner has obtained an SSL («Secure Sockets Layer») certificate for its website. This SSL certificate protects all personal and confidential information that may be handled on a website, regardless of the information being transmitted, for example, from any of the website's contact forms to the server, or the data entered to subscribe to newsletters, access protected areas, etc.",
+        "The website address will appear in green, activating the “https” protocol, which allows secure connections from a web server to the user's browser.",
         ],
       },
     ],
+    revised: "Last revised 5 October 2026",
   },
   {
     key: 'privacy',
-    title: "Data protection policy",
-    nav: "Data protection",
-    description: "Data protection policy of Laboratorios Virens S.L. under the GDPR.",
+    title: "Privacy policy",
+    nav: "Privacy policy",
+    description: "Privacy policy of Laboratorios Virens S.L. in accordance with the GDPR and the Spanish LOPDGDD.",
+    intro: [
+      "The purpose of this policy is to inform data subjects about the different processing operations carried out by this organisation through the website that affect their personal data, in accordance with Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016 and Spanish Organic Law 3/2018, of 5 December, on the Protection of Personal Data and the guarantee of digital rights.",
+    ],
     sections: [
       {
-        heading: "Data controller",
+        heading: "Identity and contact details of the controller",
         body: [
-        "The personal data you provide to us as a user through the website www.lvirens.com (hereinafter, the \"Website\") will be included in a file owned by LABORATORIOS VIRENS S.L., hereinafter VIRENS, with registered office at C/Industria 48-B Polígono Industrial Nord-Est 08740 Sant Andreu de la Barca - Barcelona (Spain); holder of Tax ID (N.I.F.) no. B64294473; and email address csp@lvirens.com",
-        "The processing of your data and this Privacy Policy shall be governed by the General Data Protection Regulation (Regulation (EU) 2016/679) (the \"GDPR\").",
+        "LABORATORIOS VIRENS, S.L, with registered address at C/ Industria 48, Polig. Ind. Nord-Est (08740 Sant Andreu De La Barca) Barcelona (Spain), Tax ID (NIF) B64294473, contact telephone +34 936828972 and email cgestion@lvirens.com",
         ],
       },
       {
-        heading: "Purpose",
+        heading: "Purposes of processing your personal data",
         body: [
-        "In order to use certain services, the user must provide personal data. By ticking the box provided in the contact forms on the website, users expressly, freely and unequivocally accept that their personal data be processed by VIRENS, which will inform the user, in order to analyse the information arising from this management so as to improve our services and adapt them to users' preferences, for the following purposes:",
+        { subheading: "Users/visitors of the controller's website" },
+        "We will process the personal data provided in order to:",
         { ordered: false, list: [
-            "To provide you with access to the Website and improve the user experience.",
-            "To manage the services requested on the Website.",
-            "To provide data subjects with offers of products and services of interest to them.",
-            "To draw up a \"commercial profile\" based on the information provided. No automated decisions will be taken on the basis of this profile.",
+            "Respond to requests, complaints and incidents submitted through the contact channels on the website.",
+            "Understand visitor behaviour on the website in order to detect possible cyberattacks against our website.",
+            "Comply with the legal obligations directly applicable to us and governing our activity.",
+            "Protect and exercise our rights or respond to claims of any kind.",
+            "Where applicable, send commercial communications relating to the goods or services that make up our activity and/or news or newsletters related to our sector. Refusal to give us your authorisation will mean that the entity cannot send you information.",
+            "Where applicable, manage your participation in competitions and promotions run by the entity. Refusal to give us your authorisation will mean that you cannot take part.",
+            "Where applicable, send satisfaction and/or quality surveys. Refusal to give us your authorisation will mean that the service provided cannot be evaluated.",
+          ] },
+        { subheading: "Job candidates or applicants" },
+        "In addition to the purposes set out in the section «users/visitors of the website», we will process the personal data provided in order to:",
+        { ordered: false, list: [
+            "Manage your application in the selection process and keep you informed about it.",
           ] },
         ],
       },
       {
-        heading: "Legal basis",
+        heading: "Legal basis for processing",
         body: [
-        "By sending their personal data to VIRENS, the user expressly consents to VIRENS carrying out the following activities and/or actions, unless otherwise indicated when contracting or subscribing to any VIRENS product and/or service, or as a result of a subsequent withdrawal of the consent initially given:",
+        { subheading: "Users/visitors of the controller's website" },
         { ordered: false, list: [
-            "Sending commercial and/or promotional communications on paper, informing users of activities, promotions, advertising, news, offers and other information about services and products related to the commercial activity.",
-            "Sending commercial communications by electronic means, informing users of activities, promotions, advertising, news, offers and other information about VIRENS services and products that are the same as or similar to those initially contracted or of interest to the user.",
-            "Processing orders or responding to requests made by the user through any of the contact methods made available on the VIRENS website.",
-            "Carrying out statistical studies.",
-            "Or, where provided for on our website, processing your user registration request and/or your order for products offered by VIRENS. Once your request has been confirmed and accepted, the user will receive a confirmation email at the address provided when completing the registration form.",
+            "The consent you have given us to process your data for the stated purposes. Refusal to provide your personal data will mean that it cannot be processed for those purposes.",
+            "Compliance with the legal obligations that apply to us. In this case, the data subject may not object to the processing of personal data.",
+            "Our legitimate interest in protecting our image, business and track record by preventing attacks on our website. In this case, the data subject may not object to the processing of personal data, although they may exercise, where applicable, the rights set out in the «rights» section of this policy.",
           ] },
-        "Notwithstanding the foregoing, any information sent by VIRENS —including by electronic means— to VIRENS users for the purpose of carrying out, performing and/or developing any service subscribed to or contracted by the user —even if not subscribed to by electronic means—, as well as all other tasks, actions and/or activities arising from that contractual and/or commercial relationship, shall not be considered commercial and/or advertising communications.",
-        "By sending your data, you consent to VIRENS processing your personal data for the purposes described. You warrant that the data provided are true, accurate and complete, and you are responsible for notifying any changes to them.",
+        { subheading: "Job candidates or applicants" },
+        { ordered: false, list: [
+            "The consent you have given us to process your data for the stated purposes. Refusal to provide your personal data will mean that it cannot be processed for those purposes.",
+            "Compliance with the legal obligations that apply to us. In this case, the data subject may not object to the processing of personal data.",
+            "Our legitimate interest in protecting our image, business and track record by preventing attacks on our website. In this case, the data subject may not object to the processing of personal data, although they may exercise, where applicable, the rights set out in the «rights» section of this policy.",
+          ] },
+        ],
+      },
+      {
+        heading: "Data retention periods or criteria",
+        body: [
+        "The personal data provided will be kept for as long as necessary to fulfil the purposes for which they were originally collected.",
+        "Once the data are no longer necessary for the processing in question, they will be kept duly blocked in order to make them available, where appropriate, to the competent Public Administrations and Bodies, Judges and Courts or the Public Prosecutor, during the limitation period for any actions that may arise from the relationship with the client and/or the legally established retention periods.",
+        "If you have provided us with your CV, we will keep your data for a maximum period of two years from receipt, at which point we will delete them, unless you have updated your data or authorised us to keep them for a longer period. For the relevant purposes, we inform you that you may withdraw your consent at any time.",
+        ],
+      },
+      {
+        heading: "Automated decisions and profiling",
+        body: [
+        "The website does not make automated decisions or create profiles.",
         ],
       },
       {
         heading: "Recipients",
         body: [
-        "The data will be disclosed to other companies of the VIRENS business group for internal administrative purposes, including the processing of personal data of customers or employees.",
+        "During the period in which your personal data are processed, the organisation may disclose your data to the following recipients:",
         { ordered: false, list: [
-            "CDMon (10DENCEHISPAHARD, S.L.) as hosting provider.",
+            "Judges and Courts.",
+            "State Security Forces and Bodies.",
+            "Other competent public authorities or bodies, where the controller is legally obliged to provide the personal data.",
           ] },
-        "The files are stored with our technology providers for web storage, email and online marketing, in accordance with the EU-US Privacy security framework.",
-        "By accepting this privacy policy, you expressly authorise us to process and disclose your personal data to the aforementioned companies and/or to transfer the personal data to the aforementioned service providers, as data processors, for the purposes described and in order to provide you with a complete service.",
-        "VIRENS expressly informs and guarantees users that their personal data will under no circumstances be transferred to third-party companies, and that, whenever any transfer of personal data is to take place, the express, informed and unequivocal consent of the data subjects will be requested in advance.",
+        ],
+      },
+      {
+        heading: "International data transfers",
+        body: [
+        "The organisation does not carry out any International Data Transfer. Should it later become necessary to carry out international data transfers, the level of protection of the destination country will be verified and the safeguards required by law will be adopted.",
+        ],
+      },
+      {
+        heading: "Social networks",
+        body: [
+        "In order to involve you in our activity and keep you up to date with our news, we inform you that LABORATORIOS VIRENS, S.L has a profile on Social Networks.",
+        "All users have the opportunity to join our social networks or groups. However, please bear in mind that, unless we request your data directly (for example, through marketing actions, competitions, promotions or any other valid means), your data will belong to the corresponding Social Network, so we recommend that you read its terms of use and privacy policies carefully and make sure you configure your preferences regarding the processing of your data.",
+        "Below is the link to the privacy policy of the Social Networks on which we are present, so that you can access their privacy policies at any time and configure your profile to guarantee your privacy:",
+        { ordered: false, list: [
+            "LinkedIn: [https://www.linkedin.com/legal/privacy-policy](https://www.linkedin.com/legal/privacy-policy)",
+          ] },
         ],
       },
       {
         heading: "Rights",
         body: [
-        "In accordance with data protection legislation, you have the rights of information, access, rectification, erasure, objection and portability. You have the right to obtain confirmation as to whether or not VIRENS is processing personal data concerning you. Data subjects have the right to access their personal data, as well as to request the rectification of inaccurate data or, where appropriate, to request its erasure when, among other reasons, the data are no longer necessary for the purposes for which they were collected.",
-        "In certain circumstances, data subjects may request the restriction of the processing of their data, in which case we will only retain them for the exercise or defence of claims.",
-        "In certain circumstances and for reasons related to their particular situation, data subjects may object to the processing of their data. VIRENS will stop processing the data, except for compelling legitimate grounds or for the exercise or defence of possible claims.",
-        "You may exercise your rights of access, rectification, erasure, objection and portability by sending an email to email@laempresa.com or by post to VIRENS, C/Industria 48-B Polígono Industrial Nord-Est 08740 Sant Andreu de la Barca - Barcelona (Spain), stating your full name, the specific request you are making and an address for notification purposes, and enclosing a copy of your national ID card (DNI) or another valid identity document.",
-        "Furthermore, VIRENS undertakes to guarantee the confidentiality of your personal data and to use them in accordance with the purposes indicated above.",
-        "Likewise, it will adopt all necessary measures to prevent their alteration, loss, processing or unauthorised access, in accordance with the provisions of personal data protection legislation.",
+        "Data subjects may request further information about the processing of their personal data and may exercise, at any time and free of charge, the rights of access, rectification and erasure, as well as request the restriction of the processing of their personal data, object to it, request its portability (where technically possible) or withdraw the consent given and, where applicable, not be subject to a decision based solely on automated processing, including profiling.",
+        "To do so, you may use the forms provided by the organisation, or write to the postal or email address given at the beginning of this policy. For the relevant purposes, we inform you that you may be asked for your ID card or any similar document in order to verify your identity, provided that this cannot be done by other less intrusive means.",
+        "If you feel that your rights regarding the protection of your personal data have been infringed, especially when you have not obtained satisfaction in exercising your rights, you may lodge a complaint with the competent Data Protection Supervisory Authority (Spanish Data Protection Agency, AEPD) through its website [www.aepd.es](https://www.aepd.es)",
+        "In accordance with article 21 of Spanish Law 34/2002 on Information Society Services and Electronic Commerce, if you no longer wish to receive information about our services, you may unsubscribe by sending an email to cgestion@lvirens.com with the subject “BAJAS” (unsubscribe).",
         ],
       },
       {
-        heading: "Data retention period",
+        heading: "Accuracy of data",
         body: [
-        "We will keep your personal data for as long as the contractual relationship with us remains in force and, once it has ended, for the limitation periods of any obligations that may have arisen from the processing of the data and/or for the periods established by law.",
+        "The data subject guarantees that the data provided are true, accurate, complete and up to date, and undertakes to report any change to them through the channels provided for this purpose and indicated in point one of this policy. The data subject shall be liable for any direct or indirect damage or loss that may result from failure to comply with this obligation.",
+        "Should the user provide data of third parties, they declare that they have the consent of those data subjects and undertake to pass on to them the information contained in this clause, releasing the organisation from any liability arising from failure to comply with this obligation.",
+        ],
+      },
+      {
+        heading: "Changes and updates",
+        body: [
+        "This privacy policy may be modified/updated in accordance with legal requirements or in order to adapt it to the instructions issued by the Spanish Data Protection Agency, or as a result of changes to our website. For this reason, we advise users to visit our Privacy Policy periodically.",
+        "If you have any questions about this policy, you may contact LABORATORIOS VIRENS, S.L through the forms provided by the organisation, or write to the postal or email address given at the beginning of this policy.",
         ],
       },
     ],
+    revised: "Last revised 5 October 2026",
+  },
+  {
+    key: 'cookies',
+    title: "Cookie policy",
+    nav: "Cookie policy",
+    description: "Cookie policy of Laboratorios Virens S.L.: what cookies are and which ones this website uses.",
+    sections: [
+      {
+        heading: "Use of cookies. What are cookies?",
+        body: [
+        "Cookies are files that are downloaded to your computer, smartphone or tablet when you access certain web pages, and which store and retrieve information while you browse. The use of cookies offers numerous advantages in the provision of Information Society services since, among others, they:",
+        { ordered: true, alpha: true, list: [
+            "make it easier for the user to browse the Website;",
+            "make it easier for the user to access the different services offered by the Website;",
+            "save the user from having to reconfigure the general predefined settings each time they access the Website;",
+            "help improve the operation and services provided through the Website, after analysing the information obtained through the cookies installed;",
+            "allow a Website, among other things, to store and retrieve information about the browsing habits of a user or their device and, depending on the information they contain and the way the device is used, they can be used to recognise the user.",
+          ] },
+        "In accordance with Spanish Law 34/2002, of 11 July, on Information Society Services and Electronic Commerce, and Regulation (EU) 2016/679 of the European Parliament and of the Council of 27 April 2016, we inform you that this website does not use cookies to collect information from users. Only technical and personalisation cookies are used, in order to allow you to browse and to enable you to set your preferences.",
+        "In order to provide you with as much information as possible, we first classify cookies according to a series of categories:",
+        { subheading: "Types of cookies according to the entity that manages them" },
+        { ordered: true, alpha: true, list: [
+            "First-party cookies: those for which the publisher itself is responsible and which are generally sent to the user's terminal from a device or domain managed by the publisher and from which the service requested by the user is provided.",
+            "Third-party cookies: those for which an entity other than the publisher is responsible and which are generally sent to the user's terminal from a device or domain not managed by the publisher, but by another entity that processes the data obtained through the cookies.",
+          ] },
+        { subheading: "Types of cookies according to their purpose" },
+        { ordered: true, alpha: true, list: [
+            "Technical cookies: those that allow the user to browse a website, platform or application and use the different options or services it offers, including those the publisher uses to manage and operate the website and enable its functions and services, for example, controlling traffic and data communication, identifying the session, accessing restricted areas, carrying out the purchase process, storing content, broadcasting video or sound, enabling dynamic content, etc.",
+            "Preference or personalisation cookies: those that allow information to be remembered so that the user accesses the service with certain characteristics that may differentiate their experience from that of other users, for example, the language, the number of results to display when the user carries out a search, etc.",
+            "Analytics or measurement cookies: those that allow the party responsible for them to monitor and analyse the behaviour of users of the websites to which they are linked, including measuring the impact of advertisements.",
+            "Behavioural advertising cookies: those that store information on user behaviour obtained through continuous observation of their browsing habits, which makes it possible to develop a specific profile to display advertising based on it.",
+          ] },
+        { subheading: "Types of cookies according to how long they remain active" },
+        { ordered: true, alpha: true, list: [
+            "Session cookies: those designed to collect and store data while the user accesses a web page. They are usually used to store information that is only of interest for providing the service requested by the user on a single occasion (for example, a list of products purchased) and disappear at the end of the session.",
+            "Persistent cookies: those in which the data remain stored on the terminal and can be accessed and processed for a period defined by the party responsible for the cookie, which can range from a few minutes to several years.",
+          ] },
+        { subheading: "Cookies we use" },
+        "This website does not currently install any cookies on your device.",
+        "The website owned by LABORATORIOS VIRENS, S.L may contain links to third-party websites, whose privacy policies are independent of that of LABORATORIOS VIRENS, S.L. When accessing such websites, you can decide whether to accept their privacy and cookie policies. In general, when browsing the Internet you can accept or reject third-party cookies from your browser's settings. LABORATORIOS VIRENS, S.L is not responsible, under any circumstances, for the content or accuracy of the policies and/or terms of use and privacy of third parties.",
+        ],
+      },
+      {
+        heading: "Changes. Updates",
+        body: [
+        "This cookie policy may be modified/updated in accordance with legal requirements or in order to adapt it to the instructions issued by the Spanish Data Protection Agency, or due to updates to the website. For this reason, we advise users to visit our cookie policy periodically.",
+        "If you have any questions about this cookie policy, you may contact LABORATORIOS VIRENS, S.L at the following email address: cgestion@lvirens.com",
+        `For further information on the processing of your personal data, please see our [Privacy Policy](${PRIVACY})`,
+        ],
+      },
+    ],
+    revised: "Last revised 5 October 2026",
   },
   {
     key: 'sales',

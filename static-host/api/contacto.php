@@ -74,7 +74,9 @@ $body = "Nuevo mensaje desde el formulario de contacto de {$host}\n\n"
     . "Email: {$email}\n"
     . 'Teléfono: ' . ($phone !== '' ? $phone : '—') . "\n"
     . 'Asunto: ' . ($subject !== '' ? $subject : '—') . "\n"
-    . "Aceptación de la política de protección de datos: sí\n"
+    . "Acepta la política de privacidad: sí\n"
+    . 'Autoriza comunicaciones comerciales: ' . (line('comunicaciones') !== '' ? 'sí' : 'no') . "\n"
+    . 'Autoriza el envío de Newsletter: ' . (line('newsletter') !== '' ? 'sí' : 'no') . "\n"
     . 'Fecha: ' . date('d/m/Y H:i') . "\n\n"
     . "Mensaje:\n{$message}\n";
 

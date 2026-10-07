@@ -189,7 +189,8 @@ export const v2FooterNav = [
     title: 'Documentation', // [TR]
     items: [
       { label: 'Legal notice', href: '/en/legal/legal-notice' },
-      { label: 'Data protection', href: '/en/legal/privacy-policy' },
+      { label: 'Privacy policy', href: '/en/legal/privacy-policy' },
+      { label: 'Cookie policy', href: '/en/legal/cookie-policy' },
       { label: 'Commercial policy', href: '/en/legal/sales-terms-and-conditions' },
     ],
   },

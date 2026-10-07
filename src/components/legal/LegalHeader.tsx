@@ -7,7 +7,7 @@ import { pathFor, type Locale } from '@/lib/i18n';
 
 /**
  * Cabecera de los textos legales: banda azul corporativa con el título y, abajo,
- * las tres pestañas de «Documentación» (la activa lleva el filete teal de los
+ * las pestañas de «Documentación» (la activa lleva el filete teal de los
  * títulos de sección). Mismo lenguaje que el resto de la web: sin tarjetas.
  */
 export function LegalHeader({ doc, docs, ui, locale }: {

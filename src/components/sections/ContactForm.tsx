@@ -1,12 +1,12 @@
 'use client';
 
-import Link from 'next/link';
 import { buttonStyles } from '@/components/ui/Button';
 import { cn } from '@/lib/utils';
 import { useId, useState, type CSSProperties } from 'react';
 import type { ContactDepartment, ContactField } from '@/lib/types';
 import { ContactIcon } from '@/components/ui/ContactIcon';
 import { ContactAttach } from './ContactAttach';
+import { ContactConsent } from './ContactConsent';
 import { contactContent } from '@/content';
 import { site } from '@/config/site';
 import { useContactSubmit } from '@/lib/useContactSubmit';
@@ -104,16 +104,7 @@ export function ContactForm({
 
       <ContactAttach key={sent} locale={locale} />
 
-      <div className="mt-6 flex items-start gap-3">
-        <input id={`${uid}-consent`} type="checkbox" name="consentimiento" required className="contact-consent" />
-        <label htmlFor={`${uid}-consent`} className="text-[length:var(--text-small)] leading-snug text-gray-700">
-          {contactForm.consent.before}
-          <Link href={contactForm.consent.href} className="font-semibold text-tech underline underline-offset-2">
-            {contactForm.consent.link}
-          </Link>
-          {contactForm.consent.after}
-        </label>
-      </div>
+      <ContactConsent uid={uid} locale={locale} jobs={department === 'rrhh'} />
 
       <button
         type="submit"

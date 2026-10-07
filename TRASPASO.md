@@ -44,8 +44,10 @@ Resumen vigente para quien retome. Reglas en `CLAUDE.md`; guías para personas e
   stand e imágenes (`public/img/cphi/`), y cambiar `SEEN_KEY` en `CphiPopup.tsx` para que vuelva a
   salir a quien ya vio el anterior. La nota de la tarjeta `.vcf` (`src/app/virens-labs.vcf/`)
   menciona CPHI: actualizarla o quitarla.
-- **Política de cookies:** no hay texto; `/uso-de-cookies` redirige a una página inexistente (404).
-- **Legales:** falta el email real para derechos RGPD (el texto trae «email@laempresa.com»).
+- **Legales (07/10/2026):** aviso legal, privacidad y cookies con los textos del cliente del
+  05/10/2026; formulario con sus casillas nuevas. Pendiente del cliente: Tomo/Folio/Sección/Hoja
+  del Registro Mercantil, si hay notificaciones push, revisar el inglés (traducción nuestra) y si
+  el email legal es cgestion@ o csp@. Detalle al principio de `src/content/legal.ts`.
 - **Datos sin confirmar por el cliente:** `site.pendingClientConfirmation` en `src/config/site.ts`.
 - **Inglés `[TR]`** pendiente de revisión por el cliente.
 - **Sello «FDA Approved»** publicado por decisión del cliente (02/10); la FDA no «aprueba»

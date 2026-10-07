@@ -21,7 +21,7 @@ interface Ui {
   nav: {
     backTo: string;
     /** Rótulo de cada página tal como se nombra en «Volver a …». */
-    pages: Record<'home' | 'company' | 'tech' | 'contact' | 'legalNotice' | 'privacy' | 'sales', string>;
+    pages: Record<'home' | 'company' | 'tech' | 'contact' | 'legalNotice' | 'privacy' | 'cookies' | 'sales', string>;
   };
   meta: {
     defaultTitle: string;
@@ -52,7 +52,7 @@ export const ui: Record<Locale, Ui> = {
     },
     nav: {
       backTo: 'Volver a',
-      pages: { home: 'Inicio', company: 'Compañía', tech: 'Virens Tech', contact: 'Contacto', legalNotice: 'Aviso legal', privacy: 'Protección de datos', sales: 'Política comercial' },
+      pages: { home: 'Inicio', company: 'Compañía', tech: 'Virens Tech', contact: 'Contacto', legalNotice: 'Aviso legal', privacy: 'Política de privacidad', cookies: 'Política de cookies', sales: 'Política comercial' },
     },
     meta: {
       defaultTitle: 'Laboratorios Virens · Fabricación de complementos alimenticios',
@@ -95,7 +95,7 @@ export const ui: Record<Locale, Ui> = {
     },
     nav: {
       backTo: 'Back to', // [TR]
-      pages: { home: 'Home', company: 'Company', tech: 'Virens Tech', contact: 'Contact', legalNotice: 'Legal notice', privacy: 'Data protection', sales: 'Commercial policy' },
+      pages: { home: 'Home', company: 'Company', tech: 'Virens Tech', contact: 'Contact', legalNotice: 'Legal notice', privacy: 'Privacy policy', cookies: 'Cookie policy', sales: 'Commercial policy' },
     },
     meta: {
       defaultTitle: 'Laboratorios Virens · Food supplement manufacturing', // [TR]
