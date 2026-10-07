@@ -12,7 +12,7 @@ Resumen vigente para quien retome. Reglas en `CLAUDE.md`; guías para personas e
 | Web de pruebas | https://virenslab.netlify.app (Netlify `virenslab`), se actualiza sola con cada push a `v2`. |
 | WordPress anterior | Guardado en cdmon en `backup_db/oldvirens`. |
 | Material original (vídeos, logos, referencias) | Fuera del repo: carpeta `material/` en iCloud de Ignacio. Al socio se le comparte aparte (iCloud/Drive). |
-| Equipo | Desde el 07/10/2026 lo lleva **el socio de Ignacio** (Mac + app de Claude, pestaña Code, sesión local; recibió el proyecto en zip con `.git`). Ignacio solo toca algo si se lo pide. Normas en `EMPEZAR-AQUI.md`. |
+| Equipo | Desde el 07/10/2026 lo lleva **el socio de Ignacio** (Mac + app de Claude, pestaña Code, sesión local; clonado con GitHub Desktop). Ignacio solo toca algo si se lo pide. Normas en `EMPEZAR-AQUI.md`. |
 | Restos antiguos | Repo `theartificialvision/VIrensLab` y proyectos Netlify `virens-v2`, `virenslabv2`, `virens-web`: pruebas viejas, no usar. |
 
 ## Cómo se publica (técnico)

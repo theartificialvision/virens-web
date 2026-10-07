@@ -20,17 +20,16 @@ y guía paso a paso cuando haya que hacer algo fuera del editor.
 
 ## Primera vez en un Mac nuevo («es mi primera vez», «déjalo todo listo»)
 
-El proyecto le llega como zip (carpeta con `.git` incluido, sin `node_modules`). Revisar y
+La persona ha clonado el repo con GitHub Desktop (así queda conectada a GitHub). Revisar y
 resolver en este orden, explicando cada paso en una frase y sin jerga:
 
 1. `node -v`: si falta, mandarle a https://nodejs.org (botón LTS) y esperar a que lo instale.
-2. `git -C . status` y `git remote -v` (debe ser `theartificialvision/virens-web`, rama `v2`).
-   Pedirle su nombre y email y fijarlos con `git config user.name` / `user.email` (solo en este repo).
-3. `npm install`, luego arrancar (`npm run dev`) y enseñarle la web en localhost:3000.
-4. Conectar GitHub: `git pull --ff-only origin v2`; si pide usuario o contraseña, o falla el
-   permiso, guiarle: aceptar la invitación al repo (email de GitHub) → instalar GitHub Desktop
-   (https://desktop.github.com) → **Sign in** → **File → Add Local Repository** → esta carpeta.
-   Con eso queda conectado; si un push sigue fallando, que pulse **Push origin** en GitHub Desktop.
+2. `git status` y `git remote -v` (debe ser `theartificialvision/virens-web`, rama `v2`; si está
+   en otra rama, cambiar a `v2`). Si `git config user.name` está vacío, pedirle nombre y email y
+   fijarlos solo en este repo.
+3. `npm install`, arrancar (`npm run dev`) y enseñarle la web en localhost:3000.
+4. Comprobar la conexión con `git pull --ff-only origin v2`. Si un push falla por permisos o
+   pide contraseña: que pulse **Push origin** en GitHub Desktop (ya tiene sesión iniciada).
 5. Terminar con un resumen de cinco líneas: cómo pedir cambios, «guarda y sube a v2» (pruebas en
    virenslab.netlify.app) y «publica en lvirens.com».
 

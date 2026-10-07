@@ -23,23 +23,22 @@ mal. Esta página es el resumen rápido.
 
 ## Preparar el Mac (una sola vez, ~15 minutos)
 
-Lo más fácil, y como se hace por defecto:
-
-1. Instalar **Node.js** (https://nodejs.org → botón «LTS») y la **app de
-   Claude** (https://claude.ai/download). Abrir la app e iniciar sesión.
-2. Descomprimir el zip `virens-web.zip` en **Documentos**. Queda la carpeta
-   `Documentos/virens-web`. Esta carpeta ya es el proyecto conectado a GitHub.
-3. App de Claude → pestaña **Code** → trabajar en **tu Mac** → elegir la carpeta
-   `Documentos/virens-web` y escribir:
+1. **Instalar tres programas** (como cualquier app):
+   - **Node.js**: https://nodejs.org → botón «LTS».
+   - **GitHub Desktop**: https://desktop.github.com.
+   - **App de Claude**: https://claude.ai/download → iniciar sesión.
+2. **Traer el proyecto** con GitHub Desktop (antes, aceptar la invitación que
+   llega por email de GitHub):
+   **Sign in to GitHub.com** → **File → Clone Repository** →
+   `theartificialvision/virens-web` → carpeta `Documentos/virens-web` →
+   **Clone**. Arriba, en **Current Branch**, elegir **`v2`**.
+3. **Abrir en Claude:** app de Claude → pestaña **Code** → trabajar en **tu Mac**
+   → elegir la carpeta `Documentos/virens-web` y escribir:
 
    > Es mi primera vez. Lee EMPEZAR-AQUI.md y déjalo todo listo.
 
-Claude comprueba lo que falta, instala lo necesario, arranca la web y te guía
-para conectar tu cuenta de GitHub (hace falta para guardar y publicar). Si pide
+Claude comprueba lo que falta, instala lo necesario y te enseña la web. Si pide
 permiso para algo («Allow»), es normal.
-
-(Otra forma, sin zip: clonar el repo con GitHub Desktop. Ver
-[`GUIA-PRINCIPIANTES.md`](GUIA-PRINCIPIANTES.md) §3.)
 
 ## El día a día
 

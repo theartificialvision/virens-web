@@ -232,3 +232,5 @@ buscar ahí solo si hace falta saber el porqué de una decisión antigua.
   descomprimir y abrirla en la app de Claude. `EMPEZAR-AQUI.md`: preparar el Mac en
   3 pasos. `CLAUDE.md`: lista de «primera vez en un Mac nuevo» para que Claude deje
   todo listo (Node, identidad git, `npm install`, conexión con GitHub vía GitHub Desktop).
+- Corrección: sin zip (46 MB, y de todas formas hacía falta GitHub Desktop para subir).
+  Se trae el proyecto clonando con GitHub Desktop, que deja la conexión hecha.
