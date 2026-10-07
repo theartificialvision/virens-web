@@ -247,3 +247,6 @@ buscar ahí solo si hace falta saber el porqué de una decisión antigua.
 - No publicado (pendiente del cliente, en `site.pendingClientConfirmation`): Tomo/Folio/Sección/
   Hoja del Registro Mercantil (en blanco) y el apartado de notificaciones push (de plantilla).
 - Inglés: traducción nuestra, pendiente de revisión. Condiciones de venta sin cambios.
+
+## 2026-10-07 · Aviso legal: datos del Registro Mercantil
+- Cliente: Tomo 38911, Folio 45, Hoja B 331705 (ES y EN). No ha dado Sección; queda pendiente.

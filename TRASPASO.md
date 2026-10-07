@@ -45,8 +45,8 @@ Resumen vigente para quien retome. Reglas en `CLAUDE.md`; guías para personas e
   salir a quien ya vio el anterior. La nota de la tarjeta `.vcf` (`src/app/virens-labs.vcf/`)
   menciona CPHI: actualizarla o quitarla.
 - **Legales (07/10/2026):** aviso legal, privacidad y cookies con los textos del cliente del
-  05/10/2026; formulario con sus casillas nuevas. Pendiente del cliente: Tomo/Folio/Sección/Hoja
-  del Registro Mercantil, si hay notificaciones push, revisar el inglés (traducción nuestra) y si
+  05/10/2026; formulario con sus casillas nuevas. Pendiente del cliente: la Sección del Registro
+  Mercantil (Tomo, Folio y Hoja ya puestos), si hay notificaciones push, revisar el inglés (traducción nuestra) y si
   el email legal es cgestion@ o csp@. Detalle al principio de `src/content/legal.ts`.
 - **Datos sin confirmar por el cliente:** `site.pendingClientConfirmation` en `src/config/site.ts`.
 - **Inglés `[TR]`** pendiente de revisión por el cliente.

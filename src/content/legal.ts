@@ -10,7 +10,8 @@
  *
  * Lo que NO se publica del documento del cliente (pendiente de que lo complete,
  * anotado en `site.pendingClientConfirmation`):
- * - Aviso legal: «en el Tomo __ Folio __, Sección __, Hoja __» (datos en blanco).
+ * - Aviso legal: «Sección __» del Registro Mercantil. Tomo, Folio y Hoja los dio
+ *   el cliente el 07/10/2026 (Tomo 38911, Folio 45, Hoja B 331705), sin Sección.
  * - Privacidad: el apartado «Complementos y herramientas del sitio web ›
  *   Notificaciones push», que es de plantilla: la web no envía notificaciones.
  * - Cookies: la nota interna para el redactor, el aviso emergente (capa 1: la
@@ -64,7 +65,7 @@ export const legalDocs: readonly LegalDoc[] = [
       {
         heading: "Datos identificativos",
         body: [
-        "Usted está visitando la página web www.lvirens.com titularidad de LABORATORIOS VIRENS, S.L, con domicilio social en C/ Industria 48, Polig. Ind. Nord-Est (08740 Sant Andreu De La Barca) Barcelona, con NIF B64294473, inscrita en el Registro Mercantil de Barcelona. En adelante, el TITULAR.",
+        "Usted está visitando la página web www.lvirens.com titularidad de LABORATORIOS VIRENS, S.L, con domicilio social en C/ Industria 48, Polig. Ind. Nord-Est (08740 Sant Andreu De La Barca) Barcelona, con NIF B64294473, inscrita en el Registro Mercantil de Barcelona, en el Tomo 38911, Folio 45, Hoja B 331705. En adelante, el TITULAR.",
         "Puede contactar con el Titular por cualquiera de los siguientes medios:",
         { ordered: false, list: [
             "Teléfono: 936828972",

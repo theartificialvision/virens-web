@@ -30,7 +30,7 @@ export const legalDocs: readonly LegalDoc[] = [
       {
         heading: "Identification details",
         body: [
-        "You are visiting the website www.lvirens.com, owned by LABORATORIOS VIRENS, S.L, with registered office at C/ Industria 48, Polig. Ind. Nord-Est (08740 Sant Andreu De La Barca) Barcelona (Spain), with Tax ID (NIF) B64294473, registered in the Companies Register (Registro Mercantil) of Barcelona. Hereinafter, the OWNER.",
+        "You are visiting the website www.lvirens.com, owned by LABORATORIOS VIRENS, S.L, with registered office at C/ Industria 48, Polig. Ind. Nord-Est (08740 Sant Andreu De La Barca) Barcelona (Spain), with Tax ID (NIF) B64294473, registered in the Companies Register (Registro Mercantil) of Barcelona, Volume (Tomo) 38911, Folio 45, Sheet (Hoja) B 331705. Hereinafter, the OWNER.",
         "You may contact the Owner by any of the following means:",
         { ordered: false, list: [
             "Telephone: +34 936828972",
