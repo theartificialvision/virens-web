@@ -21,18 +21,25 @@ mal. Esta página es el resumen rápido.
 - **La web real (lvirens.com)** vive en cdmon. Nunca hace falta entrar en cdmon
   ni en net2ftp: se publica desde aquí.
 
-## Preparar el Mac (una sola vez)
+## Preparar el Mac (una sola vez, ~15 minutos)
 
-Se trabaja con la **app de Claude para Mac** (pestaña **Code**, sesión local).
-Paso a paso en [`GUIA-PRINCIPIANTES.md`](GUIA-PRINCIPIANTES.md) §3:
+Lo más fácil, y como se hace por defecto:
 
-1. Instalar **Node.js** (LTS), **GitHub Desktop** y la **app de Claude**.
-2. Aceptar la invitación de GitHub a `theartificialvision/virens-web`.
-3. GitHub Desktop → iniciar sesión → **Clone Repository** → rama **`v2`**.
-4. App de Claude → **Code** → carpeta del proyecto → «arranca la web y enséñamela».
+1. Instalar **Node.js** (https://nodejs.org → botón «LTS») y la **app de
+   Claude** (https://claude.ai/download). Abrir la app e iniciar sesión.
+2. Descomprimir el zip `virens-web.zip` en **Documentos**. Queda la carpeta
+   `Documentos/virens-web`. Esta carpeta ya es el proyecto conectado a GitHub.
+3. App de Claude → pestaña **Code** → trabajar en **tu Mac** → elegir la carpeta
+   `Documentos/virens-web` y escribir:
 
-(VS Code también sirve: el repo trae tareas en `.vscode/tasks.json`, incluida
-«Publicar en lvirens.com». No es necesario.)
+   > Es mi primera vez. Lee EMPEZAR-AQUI.md y déjalo todo listo.
+
+Claude comprueba lo que falta, instala lo necesario, arranca la web y te guía
+para conectar tu cuenta de GitHub (hace falta para guardar y publicar). Si pide
+permiso para algo («Allow»), es normal.
+
+(Otra forma, sin zip: clonar el repo con GitHub Desktop. Ver
+[`GUIA-PRINCIPIANTES.md`](GUIA-PRINCIPIANTES.md) §3.)
 
 ## El día a día
 

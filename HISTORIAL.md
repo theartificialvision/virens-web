@@ -225,3 +225,10 @@ buscar ahí solo si hace falta saber el porqué de una decisión antigua.
   incluye lo del otro) y cómo invitar a alguien en GitHub. `CLAUDE.md`: pull con
   rebase antes de cada push, conflictos se preguntan, commits con la identidad
   de quien trabaja. `TRASPASO.md` al día.
+
+## 2026-10-07 · El socio lleva el proyecto (entrega en zip)
+- El socio pasa a llevar la web; Ignacio solo interviene si se le pide.
+- Entrega por zip (carpeta con `.git`, sin `node_modules`) para que solo tenga que
+  descomprimir y abrirla en la app de Claude. `EMPEZAR-AQUI.md`: preparar el Mac en
+  3 pasos. `CLAUDE.md`: lista de «primera vez en un Mac nuevo» para que Claude deje
+  todo listo (Node, identidad git, `npm install`, conexión con GitHub vía GitHub Desktop).
