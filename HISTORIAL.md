@@ -218,3 +218,10 @@ buscar ahí solo si hace falta saber el porqué de una decisión antigua.
 - Cliente: el sello ecológico ya no va. Quitado de ES y EN y borrado su SVG.
   Quedan 8 sellos (una fila en escritorio; 3 + 3 + 2 en móvil). El hito de 2015
   «Certificación ECO y Veterinaria» de la historia de Compañía no se toca.
+
+## 2026-10-07 · Proyecto compartido con el socio
+- El socio de Ignacio se suma con su Mac y su Claude. `EMPEZAR-AQUI.md`: sección
+  «Trabajar dos a la vez» (traer antes de empezar, avisar de la zona, publicar
+  incluye lo del otro) y cómo invitar a alguien en GitHub. `CLAUDE.md`: pull con
+  rebase antes de cada push, conflictos se preguntan, commits con la identidad
+  de quien trabaja. `TRASPASO.md` al día.

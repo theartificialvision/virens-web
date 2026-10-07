@@ -1,4 +1,4 @@
-# Traspaso — estado del proyecto (02/10/2026)
+# Traspaso — estado del proyecto (07/10/2026)
 
 Resumen vigente para quien retome. Reglas en `CLAUDE.md`; guías para personas en
 `EMPEZAR-AQUI.md` y `GUIA-PRINCIPIANTES.md`; cambios recientes al final de `HISTORIAL.md`.
@@ -11,7 +11,8 @@ Resumen vigente para quien retome. Reglas en `CLAUDE.md`; guías para personas e
 | Web real | **https://lvirens.com** — hosting cdmon, carpeta `web/`. Se actualiza con push a `produccion` (GitHub Actions «Publicar en cdmon», ~1 min). |
 | Web de pruebas | https://virenslab.netlify.app (Netlify `virenslab`), se actualiza sola con cada push a `v2`. |
 | WordPress anterior | Guardado en cdmon en `backup_db/oldvirens`. |
-| Material original (vídeos, logos, referencias) | Fuera del repo: carpeta `material/` en iCloud de Ignacio. |
+| Material original (vídeos, logos, referencias) | Fuera del repo: carpeta `material/` en iCloud de Ignacio. Al socio se le comparte aparte (iCloud/Drive). |
+| Equipo | Desde el 07/10/2026 trabajan **Ignacio y su socio**, cada uno con su Mac y su Claude, ambos sobre `v2`. Normas en `EMPEZAR-AQUI.md` («Trabajar dos a la vez»). |
 | Restos antiguos | Repo `theartificialvision/VIrensLab` y proyectos Netlify `virens-v2`, `virenslabv2`, `virens-web`: pruebas viejas, no usar. |
 
 ## Cómo se publica (técnico)

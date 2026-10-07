@@ -47,6 +47,26 @@ Todo se pide a Claude en la pestaña Code:
 
 Si Claude no puede subir a GitHub, GitHub Desktop → **Push origin**.
 
+## Trabajar dos a la vez
+
+El proyecto lo llevan dos personas, cada una desde su Mac y con su propio Claude.
+Para no pisarse:
+
+- **Siempre «trae lo último de v2» antes de empezar.** Claude además lo repite
+  antes de subir; si los dos tocasteis lo mismo, te enseñará el choque y te
+  preguntará cuál se queda.
+- **Avisaos de qué zona estáis tocando** (una página, un bloque). Dos personas en
+  el mismo archivo a la vez es lo único que da guerra.
+- **Publicar en lvirens.com publica todo lo que haya en `v2`**, también lo del
+  otro. Antes de «publica», mirad juntos https://virenslab.netlify.app.
+- Cada uno sube con su propia cuenta de GitHub: en el historial se ve quién hizo qué.
+
+**Para dar acceso a alguien nuevo** (lo hace Ignacio, dueño del repo): GitHub →
+`theartificialvision/virens-web` → Settings → Collaborators → **Add people** → su
+usuario o email → rol **Write**. La persona acepta el correo y sigue
+[`GUIA-PRINCIPIANTES.md`](GUIA-PRINCIPIANTES.md) §3. No hace falta darle acceso a
+cdmon ni a Netlify: la publicación sale de GitHub.
+
 ## Dónde se cambia cada cosa (para orientarte, Claude ya lo sabe)
 
 | Qué | Dónde |

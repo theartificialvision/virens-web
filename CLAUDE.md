@@ -11,6 +11,10 @@ y guía paso a paso cuando haya que hacer algo fuera del editor.
   («Publicar en cdmon») la sube sola. **Solo cuando la persona lo pida** («publica»); después,
   comprobar que la ejecución termina en verde.
 - Antes de empezar: `git pull --ff-only origin v2`.
+- **Trabajan dos personas** (Ignacio y su socio, cada uno con su Mac y su Claude). Antes de cada
+  push, `git pull --rebase origin v2`; si hay conflicto, no elegir a ciegas: enseñar qué choca y
+  preguntar. Commits con la identidad git de quien trabaja (no fijar autor). Publicar en
+  `produccion` publica también lo que haya subido la otra persona: avisar de qué entra.
 - Cada cambio: uno a uno, enseñar el resultado (localhost o Netlify), `npm run typecheck` en
   limpio, una entrada breve al final de `HISTORIAL.md`, commit y push a `v2`.
 
