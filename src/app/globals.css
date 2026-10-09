@@ -2096,3 +2096,172 @@ textarea.contact-field { min-height: 9.5rem; resize: vertical; }
   }
 }
 
+
+/* ============================================================
+   BLOG (2026-10-09) — listado, cuerpo del artículo y panel.
+   Sin radio ni sombra en lo público (reglas 4 y 7): el listado es
+   una rejilla de filete compartido. Heredado de Noticias (29/09).
+   ============================================================ */
+.blog-row-title { transition: color var(--motion-control) var(--motion-ease); }
+.blog-media img { transition: transform var(--motion-enter) var(--motion-ease); }
+@media (hover: hover) and (pointer: fine) {
+  .blog-row:hover .blog-row-title { color: var(--color-labs); }
+  .blog-row:hover .blog-media img { transform: scale(1.04); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .blog-media img { transform: none !important; }
+}
+
+/* Cuerpo del artículo. La misma clase pinta el área del editor del panel,
+   así lo que se escribe es lo que sale. Ritmo en em: escala con el cuerpo. */
+.article-body {
+  font-size: var(--text-body);
+  line-height: 1.75;
+  color: var(--color-gray-700);
+  overflow-wrap: break-word;
+}
+.article-body > * + * { margin-top: 1.25em; }
+.article-body h2,
+.article-body h3,
+.article-body h4 {
+  color: var(--color-blue);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.article-body h2 { font-size: var(--text-h3); margin-top: 2em; }
+.article-body h3 { font-size: var(--text-h4); margin-top: 1.75em; }
+.article-body h4 { font-size: var(--text-body); font-weight: 700; margin-top: 1.75em; }
+.article-body strong,
+.article-body b { color: var(--color-blue); font-weight: 600; }
+.article-body a {
+  color: var(--color-labs);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .article-body a:hover { color: var(--color-blue); }
+}
+.article-body ul,
+.article-body ol { padding-left: 1.5em; display: grid; gap: 0.5em; }
+.article-body ul { list-style: disc; }
+.article-body ol { list-style: decimal; }
+.article-body li::marker { color: var(--color-labs); }
+.article-body li > p { margin: 0; }
+.article-body blockquote {
+  border-left: 3px solid var(--color-labs);
+  padding-left: 1.25em;
+  color: var(--color-blue);
+}
+.article-body img { display: block; width: 100%; height: auto; margin-top: 2em; }
+
+/* --- Panel (/admin): herramienta interna, sobria y legible ---------- */
+.admin { font-family: var(--font-montserrat), system-ui, sans-serif; }
+.admin-label {
+  display: block;
+  font-size: var(--text-micro);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-gray-500);
+}
+.admin-input {
+  display: block;
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.75rem 0.875rem;
+  border: 1px solid var(--color-gray-300);
+  background: var(--color-white);
+  font-size: var(--text-body);
+  color: var(--color-blue);
+  transition: border-color var(--motion-control) var(--motion-ease);
+}
+.admin-input:focus-visible { outline: 2px solid var(--color-labs); outline-offset: 1px; border-color: var(--color-labs); }
+.admin-input--title { font-size: var(--text-h4); font-weight: 600; }
+.admin-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid var(--color-blue);
+  border-radius: 999px;
+  font-size: var(--text-small);
+  font-weight: 600;
+  color: var(--color-blue);
+  background: transparent;
+  transition: background-color var(--motion-control) var(--motion-ease), color var(--motion-control) var(--motion-ease);
+}
+.admin-button:hover { background: var(--color-blue-soft); }
+.admin-button:disabled { opacity: 0.55; cursor: progress; }
+.admin-button:focus-visible,
+.admin-tool:focus-visible,
+.admin-cover:focus-visible { outline: 2px solid var(--color-labs); outline-offset: 2px; }
+.admin-button--primary { border-color: var(--color-labs); background: var(--color-labs); color: var(--color-white); }
+.admin-button--primary:hover { background: var(--color-blue); border-color: var(--color-blue); }
+.admin-button--ghost { border-color: transparent; }
+.admin-button--danger { border-color: transparent; color: var(--color-tech); }
+.admin-button--danger:hover { background: var(--color-tech); color: var(--color-white); }
+.admin-status {
+  display: inline-block;
+  flex: none;
+  padding: 0.25rem 0.625rem;
+  border-radius: 999px;
+  font-size: var(--text-note);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.admin-status--draft { background: var(--color-gray-200); color: var(--color-gray-700); }
+.admin-status--published { background: var(--color-labs-soft); color: var(--color-labs); }
+.admin-status--scheduled { background: var(--color-blue-soft); color: var(--color-blue); }
+.admin-cover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px dashed var(--color-gray-300);
+  background: var(--color-gray-50);
+  font-size: var(--text-small);
+  font-weight: 600;
+  color: var(--color-gray-500);
+}
+.admin-cover:hover { border-color: var(--color-labs); color: var(--color-labs); }
+.admin-details summary { cursor: pointer; font-size: var(--text-small); font-weight: 600; color: var(--color-blue); }
+.admin-editor { margin-top: 0.5rem; border: 1px solid var(--color-gray-300); }
+.admin-editor:focus-within { border-color: var(--color-labs); }
+.admin-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--color-gray-200);
+  background: var(--color-gray-50);
+}
+.admin-tool {
+  min-width: 2.5rem;
+  padding: 0.375rem 0.625rem;
+  font-size: var(--text-micro);
+  font-weight: 600;
+  color: var(--color-blue);
+}
+.admin-tool:hover { background: var(--color-gray-200); }
+.admin-tool[aria-pressed='true'] { background: var(--color-blue); color: var(--color-white); }
+.admin-editor-area { min-height: 22rem; padding: 1.25rem 1.5rem; outline: none; }
+.admin-editor-area img.ProseMirror-selectednode { outline: 3px solid var(--color-labs); }
+/* Texto de ayuda con el cuerpo vacío: un único párrafo con solo el salto
+   que Tiptap pone de relleno. */
+.admin-editor-area:has(> p:only-child > br.ProseMirror-trailingBreak:only-child)::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  color: var(--color-gray-500);
+}

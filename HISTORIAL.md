@@ -250,3 +250,16 @@ buscar ahí solo si hace falta saber el porqué de una decisión antigua.
 
 ## 2026-10-07 · Aviso legal: datos del Registro Mercantil
 - Cliente: Tomo 38911, Folio 45, Hoja B 331705 (ES y EN). No ha dado Sección; queda pendiente.
+
+## 2026-10-09 · Blog con panel privado (rama `blog`, sin publicar)
+- Rama aparte para poder publicar `v2` sin el blog. Supabase (gratis) para login, base de
+  datos e imágenes; seguridad con RLS (solo emails de `blog_admins` escriben o ven borradores).
+- `/admin`: login, lista, editor visual (Tiptap) con foto principal, título, subtítulo,
+  cuerpo, slug automático editable, fecha y borrador/publicado. Fotos reducidas en el
+  navegador antes de subir.
+- `/blog` y `/blog/<slug>`: plantilla única (imagen · título · subtítulo · cuerpo), HTML
+  limpiado en el servidor. Diseño heredado de Noticias (aparcada el 29/09).
+- 18 noticias antiguas listas para importar (`supabase/import-noticias.sql`) y sus 301
+  (`/noticias/*` y `/<slug>/` → `/blog/<slug>`). «Blog» en el menú español.
+- Dependencias nuevas: `@supabase/supabase-js`, `@tiptap/*`, `sanitize-html`.
+- Puesta en marcha en `docs/blog.md`. Pendiente: proyecto Supabase y branch deploy en Netlify.

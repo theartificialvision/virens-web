@@ -14,7 +14,13 @@ const nextConfig = {
   reactStrictMode: true,
   // `qualities`: Next 16 exige declarar las calidades que se piden con `quality={…}`
   // (el fondo de Contacto usa 85). 75 es el valor por defecto de `next/image`.
-  images: { formats: ['image/avif', 'image/webp'], qualities: [75, 85], unoptimized: isStaticExport },
+  images: {
+    formats: ['image/avif', 'image/webp'],
+    qualities: [75, 85],
+    unoptimized: isStaticExport,
+    // Blog (09/10/2026): fotos subidas desde el panel a Supabase Storage.
+    remotePatterns: [{ protocol: 'https', hostname: '*.supabase.co', pathname: '/storage/v1/object/public/**' }],
+  },
   ...(isStaticExport
     ? { output: 'export' }
     : {

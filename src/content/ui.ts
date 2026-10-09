@@ -43,6 +43,8 @@ export const ui: Record<Locale, Ui> = {
       { href: '/', label: 'Inicio' },
       { href: '/compania', label: 'Compañía' },
       { href: '/virens-tech', label: 'Virens Tech', division: 'tech' },
+      // 09/10/2026: el blog solo existe en español; el menú inglés no lo lleva.
+      { href: '/blog', label: 'Blog' },
       { href: '/contacto', label: 'Contacto' },
     ],
     menuAria: 'Menú principal',

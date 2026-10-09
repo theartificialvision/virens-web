@@ -33,14 +33,17 @@ rmSync(OUT, { recursive: true, force: true });
 run('npx next build', { STATIC_EXPORT: '1', NEXT_PUBLIC_INDEXABLE: indexable });
 cpSync('static-host', OUT, { recursive: true });
 
-/** `/noticias/:path*` → `^noticias(?:/.*)?$`; `/compania/` → `^compania/$`. */
+/** `/noticias/:path*` → `^noticias(/.*)?$`; `/compania/` → `^compania/$`. */
 function toPattern(source) {
   const path = source.replace(/^\//, '').replace(/[.+?()[\]{}|\\^$]/g, '\\$&');
-  return `^${path.replace(/\/:path\*$/, '(?:/.*)?')}$`;
+  return `^${path.replace(/\/:path\*$/, '(/.*)?')}$`;
 }
 
+/** Si el destino también lleva `:path*`, se le pasa lo capturado (`/blog$1`). */
+const toDestination = (destination) => destination.replace(/\/:path\*$/, '$1');
+
 const redirects = redirectRules()
-  .map(([source, destination]) => `RewriteRule ${toPattern(source)} ${destination} [R=301,L]`)
+  .map(([source, destination]) => `RewriteRule ${toPattern(source)} ${toDestination(destination)} [R=301,L]`)
   .join('\n');
 
 const htaccess = `# Generado por scripts/build-static.mjs — no editar a mano.

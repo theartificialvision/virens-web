@@ -11,10 +11,29 @@ export const redirectMap = [
   // Labs ya es la home: se conserva la URL histórica como redirección.
   ['/virens-labs', '/'],
   ['/virens-tech/', '/virens-tech'],
-  // Noticias retirada (29/09/2026, decisión del cliente; el trabajo está en
-  // está en el historial de git). Sus URLs van a la home del idioma.
-  ['/noticias', '/'],
-  ['/noticias/:path*', '/'],
+  // Noticias vuelve como Blog (09/10/2026, rama `blog`): mismas direcciones
+  // con /blog delante. El inglés no tiene blog: sigue yendo a su home.
+  ['/noticias', '/blog'],
+  ['/noticias/:path*', '/blog/:path*'],
+  // Las 18 noticias de WordPress colgaban de la raíz (/cphi-milan-2026/).
+  ['/cphi-milan-2026/', '/blog/cphi-milan-2026'],
+  ['/verano-2026/', '/blog/verano-2026'],
+  ['/vitafoods-2026-un-exito-gracias-por-formar-parte-de-esta-gran-edicion/', '/blog/vitafoods-2026-un-exito-gracias-por-formar-parte-de-esta-gran-edicion'],
+  ['/vitafoods-2026/', '/blog/vitafoods-2026'],
+  ['/nootropicos-y-salud-cognitiva-como-los-suplementos-apoyan-la-salud-cerebral/', '/blog/nootropicos-y-salud-cognitiva-como-los-suplementos-apoyan-la-salud-cerebral'],
+  ['/cierre-por-vacaciones-de-agosto/', '/blog/cierre-por-vacaciones-de-agosto'],
+  ['/la-creatina-el-boom-en-los-suplementos-para-la-mujer-2/', '/blog/la-creatina-el-boom-en-los-suplementos-para-la-mujer-2'],
+  ['/vitafoods-europe-2025/', '/blog/vitafoods-europe-2025'],
+  ['/nutricion-deportiva-claves-y-tendencias-para-2025/', '/blog/nutricion-deportiva-claves-y-tendencias-para-2025'],
+  ['/feliz-navidad-y-prospero-ano-nuevo/', '/blog/feliz-navidad-y-prospero-ano-nuevo'],
+  ['/tendencias-en-los-complementos-alimenticios-en-2025/', '/blog/tendencias-en-los-complementos-alimenticios-en-2025'],
+  ['/envejecimiento-saludable-bienestar/', '/blog/envejecimiento-saludable-bienestar'],
+  ['/vitafoods-moves-to-barcelona/', '/blog/vitafoods-moves-to-barcelona'],
+  ['/laboratorios-virens-amb-accio/', '/blog/laboratorios-virens-amb-accio'],
+  ['/laboratorios-virens-vuelve-a-vitafoods-2024/', '/blog/laboratorios-virens-vuelve-a-vitafoods-2024'],
+  ['/virens-crece/', '/blog/virens-crece'],
+  ['/nuevo-catalogo/', '/blog/nuevo-catalogo'],
+  ['/vitafoods-2023/', '/blog/vitafoods-2023'],
   ['/en/news', '/en'],
   ['/en/news/:path*', '/en'],
   ['/contacto/', '/contacto'],
