@@ -10,8 +10,8 @@
  * cambia de proyecto, sin tocar código.
  */
 export const blogConfig = {
-  supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL ?? '',
-  supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_KEY ?? '',
+  supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL ?? 'https://qkcogkghxqczbcseieov.supabase.co',
+  supabaseKey: process.env.NEXT_PUBLIC_SUPABASE_KEY ?? 'sb_publishable_SsSXJ0uAjBIQ7LIQYLQSvw_ecesVxLM',
   /** Carpeta de imágenes en Supabase Storage (la crea `schema.sql`). */
   bucket: 'blog',
   /** Segundos que la web tarda como máximo en reflejar un cambio del panel. */
