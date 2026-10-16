@@ -30,6 +30,8 @@ export const adminText = {
     lead: 'Entra con tu email y tu contraseña.',
     email: 'Email',
     password: 'Contraseña',
+    showPassword: 'Mostrar contraseña',
+    hidePassword: 'Ocultar contraseña',
     submit: 'Entrar',
     sending: 'Entrando…',
     wrong: 'El email o la contraseña no son correctos.',

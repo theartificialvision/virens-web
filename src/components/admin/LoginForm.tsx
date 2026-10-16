@@ -21,6 +21,7 @@ export function LoginForm() {
   const session = useAdminSession();
   const [error, setError] = useState('');
   const [sending, setSending] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   // Si ya hay sesión (otra pestaña, recarga), directo al panel.
   useEffect(() => {
@@ -63,12 +64,35 @@ export function LoginForm() {
         <label className="admin-label mt-8" htmlFor="admin-email">{t.email}</label>
         <input id="admin-email" name="email" type="email" autoComplete="username" required className="admin-input" />
         <label className="admin-label mt-5" htmlFor="admin-password">{t.password}</label>
-        <input id="admin-password" name="password" type="password" autoComplete="current-password" required className="admin-input" />
+        <div className="relative">
+          <input id="admin-password" name="password" type={showPassword ? 'text' : 'password'} autoComplete="current-password" required className="admin-input pr-12" />
+          <button
+            type="button"
+            onClick={() => setShowPassword((v) => !v)}
+            aria-label={showPassword ? t.hidePassword : t.showPassword}
+            aria-pressed={showPassword}
+            title={showPassword ? t.hidePassword : t.showPassword}
+            className="admin-eye"
+          >
+            <EyeIcon open={!showPassword} />
+          </button>
+        </div>
         <p role="alert" className="mt-4 min-h-[1.5em] text-[length:var(--text-small)] font-medium text-tech">{error}</p>
         <button type="submit" disabled={sending} className="admin-button admin-button--primary mt-2 w-full">
           {sending ? t.sending : t.submit}
         </button>
       </form>
     </main>
+  );
+}
+
+/** Ojo abierto = «mostrar»; tachado = «ocultar». Trazo fino, como el resto de iconos. */
+function EyeIcon({ open }: { open: boolean }) {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" className="size-5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" />
+      <circle cx="12" cy="12" r="3" />
+      {!open && <path d="m3 3 18 18" />}
+    </svg>
   );
 }

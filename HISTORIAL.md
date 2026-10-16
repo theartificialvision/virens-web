@@ -263,3 +263,6 @@ buscar ahí solo si hace falta saber el porqué de una decisión antigua.
   (`/noticias/*` y `/<slug>/` → `/blog/<slug>`). «Blog» en el menú español.
 - Dependencias nuevas: `@supabase/supabase-js`, `@tiptap/*`, `sanitize-html`.
 - Puesta en marcha en `docs/blog.md`. Pendiente: proyecto Supabase y branch deploy en Netlify.
+
+## 2026-10-16 · Panel del blog: ver contraseña
+- Login de `/admin`: icono de ojo dentro del campo para mostrar u ocultar la contraseña.
