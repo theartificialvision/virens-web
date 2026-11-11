@@ -256,3 +256,5 @@ buscar ahí solo si hace falta saber el porqué de una decisión antigua.
   línea inferior del pie (derecha en escritorio, bajo el copyright en móvil),
   mismo estilo que el copyright; enlace en pestaña nueva. EN: «Designed and
   built by». Texto en `src/content/ui.ts` (`footer.credit`).
+- 11/11 (cliente): la autoría pasa a «Diseñada y desarrollada por Antonio Campos», con el
+  enlace en el nombre y sin la URL escrita. EN: «Designed and developed by».
