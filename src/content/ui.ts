@@ -16,7 +16,7 @@ interface Ui {
   mainNav: readonly NavLink[];
   menuAria: string;
   logoAria: { labs: string; tech: string };
-  /** `credit`: autoría de la web (11/11/2026, cliente). */
+  /** `credit`: autoría de la web (11/11/2026, cliente). Oculta en el pie; se usa en los metadatos. */
   footer: { rights: string; credit: { before: string; name: string; href: string } };
   /** Volver atrás (30/09/2026): nombre accesible de la flecha bajo la cabecera. */
   nav: {

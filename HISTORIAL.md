@@ -258,3 +258,6 @@ buscar ahí solo si hace falta saber el porqué de una decisión antigua.
   built by». Texto en `src/content/ui.ts` (`footer.credit`).
 - 11/11 (cliente): la autoría pasa a «Diseñada y desarrollada por Antonio Campos», con el
   enlace en el nombre y sin la URL escrita. EN: «Designed and developed by».
+- 11/11 (cliente): la autoría se oculta del pie «de momento» y queda solo en los
+  metadatos (`authors` en `rootMetadata` → `<meta name="author">` y `<link rel="author">`).
+  No se usa texto oculto: Google lo trata como spam. El copyright sigue visible.

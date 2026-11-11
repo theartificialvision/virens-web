@@ -11,6 +11,10 @@ export function rootMetadata(locale: Locale): Metadata {
     title: { default: t.meta.defaultTitle, template: '%s · Laboratorios Virens' },
     description: t.meta.description,
     openGraph: { type: 'website', locale: t.ogLocale, siteName: site.name },
+    // Autoría de la web (11/11/2026): no se ve en la página, pero queda en el
+    // código para buscadores (`<meta name="author">` + `<link rel="author">`).
+    // Metadatos y no texto oculto: Google penaliza los enlaces invisibles.
+    authors: [{ name: t.footer.credit.name, url: t.footer.credit.href }],
     robots: isIndexable ? { index: true, follow: true } : { index: false, follow: false },
   };
 }
