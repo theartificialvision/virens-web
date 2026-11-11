@@ -16,7 +16,8 @@ interface Ui {
   mainNav: readonly NavLink[];
   menuAria: string;
   logoAria: { labs: string; tech: string };
-  footer: { rights: string };
+  /** `credit`: autoría de la web (11/11/2026, cliente). */
+  footer: { rights: string; credit: { before: string; name: string; site: string; href: string } };
   /** Volver atrás (30/09/2026): nombre accesible de la flecha bajo la cabecera. */
   nav: {
     backTo: string;
@@ -49,6 +50,7 @@ export const ui: Record<Locale, Ui> = {
     logoAria: { labs: 'Virens Labs — inicio', tech: 'Virens Tech — inicio' },
     footer: {
       rights: 'Todos los derechos reservados.',
+      credit: { before: 'Diseñada y creada por', name: 'Antonio Campos', site: 'antoniocamposdesign.com', href: 'https://antoniocamposdesign.com' },
     },
     nav: {
       backTo: 'Volver a',
@@ -92,6 +94,7 @@ export const ui: Record<Locale, Ui> = {
     logoAria: { labs: 'Virens Labs — home', tech: 'Virens Tech — home' }, // [TR]
     footer: {
       rights: 'All rights reserved.', // [TR]
+      credit: { before: 'Designed and built by', name: 'Antonio Campos', site: 'antoniocamposdesign.com', href: 'https://antoniocamposdesign.com' }, // [TR]
     },
     nav: {
       backTo: 'Back to', // [TR]

@@ -250,3 +250,9 @@ buscar ahí solo si hace falta saber el porqué de una decisión antigua.
 
 ## 2026-10-07 · Aviso legal: datos del Registro Mercantil
 - Cliente: Tomo 38911, Folio 45, Hoja B 331705 (ES y EN). No ha dado Sección; queda pendiente.
+
+## 2026-11-11 · Pie: autoría de la web
+- Cliente: «Diseñada y creada por Antonio Campos · antoniocamposdesign.com» en la
+  línea inferior del pie (derecha en escritorio, bajo el copyright en móvil),
+  mismo estilo que el copyright; enlace en pestaña nueva. EN: «Designed and
+  built by». Texto en `src/content/ui.ts` (`footer.credit`).

@@ -81,6 +81,13 @@ export function V2Footer({ locale }: { locale: Locale }) {
           {/* Los textos legales viven desde el 29/09/2026 en la columna
               «Documentación»; aquí ya no se repiten. */}
           <p>&copy; {new Date().getFullYear()} Virens Labs &amp; Tech. {t.footer.rights}</p>
+          {/* Autoría (11/11/2026, cliente): a la derecha en escritorio, debajo en móvil. */}
+          <p>
+            {t.footer.credit.before} {t.footer.credit.name} ·{' '}
+            <a href={t.footer.credit.href} target="_blank" rel="noopener" className="underline decoration-white/30 underline-offset-4 transition-colors duration-200 hover:text-white hover:decoration-white">
+              {t.footer.credit.site}
+            </a>
+          </p>
         </div>
       </div>
     </footer>
